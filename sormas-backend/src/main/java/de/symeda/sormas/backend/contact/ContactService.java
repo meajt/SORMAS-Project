@@ -927,7 +927,7 @@ public class ContactService extends AbstractCoreAdoService<Contact>
 					.calculateFollowUpUntilDate(
 						contactDto,
 						ContactLogic.getFollowUpStartDate(contact.getLastContactDate(), contact.getReportDateTime(), earliestSampleDate),
-						contact.getVisits().stream().map(VisitFacadeEjb::toDto).collect(Collectors.toList()),
+						contact.getVisits().stream().map(VisitFacadeEjb::toVisitDto).collect(Collectors.toList()),
 						diseaseConfigurationFacade.getFollowUpDuration(contact.getDisease()),
 						false,
 						featureConfigurationFacade
