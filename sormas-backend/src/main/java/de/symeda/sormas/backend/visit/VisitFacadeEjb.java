@@ -35,6 +35,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -97,6 +98,7 @@ import de.symeda.sormas.backend.user.User;
 import de.symeda.sormas.backend.user.UserFacadeEjb;
 import de.symeda.sormas.backend.user.UserReference;
 import de.symeda.sormas.backend.user.UserRoleFacadeEjb;
+import de.symeda.sormas.backend.user.UserService;
 import de.symeda.sormas.backend.util.DtoHelper;
 import de.symeda.sormas.backend.util.JurisdictionHelper;
 import de.symeda.sormas.backend.util.ModelConstants;
@@ -125,6 +127,14 @@ public class VisitFacadeEjb extends AbstractBaseEjb<Visit, VisitDto, VisitIndexD
 	private SymptomsFacadeEjbLocal symptomsFacade;
 	@EJB
 	private NotificationService notificationService;
+
+	public VisitFacadeEjb() {
+	}
+
+	@Inject
+	protected VisitFacadeEjb(VisitService service, UserService userService) {
+		super(Visit.class, VisitDto.class, service, userService);
+	}
 
 	@Override
 	public List<String> getAllActiveUuids() {
@@ -656,6 +666,14 @@ public class VisitFacadeEjb extends AbstractBaseEjb<Visit, VisitDto, VisitIndexD
 	@LocalBean
 	@Stateless
 	public static class VisitFacadeEjbLocal extends VisitFacadeEjb {
+
+		public VisitFacadeEjbLocal() {
+		}
+
+		@Inject
+		protected VisitFacadeEjbLocal(VisitService service, UserService userService) {
+			super(service, userService);
+		}
 
 	}
 }
