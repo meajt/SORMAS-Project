@@ -1599,7 +1599,7 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		getCaseFacade().save(leadCase);
 		VisitDto leadVisit = creator.createVisit(leadCase.getDisease(), leadCase.getPerson(), leadCase.getReportDate());
 		leadVisit.getSymptoms().setAnorexiaAppetiteLoss(SymptomState.YES);
-		getVisitFacade().saveVisit(leadVisit);
+		getVisitFacade().save(leadVisit);
 
 		// Create otherCase
 		UserDto otherUser = creator.createUser("", "", "", "Second", "User");
@@ -1653,7 +1653,7 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		getCaseFacade().save(otherCase);
 		VisitDto otherVisit = creator.createVisit(otherCase.getDisease(), otherCase.getPerson(), otherCase.getReportDate());
 		otherVisit.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(otherVisit);
+		getVisitFacade().save(otherVisit);
 		EventDto event = creator.createEvent(otherUserReference);
 		event.setDisease(otherCase.getDisease());
 		getEventFacade().save(event);
@@ -2079,7 +2079,7 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		visit.getSymptoms().setChestPain(SymptomState.NO);
 
 		getCaseFacade().save(caze);
-		getVisitFacade().saveVisit(visit);
+		getVisitFacade().save(visit);
 		CaseDataDto updatedCase = getCaseFacade().getCaseDataByUuid(caze.getUuid());
 
 		assertEquals(SymptomState.YES, updatedCase.getSymptoms().getChestPain());
@@ -2087,7 +2087,7 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 
 		// Update an existing visit
 		visit.getSymptoms().setAcuteRespiratoryDistressSyndrome(SymptomState.YES);
-		getVisitFacade().saveVisit(visit);
+		getVisitFacade().save(visit);
 
 		updatedCase = getCaseFacade().getCaseDataByUuid(caze.getUuid());
 
@@ -2549,7 +2549,7 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		assertEquals(LocalDate.now().plusDays(21 + 1), UtilDate.toLocalDate(caze.getFollowUpUntil()));
 
 		visit.setVisitStatus(VisitStatus.COOPERATIVE);
-		visit = getVisitFacade().saveVisit(visit);
+		visit = getVisitFacade().save(visit);
 
 		// Follow-up until should be back at the original date and follow-up should be completed
 		caze = getCaseFacade().getCaseDataByUuid(caze.getUuid());
@@ -2565,7 +2565,7 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		// Add a cooperative visit AFTER the follow-up until date; should set follow-up to completed
 		visit.setVisitStatus(VisitStatus.UNAVAILABLE);
 		visit.setVisitDateTime(caze.getFollowUpUntil());
-		getVisitFacade().saveVisit(visit);
+		getVisitFacade().save(visit);
 		caze = getCaseFacade().getCaseDataByUuid(caze.getUuid());
 		assertEquals(FollowUpStatus.FOLLOW_UP, caze.getFollowUpStatus());
 		creator

@@ -562,7 +562,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		// Database should contain the created contact, visit and task
 		assertNotNull(getContactFacade().getByUuid(contact.getUuid()));
 		assertNotNull(getTaskFacade().getByUuid(task.getUuid()));
-		assertNotNull(getVisitFacade().getVisitByUuid(visit.getUuid()));
+		assertNotNull(getVisitFacade().getByUuid(visit.getUuid()));
 		assertNotNull(getSampleFacade().getSampleByUuid(sample.getUuid()));
 
 		getContactFacade().delete(contact.getUuid(), new DeletionDetails(DeletionReason.OTHER_REASON, "test reason"));
@@ -570,7 +570,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		// Deleted flag should be set for contact; Task should be deleted
 		assertTrue(getContactFacade().getDeletedUuidsSince(since).contains(contact.getUuid()));
 		// Can't delete visit because it might be associated with other contacts as well
-		//		assertNull(getVisitFacade().getVisitByUuid(visit.getUuid()));
+		//		assertNull(getVisitFacade().getByUuid(visit.getUuid()));
 		assertNull(getTaskFacade().getByUuid(task.getUuid()));
 		assertTrue(getSampleFacade().getDeletedUuidsSince(since).contains(sample.getUuid()));
 		assertFalse(getSampleFacade().getDeletedUuidsSince(since).contains(sample2.getUuid()));
@@ -1205,7 +1205,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		getPersonFacade().save(contactPerson);
 
 		visit.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(visit);
+		getVisitFacade().save(visit);
 
 		ImmunizationDto immunization = creator.createImmunization(
 			contact.getDisease(),
@@ -1349,7 +1349,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		getPersonFacade().save(contactPerson);
 
 		visit.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(visit);
+		getVisitFacade().save(visit);
 
 		ImmunizationDto immunization = creator.createImmunization(
 			contact.getDisease(),
@@ -1463,7 +1463,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 			creator.createContact(user.toReference(), user.toReference(), contactPerson.toReference(), caze, new Date(), new Date(), null);
 		VisitDto visit11 = creator.createVisit(caze.getDisease(), contactPerson.toReference(), new Date(), VisitStatus.COOPERATIVE, VisitOrigin.USER);
 		visit11.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(visit11);
+		getVisitFacade().save(visit11);
 		VisitDto visit12 = creator.createVisit(
 			caze.getDisease(),
 			contactPerson.toReference(),
@@ -1471,7 +1471,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 			VisitStatus.COOPERATIVE,
 			VisitOrigin.USER);
 		visit12.getSymptoms().setChestPain(SymptomState.YES);
-		getVisitFacade().saveVisit(visit12);
+		getVisitFacade().save(visit12);
 		PersonDto contactPersonWithoutFollowUp = creator.createPerson();
 		creator.createContact(user.toReference(), contactPersonWithoutFollowUp.toReference());
 
@@ -1481,7 +1481,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		VisitDto visit21 =
 			creator.createVisit(caze.getDisease(), contactPerson2.toReference(), new Date(), VisitStatus.COOPERATIVE, VisitOrigin.USER);
 		visit21.getSymptoms().setBackache(SymptomState.YES);
-		getVisitFacade().saveVisit(visit21);
+		getVisitFacade().save(visit21);
 
 		final List<VisitSummaryExportDto> results = getContactFacade().getVisitSummaryExportList(null, Collections.emptySet(), 0, 100, Language.EN);
 		assertNotNull(results);
@@ -1557,18 +1557,18 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		creator.createContact(user.toReference(), user.toReference(), contactPerson.toReference(), caze, new Date(), new Date(), null);
 		VisitDto visit = creator.createVisit(caze.getDisease(), contactPerson.toReference(), new Date(), VisitStatus.COOPERATIVE, VisitOrigin.USER);
 		visit.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(visit);
+		getVisitFacade().save(visit);
 
 		PersonDto contactPerson2 = creator.createPerson("Contact2", "Person2");
 		creator.createContact(user.toReference(), user.toReference(), contactPerson2.toReference(), caze, new Date(), new Date(), null);
 		VisitDto visit21 =
 			creator.createVisit(caze.getDisease(), contactPerson2.toReference(), new Date(), VisitStatus.COOPERATIVE, VisitOrigin.USER);
 		visit21.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(visit21);
+		getVisitFacade().save(visit21);
 		VisitDto visit22 =
 			creator.createVisit(caze.getDisease(), contactPerson2.toReference(), new Date(), VisitStatus.COOPERATIVE, VisitOrigin.USER);
 		visit22.getSymptoms().setAgitation(SymptomState.YES);
-		getVisitFacade().saveVisit(visit22);
+		getVisitFacade().save(visit22);
 
 		PersonDto contactPerson3 = creator.createPerson("Contact3", "Person3");
 		creator.createContact(user.toReference(), user.toReference(), contactPerson3.toReference(), caze, new Date(), new Date(), null);
@@ -1878,7 +1878,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 			});
 		getContactFacade().save(leadContact);
 		VisitDto leadVisit = creator.createVisit(leadContact.getDisease(), leadContact.getPerson(), leadContact.getReportDateTime());
-		getVisitFacade().saveVisit(leadVisit);
+		getVisitFacade().save(leadVisit);
 
 		// Create otherContact
 		UserReferenceDto otherUserReference = new UserReferenceDto(otherUser.getUuid());
@@ -1923,7 +1923,7 @@ public class ContactFacadeEjbTest extends AbstractBeanTest {
 		getContactFacade().save(otherContact);
 		VisitDto otherVisit = creator.createVisit(otherContact.getDisease(), otherContact.getPerson(), otherContact.getReportDateTime());
 		otherVisit.getSymptoms().setAbdominalPain(SymptomState.YES);
-		getVisitFacade().saveVisit(otherVisit);
+		getVisitFacade().save(otherVisit);
 
 		DocumentDto document = creator.createDocument(
 			leadUserReference,

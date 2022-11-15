@@ -59,7 +59,7 @@ public class VisitController {
 		CaseReferenceDto caseRef,
 		Consumer<VisitReferenceDto> doneConsumer,
 		boolean isEditAllowed) {
-		VisitDto visit = FacadeProvider.getVisitFacade().getVisitByUuid(visitUuid);
+		VisitDto visit = FacadeProvider.getVisitFacade().getByUuid(visitUuid);
 		VisitEditForm editForm;
 		if (contactRef != null) {
 			ContactDto contact = FacadeProvider.getContactFacade().getByUuid(contactRef.getUuid());
@@ -99,7 +99,7 @@ public class VisitController {
 
 		editView.addCommitListener(() -> {
 			if (!editForm.getFieldGroup().isModified()) {
-				FacadeProvider.getVisitFacade().saveVisit(editForm.getValue());
+				FacadeProvider.getVisitFacade().save(editForm.getValue());
 				if (doneConsumer != null) {
 					doneConsumer.accept(visitRef);
 				}
@@ -126,7 +126,7 @@ public class VisitController {
 		editView.addCommitListener(() -> {
 			if (!createForm.getFieldGroup().isModified()) {
 				VisitDto dto = createForm.getValue();
-				dto = FacadeProvider.getVisitFacade().saveVisit(dto);
+				dto = FacadeProvider.getVisitFacade().save(dto);
 				if (doneConsumer != null) {
 					doneConsumer.accept(dto.toReference());
 				}

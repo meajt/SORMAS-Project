@@ -1269,7 +1269,7 @@ public class DevModeView extends AbstractConfigurationView {
 						if (visit.getVisitStatus() == null) {
 							visit.setVisitStatus(VisitStatus.COOPERATIVE);
 						}
-						FacadeProvider.getVisitFacade().saveVisit(visit);
+						FacadeProvider.getVisitFacade().save(visit);
 					}
 				}
 			}
