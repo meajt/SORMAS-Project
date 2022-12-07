@@ -495,8 +495,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 	}
 
 	@Inject
-	public CaseFacadeEjb(CaseService service, UserService userService) {
-		super(Case.class, CaseDataDto.class, service, userService);
+	public CaseFacadeEjb(CaseService service) {
+		super(Case.class, CaseDataDto.class, service);
 	}
 
 	@Override
@@ -4207,8 +4207,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		}
 
 		@Inject
-		public CaseFacadeEjbLocal(CaseService service, UserService userService) {
-			super(service, userService);
+		public CaseFacadeEjbLocal(CaseService service) {
+			super(service);
 		}
 	}
 }

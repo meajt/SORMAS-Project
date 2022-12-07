@@ -173,7 +173,6 @@ import de.symeda.sormas.backend.travelentry.TravelEntry;
 import de.symeda.sormas.backend.travelentry.services.TravelEntryService;
 import de.symeda.sormas.backend.user.User;
 import de.symeda.sormas.backend.user.UserFacadeEjb.UserFacadeEjbLocal;
-import de.symeda.sormas.backend.user.UserService;
 import de.symeda.sormas.backend.util.DtoHelper;
 import de.symeda.sormas.backend.util.IterableHelper;
 import de.symeda.sormas.backend.util.JurisdictionHelper;
@@ -249,8 +248,8 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 	}
 
 	@Inject
-	protected PersonFacadeEjb(PersonService service, UserService userService) {
-		super(Person.class, PersonDto.class, service, userService);
+	protected PersonFacadeEjb(PersonService service) {
+		super(Person.class, PersonDto.class, service);
 	}
 
 	@Override
@@ -1922,8 +1921,8 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		}
 
 		@Inject
-		protected PersonFacadeEjbLocal(PersonService service, UserService userService) {
-			super(service, userService);
+		protected PersonFacadeEjbLocal(PersonService service) {
+			super(service);
 		}
 	}
 }

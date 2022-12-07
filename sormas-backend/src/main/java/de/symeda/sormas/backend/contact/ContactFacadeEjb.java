@@ -199,7 +199,6 @@ import de.symeda.sormas.backend.user.User;
 import de.symeda.sormas.backend.user.UserFacadeEjb;
 import de.symeda.sormas.backend.user.UserReference;
 import de.symeda.sormas.backend.user.UserRoleFacadeEjb;
-import de.symeda.sormas.backend.user.UserService;
 import de.symeda.sormas.backend.util.DtoHelper;
 import de.symeda.sormas.backend.util.IterableHelper;
 import de.symeda.sormas.backend.util.JurisdictionHelper;
@@ -289,8 +288,8 @@ public class ContactFacadeEjb
 	}
 
 	@Inject
-	public ContactFacadeEjb(ContactService service, UserService userService) {
-		super(Contact.class, ContactDto.class, service, userService);
+	public ContactFacadeEjb(ContactService service) {
+		super(Contact.class, ContactDto.class, service);
 	}
 
 	@Override
@@ -2388,8 +2387,8 @@ public class ContactFacadeEjb
 		}
 
 		@Inject
-		public ContactFacadeEjbLocal(ContactService service, UserService userService) {
-			super(service, userService);
+		public ContactFacadeEjbLocal(ContactService service) {
+			super(service);
 		}
 	}
 
