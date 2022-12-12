@@ -1644,7 +1644,7 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 
 		target = DtoHelper.fillOrBuildEntity(source, target, service::createPerson, checkChangeDate);
 
-		if (targetWasNull) {
+		if (targetWasNull && source.getAddress() != null) {
 			target.getAddress().setUuid(source.getAddress().getUuid());
 		}
 
