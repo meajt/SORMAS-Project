@@ -11,9 +11,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.person.JournalPersonDto;
 import de.symeda.sormas.api.person.PersonFollowUpEndDto;
 import de.symeda.sormas.api.person.PersonSymptomJournalStatusDto;
@@ -93,8 +93,8 @@ public class ExternalVisitsResource extends EntityDtoResource {
 	@POST
 	@Path("/")
 	@Operation(summary = "Save visits", description = "Upload visits with all symptom and disease related data to SORMAS.")
-	public List<PushResult> postExternalVisits(List<ExternalVisitDto> dtos) {
-		return savePushedDto(dtos, FacadeProvider.getVisitFacade()::saveExternalVisit);
+	public Response postExternalVisits(List<ExternalVisitDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getVisitFacade()::saveExternalVisit);
 	}
 
 	@GET
@@ -129,11 +129,4 @@ public class ExternalVisitsResource extends EntityDtoResource {
 	public List<PersonFollowUpEndDto> getLatestFollowUpEndDates(@PathParam("since") long since) {
 		return FacadeProvider.getPersonFacade().getLatestFollowUpEndDates(new Date(since), true);
 	}
-
-	@Override
-	protected <T> String createErrorMessage(T dto) {
-		final ExternalVisitDto externalVisitDto = (ExternalVisitDto) dto;
-		return dto.getClass().getSimpleName() + " #personUUID: " + externalVisitDto.getPersonUuid() + "\n";
-	}
-
 }

@@ -28,9 +28,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.infrastructure.region.RegionCriteria;
@@ -62,9 +62,8 @@ public class RegionResource extends EntityDtoResource {
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postRegions(@Valid List<RegionDto> dtos) {
-		List<PushResult> result = savePushedDto(dtos, FacadeProvider.getRegionFacade()::save);
-		return result;
+	public Response postRegions(@Valid List<RegionDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getRegionFacade()::save);
 	}
 
 	@GET

@@ -32,7 +32,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.externaldata.ExternalDataDto;
@@ -86,8 +85,8 @@ public class PersonResource extends EntityDtoResource {
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postPersons(@Valid List<PersonDto> dtos) {
-		return savePushedDto(dtos, FacadeProvider.getPersonFacade()::save);
+	public Response postPersons(@Valid List<PersonDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getPersonFacade()::save);
 	}
 
 	@GET

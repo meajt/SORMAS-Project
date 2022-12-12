@@ -1,27 +1,21 @@
 package de.symeda.sormas.rest.resources;
 
-import static java.util.Objects.isNull;
-
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import javax.ejb.EJB;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Providers;
 
 import de.symeda.sormas.rest.TransactionWrapper;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.symeda.sormas.api.EntityDto;
-import de.symeda.sormas.api.PushResult;
-import de.symeda.sormas.api.utils.OutdatedEntityException;
-import de.symeda.sormas.api.utils.ValidationException;
+import de.symeda.sormas.api.PushResponse;
 
 public abstract class EntityDtoResource {
 
@@ -30,75 +24,44 @@ public abstract class EntityDtoResource {
 	@EJB
 	private TransactionWrapper transactionWrapper;
 
-	protected <T> List<PushResult> savePushedDto(List<T> dtos, Function<T, T> saveEntityDto) {
+	@Context
+	private Providers providers;
 
-		List<PushResult> results = new ArrayList<>(dtos.size());
-		for (T dto : dtos) {
-			PushResult result;
-			try {
-				dto = transactionWrapper.execute(saveEntityDto, dto);
-				result = PushResult.OK;
-			} catch (Exception e) {
-				String errorMessage = createErrorMessage(dto);
-				errorMessage += e.getMessage();
-				result = getPushResultError(e, errorMessage);
-			}
-			results.add(result);
+	protected <T> Response savePushedDtosNonAtomic(List<T> dtos, UnaryOperator<T> saveEntityDto) {
+		if (dtos == null || dtos.isEmpty()) {
+			return Response.status(HttpStatus.SC_OK).build();
 		}
-		return results;
-	}
 
-	protected <T> Map<String, Map<PushResult, String>> savePushedDetailedDto(List<T> dtos, Function<T, T> saveEntityDto) {
+		List<PushResponse> results = new ArrayList<>(dtos.size());
 
-		Map<String, Map<PushResult, String>> results = new HashMap<>(dtos.size());
 		for (T dto : dtos) {
-			PushResult result;
 			try {
-				dto = transactionWrapper.execute(saveEntityDto, dto);
-				result = PushResult.OK;
-
-				Map<PushResult, String> map = new EnumMap<>(PushResult.class);
-				map.put(result, StringUtils.EMPTY);
-				results.put(dto.toString(), map);
+				transactionWrapper.execute(saveEntityDto, dto);
+				// save a few bytes by setting only the status code
+				results.add(new PushResponse(HttpStatus.SC_OK, null));
 			} catch (Exception e) {
-				String errorMessage = createErrorMessage(dto);
-				errorMessage += e.getMessage();
-				result = getPushResultError(e, errorMessage);
-				Map<PushResult, String> map = new EnumMap<>(PushResult.class);
-				map.put(result, errorMessage + (isNull(e.getMessage()) ? " - " + e.getCause() : ""));
-				results.put(dto.toString(), map);
+				results.add(getPushResultError(e));
 			}
 		}
-		return results;
-	}
 
-	private PushResult getPushResultError(Exception e, String errorMessage) {
-		PushResult result;
-		if (e instanceof OutdatedEntityException || ExceptionUtils.getRootCause(e) instanceof OutdatedEntityException) {
-			logger.warn(errorMessage, e);
-			result = PushResult.TOO_OLD;
-		} else if (e instanceof ValidationException || ExceptionUtils.getRootCause(e) instanceof ValidationException) {
-			logger.error(errorMessage, e);
-			result = PushResult.VALIDATION_EXCEPTION;
-		} else if (e instanceof javax.ejb.EJBTransactionRolledbackException
-			|| ExceptionUtils.getRootCause(e) instanceof javax.ejb.EJBTransactionRolledbackException) {
-			logger.error(errorMessage, e);
-			result = PushResult.TRANSACTION_ROLLED_BACK_EXCEPTION;
+		if (dtos.size() == 1) {
+			return Response.status(results.get(0).getStatusCode()).entity(results).build();
 		} else {
-			logger.error(errorMessage, e);
-			result = PushResult.ERROR;
-		}
-		return result;
-	}
-
-	protected <T> String createErrorMessage(T dto) {
-
-		final EntityDto entityDto = (EntityDto) dto;
-		if (entityDto.getChangeDate() == null) {
-			return dto.getClass().getSimpleName() + " " + entityDto.getUuid() + "\n";
-		} else {
-			return dto.getClass().getSimpleName() + " " + entityDto.getUuid() + " "
-				+ DateFormat.getDateTimeInstance().format(entityDto.getChangeDate()) + "\n";
+			return Response.status(HttpStatus.SC_MULTI_STATUS).entity(results).build();
 		}
 	}
+
+	private PushResponse getPushResultError(Exception e) {
+
+		logger.warn("{}", e.getMessage());
+
+		final ExceptionMapper<Exception> exceptionMapper = (ExceptionMapper<Exception>) providers.getExceptionMapper(e.getClass());
+		if (exceptionMapper != null) {
+			try (Response response = exceptionMapper.toResponse(e)) {
+				return new PushResponse(response.getStatus(), response.getEntity());
+			}
+		}
+		return new PushResponse(HttpStatus.SC_UNPROCESSABLE_ENTITY, "The entity could not be processed.");
+	}
+
 }

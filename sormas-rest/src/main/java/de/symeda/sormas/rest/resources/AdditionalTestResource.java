@@ -29,9 +29,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.sample.AdditionalTestCriteria;
@@ -67,9 +67,8 @@ public class AdditionalTestResource extends EntityDtoResource {
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postAdditionalTests(@Valid List<AdditionalTestDto> dtos) {
-		List<PushResult> result = savePushedDto(dtos, FacadeProvider.getAdditionalTestFacade()::saveAdditionalTest);
-		return result;
+	public Response postAdditionalTests(@Valid List<AdditionalTestDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getAdditionalTestFacade()::saveAdditionalTest);
 	}
 
 	@GET

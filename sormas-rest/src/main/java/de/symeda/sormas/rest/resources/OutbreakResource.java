@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * SORMAS® - Surveillance Outbreak Response Management & Analysis System
  * Copyright © 2016-2018 Helmholtz-Zentrum für Infektionsforschung GmbH (HZI)
  *
@@ -14,7 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
- *******************************************************************************/
+*/
+
 package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
@@ -28,9 +29,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.outbreak.OutbreakCriteria;
@@ -79,8 +80,7 @@ public class OutbreakResource extends EntityDtoResource {
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postOutbreak(@Valid List<OutbreakDto> dtos) {
-		return savePushedDto(dtos, FacadeProvider.getOutbreakFacade()::saveOutbreak);
+	public Response postOutbreak(@Valid List<OutbreakDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getOutbreakFacade()::saveOutbreak);
 	}
-
 }

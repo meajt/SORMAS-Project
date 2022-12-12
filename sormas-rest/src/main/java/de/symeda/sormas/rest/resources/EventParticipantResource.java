@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * SORMAS® - Surveillance Outbreak Response Management & Analysis System
- * Copyright © 2016-2018 Helmholtz-Zentrum für Infektionsforschung GmbH (HZI)
+ * Copyright © 2016-2022 Helmholtz-Zentrum für Infektionsforschung GmbH (HZI)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
- *******************************************************************************/
+*/
+
 package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
@@ -29,9 +30,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.event.EventParticipantCriteria;
@@ -54,8 +55,7 @@ public class EventParticipantResource extends EntityDtoResource {
 	@GET
 	@Path("/all/{since}")
 	public List<EventParticipantDto> getAllEventParticipantsAfter(@PathParam("since") long since) {
-		List<EventParticipantDto> result = FacadeProvider.getEventParticipantFacade().getAllAfter(new Date(since));
-		return result;
+		return FacadeProvider.getEventParticipantFacade().getAllAfter(new Date(since));
 	}
 
 	@GET
@@ -64,8 +64,7 @@ public class EventParticipantResource extends EntityDtoResource {
 		@PathParam("since") long since,
 		@PathParam("size") int size,
 		@PathParam("lastSynchronizedUuid") String lastSynchronizedUuid) {
-		List<EventParticipantDto> result = FacadeProvider.getEventParticipantFacade().getAllAfter(new Date(since), size, lastSynchronizedUuid);
-		return result;
+		return FacadeProvider.getEventParticipantFacade().getAllAfter(new Date(since), size, lastSynchronizedUuid);
 	}
 
 	@GET
@@ -77,15 +76,13 @@ public class EventParticipantResource extends EntityDtoResource {
 	@POST
 	@Path("/query")
 	public List<EventParticipantDto> getByUuids(List<String> uuids) {
-		List<EventParticipantDto> result = FacadeProvider.getEventParticipantFacade().getByUuids(uuids);
-		return result;
+		return FacadeProvider.getEventParticipantFacade().getByUuids(uuids);
 	}
 
 	@POST
 	@Path("/query/events")
 	public List<EventParticipantDto> getByEventUuids(List<String> uuids) {
-		List<EventParticipantDto> result = FacadeProvider.getEventParticipantFacade().getByEventUuids(uuids);
-		return result;
+		return FacadeProvider.getEventParticipantFacade().getByEventUuids(uuids);
 	}
 
 	@POST
@@ -96,10 +93,8 @@ public class EventParticipantResource extends EntityDtoResource {
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postEventParticipants(@Valid List<EventParticipantDto> dtos) {
-
-		List<PushResult> result = savePushedDto(dtos, FacadeProvider.getEventParticipantFacade()::save);
-		return result;
+	public Response postEventParticipants(@Valid List<EventParticipantDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getEventParticipantFacade()::save);
 	}
 
 	@GET

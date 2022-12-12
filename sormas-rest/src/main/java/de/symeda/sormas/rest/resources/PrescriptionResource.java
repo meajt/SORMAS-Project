@@ -28,9 +28,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.therapy.PrescriptionCriteria;
 import de.symeda.sormas.api.therapy.PrescriptionDto;
@@ -59,8 +59,8 @@ public class PrescriptionResource extends EntityDtoResource {
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postPrescriptions(@Valid List<PrescriptionDto> dtos) {
-		return savePushedDto(dtos, FacadeProvider.getPrescriptionFacade()::savePrescription);
+	public Response postPrescriptions(@Valid List<PrescriptionDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getPrescriptionFacade()::savePrescription);
 	}
 
 	@GET

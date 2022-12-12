@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * SORMAS® - Surveillance Outbreak Response Management & Analysis System
- * Copyright © 2016-2018 Helmholtz-Zentrum für Infektionsforschung GmbH (HZI)
+ * Copyright © 2016-2022 Helmholtz-Zentrum für Infektionsforschung GmbH (HZI)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
- *******************************************************************************/
+*/
+
 package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
@@ -29,9 +30,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.clinicalcourse.ClinicalVisitCriteria;
 import de.symeda.sormas.api.clinicalcourse.ClinicalVisitDto;
@@ -59,17 +60,13 @@ public class ClinicalVisitResource extends EntityDtoResource {
 	@POST
 	@Path("/query")
 	public List<ClinicalVisitDto> getByUuids(List<String> uuids) {
-
-		List<ClinicalVisitDto> result = FacadeProvider.getClinicalVisitFacade().getByUuids(uuids);
-		return result;
+		return FacadeProvider.getClinicalVisitFacade().getByUuids(uuids);
 	}
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postVisits(@Valid List<ClinicalVisitDto> dtos) {
-
-		List<PushResult> result = savePushedDto(dtos, FacadeProvider.getClinicalVisitFacade()::saveClinicalVisit);
-		return result;
+	public Response postVisits(@Valid List<ClinicalVisitDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getClinicalVisitFacade()::saveClinicalVisit);
 	}
 
 	@GET

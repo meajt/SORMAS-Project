@@ -8,9 +8,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.PushResult;
 import de.symeda.sormas.api.caze.surveillancereport.SurveillanceReportDto;
 import de.symeda.sormas.rest.resources.EntityDtoResource;
 
@@ -22,13 +22,12 @@ public class SurveillanceReportResource extends EntityDtoResource {
 	@POST
 	@Path("/query/cases")
 	public List<SurveillanceReportDto> getByCaseUuids(List<String> uuids) {
-		List<SurveillanceReportDto> result = FacadeProvider.getSurveillanceReportFacade().getByCaseUuids(uuids);
-		return result;
+		return FacadeProvider.getSurveillanceReportFacade().getByCaseUuids(uuids);
 	}
 
 	@POST
 	@Path("/push")
-	public List<PushResult> postCaseReports(@Valid List<SurveillanceReportDto> dtos) {
-		return savePushedDto(dtos, FacadeProvider.getSurveillanceReportFacade()::saveSurveillanceReport);
+	public Response postCaseReports(@Valid List<SurveillanceReportDto> dtos) {
+		return savePushedDtosNonAtomic(dtos, FacadeProvider.getSurveillanceReportFacade()::saveSurveillanceReport);
 	}
 }
