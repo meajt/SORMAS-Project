@@ -17,8 +17,8 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,7 +27,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
@@ -35,7 +34,7 @@ import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.task.TaskCriteria;
 import de.symeda.sormas.api.task.TaskDto;
 import de.symeda.sormas.api.task.TaskIndexDto;
-import de.symeda.sormas.rest.resources.EntityDtoResource;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
@@ -49,7 +48,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @Path("/tasks")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class TaskResource extends EntityDtoResource {
+public class TaskResource extends EntityDtoResource<TaskDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -70,12 +69,6 @@ public class TaskResource extends EntityDtoResource {
 	@Path("/query")
 	public List<TaskDto> getByUuids(List<String> uuids) {
 		return FacadeProvider.getTaskFacade().getByUuids(uuids);
-	}
-
-	@POST
-	@Path("/push")
-	public Response postTasks(@Valid List<TaskDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getTaskFacade()::saveTask);
 	}
 
 	@GET
@@ -115,5 +108,10 @@ public class TaskResource extends EntityDtoResource {
 	@Path("/delete")
 	public List<String> delete(List<String> uuids) {
 		return FacadeProvider.getTaskFacade().deleteTasks(uuids);
+	}
+
+	@Override
+	public UnaryOperator<TaskDto> getSave() {
+		return FacadeProvider.getTaskFacade()::saveTask;
 	}
 }

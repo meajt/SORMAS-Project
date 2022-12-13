@@ -17,8 +17,8 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,7 +27,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
@@ -35,6 +34,7 @@ import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.visit.VisitCriteria;
 import de.symeda.sormas.api.visit.VisitDto;
 import de.symeda.sormas.api.visit.VisitIndexDto;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
@@ -48,7 +48,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @Path("/visits")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class VisitResource extends EntityDtoResource {
+public class VisitResource extends EntityDtoResource<VisitDto> {
 
 	/**
 	 * Attention: For now this only returns the visits of contacts, since case visits are not yet implemented in the mobile app
@@ -75,12 +75,6 @@ public class VisitResource extends EntityDtoResource {
 		return FacadeProvider.getVisitFacade().getByUuids(uuids);
 	}
 
-	@POST
-	@Path("/push")
-	public Response postVisits(@Valid List<VisitDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getVisitFacade()::saveVisit);
-	}
-
 	@GET
 	@Path("/uuids")
 	public List<String> getAllActiveUuids() {
@@ -96,4 +90,8 @@ public class VisitResource extends EntityDtoResource {
 		return FacadeProvider.getVisitFacade().getIndexPage(criteriaWithSorting.getCriteria(), offset, size, criteriaWithSorting.getSortProperties());
 	}
 
+	@Override
+	public UnaryOperator<VisitDto> getSave() {
+		return FacadeProvider.getVisitFacade()::saveVisit;
+	}
 }

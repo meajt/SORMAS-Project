@@ -17,22 +17,22 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.campaign.data.CampaignFormDataDto;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 
 @Path("/campaignFormData")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class CampaignFormDataResource extends EntityDtoResource {
+public class CampaignFormDataResource extends EntityDtoResource<CampaignFormDataDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -46,15 +46,14 @@ public class CampaignFormDataResource extends EntityDtoResource {
 		return FacadeProvider.getCampaignFormDataFacade().getByUuids(uuids);
 	}
 
-	@POST
-	@Path("/push")
-	public Response postCampaignFormData(@Valid List<CampaignFormDataDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getCampaignFormDataFacade()::saveCampaignFormData);
-	}
-
 	@GET
 	@Path("/uuids")
 	public List<String> getAllUuids() {
 		return FacadeProvider.getCampaignFormDataFacade().getAllActiveUuids();
+	}
+
+	@Override
+	public UnaryOperator<CampaignFormDataDto> getSave() {
+		return FacadeProvider.getCampaignFormDataFacade()::saveCampaignFormData;
 	}
 }

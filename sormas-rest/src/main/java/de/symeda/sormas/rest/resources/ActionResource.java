@@ -17,8 +17,8 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,7 +27,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.action.ActionCriteria;
@@ -36,6 +35,7 @@ import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.event.EventActionIndexDto;
 import de.symeda.sormas.api.event.EventCriteria;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
@@ -49,7 +49,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @Path("/actions")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class ActionResource extends EntityDtoResource {
+public class ActionResource extends EntityDtoResource<ActionDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -61,12 +61,6 @@ public class ActionResource extends EntityDtoResource {
 	@Path("/query")
 	public List<ActionDto> getByUuids(List<String> uuids) {
 		return FacadeProvider.getActionFacade().getByUuids(uuids);
-	}
-
-	@POST
-	@Path("/push")
-	public Response postActions(@Valid List<ActionDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getActionFacade()::saveAction);
 	}
 
 	@GET
@@ -95,4 +89,8 @@ public class ActionResource extends EntityDtoResource {
 			.getActionPage(criteriaWithSorting.getCriteria(), offset, size, criteriaWithSorting.getSortProperties());
 	}
 
+	@Override
+	public UnaryOperator<ActionDto> getSave() {
+		return FacadeProvider.getActionFacade()::saveAction;
+	}
 }

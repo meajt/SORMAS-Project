@@ -16,6 +16,7 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -40,6 +41,7 @@ import de.symeda.sormas.api.contact.ContactIndexDetailedDto;
 import de.symeda.sormas.api.contact.ContactIndexDto;
 import de.symeda.sormas.api.externaldata.ExternalDataDto;
 import de.symeda.sormas.api.externaldata.ExternalDataUpdateException;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
@@ -53,7 +55,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @Path("/contacts")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class ContactResource extends EntityDtoResource {
+public class ContactResource extends EntityDtoResource<ContactDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -80,12 +82,6 @@ public class ContactResource extends EntityDtoResource {
 	@Path("/query/persons")
 	public List<ContactDto> getByPersonUuids(List<String> uuids) {
 		return FacadeProvider.getContactFacade().getByPersonUuids(uuids);
-	}
-
-	@POST
-	@Path("/push")
-	public Response postContacts(@Valid List<ContactDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getContactFacade()::save);
 	}
 
 	@POST
@@ -162,4 +158,8 @@ public class ContactResource extends EntityDtoResource {
 		return FacadeProvider.getContactFacade().getByUuid(uuid);
 	}
 
+	@Override
+	public UnaryOperator<ContactDto> getSave() {
+		return FacadeProvider.getContactFacade()::save;
+	}
 }

@@ -17,8 +17,8 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,19 +27,19 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.caze.CriteriaWithSorting;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.sample.PathogenTestCriteria;
 import de.symeda.sormas.api.sample.PathogenTestDto;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @Path("/pathogentests")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class PathogenTestResource extends EntityDtoResource {
+public class PathogenTestResource extends EntityDtoResource<PathogenTestDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -68,12 +68,6 @@ public class PathogenTestResource extends EntityDtoResource {
 		return FacadeProvider.getPathogenTestFacade().getBySampleUuids(sampleUuids);
 	}
 
-	@POST
-	@Path("/push")
-	public Response postPathogenTests(@Valid List<PathogenTestDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getPathogenTestFacade()::savePathogenTest);
-	}
-
 	@GET
 	@Path("/uuids")
 	public List<String> getAllActiveUuids() {
@@ -94,5 +88,10 @@ public class PathogenTestResource extends EntityDtoResource {
 		@QueryParam("size") int size) {
 		return FacadeProvider.getPathogenTestFacade()
 			.getIndexPage(criteriaWithSorting.getCriteria(), offset, size, criteriaWithSorting.getSortProperties());
+	}
+
+	@Override
+	public UnaryOperator<PathogenTestDto> getSave() {
+		return FacadeProvider.getPathogenTestFacade()::savePathogenTest;
 	}
 }

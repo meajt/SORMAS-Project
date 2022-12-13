@@ -17,6 +17,7 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -28,6 +29,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
+import org.apache.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -48,12 +52,11 @@ import de.symeda.sormas.api.externaldata.ExternalDataDto;
 import de.symeda.sormas.api.externaldata.ExternalDataUpdateException;
 import de.symeda.sormas.api.utils.Experimental;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import org.apache.http.HttpStatus;
 
 @Path("/cases")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class CaseResource extends EntityDtoResource {
+public class CaseResource extends EntityDtoResource<CaseDataDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -80,12 +83,6 @@ public class CaseResource extends EntityDtoResource {
 	@Path("/query/persons")
 	public List<CaseDataDto> getByPersonUuids(List<String> uuids) {
 		return FacadeProvider.getCaseFacade().getByPersonUuids(uuids);
-	}
-
-	@POST
-	@Path("/push")
-	public Response postCases(@Valid List<CaseDataDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getCaseFacade()::save);
 	}
 
 	@POST
@@ -223,4 +220,8 @@ public class CaseResource extends EntityDtoResource {
 		return FacadeProvider.getCaseFacade().getUuidByUuidEpidNumberOrExternalId(searchTerm, caseCriteria);
 	}
 
+	@Override
+	public UnaryOperator<CaseDataDto> getSave() {
+		return FacadeProvider.getCaseFacade()::save;
+	}
 }

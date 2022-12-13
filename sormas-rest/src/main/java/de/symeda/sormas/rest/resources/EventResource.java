@@ -17,8 +17,8 @@ package de.symeda.sormas.rest.resources;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,12 +39,13 @@ import de.symeda.sormas.api.event.EventDto;
 import de.symeda.sormas.api.event.EventIndexDto;
 import de.symeda.sormas.api.externaldata.ExternalDataDto;
 import de.symeda.sormas.api.externaldata.ExternalDataUpdateException;
+import de.symeda.sormas.rest.resources.base.EntityDtoResource;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @Path("/events")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class EventResource extends EntityDtoResource {
+public class EventResource extends EntityDtoResource<EventDto> {
 
 	@GET
 	@Path("/all/{since}")
@@ -79,12 +80,6 @@ public class EventResource extends EntityDtoResource {
 	@Path("/query")
 	public List<EventDto> getByUuids(List<String> uuids) {
 		return FacadeProvider.getEventFacade().getByUuids(uuids);
-	}
-
-	@POST
-	@Path("/push")
-	public Response postEvents(@Valid List<EventDto> dtos) {
-		return savePushedDtosNonAtomic(dtos, FacadeProvider.getEventFacade()::save);
 	}
 
 	@GET
@@ -155,5 +150,10 @@ public class EventResource extends EntityDtoResource {
 	@Path("/specificEvent/{searchTerm}")
 	public String getSpecificCase(@PathParam("searchTerm") String searchTerm) {
 		return FacadeProvider.getEventFacade().getUuidByCaseUuidOrPersonUuid(searchTerm);
+	}
+
+	@Override
+	public UnaryOperator<EventDto> getSave() {
+		return FacadeProvider.getEventFacade()::save;
 	}
 }

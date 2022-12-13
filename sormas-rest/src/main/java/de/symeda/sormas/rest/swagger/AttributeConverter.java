@@ -31,7 +31,7 @@ public class AttributeConverter extends ModelResolver {
     @Override
     protected void applyBeanValidatorAnnotations(Schema property, Annotation[] annotations, Schema parent) {
         super.applyBeanValidatorAnnotations(property, annotations, parent);
-        Map<String, Annotation> annos = new HashMap<String, Annotation>();
+		Map<String, Annotation> annos = new HashMap<>();
         if (annotations != null) {
             for (Annotation anno : annotations) {
                 annos.put(anno.annotationType().getName(), anno);
