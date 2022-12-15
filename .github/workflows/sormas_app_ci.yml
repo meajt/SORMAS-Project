@@ -1,11 +1,16 @@
+---
 # This workflow will test the sormas-app project with Gradle and running the AVD emulator
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle and https://github.com/ReactiveCircus/android-emulator-runner
+# For more information see:
+# https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+# and https://github.com/ReactiveCircus/android-emulator-runner
 
 name: Java CI with Gradle
 
 env:
   JAVA: 11
-  PRIVILEGED_RUN: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/development') || github.event.pull_request.head.repo.full_name == github.repository }}
+  PRIVILEGED_RUN: | 
+    ${{ (github.event_name == 'push' && github.ref == 'refs/heads/development') \ 
+    || github.event.pull_request.head.repo.full_name == github.repository }}
 
 on:
   push:
@@ -25,8 +30,10 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        # Even though we are using macos machines which should be faster thanks to hardware accelerations (explanation here https://github.com/ReactiveCircus/android-emulator-runner/issues/46)
-        # The memory footprint of newer android versions (>= 29) and the limitations of the GitHub provided machines is usually resulting in timeout when starting the emulator
+        # Even though we are using macos machines which should be faster thanks to hardware accelerations
+        # (explanation here https://github.com/ReactiveCircus/android-emulator-runner/issues/46)
+        # The memory footprint of newer android versions (>= 29) and the limitations of the GitHub provided machines
+        # is usually resulting in timeout when starting the emulator
         api-level: [26, 27, 28]
 
     steps:
@@ -109,7 +116,8 @@ jobs:
         with:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim \ 
+           -camera-back none
           disable-animations: true
           working-directory: ./sormas-app
           script: ./gradlew connectedAndroidTest
