@@ -1,12 +1,15 @@
 ---
 # This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+# For more information see:
+# https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven # yamllint disable-line
 
 name: Java CI with Maven
 
 env:
   JAVA: 11
-  PRIVILEGED_RUN: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/development') || github.event.pull_request.head.repo.full_name == github.repository }}
+  PRIVILEGED_RUN: |
+    ${{ (github.event_name == 'push' && github.ref == 'refs/heads/development') \
+    || github.event.pull_request.head.repo.full_name == github.repository }}
   CODEQL_LANGUAGES: 'java' # FIXME(@JonasCir) add 'javascript'
 on:
   push:
@@ -35,8 +38,8 @@ jobs:
 
       - name: Checkout repository (without token)
         # Check if PR results from a fork: if yes, we cannot access the token.
-        # The token is only needed for privileged actions from within the repo, so no need
-        # to make it available on 3rd party PRs
+        # The token is only needed for privileged actions from within the
+        # repo, so no need to make it available on 3rd party PRs
         if: ${{ !fromJSON(env.PRIVILEGED_RUN) }}
         uses: actions/checkout@v3
 
