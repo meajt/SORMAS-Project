@@ -57,6 +57,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA }}
+          distribution: 'zulu'
 
       - name: Cache Maven packages
         # Check if PR results from the repository: if yes, it is safe to cache dependencies.
