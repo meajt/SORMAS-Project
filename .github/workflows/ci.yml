@@ -1,7 +1,7 @@
 ---
 # This workflow will build a Java project with Maven
 # For more information see:
-# https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven # yamllint disable-line
+# https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
 name: Java CI with Maven
 
@@ -75,7 +75,8 @@ jobs:
       - name: Commit external visits API spec to development
         # Privileged action needing a secret token. Since this only runs on development in our own repo
         # the token will be available through a privileged checkout.
-        if: github.event_name == 'push' && github.ref == 'refs/heads/development' && hashFiles('sormas-rest/target/external_visits_API.yaml') != hashFiles('openapi/external_visits_API.yaml')
+        if: github.event_name == 'push' && github.ref == 'refs/heads/development' 
+         && hashFiles('sormas-rest/target/external_visits_API.yaml') != hashFiles('openapi/external_visits_API.yaml')
         # https://stackoverflow.com/questions/59604922/authorize-bash-to-access-github-protected-branch
         run: |
             git config --global user.name "sormas-vitagroup"
