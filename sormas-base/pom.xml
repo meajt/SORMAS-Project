@@ -832,14 +832,14 @@
 				<scope>test</scope>
 			</dependency>
 
-			<dependency>
+			<!--<dependency>
 				<groupId>info.novatec</groupId>
 				<artifactId>bean-test</artifactId>
 				<version>0.2.Final_Local</version>
 				<scope>system</scope>
 				<systemPath>${project.basedir}/../sormas-base/dependencies/bean-test-0.2.Final.jar</systemPath>
-				<!-- Changed scope "test" to "system" as workaround for currently no publicly available maven artifact -->
-			</dependency>
+				&lt;!&ndash; Changed scope "test" to "system" as workaround for currently no publicly available maven artifact &ndash;&gt;
+			</dependency>-->
 			<dependency>
 				<groupId>org.jboss.weld.se</groupId>
 				<artifactId>weld-se</artifactId>
