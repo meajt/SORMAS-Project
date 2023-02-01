@@ -18,6 +18,8 @@ package de.symeda.sormas.app.caze.edit;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -238,7 +240,13 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
 
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		contentBinding.personBirthdateYYYY.setSelectionOnOpen(year - 35);
-
+		contentBinding.personAge.addValueChangedListener(e ->{
+			Log.d(getClass().getSimpleName(), "change age unit "+e.getValue());
+		});
+		contentBinding.personAgeUnit.initializeSpinner(List.of(new Item<String>("Year", "Year"), new Item<String>("Month", "Month"), new Item<String>("Day", "Day")));
+		contentBinding.personAgeUnit.addValueChangedListener(e -> {
+			Log.d(getClass().getSimpleName(), "change age unit "+e.getValue());
+		});
 		contentBinding.personSex.initializeSpinner(sexList);
 
 		contentBinding.personPresentCondition.initializeSpinner(presentConditionList);

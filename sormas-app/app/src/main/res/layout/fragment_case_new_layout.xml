@@ -338,6 +338,34 @@
                     app:value="@={data.person.birthdateDD}" />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/person_ageLabel"
+                style="@style/ControlLabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/caption_age" />
+            <LinearLayout
+                android:id="@+id/age_fields_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.symeda.sormas.app.component.controls.ControlTextEditField
+                    android:id="@+id/person_age"
+                    style="@style/ControlFirstOfTwoColumnsStyle"
+                    app:hint="@string/caption_age"
+                    app:showCaption="false"
+                    app:inputType="number"
+                    app:value="@{data.person.age}" />
+
+                <de.symeda.sormas.app.component.controls.ControlSpinnerField
+                    android:id="@+id/person_ageUnit"
+                    style="@style/ControlSecondOfTwoColumnsStyle"
+                    app:hint="@string/hint_select_time_unit"
+                    app:showCaption="false"
+                    app:value="@={data.person.ageUnit}" />
+
+            </LinearLayout>
 
             <de.symeda.sormas.app.component.controls.ControlSpinnerField
                 android:id="@+id/person_sex"

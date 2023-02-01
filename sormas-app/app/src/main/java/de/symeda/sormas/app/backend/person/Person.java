@@ -33,6 +33,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 import de.symeda.sormas.api.Disease;
@@ -103,6 +104,12 @@ public class Person extends PseudonymizableAdo {
 	private Integer birthdateMM;
 	@Column
 	private Integer birthdateYYYY;
+
+	@Transient
+	private Integer age;
+
+	@Transient
+	private String ageUnit;
 	@Column
 	private Integer approximateAge;
 	@Enumerated(EnumType.STRING)
@@ -277,6 +284,22 @@ public class Person extends PseudonymizableAdo {
 
 	public void setBirthdateYYYY(Integer birthdateYYYY) {
 		this.birthdateYYYY = birthdateYYYY;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public String getAgeUnit() {
+		return ageUnit;
+	}
+
+	public void setAgeUnit(String ageUnit) {
+		this.ageUnit = ageUnit;
 	}
 
 	@Bindable
