@@ -251,9 +251,16 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
                 .collect(Collectors.toList());
         contentBinding.personAgeUnit.initializeSpinner(ageUnitList);
         contentBinding.personAge.addValueChangedListener(e -> {
-
+            int age = 0;
+            try {
+                age = Integer.parseInt((String) e.getValue());
+            }catch (NumberFormatException ne)
+            {
+            }
+            setPersonDateOfBirth(age, record.getPerson().getAgeUnit());
         });
         contentBinding.personAgeUnit.addValueChangedListener(e -> {
+            setPersonDateOfBirth(record.getPerson().getAge(),(TimeUnit) e.getValue());
         });
         contentBinding.personSex.initializeSpinner(sexList);
 
@@ -277,6 +284,29 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
         });
     }
 
+    private void setPersonDateOfBirth(Integer ageValue, TimeUnit timeUnit) {
+        Person person = record.getPerson();
+        if (ageValue != null && ageValue != 0) {
+            LocalDate localDate = DateHelper.minusTimeFromCurrentDate(ageValue, timeUnit);
+            person.setBirthdateYYYY(localDate.getYear());
+            person.setBirthdateMM(localDate.getMonthValue());
+            person.setBirthdateDD(localDate.getDayOfMonth());
+            person.setAge(ageValue);
+            person.setAgeUnit(timeUnit);
+            Log.d(TAG, "@setPersonDateOfBirth ageValue="+ageValue+" localDate="+localDate);
+
+        } else {
+            resetPersonAge(person);
+        }
+        Log.d(TAG, "@setPersonDateOfBirth "+person.getBirthdateYYYY()+" "+person.getBirthdateMM()+" "+person.getBirthdateDD());
+    }
+
+    private void resetPersonAge(Person person) {
+        person.setBirthdateYYYY(null);
+        person.setBirthdateMM(null);
+        person.setBirthdateDD(null);
+        person.setAge(null);
+    }
 
 
     @Override

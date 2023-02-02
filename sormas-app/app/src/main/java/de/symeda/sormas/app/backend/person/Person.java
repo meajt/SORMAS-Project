@@ -33,7 +33,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 import de.symeda.sormas.api.Disease;
@@ -49,6 +48,7 @@ import de.symeda.sormas.api.person.OccupationType;
 import de.symeda.sormas.api.person.PresentCondition;
 import de.symeda.sormas.api.person.Salutation;
 import de.symeda.sormas.api.person.Sex;
+import de.symeda.sormas.api.person.TimeUnit;
 import de.symeda.sormas.app.backend.common.DatabaseHelper;
 import de.symeda.sormas.app.backend.common.PseudonymizableAdo;
 import de.symeda.sormas.app.backend.facility.Facility;
@@ -109,7 +109,7 @@ public class Person extends PseudonymizableAdo {
 	private Integer age;
 
 	@Transient
-	private String ageUnit;
+	private TimeUnit timeUnit;
 	@Column
 	private Integer approximateAge;
 	@Enumerated(EnumType.STRING)
@@ -294,12 +294,12 @@ public class Person extends PseudonymizableAdo {
 		this.age = age;
 	}
 
-	public String getAgeUnit() {
-		return ageUnit;
+	public TimeUnit getAgeUnit() {
+		return timeUnit;
 	}
 
-	public void setAgeUnit(String ageUnit) {
-		this.ageUnit = ageUnit;
+	public void setAgeUnit(TimeUnit timeUnit) {
+		this.timeUnit = timeUnit;
 	}
 
 	@Bindable
