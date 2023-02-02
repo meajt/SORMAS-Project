@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.symeda.sormas.api.person.TimeUnit;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -1140,6 +1141,18 @@ public final class DateHelper {
 
 	public static boolean isStartDateBeforeEndDate(Date startDate, Date endDate) {
 		return startDate != null && endDate != null && endDate.before(startDate);
+	}
+
+	public static LocalDate minusTimeFromCurrentDate(int value, TimeUnit timeUnit) {
+		LocalDate localDate = LocalDate.now();
+		if (timeUnit == null || timeUnit == TimeUnit.YEAR)
+			localDate = localDate.minusYears(value);
+		else if (timeUnit == TimeUnit.MONTH) {
+			localDate = localDate.minusMonths(value);
+		} else {
+			localDate = localDate.minusDays(value);
+		}
+		return localDate;
 	}
 
 	public static class ParsedDateFormat {
