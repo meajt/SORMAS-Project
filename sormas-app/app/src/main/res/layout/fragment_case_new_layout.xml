@@ -363,7 +363,7 @@
                     style="@style/ControlSecondOfTwoColumnsStyle"
                     app:hint="@string/hint_select_time_unit"
                     app:showCaption="false"
-                    app:value="@={data.person.ageUnit}" />
+                     />
 
             </LinearLayout>
 
