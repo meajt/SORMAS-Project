@@ -286,19 +286,25 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
 
     private void setPersonDateOfBirth(Integer ageValue, TimeUnit timeUnit) {
         Person person = record.getPerson();
-        if (ageValue != null && ageValue != 0) {
-            LocalDate localDate = DateHelper.minusTimeFromCurrentDate(ageValue, timeUnit);
-            person.setBirthdateYYYY(localDate.getYear());
-            person.setBirthdateMM(localDate.getMonthValue());
-            person.setBirthdateDD(localDate.getDayOfMonth());
-            person.setAge(ageValue);
+        try {
             person.setAgeUnit(timeUnit);
-            Log.d(TAG, "@setPersonDateOfBirth ageValue="+ageValue+" localDate="+localDate);
+            if (ageValue != null && ageValue != 0) {
+                LocalDate localDate = DateHelper.minusTimeFromCurrentDate(ageValue, timeUnit);
+                person.setBirthdateYYYY(localDate.getYear());
+                person.setBirthdateMM(localDate.getMonthValue());
+                person.setBirthdateDD(localDate.getDayOfMonth());
+                person.setAge(ageValue);
+                person.setAgeUnit(timeUnit);
+                Log.d(TAG, "@setPersonDateOfBirth ageValue=" + ageValue + " localDate=" + localDate);
 
-        } else {
-            resetPersonAge(person);
+            } else {
+                resetPersonAge(person);
+            }
+            Log.d(TAG, "@setPersonDateOfBirth " + person.getBirthdateYYYY() + " " + person.getBirthdateMM() + " " + person.getBirthdateDD());
+        }catch (Exception exe)
+        {
+            exe.printStackTrace();
         }
-        Log.d(TAG, "@setPersonDateOfBirth "+person.getBirthdateYYYY()+" "+person.getBirthdateMM()+" "+person.getBirthdateDD());
     }
 
     private void resetPersonAge(Person person) {
