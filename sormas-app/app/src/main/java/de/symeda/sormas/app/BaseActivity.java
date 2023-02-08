@@ -114,7 +114,7 @@ public abstract class BaseActivity extends BaseLocalizedActivity implements Noti
 	}
 
 	public boolean isAccessNeeded() {
-		return true;
+		return BuildConfig.IS_VALID_PIN;
 	}
 
 	private static WeakReference<BaseActivity> activeActivity;

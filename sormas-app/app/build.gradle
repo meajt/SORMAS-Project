@@ -33,6 +33,7 @@ android {
     }
     buildTypes {
         debug {
+            signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -54,6 +55,15 @@ android {
         exclude 'META-INF/spring.*'
     }
     productFlavors {
+        dev {
+            buildConfigField 'String', 'BASE_URL', '"https://192.168.13.80/sormas-rest"'
+            buildConfigField 'Boolean', 'IS_VALID_PIN', 'false'
+        }
+
+          prd { 
+              buildConfigField 'String', 'BASE_URL', '"https://sormasnepal.org/sormas-rest"'
+              buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
+          }
     }
 
     lintOptions {
@@ -74,6 +84,7 @@ android {
     useLibrary 'android.test.runner'
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'
+    flavorDimensions 'dev'
 }
 
 repositories {
