@@ -330,9 +330,9 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
             contentBinding.caseDataEpidNumber.setVisibility(GONE);
         }
 
-        contentBinding.caseDataResponsibleRegion.setEnabled(false);
+        contentBinding.caseDataResponsibleRegion.setEnabled(true);
         contentBinding.caseDataResponsibleRegion.setRequired(false);
-        contentBinding.caseDataResponsibleDistrict.setEnabled(false);
+        contentBinding.caseDataResponsibleDistrict.setEnabled(true);
         contentBinding.caseDataResponsibleDistrict.setRequired(false);
 
         User user = ConfigProvider.getUser();
