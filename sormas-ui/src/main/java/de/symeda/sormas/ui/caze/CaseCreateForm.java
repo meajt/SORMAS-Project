@@ -127,6 +127,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
         + fluidRowLocs(CaseDataDto.DISEASE_VARIANT, CaseDataDto.DISEASE_VARIANT_DETAILS)
         + fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC)
         + fluidRowLocs(CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY)
+		+fluidRowLocs(CaseDataDto.RESPONSIBLE_WARD_NO, "")
         + fluidRowLocs(CaseDataDto.DONT_SHARE_WITH_REPORTING_TOOL)
         + fluidRowLocs(DONT_SHARE_WARNING_LOC)
         + fluidRowLocs(DIFFERENT_PLACE_OF_STAY_JURISDICTION)
@@ -222,9 +223,9 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		responsibleCommunityCombo = addInfrastructureField(CaseDataDto.RESPONSIBLE_COMMUNITY);
 		responsibleCommunityCombo.setNullSelectionAllowed(true);
 		responsibleCommunityCombo.addStyleName(SOFT_REQUIRED);
-
+		TextField wardNo = addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
+		style(wardNo, ERROR_COLOR_PRIMARY);
 		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegion, responsibleDistrictCombo, responsibleCommunityCombo);
-
 		differentPointOfEntryJurisdiction = addCustomField(DIFFERENT_POINT_OF_ENTRY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPointOfEntryJurisdiction.addStyleName(VSPACE_3);
 

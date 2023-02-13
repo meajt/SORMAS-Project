@@ -116,6 +116,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String RESPONSIBLE_REGION = "responsibleRegion";
 	public static final String RESPONSIBLE_DISTRICT = "responsibleDistrict";
 	public static final String RESPONSIBLE_COMMUNITY = "responsibleCommunity";
+	public static final String RESPONSIBLE_WARD_NO = "responsibleWardNo";
 	public static final String REGION = "region";
 	public static final String DISTRICT = "district";
 	public static final String COMMUNITY = "community";
@@ -322,6 +323,13 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@PersonalData
 	@SensitiveData
 	private CommunityReferenceDto responsibleCommunity;
+
+	@Outbreaks
+	@PersonalData
+	@SensitiveData
+	@Min(value = 1, message = Validations.numberTooSmall)
+	@Max(value = 50, message = Validations.numberTooBig)
+	private Integer responsibleWardNo;
 
 	@Outbreaks
 	@Required
@@ -1001,6 +1009,15 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public void setResponsibleCommunity(CommunityReferenceDto responsibleCommunity) {
 		this.responsibleCommunity = responsibleCommunity;
 	}
+
+	public Integer getResponsibleWardNo() {
+		return responsibleWardNo;
+	}
+
+	public void setResponsibleWardNo(Integer responsibleWardNo) {
+		this.responsibleWardNo = responsibleWardNo;
+	}
+
 
 	public RegionReferenceDto getRegion() {
 		return region;
