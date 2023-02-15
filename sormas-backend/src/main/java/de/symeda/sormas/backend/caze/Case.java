@@ -277,7 +277,7 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	private Region responsibleRegion;
 	private District responsibleDistrict;
 	private Community responsibleCommunity;
-
+	private Integer responsibleWardNo;
 	private Region region;
 	private District district;
 	private Community community;
@@ -753,6 +753,15 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 
 	public void setResponsibleCommunity(Community responsibleCommunity) {
 		this.responsibleCommunity = responsibleCommunity;
+	}
+
+	@Column()
+	public Integer getResponsibleWardNo() {
+		return responsibleWardNo;
+	}
+
+	public void setResponsibleWardNo(Integer responsibleWardNo) {
+		this.responsibleWardNo = responsibleWardNo;
 	}
 
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
