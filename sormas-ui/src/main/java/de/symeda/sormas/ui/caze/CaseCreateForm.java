@@ -103,6 +103,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private CheckBox differentPointOfEntryJurisdiction;
 	private ComboBox districtCombo;
 	private ComboBox communityCombo;
+	private TextField wardNoField;
 	private ComboBox facilityCombo;
 	private ComboBox pointOfEntryDistrictCombo;
 
@@ -134,6 +135,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
         + fluidRowLocs(PLACE_OF_STAY_HEADING_LOC)
         + fluidRowLocs(FACILITY_OR_HOME_LOC)
         + fluidRowLocs(CaseDataDto.REGION, CaseDataDto.DISTRICT, CaseDataDto.COMMUNITY)
+		+ fluidRowLocs(CaseDataDto.WARD_NO, "")
         + fluidRowLocs(FACILITY_TYPE_GROUP_LOC, CaseDataDto.FACILITY_TYPE)
         + fluidRowLocs(CaseDataDto.HEALTH_FACILITY, CaseDataDto.HEALTH_FACILITY_DETAILS)
         + fluidRowLocs(DIFFERENT_POINT_OF_ENTRY_JURISDICTION)
@@ -210,7 +212,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		districtCombo = addInfrastructureField(CaseDataDto.DISTRICT);
 		communityCombo = addInfrastructureField(CaseDataDto.COMMUNITY);
 		communityCombo.setNullSelectionAllowed(true);
-
+		wardNoField = addField(CaseDataDto.WARD_NO);
+		wardNoField.setNullSettingAllowed(true);
 		// jurisdictionfields
 		Label jurisdictionHeadingLabel = new Label(I18nProperties.getString(Strings.headingCaseResponsibleJurisidction));
 		jurisdictionHeadingLabel.addStyleName(H3);
@@ -223,8 +226,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		responsibleCommunityCombo = addInfrastructureField(CaseDataDto.RESPONSIBLE_COMMUNITY);
 		responsibleCommunityCombo.setNullSelectionAllowed(true);
 		responsibleCommunityCombo.addStyleName(SOFT_REQUIRED);
-		TextField wardNo = addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
-		style(wardNo, ERROR_COLOR_PRIMARY);
+		TextField responsibleWardNoField = addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
+		style(responsibleWardNoField, ERROR_COLOR_PRIMARY);
 		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegion, responsibleDistrictCombo, responsibleCommunityCombo);
 		differentPointOfEntryJurisdiction = addCustomField(DIFFERENT_POINT_OF_ENTRY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPointOfEntryJurisdiction.addStyleName(VSPACE_3);
@@ -237,7 +240,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		FieldHelper.setVisibleWhen(
 			differentPlaceOfStayJurisdiction,
-			Arrays.asList(region, districtCombo, communityCombo),
+			Arrays.asList(region, districtCombo, communityCombo, wardNoField),
 			Collections.singletonList(Boolean.TRUE),
 			true);
 

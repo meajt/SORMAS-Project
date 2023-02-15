@@ -57,6 +57,8 @@ import de.symeda.sormas.api.utils.pseudonymization.valuepseudonymizers.PostalCod
 public class LocationDto extends PseudonymizableDto {
 
 	private static final long serialVersionUID = -1399197327930368752L;
+	public static final int MIN_WARD_NO_VALUE = 1;
+	public static final int MAX_WARD_NO_VALUE = 50;
 
 	public static final String I18N_PREFIX = "Location";
 
@@ -69,6 +71,7 @@ public class LocationDto extends PseudonymizableDto {
 	public static final String REGION = "region";
 	public static final String DISTRICT = "district";
 	public static final String COMMUNITY = "community";
+	public static final String WARD_NO = "wardNo";
 	public static final String LATITUDE = "latitude";
 	public static final String LONGITUDE = "longitude";
 	public static final String LAT_LON_ACCURACY = "latLonAccuracy";
@@ -94,6 +97,12 @@ public class LocationDto extends PseudonymizableDto {
 	@PersonalData
 	@SensitiveData
 	private CommunityReferenceDto community;
+
+	@PersonalData
+	@SensitiveData
+	@Min(value = LocationDto.MIN_WARD_NO_VALUE, message = Validations.numberTooSmall)
+	@Max(value = LocationDto.MAX_WARD_NO_VALUE, message = Validations.numberTooBig)
+	private Integer wardNo;
 	@PersonalData
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
@@ -237,6 +246,14 @@ public class LocationDto extends PseudonymizableDto {
 
 	public void setCommunity(CommunityReferenceDto community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	public Double getLatitude() {

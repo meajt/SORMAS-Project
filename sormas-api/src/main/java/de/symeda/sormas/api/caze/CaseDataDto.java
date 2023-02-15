@@ -29,6 +29,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import de.symeda.sormas.api.location.LocationDto;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -120,6 +121,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String REGION = "region";
 	public static final String DISTRICT = "district";
 	public static final String COMMUNITY = "community";
+	public static final String WARD_NO = "wardNo";
 	public static final String HEALTH_FACILITY = "healthFacility";
 	public static final String HEALTH_FACILITY_DETAILS = "healthFacilityDetails";
 	public static final String REPORTING_USER = "reportingUser";
@@ -327,8 +329,8 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Outbreaks
 	@PersonalData
 	@SensitiveData
-	@Min(value = 1, message = Validations.numberTooSmall)
-	@Max(value = 50, message = Validations.numberTooBig)
+	@Min(value = LocationDto.MIN_WARD_NO_VALUE, message = Validations.numberTooSmall)
+	@Max(value = LocationDto.MAX_WARD_NO_VALUE, message = Validations.numberTooBig)
 	private Integer responsibleWardNo;
 
 	@Outbreaks
@@ -341,6 +343,13 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@PersonalData
 	@SensitiveData
 	private CommunityReferenceDto community;
+
+	@Outbreaks
+	@PersonalData
+	@SensitiveData
+	@Min(value = LocationDto.MIN_WARD_NO_VALUE, message = Validations.numberTooSmall)
+	@Max(value = LocationDto.MAX_WARD_NO_VALUE, message = Validations.numberTooBig)
+	private Integer wardNo;
 	@PersonalData(mandatoryField = true)
 	@SensitiveData(mandatoryField = true)
 	private FacilityType facilityType;
@@ -1041,6 +1050,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setCommunity(CommunityReferenceDto community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	public InvestigationStatus getInvestigationStatus() {

@@ -26,6 +26,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.navigator.Navigator;
@@ -705,7 +707,10 @@ public class CaseController {
 		editView.addCommitListener(() -> {
 			if (!createForm.getFieldGroup().isModified()) {
 				final CaseDataDto dto = createForm.getValue();
-
+				CustomLoggerFactory.getLogger(LoggerType.WEB)
+								.logObj("home address is ", dto.getPerson());
+				CustomLoggerFactory.getLogger(LoggerType.WEB)
+						.logObj("case dto is ", dto);
 				if (dto.getHealthFacility() == null || FacilityDto.NONE_FACILITY_UUID.equals(dto.getHealthFacility().getUuid())) {
 					dto.setFacilityType(null);
 				}
@@ -725,6 +730,8 @@ public class CaseController {
 					dto.setWasInQuarantineBeforeIsolation(YesNoUnknown.YES);
 
 					transferDataToPerson(createForm, person);
+					CustomLoggerFactory.getLogger(LoggerType.WEB)
+									.logObj("PersonDto", person);
 					FacadeProvider.getPersonFacade().save(person);
 
 					saveCase(dto);
@@ -853,6 +860,8 @@ public class CaseController {
 
 	private void transferDataToPerson(CaseCreateForm createForm, PersonDto person) {
 		createForm.getPersonCreateForm().transferDataToPerson(person);
+		CustomLoggerFactory.getLogger(LoggerType.WEB)
+				.logObj("@transferDataToPerson", person);
 	}
 
 	public void selectOrCreateCase(CaseDataDto caseDto, PersonDto person, Consumer<String> selectedCaseUuidConsumer) {

@@ -102,6 +102,7 @@ public class LocationEditForm extends AbstractEditForm<LocationDto> {
 			fluidRowLocs(LocationDto.CONTINENT, LocationDto.SUB_CONTINENT, ""),
 			fluidRowLocs(LocationDto.COUNTRY, COUNTRY_HINT_LOC, ""),
 			fluidRowLocs(LocationDto.REGION, LocationDto.DISTRICT, LocationDto.COMMUNITY),
+			fluidRowLocs(LocationDto.WARD_NO),
 			fluidRowLocs(FACILITY_TYPE_GROUP_LOC, LocationDto.FACILITY_TYPE),
 			fluidRowLocs(LocationDto.FACILITY, LocationDto.FACILITY_DETAILS),
 			fluidRowLocs(LocationDto.STREET, LocationDto.HOUSE_NUMBER, LocationDto.ADDITIONAL_INFORMATION),
@@ -253,6 +254,7 @@ public class LocationEditForm extends AbstractEditForm<LocationDto> {
 		ComboBox region = addInfrastructureField(LocationDto.REGION);
 		ComboBox district = addInfrastructureField(LocationDto.DISTRICT);
 		ComboBox community = addInfrastructureField(LocationDto.COMMUNITY);
+		TextField wardNoField = addField(LocationDto.WARD_NO, TextField.class);
 
 		continent.setVisible(false);
 		subcontinent.setVisible(false);
