@@ -2885,6 +2885,7 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setRegion(RegionFacadeEjb.toReferenceDto(source.getRegion()));
 		target.setDistrict(DistrictFacadeEjb.toReferenceDto(source.getDistrict()));
 		target.setCommunity(CommunityFacadeEjb.toReferenceDto(source.getCommunity()));
+		target.setWardNo(source.getWardNo());
 		target.setHealthFacility(FacilityFacadeEjb.toReferenceDto(source.getHealthFacility()));
 		target.setHealthFacilityDetails(source.getHealthFacilityDetails());
 
@@ -3089,6 +3090,7 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setRegion(regionService.getByReferenceDto(source.getRegion()));
 		target.setDistrict(districtService.getByReferenceDto(source.getDistrict()));
 		target.setCommunity(communityService.getByReferenceDto(source.getCommunity()));
+		target.setWardNo(source.getWardNo());
 		target.setHealthFacility(facilityService.getByReferenceDto(source.getHealthFacility()));
 		target.setHealthFacilityDetails(source.getHealthFacilityDetails());
 

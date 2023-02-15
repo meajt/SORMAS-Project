@@ -147,6 +147,7 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	public static final String REGION = "region";
 	public static final String DISTRICT = "district";
 	public static final String COMMUNITY = "community";
+	public static final String WARD_NO = "wardNo";
 	public static final String HOSPITALIZATION = "hospitalization";
 	public static final String EPI_DATA = "epiData";
 	public static final String CLINICAL_COURSE = "clinicalCourse";
@@ -281,6 +282,7 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	private Region region;
 	private District district;
 	private Community community;
+	private Integer wardNo;
 	private FacilityType facilityType;
 	private Facility healthFacility;
 	private String healthFacilityDetails;
@@ -789,6 +791,14 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 
 	public void setCommunity(Community community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	// It's necessary to do a lazy fetch here because having three eager fetching
