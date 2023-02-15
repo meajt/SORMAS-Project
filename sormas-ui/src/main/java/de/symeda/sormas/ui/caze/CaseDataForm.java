@@ -223,6 +223,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					fluidRowLocs(CaseDataDto.CASE_ORIGIN, "") +
 					fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC) +
 					fluidRowLocs(CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY) +
+					fluidRowLocs(CaseDataDto.RESPONSIBLE_WARD_NO, "") +
 					fluidRowLocs(CaseDataDto.DONT_SHARE_WITH_REPORTING_TOOL) +
 					fluidRowLocs(DONT_SHARE_WARNING_LOC) +
 					fluidRowLocs(DIFFERENT_PLACE_OF_STAY_JURISDICTION) +
@@ -1026,6 +1027,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		responsibleCommunity = addInfrastructureField(CaseDataDto.RESPONSIBLE_COMMUNITY);
 		responsibleCommunity.setNullSelectionAllowed(true);
 		responsibleCommunity.addStyleName(SOFT_REQUIRED);
+
+		addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
 
 		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegion, responsibleDistrict, responsibleCommunity);
 		InfrastructureFieldsHelper.initPointOfEntry(responsibleDistrict, pointOfEntry);
