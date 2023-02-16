@@ -78,6 +78,9 @@ public class Location extends PseudonymizableAdo {
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Community community;
 
+	@Column
+	private Integer wardNo;
+
 	@DatabaseField
 	private Double latitude;
 	@DatabaseField
@@ -193,6 +196,14 @@ public class Location extends PseudonymizableAdo {
 
 	public void setCommunity(Community community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	public Double getLatitude() {
@@ -350,9 +361,19 @@ public class Location extends PseudonymizableAdo {
 			if (sb.length() > 0) {
 				sb.append("\n");
 			}
+			if (getWardNo() != null && getWardNo() != 0)
+			{
+				sb.append(getWardNo());
+			}
 			if (getCity() != null && !getCity().isEmpty()) {
+				if (sb.length() > 0) {
+					sb.append(", ");
+				}
 				sb.append(getCity());
 			} else if (getCommunity() != null) {
+				if (sb.length() > 0) {
+					sb.append(", ");
+				}
 				sb.append(getCommunity().buildCaption());
 			}
 			if (getDistrict() != null) {

@@ -77,7 +77,7 @@ public class LocationDtoHelper extends AdoDtoHelper<Location, LocationDto> {
 		target.setRegion(DatabaseHelper.getRegionDao().getByReferenceDto(source.getRegion()));
 		target.setDistrict(DatabaseHelper.getDistrictDao().getByReferenceDto(source.getDistrict()));
 		target.setCommunity(DatabaseHelper.getCommunityDao().getByReferenceDto(source.getCommunity()));
-
+		target.setWardNo(source.getWardNo());
 		target.setPostalCode(source.getPostalCode());
 
 		target.setPseudonymized(source.isPseudonymized());
@@ -110,6 +110,7 @@ public class LocationDtoHelper extends AdoDtoHelper<Location, LocationDto> {
 		} else {
 			target.setCommunity(null);
 		}
+		target.setWardNo(source.getWardNo());
 		if (source.getDistrict() != null) {
 			target.setDistrict(DistrictDtoHelper.toReferenceDto(DatabaseHelper.getDistrictDao().queryForId(source.getDistrict().getId())));
 		} else {
