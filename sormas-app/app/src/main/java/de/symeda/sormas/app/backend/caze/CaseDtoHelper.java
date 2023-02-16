@@ -130,10 +130,12 @@ public class CaseDtoHelper extends PersonDependentDtoHelper<Case, CaseDataDto> {
 		target.setResponsibleRegion(DatabaseHelper.getRegionDao().getByReferenceDto(source.getResponsibleRegion()));
 		target.setResponsibleDistrict(DatabaseHelper.getDistrictDao().getByReferenceDto(source.getResponsibleDistrict()));
 		target.setResponsibleCommunity(DatabaseHelper.getCommunityDao().getByReferenceDto(source.getResponsibleCommunity()));
+		target.setResponsibleWardNo(source.getResponsibleWardNo());
 
 		target.setRegion(DatabaseHelper.getRegionDao().getByReferenceDto(source.getRegion()));
 		target.setDistrict(DatabaseHelper.getDistrictDao().getByReferenceDto(source.getDistrict()));
 		target.setCommunity(DatabaseHelper.getCommunityDao().getByReferenceDto(source.getCommunity()));
+		target.setWardNo(source.getWardNo());
 		target.setPointOfEntry(DatabaseHelper.getPointOfEntryDao().getByReferenceDto(source.getPointOfEntry()));
 		target.setPointOfEntryDetails(source.getPointOfEntryDetails());
 
@@ -316,6 +318,7 @@ public class CaseDtoHelper extends PersonDependentDtoHelper<Case, CaseDataDto> {
 		} else {
 			target.setResponsibleCommunity(null);
 		}
+		target.setResponsibleWardNo(source.getResponsibleWardNo());
 
 		if (source.getRegion() != null) {
 			Region region = DatabaseHelper.getRegionDao().queryForId(source.getRegion().getId());
@@ -337,6 +340,7 @@ public class CaseDtoHelper extends PersonDependentDtoHelper<Case, CaseDataDto> {
 		} else {
 			target.setCommunity(null);
 		}
+		target.setWardNo(source.getWardNo());
 
 		if (source.getPointOfEntry() != null) {
 			PointOfEntry pointOfEntry = DatabaseHelper.getPointOfEntryDao().queryForId(source.getPointOfEntry().getId());
@@ -489,7 +493,6 @@ public class CaseDtoHelper extends PersonDependentDtoHelper<Case, CaseDataDto> {
 		} else {
 			target.setHealthConditions(null);
 		}
-
 	}
 
 	@Override
