@@ -230,6 +230,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					fluidRowLocs(PLACE_OF_STAY_HEADING_LOC) +
 					fluidRowLocs(FACILITY_OR_HOME_LOC) +
 					fluidRowLocs(CaseDataDto.REGION, CaseDataDto.DISTRICT, CaseDataDto.COMMUNITY) +
+					fluidRowLocs(CaseDataDto.WARD_NO, "", "") +
 					fluidRowLocs(TYPE_GROUP_LOC, CaseDataDto.FACILITY_TYPE) +
 					fluidRowLocs(CaseDataDto.HEALTH_FACILITY, CaseDataDto.HEALTH_FACILITY_DETAILS) +
 					inlineLocs(CaseDataDto.POINT_OF_ENTRY, CaseDataDto.POINT_OF_ENTRY_DETAILS, CASE_REFER_POINT_OF_ENTRY_BTN_LOC) +
@@ -786,10 +787,12 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		communityCombo = addInfrastructureField(CaseDataDto.COMMUNITY);
 		communityCombo.setNullSelectionAllowed(true);
 		communityCombo.addStyleName(SOFT_REQUIRED);
+		TextField wardNoField = addField(CaseDataDto.WARD_NO, TextField.class);
+		wardNoField.setNullSettingAllowed(true);
 
 		FieldHelper.setVisibleWhen(
 			differentPlaceOfStayJurisdiction,
-			Arrays.asList(regionCombo, districtCombo, communityCombo),
+			Arrays.asList(regionCombo, districtCombo, communityCombo, wardNoField),
 			Collections.singletonList(Boolean.TRUE),
 			true);
 
