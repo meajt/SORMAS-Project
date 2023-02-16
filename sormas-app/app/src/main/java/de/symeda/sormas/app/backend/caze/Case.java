@@ -169,6 +169,9 @@ public class Case extends PseudonymizableAdo {
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Community responsibleCommunity;
 
+	@Column
+	private Integer responsibleWardNo;
+
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Region region;
 
@@ -177,6 +180,9 @@ public class Case extends PseudonymizableAdo {
 
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Community community;
+
+	@Column
+	private Integer wardNo;
 
 	@Enumerated(EnumType.STRING)
 	private FacilityType facilityType;
@@ -531,6 +537,14 @@ public class Case extends PseudonymizableAdo {
 		this.responsibleCommunity = responsibleCommunity;
 	}
 
+	public Integer getResponsibleWardNo() {
+		return responsibleWardNo;
+	}
+
+	public void setResponsibleWardNo(Integer responsibleWardNo) {
+		this.responsibleWardNo = responsibleWardNo;
+	}
+
 	public Region getRegion() {
 		return region;
 	}
@@ -553,6 +567,14 @@ public class Case extends PseudonymizableAdo {
 
 	public void setCommunity(Community community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	public User getReportingUser() {
