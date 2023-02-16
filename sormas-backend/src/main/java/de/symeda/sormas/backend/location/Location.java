@@ -62,6 +62,7 @@ public class Location extends AbstractDomainObject {
 	public static final String REGION = "region";
 	public static final String DISTRICT = "district";
 	public static final String COMMUNITY = "community";
+	public static final String WARD_NO = "wardNo";
 	public static final String LATITUDE = "latitude";
 	public static final String LONGITUDE = "longitude";
 	public static final String LATLONACCURACY = "latLonAccuracy";
@@ -90,7 +91,7 @@ public class Location extends AbstractDomainObject {
 	private Region region;
 	private District district;
 	private Community community;
-
+	private Integer wardNo;
 	private Double latitude;
 	private Double longitude;
 	private Float latLonAccuracy;
@@ -191,6 +192,14 @@ public class Location extends AbstractDomainObject {
 
 	public void setCommunity(Community community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	public Double getLatitude() {
