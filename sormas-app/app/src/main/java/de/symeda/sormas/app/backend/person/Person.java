@@ -201,6 +201,9 @@ public class Person extends PseudonymizableAdo {
 	@Column(columnDefinition = "text")
 	private String additionalDetails;
 
+	@Column(length = 10)
+	private String mobileNo;
+
 	public Person() {
 	}
 
@@ -660,5 +663,13 @@ public class Person extends PseudonymizableAdo {
 
 	public void setAdditionalDetails(String additionalDetails) {
 		this.additionalDetails = additionalDetails;
+	}
+	@Bindable
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 }

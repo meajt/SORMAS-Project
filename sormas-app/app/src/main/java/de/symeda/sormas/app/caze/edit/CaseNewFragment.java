@@ -282,6 +282,9 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
             updateDiseaseVariantsField(contentBinding);
             updatePresentConditionField(contentBinding);
         });
+        contentBinding.personMobileNo.addValueChangedListener(e ->{
+            record.getPerson().setMobileNo(e.getValue()+"");
+        });
     }
 
     private void setPersonDateOfBirth(Integer ageValue, TimeUnit timeUnit) {

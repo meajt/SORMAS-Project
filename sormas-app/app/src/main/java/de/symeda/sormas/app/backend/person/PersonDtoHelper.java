@@ -148,6 +148,7 @@ public class PersonDtoHelper extends AdoDtoHelper<Person, PersonDto> {
 		target.setBirthCountry(DatabaseHelper.getCountryDao().getByReferenceDto(source.getBirthCountry()));
 		target.setCitizenship(DatabaseHelper.getCountryDao().getByReferenceDto(source.getCitizenship()));
 		target.setAdditionalDetails(source.getAdditionalDetails());
+		target.setMobileNo(source.getMobileNo());
 	}
 
 	@Override
@@ -253,6 +254,7 @@ public class PersonDtoHelper extends AdoDtoHelper<Person, PersonDto> {
 		target.setBirthCountry(CountryDtoHelper.toReferenceDto(source.getBirthCountry()));
 		target.setCitizenship(CountryDtoHelper.toReferenceDto(source.getCitizenship()));
 		target.setAdditionalDetails(source.getAdditionalDetails());
+		target.setMobileNo(source.getMobileNo());
 	}
 
     @Override
