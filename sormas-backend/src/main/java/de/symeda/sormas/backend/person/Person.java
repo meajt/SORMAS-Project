@@ -143,6 +143,7 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 	public static final String IMMUNIZATIONS = "immunizations";
 	public static final String ADDITIONAL_DETAILS = "additionalDetails";
 	public static final String TRAVEL_ENTRIES = "travelEntries";
+	public static final String MOBILE_NO = "mobileNo";
 
 	private String firstName;
 	private String lastName;
@@ -210,6 +211,8 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 	private Country birthCountry;
 	private Country citizenship;
 	private String additionalDetails;
+
+	private String mobileNo;
 
 	private List<Case> cases = new ArrayList<>();
 	private List<Contact> contacts = new ArrayList<>();
@@ -809,5 +812,13 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 	@Transient
 	public boolean isEnrolledInExternalJournal() {
 		return SymptomJournalStatus.ACCEPTED.equals(symptomJournalStatus) || SymptomJournalStatus.REGISTERED.equals(symptomJournalStatus);
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 }

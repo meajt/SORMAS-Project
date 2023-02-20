@@ -127,6 +127,7 @@ public class PersonDto extends PseudonymizableDto {
 	public static final String BIRTH_COUNTRY = "birthCountry";
 	public static final String CITIZENSHIP = "citizenship";
 	public static final String ADDITIONAL_DETAILS = "additionalDetails";
+	public static final String MOBILE_NO = "mobileNo";
 	private static final long serialVersionUID = -8558187171374254398L;
 
 	// Fields are declared in the order they should appear in the import template
@@ -374,6 +375,11 @@ public class PersonDto extends PseudonymizableDto {
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_ADDITIONAL_DETAILS)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String additionalDetails;
+
+	@PersonalData
+	@SensitiveData
+	@Size(max = 10)
+	private String mobileNo;
 
 	@SuppressWarnings("serial")
 	public static class SeveralNonPrimaryContactDetailsException extends RuntimeException {
@@ -1041,5 +1047,13 @@ public class PersonDto extends PseudonymizableDto {
 		clone.setPersonContactDetails(contactDetailsClone);
 
 		return clone;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 }

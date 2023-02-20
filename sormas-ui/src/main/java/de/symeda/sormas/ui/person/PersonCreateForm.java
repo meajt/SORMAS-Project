@@ -88,6 +88,7 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 
 	private static final String HTML_LAYOUT =
 		"%s" + fluidRow(fluidRowLocs(PersonDto.BIRTH_DATE_YYYY, PersonDto.BIRTH_DATE_MM, PersonDto.BIRTH_DATE_DD), fluidRowLocs(PersonDto.SEX))
+			+ fluidRowLocs(PersonDto.MOBILE_NO)
 			+ fluidRowLocs(PersonDto.NATIONAL_HEALTH_ID, PersonDto.PASSPORT_NUMBER)
 			+ fluidRowLocs(PersonDto.PRESENT_CONDITION, SymptomsDto.ONSET_DATE) + fluidRowLocs(PersonDto.PHONE, PersonDto.EMAIL_ADDRESS)
 			+ fluidRowLocs(ENTER_HOME_ADDRESS_NOW) + loc(HOME_ADDRESS_HEADER) + divsCss(VSPACE_3, fluidRowLocs(HOME_ADDRESS_LOC));
@@ -183,6 +184,7 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 
 		addField(PersonDto.PASSPORT_NUMBER, TextField.class);
 		addField(PersonDto.NATIONAL_HEALTH_ID, TextField.class);
+		addField(PersonDto.MOBILE_NO, TextField.class);
 
 		ComboBox presentCondition = addField(PersonDto.PRESENT_CONDITION, ComboBox.class);
 		presentCondition.setVisible(showPresentCondition);
@@ -352,6 +354,10 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		person.setNationalHealthId(personCreated.getNationalHealthId());
 		person.setPassportNumber(personCreated.getPassportNumber());
 
+		if(StringUtils.isNotEmpty(personCreated.getMobileNo()))
+		{
+			person.setMobileNo(personCreated.getMobileNo());
+		}
 		if (StringUtils.isNotEmpty(getPhone())) {
 			person.setPhone(getPhone());
 		}
