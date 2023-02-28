@@ -32,6 +32,7 @@ import de.symeda.sormas.api.caze.CaseDataDto;
 import de.symeda.sormas.api.caze.CaseReferenceDto;
 import de.symeda.sormas.api.contact.ContactReferenceDto;
 import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.formfilter.NepalFormFilterConstance;
 import de.symeda.sormas.api.i18n.Descriptions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
@@ -367,7 +368,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		CssStyles.style(requestedPathogenTestsField, CssStyles.OPTIONGROUP_CHECKBOXES_HORIZONTAL);
 		requestedPathogenTestsField.setMultiSelect(true);
 		requestedPathogenTestsField.addItems(
-				Arrays.stream(PathogenTestType.values())
+				Arrays.stream(NepalFormFilterConstance.pathogenTestTypeToShowArray)
 						.filter( c -> fieldVisibilityCheckers.isVisible(PathogenTestType.class, c.name()))
 						.collect(Collectors.toList()));
 		requestedPathogenTestsField.removeItem(PathogenTestType.OTHER);
