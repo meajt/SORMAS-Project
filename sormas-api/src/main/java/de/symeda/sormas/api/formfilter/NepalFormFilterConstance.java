@@ -11,6 +11,7 @@ public interface NepalFormFilterConstance {
      PathogenTestType[] pathogenTestTypeToShowArray = new PathogenTestType[]{
              PathogenTestType.PCR_RT_PCR,
              PathogenTestType.CULTURE,
+             PathogenTestType.RAPID_TEST,
              PathogenTestType.ANTIBODY_DETECTION,
              PathogenTestType.IGM_SERUM_ANTIBODY,
              PathogenTestType.IGG_SERUM_ANTIBODY,
