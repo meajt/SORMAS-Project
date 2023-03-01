@@ -17,19 +17,26 @@ package de.symeda.sormas.api.sample;
 
 import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.i18n.I18nProperties;
+import de.symeda.sormas.api.utils.HideForCountries;
 import de.symeda.sormas.api.utils.HideForCountriesExcept;
 
 public enum SamplingReason {
 
 	PRESENCE_OF_SYMPTOMS,
 	OUTBREAK,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	SCREENING,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	PROFESSIONAL_REASON,
 	QUARANTINE_REGULATIONS,
 	CONTACT_TO_CASE,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	PLANNING_TO_TRAVEL,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	RETURNING_TRAVELER,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	PERSONAL_REASON,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	MOVING_RETURNING_RETIREMENT_HOME,
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
 	SWISS_COVID_APP_NOTIFICATION,
