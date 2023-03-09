@@ -51,6 +51,7 @@ import javax.persistence.criteria.Subquery;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
+import de.symeda.sormas.api.user.UserRight;
 import org.apache.commons.lang3.StringUtils;
 
 import de.symeda.sormas.api.Disease;
@@ -945,7 +946,15 @@ public class CaseService extends AbstractCoreAdoService<Case, CaseJoins> {
 				from,
 				ExternalShareInfo.CAZE,
 				(latestShareDate) -> createChangeDateFilter(cq, cb, joins, latestShareDate, true, true)));
+		filter = getAccessOtherUserDataFilter(cb, reportingUser, filter);
+		return filter;
+	}
 
+	private  Predicate getAccessOtherUserDataFilter(CriteriaBuilder cb, Join<Case, User> reportingUser, Predicate filter) {
+		User currentUser =  getCurrentUser();
+		if(currentUser.hasUserRight(UserRight.OTHER_USER_DATA))
+			return filter;
+		filter = CriteriaBuilderHelper.and(cb, filter, cb.equal(reportingUser.get(AbstractDomainObject.ID), currentUser.getId()));
 		return filter;
 	}
 
