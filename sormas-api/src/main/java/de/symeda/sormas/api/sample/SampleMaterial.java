@@ -17,10 +17,12 @@
  *******************************************************************************/
 package de.symeda.sormas.api.sample;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.api.utils.Diseases;
+import de.symeda.sormas.api.utils.HideForCountries;
 
 public enum SampleMaterial {
 
@@ -29,8 +31,10 @@ public enum SampleMaterial {
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
 	STOOL,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	NASAL_SWAB,
 	THROAT_SWAB,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	NP_SWAB,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
@@ -39,6 +43,7 @@ public enum SampleMaterial {
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
 	CRUST,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	TISSUE,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
@@ -59,8 +64,10 @@ public enum SampleMaterial {
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
 	BRAIN_TISSUE,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	ANTERIOR_NARES_SWAB,
 	OP_ASPIRATE,
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	NP_ASPIRATE,
 	PLEURAL_FLUID,
 	OTHER;
