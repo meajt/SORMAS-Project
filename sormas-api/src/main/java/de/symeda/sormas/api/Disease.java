@@ -46,6 +46,8 @@ public enum Disease
 	CORONAVIRUS(true, true, true, false, true, 14, true, true, true),
 	PNEUMONIA(true, false, true, false, false, 0, true, false, false),
 	MALARIA(true, false, false, true, false, 0, true, false, false),
+	KALAZAR(true, true, true, false, false, 14, true, false, false),
+	NCD(true, true, true, false, false, 14, false, false, false),
 	TYPHOID_FEVER(true, false, false, true, false, 0, true, false, false),
 	ACUTE_VIRAL_HEPATITIS(true, false, false, true, false, 0, true, false, false),
 	NON_NEONATAL_TETANUS(true, false, false, true, false, 0, true, false, false),
