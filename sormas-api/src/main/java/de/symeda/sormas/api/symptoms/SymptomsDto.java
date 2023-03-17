@@ -262,6 +262,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		ANTHRAX,
 		CORONAVIRUS,
 		UNSPECIFIED_VHF,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -280,6 +281,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		UNSPECIFIED_VHF,
 		MALARIA,
 			KALAZAR,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -431,6 +433,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		CORONAVIRUS,
 		MALARIA,
+			ACUTE_VIRAL_HEPATITIS,
 			SNAKE_BITE,
 		UNDEFINED,
 		OTHER })
@@ -511,6 +514,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		YELLOW_FEVER,
 		UNSPECIFIED_VHF,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -637,6 +641,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			KALAZAR,
 			MALARIA,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -666,6 +671,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			MALARIA,
 			KALAZAR,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -781,6 +787,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		UNSPECIFIED_VHF,
 		CONGENITAL_RUBELLA,
 			MALARIA,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -805,6 +812,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		DENGUE,
 		CORONAVIRUS,
 		UNSPECIFIED_VHF,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -1083,6 +1091,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		UNSPECIFIED_VHF,
 			MALARIA,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1131,6 +1140,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		ANTHRAX,
 			MALARIA,
 			SNAKE_BITE,
+			ACUTE_VIRAL_HEPATITIS,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -1322,6 +1332,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 			KALAZAR,
 			MALARIA,
+			ACUTE_VIRAL_HEPATITIS,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -1752,6 +1763,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 			SNAKE_BITE,
 			MALARIA,
+			ACUTE_VIRAL_HEPATITIS,
 		CORONAVIRUS,
 		OTHER })
 	@Outbreaks
@@ -2248,6 +2260,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			MALARIA,
 			KALAZAR,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2257,6 +2270,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			MALARIA,
 			KALAZAR,
+			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
