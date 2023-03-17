@@ -1168,6 +1168,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		YELLOW_FEVER,
 		UNSPECIFIED_VHF,
+			LEPROSY,
 		UNDEFINED,
 		OTHER })
 	@DependantOn(UNEXPLAINED_BLEEDING)
@@ -1968,6 +1969,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 		CORONAVIRUS,
 			KALAZAR,
+			LEPROSY,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries(countries = {
