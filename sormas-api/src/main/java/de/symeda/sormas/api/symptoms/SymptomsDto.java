@@ -279,6 +279,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		YELLOW_FEVER,
 		UNSPECIFIED_VHF,
 		MALARIA,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -430,6 +431,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		CORONAVIRUS,
 		MALARIA,
+			SNAKE_BITE,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -542,6 +544,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		ANTHRAX,
 		CORONAVIRUS,
+			SNAKE_BITE,
 			MALARIA,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
@@ -632,6 +635,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		RABIES,
 		ANTHRAX,
 		CORONAVIRUS,
+			KALAZAR,
 			MALARIA,
 		UNDEFINED,
 		OTHER })
@@ -661,6 +665,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		ANTHRAX,
 		CORONAVIRUS,
 			MALARIA,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -1041,6 +1046,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		MONKEYPOX,
 		POLIO,
+			SNAKE_BITE,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1063,6 +1069,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		MONKEYPOX,
 		POLIO,
+			SNAKE_BITE,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1123,6 +1130,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		RABIES,
 		ANTHRAX,
 			MALARIA,
+			SNAKE_BITE,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -1205,6 +1213,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		LASSA,
 		PLAGUE,
 		POLIO,
+			SNAKE_BITE,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -1311,6 +1320,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		LASSA,
 		POLIO,
+			KALAZAR,
 			MALARIA,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
@@ -1325,6 +1335,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		LASSA,
 		POLIO,
 		UNSPECIFIED_VHF,
+			KALAZAR,
 			MALARIA,
 		UNDEFINED,
 		OTHER })
@@ -1374,6 +1385,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		POLIO,
 		UNSPECIFIED_VHF,
+			SNAKE_BITE,
 			MALARIA,
 		UNDEFINED,
 		OTHER })
@@ -1443,6 +1455,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		LASSA,
 		POLIO,
+			SNAKE_BITE,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -1463,6 +1476,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		DENGUE,
 		POLIO,
 		UNSPECIFIED_VHF,
+			KALAZAR,
 		UNDEFINED,
 		OTHER,
 		CORONAVIRUS })
@@ -1520,6 +1534,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		POLIO,
 		UNSPECIFIED_VHF,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1661,6 +1676,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState developmentalDelay;
 
 	@Diseases({
+			KALAZAR,
 		CONGENITAL_RUBELLA })
 	@HideForCountries
 	@SymptomGrouping(SymptomGroup.OTHER)
@@ -1734,6 +1750,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		POLIO,
+			SNAKE_BITE,
 			MALARIA,
 		CORONAVIRUS,
 		OTHER })
@@ -1779,6 +1796,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState paresthesiaAroundWound;
 
 	@Diseases({
+			SNAKE_BITE,
 		RABIES })
 	@HideForCountries
 	@SymptomGrouping(SymptomGroup.OTHER)
@@ -1937,6 +1955,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
 	@Diseases({
 		CORONAVIRUS,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries(countries = {
@@ -1976,6 +1995,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 			MALARIA,
 		CORONAVIRUS,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = {
@@ -2208,6 +2228,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		PLAGUE,
 		ANTHRAX,
 		POLIO,
+			SNAKE_BITE,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -2226,6 +2247,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 		CORONAVIRUS,
 			MALARIA,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2234,6 +2256,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 		CORONAVIRUS,
 			MALARIA,
+			KALAZAR,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2248,6 +2271,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState coughWithoutSputum;
 	@Diseases({
 		CORONAVIRUS,
+			SNAKE_BITE,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
