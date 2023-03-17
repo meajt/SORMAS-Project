@@ -19,26 +19,7 @@ package de.symeda.sormas.api.symptoms;
 
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_GERMANY;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_SWITZERLAND;
-import static de.symeda.sormas.api.Disease.AFP;
-import static de.symeda.sormas.api.Disease.ANTHRAX;
-import static de.symeda.sormas.api.Disease.CHOLERA;
-import static de.symeda.sormas.api.Disease.CONGENITAL_RUBELLA;
-import static de.symeda.sormas.api.Disease.CORONAVIRUS;
-import static de.symeda.sormas.api.Disease.CSM;
-import static de.symeda.sormas.api.Disease.DENGUE;
-import static de.symeda.sormas.api.Disease.EVD;
-import static de.symeda.sormas.api.Disease.GUINEA_WORM;
-import static de.symeda.sormas.api.Disease.LASSA;
-import static de.symeda.sormas.api.Disease.MEASLES;
-import static de.symeda.sormas.api.Disease.MONKEYPOX;
-import static de.symeda.sormas.api.Disease.NEW_INFLUENZA;
-import static de.symeda.sormas.api.Disease.OTHER;
-import static de.symeda.sormas.api.Disease.PLAGUE;
-import static de.symeda.sormas.api.Disease.POLIO;
-import static de.symeda.sormas.api.Disease.RABIES;
-import static de.symeda.sormas.api.Disease.UNDEFINED;
-import static de.symeda.sormas.api.Disease.UNSPECIFIED_VHF;
-import static de.symeda.sormas.api.Disease.YELLOW_FEVER;
+import static de.symeda.sormas.api.Disease.*;
 
 import java.util.Date;
 
@@ -297,6 +278,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		YELLOW_FEVER,
 		UNSPECIFIED_VHF,
+		MALARIA,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -359,6 +341,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		YELLOW_FEVER,
 		ANTHRAX,
+		MALARIA,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -446,6 +429,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		ANTHRAX,
 		POLIO,
 		CORONAVIRUS,
+		MALARIA,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -558,6 +542,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		ANTHRAX,
 		CORONAVIRUS,
+			MALARIA,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -647,6 +632,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		RABIES,
 		ANTHRAX,
 		CORONAVIRUS,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -674,6 +660,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		RABIES,
 		ANTHRAX,
 		CORONAVIRUS,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -728,6 +715,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		UNSPECIFIED_VHF,
 		RABIES,
 		ANTHRAX,
+			MALARIA,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -787,6 +775,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		UNSPECIFIED_VHF,
 		CONGENITAL_RUBELLA,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1086,6 +1075,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		LASSA,
 		POLIO,
 		UNSPECIFIED_VHF,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1132,6 +1122,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 		RABIES,
 		ANTHRAX,
+			MALARIA,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -1320,6 +1311,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		LASSA,
 		POLIO,
+			MALARIA,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -1333,6 +1325,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		LASSA,
 		POLIO,
 		UNSPECIFIED_VHF,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -1381,6 +1374,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		POLIO,
 		UNSPECIFIED_VHF,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1740,6 +1734,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		POLIO,
+			MALARIA,
 		CORONAVIRUS,
 		OTHER })
 	@Outbreaks
@@ -1979,6 +1974,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState respiratoryDiseaseVentilation;
 
 	@Diseases({
+			MALARIA,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -2021,6 +2017,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		MEASLES,
 		POLIO,
 		UNSPECIFIED_VHF,
+			MALARIA,
 		RABIES,
 		UNDEFINED,
 		OTHER })
@@ -2228,6 +2225,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState feverishFeeling;
 	@Diseases({
 		CORONAVIRUS,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2235,6 +2233,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState weakness;
 	@Diseases({
 		CORONAVIRUS,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2308,6 +2307,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
 	@Diseases({
 		CORONAVIRUS,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = {
