@@ -11,6 +11,8 @@ public enum SymptomGroup {
 	URINARY,
 	NERVOUS_SYSTEM,
 	SKIN,
+	MUSCULAR,
+	EYE,
 	OTHER;
 
 	@Override
