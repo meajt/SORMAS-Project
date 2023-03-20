@@ -263,6 +263,8 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 		UNSPECIFIED_VHF,
 			ACUTE_VIRAL_HEPATITIS,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -345,6 +347,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		YELLOW_FEVER,
 		ANTHRAX,
 		MALARIA,
+			DIARRHEA_BLOOD,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -376,6 +379,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		LASSA,
 		POLIO,
+			DIARRHEA_BLOOD,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -434,6 +438,8 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 		MALARIA,
 			ACUTE_VIRAL_HEPATITIS,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 			SNAKE_BITE,
 		UNDEFINED,
 		OTHER })
@@ -528,6 +534,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		LASSA,
 		CHOLERA,
 		POLIO,
+			DIARRHEA_DEHYDRATION,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -550,6 +557,8 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			SNAKE_BITE,
 			MALARIA,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -641,6 +650,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			KALAZAR,
 			MALARIA,
+			DIARRHEA_DEHYDRATION,
 			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
@@ -671,6 +681,8 @@ public class SymptomsDto extends PseudonymizableDto {
 		CORONAVIRUS,
 			MALARIA,
 			KALAZAR,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
@@ -1533,6 +1545,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		GUINEA_WORM,
 		LASSA,
 		POLIO,
+			DIARRHEA_DEHYDRATION,
 		UNSPECIFIED_VHF,
 		UNDEFINED,
 		OTHER })
@@ -1764,6 +1777,8 @@ public class SymptomsDto extends PseudonymizableDto {
 		POLIO,
 			SNAKE_BITE,
 			MALARIA,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 			ACUTE_VIRAL_HEPATITIS,
 		CORONAVIRUS,
 		OTHER })
@@ -2010,6 +2025,8 @@ public class SymptomsDto extends PseudonymizableDto {
 			MALARIA,
 		CORONAVIRUS,
 			KALAZAR,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = {
@@ -2020,6 +2037,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
 	@Diseases({
 		CORONAVIRUS,
+			DIARRHEA_DEHYDRATION,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = {
@@ -2263,6 +2281,8 @@ public class SymptomsDto extends PseudonymizableDto {
 			MALARIA,
 			KALAZAR,
 			ACUTE_VIRAL_HEPATITIS,
+			DIARRHEA_DEHYDRATION,
+			DIARRHEA_BLOOD,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2273,6 +2293,7 @@ public class SymptomsDto extends PseudonymizableDto {
 			MALARIA,
 			KALAZAR,
 			ACUTE_VIRAL_HEPATITIS,
+			DIARRHEA_BLOOD,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2323,6 +2344,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private SymptomState palpitations;
 	@Diseases({
 		CORONAVIRUS,
+			DIARRHEA_DEHYDRATION,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
