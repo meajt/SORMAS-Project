@@ -240,6 +240,19 @@ public class SymptomsDto extends PseudonymizableDto {
 	public static final String SEPSIS = "sepsis";
 	public static final String SHOCK = "shock";
 
+	public static final String BODY_ACHE = "bodyAche";
+	public static final String NUMBESS = "numbness";
+	public static final String MUSCLE_TWITCHING = "muscleTwitching";
+	public static final String PUNCTURE_MARK_AT_WOUND = "punctureMarkAtWound";
+	public static final String BLEEDING_AROUND_BITE = "bleedingAroundBite";
+	public static final String DISTURBED_VISION = "disturbedVision";
+	public static final String DISCOLORED_SKIN = "discoloredSkin";
+	public static final String GROWTH_NODULES_ON_SKIN = "growthNodulesOnSkin";
+	public static final String PAINLESS_ULCER = "painlessUlcer";
+	public static final String EYE_LASHES = "eyelashes";
+	public static final String ENLARGES_NERVES = "enlargesNerves";
+	public static final String MUSCLE_WEAKNESS = "muscleWeakness";
+
 	// Fields are declared in the order they should appear in the import template
 
 	public static SymptomsDto build() {
@@ -2388,6 +2401,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
 	private Boolean bodyAche;
 
+
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
 	private Boolean numbness;
 
@@ -2419,7 +2433,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	private Boolean enlargesNerves;
 
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
-	private Boolean muscleweakness;
+	private Boolean muscleWeakness;
 
 
 
@@ -4099,6 +4113,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		this.growthNodulesOnSkin = growthNodulesOnSkin;
 	}
 
+	@Order(500)
 	public Boolean getPainlessUlcer() {
 		return painlessUlcer;
 	}
@@ -4123,11 +4138,11 @@ public class SymptomsDto extends PseudonymizableDto {
 		this.enlargesNerves = enlargesNerves;
 	}
 
-	public Boolean getMuscleweakness() {
-		return muscleweakness;
+	public Boolean getMuscleWeakness() {
+		return muscleWeakness;
 	}
 
-	public void setMuscleweakness(Boolean muscleweakness) {
-		this.muscleweakness = muscleweakness;
+	public void setMuscleWeakness(Boolean muscleWeakness) {
+		this.muscleWeakness = muscleWeakness;
 	}
 }

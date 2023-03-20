@@ -462,7 +462,18 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			DIZZINESS_STANDING_UP,
 			HIGH_OR_LOW_BLOOD_PRESSURE,
 			URINARY_RETENTION,
-			FEVER);
+			FEVER,
+			BODY_ACHE,
+			NUMBESS,
+			MUSCLE_TWITCHING,
+			PUNCTURE_MARK_AT_WOUND,
+			BLEEDING_AROUND_BITE,
+			DISTURBED_VISION,
+			DISCOLORED_SKIN,
+			GROWTH_NODULES_ON_SKIN,
+			PAINLESS_ULCER,
+			EYE_LASHES,
+			ENLARGES_NERVES);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
