@@ -284,6 +284,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		MALARIA,
 			KALAZAR,
 			ACUTE_VIRAL_HEPATITIS,
+			RSV,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -476,6 +477,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		PLAGUE,
 		POLIO,
 		ANTHRAX,
+			RSV,
 		UNSPECIFIED_VHF,
 		CORONAVIRUS,
 		UNDEFINED,
@@ -575,6 +577,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		MEASLES,
 		PLAGUE,
 		POLIO,
+			RSV,
 		UNSPECIFIED_VHF,
 		RABIES,
 		ANTHRAX,
@@ -683,6 +686,7 @@ public class SymptomsDto extends PseudonymizableDto {
 			KALAZAR,
 			DIARRHEA_DEHYDRATION,
 			DIARRHEA_BLOOD,
+			RSV,
 			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
@@ -1455,6 +1459,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		NEW_INFLUENZA,
 		MEASLES,
 		POLIO,
+			RSV,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -1974,6 +1979,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
 	@Diseases({
 		CORONAVIRUS,
+			RSV,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries(countries = {
@@ -2309,6 +2315,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 		CORONAVIRUS,
 			SNAKE_BITE,
+			RSV,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
