@@ -2385,6 +2385,45 @@ public class SymptomsDto extends PseudonymizableDto {
 	@SymptomGrouping(SymptomGroup.GENERAL)
 	private SymptomState shivering;
 
+	@SymptomGrouping(SymptomGroup.MUSCULAR)
+	private Boolean bodyAche;
+
+	@SymptomGrouping(SymptomGroup.MUSCULAR)
+	private Boolean numbness;
+
+	@SymptomGrouping(SymptomGroup.MUSCULAR)
+	private Boolean muscleTwitching;
+
+	@SymptomGrouping(SymptomGroup.OTHER)
+	private Boolean punctureMarkAtWound;
+
+	@SymptomGrouping(SymptomGroup.OTHER)
+	private Boolean bleedingAroundBite;
+
+	@SymptomGrouping(SymptomGroup.EYE)
+	private Boolean disturbedVision;
+
+	@SymptomGrouping(SymptomGroup.SKIN)
+	private Boolean discoloredSkin;
+
+	@SymptomGrouping(SymptomGroup.SKIN)
+	private Boolean growthNodulesOnSkin;
+
+	@SymptomGrouping(SymptomGroup.SKIN)
+	private Boolean painlessUlcer;
+
+	@SymptomGrouping(SymptomGroup.EYE)
+	private Boolean eyelashes;
+
+	@SymptomGrouping(SymptomGroup.NERVOUS_SYSTEM)
+	private Boolean enlargesNerves;
+
+	@SymptomGrouping(SymptomGroup.MUSCULAR)
+	private Boolean muscleweakness;
+
+
+
+
 	@Order(0)
 	public Float getTemperature() {
 		return temperature;
@@ -3996,4 +4035,99 @@ public class SymptomsDto extends PseudonymizableDto {
 		this.bloodCirculationProblems = bloodCirculationProblems;
 	}
 
+	public Boolean getBodyAche() {
+		return bodyAche;
+	}
+
+	public void setBodyAche(Boolean bodyAche) {
+		this.bodyAche = bodyAche;
+	}
+
+	public Boolean getNumbness() {
+		return numbness;
+	}
+
+	public void setNumbness(Boolean numbness) {
+		this.numbness = numbness;
+	}
+
+	public Boolean getMuscleTwitching() {
+		return muscleTwitching;
+	}
+
+	public void setMuscleTwitching(Boolean muscleTwitching) {
+		this.muscleTwitching = muscleTwitching;
+	}
+
+	public Boolean getPunctureMarkAtWound() {
+		return punctureMarkAtWound;
+	}
+
+	public void setPunctureMarkAtWound(Boolean punctureMarkAtWound) {
+		this.punctureMarkAtWound = punctureMarkAtWound;
+	}
+
+	public Boolean getBleedingAroundBite() {
+		return bleedingAroundBite;
+	}
+
+	public void setBleedingAroundBite(Boolean bleedingAroundBite) {
+		this.bleedingAroundBite = bleedingAroundBite;
+	}
+
+	public Boolean getDisturbedVision() {
+		return disturbedVision;
+	}
+
+	public void setDisturbedVision(Boolean disturbedVision) {
+		this.disturbedVision = disturbedVision;
+	}
+
+	public Boolean getDiscoloredSkin() {
+		return discoloredSkin;
+	}
+
+	public void setDiscoloredSkin(Boolean discoloredSkin) {
+		this.discoloredSkin = discoloredSkin;
+	}
+
+	public Boolean getGrowthNodulesOnSkin() {
+		return growthNodulesOnSkin;
+	}
+
+	public void setGrowthNodulesOnSkin(Boolean growthNodulesOnSkin) {
+		this.growthNodulesOnSkin = growthNodulesOnSkin;
+	}
+
+	public Boolean getPainlessUlcer() {
+		return painlessUlcer;
+	}
+
+	public void setPainlessUlcer(Boolean painlessUlcer) {
+		this.painlessUlcer = painlessUlcer;
+	}
+
+	public Boolean getEyelashes() {
+		return eyelashes;
+	}
+
+	public void setEyelashes(Boolean eyelashes) {
+		this.eyelashes = eyelashes;
+	}
+
+	public Boolean getEnlargesNerves() {
+		return enlargesNerves;
+	}
+
+	public void setEnlargesNerves(Boolean enlargesNerves) {
+		this.enlargesNerves = enlargesNerves;
+	}
+
+	public Boolean getMuscleweakness() {
+		return muscleweakness;
+	}
+
+	public void setMuscleweakness(Boolean muscleweakness) {
+		this.muscleweakness = muscleweakness;
+	}
 }
