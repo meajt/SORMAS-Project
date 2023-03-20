@@ -284,7 +284,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		MALARIA,
 			KALAZAR,
 			ACUTE_VIRAL_HEPATITIS,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 		UNDEFINED,
 		OTHER })
 	@Outbreaks
@@ -477,7 +477,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		PLAGUE,
 		POLIO,
 		ANTHRAX,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 		UNSPECIFIED_VHF,
 		CORONAVIRUS,
 		UNDEFINED,
@@ -577,7 +577,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		MEASLES,
 		PLAGUE,
 		POLIO,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 		UNSPECIFIED_VHF,
 		RABIES,
 		ANTHRAX,
@@ -686,7 +686,7 @@ public class SymptomsDto extends PseudonymizableDto {
 			KALAZAR,
 			DIARRHEA_DEHYDRATION,
 			DIARRHEA_BLOOD,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 			ACUTE_VIRAL_HEPATITIS,
 		UNDEFINED,
 		OTHER })
@@ -1459,7 +1459,7 @@ public class SymptomsDto extends PseudonymizableDto {
 		NEW_INFLUENZA,
 		MEASLES,
 		POLIO,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 		CORONAVIRUS,
 		UNDEFINED,
 		OTHER })
@@ -1979,7 +1979,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
 	@Diseases({
 		CORONAVIRUS,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries(countries = {
@@ -2315,7 +2315,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 		CORONAVIRUS,
 			SNAKE_BITE,
-			RSV,
+			RESPIRATORY_SYNCYTIAL_VIRUS,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
