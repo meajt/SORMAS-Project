@@ -17,6 +17,8 @@
  *******************************************************************************/
 package de.symeda.sormas.backend.symptoms;
 
+import static de.symeda.sormas.api.Disease.*;
+import static de.symeda.sormas.api.Disease.MALARIA;
 import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_DEFAULT;
 
 import java.util.Date;
@@ -32,6 +34,9 @@ import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
 import de.symeda.sormas.api.symptoms.SymptomState;
 import de.symeda.sormas.api.symptoms.TemperatureSource;
+import de.symeda.sormas.api.utils.Diseases;
+import de.symeda.sormas.api.utils.SymptomGroup;
+import de.symeda.sormas.api.utils.SymptomGrouping;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 
@@ -237,6 +242,31 @@ public class Symptoms extends AbstractDomainObject {
 
 	private SymptomState otherComplications;
 	private String otherComplicationsText;
+
+	private Boolean bodyAche;
+
+	private Boolean numbness;
+
+	private Boolean muscleTwitching;
+
+	private Boolean punctureMarkAtWound;
+
+	private Boolean bleedingAroundBite;
+
+	private Boolean disturbedVision;
+
+	private Boolean discoloredSkin;
+
+	private Boolean growthNodulesOnSkin;
+
+	private Boolean painlessUlcer;
+
+	private Boolean eyelashes;
+
+	private Boolean enlargesNerves;
+
+	private Boolean muscleWeakness;
+
 
 	// when adding new fields make sure to extend toHumanString
 
@@ -1840,5 +1870,101 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setOtherComplicationsText(String otherComplicationsText) {
 		this.otherComplicationsText = otherComplicationsText;
+	}
+
+	public Boolean getBodyAche() {
+		return bodyAche;
+	}
+
+	public void setBodyAche(Boolean bodyAche) {
+		this.bodyAche = bodyAche;
+	}
+
+	public Boolean getNumbness() {
+		return numbness;
+	}
+
+	public void setNumbness(Boolean numbness) {
+		this.numbness = numbness;
+	}
+
+	public Boolean getMuscleTwitching() {
+		return muscleTwitching;
+	}
+
+	public void setMuscleTwitching(Boolean muscleTwitching) {
+		this.muscleTwitching = muscleTwitching;
+	}
+
+	public Boolean getPunctureMarkAtWound() {
+		return punctureMarkAtWound;
+	}
+
+	public void setPunctureMarkAtWound(Boolean punctureMarkAtWound) {
+		this.punctureMarkAtWound = punctureMarkAtWound;
+	}
+
+	public Boolean getBleedingAroundBite() {
+		return bleedingAroundBite;
+	}
+
+	public void setBleedingAroundBite(Boolean bleedingAroundBite) {
+		this.bleedingAroundBite = bleedingAroundBite;
+	}
+
+	public Boolean getDisturbedVision() {
+		return disturbedVision;
+	}
+
+	public void setDisturbedVision(Boolean disturbedVision) {
+		this.disturbedVision = disturbedVision;
+	}
+
+	public Boolean getDiscoloredSkin() {
+		return discoloredSkin;
+	}
+
+	public void setDiscoloredSkin(Boolean discoloredSkin) {
+		this.discoloredSkin = discoloredSkin;
+	}
+
+	public Boolean getGrowthNodulesOnSkin() {
+		return growthNodulesOnSkin;
+	}
+
+	public void setGrowthNodulesOnSkin(Boolean growthNodulesOnSkin) {
+		this.growthNodulesOnSkin = growthNodulesOnSkin;
+	}
+
+	public Boolean getPainlessUlcer() {
+		return painlessUlcer;
+	}
+
+	public void setPainlessUlcer(Boolean painlessUlcer) {
+		this.painlessUlcer = painlessUlcer;
+	}
+
+	public Boolean getEyelashes() {
+		return eyelashes;
+	}
+
+	public void setEyelashes(Boolean eyelashes) {
+		this.eyelashes = eyelashes;
+	}
+
+	public Boolean getEnlargesNerves() {
+		return enlargesNerves;
+	}
+
+	public void setEnlargesNerves(Boolean enlargesNerves) {
+		this.enlargesNerves = enlargesNerves;
+	}
+
+	public Boolean getMuscleWeakness() {
+		return muscleWeakness;
+	}
+
+	public void setMuscleWeakness(Boolean muscleWeakness) {
+		this.muscleWeakness = muscleWeakness;
 	}
 }
