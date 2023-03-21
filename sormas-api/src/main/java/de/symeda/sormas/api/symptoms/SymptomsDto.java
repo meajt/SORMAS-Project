@@ -2398,40 +2398,77 @@ public class SymptomsDto extends PseudonymizableDto {
 	@SymptomGrouping(SymptomGroup.GENERAL)
 	private SymptomState shivering;
 
+	@Diseases({
+			MALARIA,
+			ACUTE_VIRAL_HEPATITIS
+	})
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
 	private Boolean bodyAche;
 
-
+	@Diseases({
+			SNAKE_BITE,
+			LEPROSY
+	})
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
 	private Boolean numbness;
 
+	@Diseases({
+			SNAKE_BITE
+	})
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
 	private Boolean muscleTwitching;
 
+	@Diseases({
+			SNAKE_BITE
+	})
 	@SymptomGrouping(SymptomGroup.OTHER)
 	private Boolean punctureMarkAtWound;
 
+	@Diseases({
+			SNAKE_BITE
+	})
 	@SymptomGrouping(SymptomGroup.OTHER)
 	private Boolean bleedingAroundBite;
 
+	@Diseases({
+		SNAKE_BITE
+	})
 	@SymptomGrouping(SymptomGroup.EYE)
 	private Boolean disturbedVision;
 
+	@Diseases({
+			MALARIA
+	})
 	@SymptomGrouping(SymptomGroup.SKIN)
 	private Boolean discoloredSkin;
 
+	@Diseases({
+			MALARIA
+	})
 	@SymptomGrouping(SymptomGroup.SKIN)
 	private Boolean growthNodulesOnSkin;
 
+	@Diseases({
+			MALARIA
+	})
 	@SymptomGrouping(SymptomGroup.SKIN)
 	private Boolean painlessUlcer;
 
+	@Diseases({
+			MALARIA
+	})
 	@SymptomGrouping(SymptomGroup.EYE)
 	private Boolean eyelashes;
 
+	@Diseases({
+			MALARIA
+	})
 	@SymptomGrouping(SymptomGroup.NERVOUS_SYSTEM)
 	private Boolean enlargesNerves;
 
+	@Diseases({
+			MALARIA
+	})
 	@SymptomGrouping(SymptomGroup.MUSCULAR)
 	private Boolean muscleWeakness;
 
