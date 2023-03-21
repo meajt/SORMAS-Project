@@ -252,6 +252,8 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		final Label nervousSystemSymptomsHeadingLabel =
 			createLabel(SymptomGroup.NERVOUS_SYSTEM.toString(), H4, NERVOUS_SYSTEM_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label skinSymptomsHeadingLabel = createLabel(SymptomGroup.SKIN.toString(), H4, SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC);
+		final Label muscularSymptomsHeadingLabel = createLabel(SymptomGroup.MUSCULAR.toString(), H4, MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC);
+		final Label eyeSymptomsHeadingLabel = createLabel(SymptomGroup.EYE.toString(), H4, EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label otherSymptomsHeadingLabel = createLabel(SymptomGroup.OTHER.toString(), H4, OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 
 		DateField onsetDateField = addField(ONSET_DATE, DateField.class);
@@ -315,7 +317,6 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		}
 		ComboBox glasgowComaScale = addField(GLASGOW_COMA_SCALE, ComboBox.class);
 		glasgowComaScale.addItems(SymptomsHelper.getGlasgowComaScaleValues());
-
 		addFields(
 			VOMITING,
 			DIARRHEA,
@@ -477,7 +478,8 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			GROWTH_NODULES_ON_SKIN,
 			PAINLESS_ULCER,
 			EYE_LASHES,
-			ENLARGES_NERVES);
+			ENLARGES_NERVES,
+			MUSCLE_WEAKNESS);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
@@ -677,6 +679,18 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			DIZZINESS_STANDING_UP,
 			HIGH_OR_LOW_BLOOD_PRESSURE,
 			URINARY_RETENTION,
+			BODY_ACHE,
+			NUMBESS,
+			MUSCLE_TWITCHING,
+			PUNCTURE_MARK_AT_WOUND,
+			BLEEDING_AROUND_BITE,
+			DISTURBED_VISION,
+			DISCOLORED_SKIN,
+			GROWTH_NODULES_ON_SKIN,
+			PAINLESS_ULCER,
+			EYE_LASHES,
+			ENLARGES_NERVES,
+			MUSCLE_WEAKNESS,
 			// complications
 			ALTERED_CONSCIOUSNESS,
 			CONFUSED_DISORIENTED,
