@@ -212,7 +212,18 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setDizzinessStandingUp(source.getDizzinessStandingUp());
 		target.setHighOrLowBloodPressure(source.getHighOrLowBloodPressure());
 		target.setUrinaryRetention(source.getUrinaryRetention());
-
+		target.setBodyAche(source.getBodyAche());
+		target.setNumbness(source.getNumbness());
+		target.setMuscleTwitching(source.getMuscleTwitching());
+		target.setPunctureMarkAtWound(source.getPunctureMarkAtWound());
+		target.setBleedingAroundBite(source.getBleedingAroundBite());
+		target.setDisturbedVision(source.getDisturbedVision());
+		target.setDiscoloredSkin(source.getDiscoloredSkin());
+		target.setGrowthNodulesOnSkin(source.getGrowthNodulesOnSkin());
+		target.setPainlessUlcer(source.getPainlessUlcer());
+		target.setEyelashes(source.getEyelashes());
+		target.setEnlargesNerves(source.getEnlargesNerves());
+		target.setMuscleWeakness(source.getMuscleWeakness());
 		return target;
 	}
 
@@ -407,7 +418,18 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setDizzinessStandingUp(source.getDizzinessStandingUp());
 		target.setHighOrLowBloodPressure(source.getHighOrLowBloodPressure());
 		target.setUrinaryRetention(source.getUrinaryRetention());
-
+		target.setBodyAche(source.getBodyAche());
+		target.setNumbness(source.getNumbness());
+		target.setMuscleTwitching(source.getMuscleTwitching());
+		target.setPunctureMarkAtWound(source.getPunctureMarkAtWound());
+		target.setBleedingAroundBite(source.getBleedingAroundBite());
+		target.setDisturbedVision(source.getDisturbedVision());
+		target.setDiscoloredSkin(source.getDiscoloredSkin());
+		target.setGrowthNodulesOnSkin(source.getGrowthNodulesOnSkin());
+		target.setPainlessUlcer(source.getPainlessUlcer());
+		target.setEyelashes(source.getEyelashes());
+		target.setEnlargesNerves(source.getEnlargesNerves());
+		target.setMuscleWeakness(source.getMuscleWeakness());
 		return target;
 	}
 
