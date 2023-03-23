@@ -425,6 +425,41 @@ public class Symptoms extends PseudonymizableAdo {
 	private SymptomState urinaryRetention;
 	@Enumerated(EnumType.STRING)
 	private SymptomState shivering;
+	@DatabaseField
+	private Boolean bodyAche;
+
+	@DatabaseField
+	private Boolean numbness;
+
+	@DatabaseField
+	private Boolean muscleTwitching;
+
+	@DatabaseField
+	private Boolean punctureMarkAtWound;
+
+	@DatabaseField
+	private Boolean bleedingAroundBite;
+
+	@DatabaseField
+	private Boolean disturbedVision;
+
+	@DatabaseField
+	private Boolean discoloredSkin;
+
+	@DatabaseField
+	private Boolean growthNodulesOnSkin;
+
+	@DatabaseField
+	private Boolean painlessUlcer;
+
+	@DatabaseField
+	private Boolean eyelashes;
+
+	@DatabaseField
+	private Boolean enlargesNerves;
+
+	@DatabaseField
+	private Boolean muscleWeakness;
 
 	@Override
 	public String getI18nPrefix() {
@@ -1869,5 +1904,133 @@ public class Symptoms extends PseudonymizableAdo {
 
 	public void setShivering(SymptomState shivering) {
 		this.shivering = shivering;
+	}
+
+	public Long getIllLocationId() {
+		return illLocationId;
+	}
+
+	public void setIllLocationId(Long illLocationId) {
+		this.illLocationId = illLocationId;
+	}
+
+	public Date getIllLocationFrom() {
+		return illLocationFrom;
+	}
+
+	public void setIllLocationFrom(Date illLocationFrom) {
+		this.illLocationFrom = illLocationFrom;
+	}
+
+	public Date getIllLocationTo() {
+		return illLocationTo;
+	}
+
+	public void setIllLocationTo(Date illLocationTo) {
+		this.illLocationTo = illLocationTo;
+	}
+
+	public SymptomState getCutaneousEruption() {
+		return cutaneousEruption;
+	}
+
+	public void setCutaneousEruption(SymptomState cutaneousEruption) {
+		this.cutaneousEruption = cutaneousEruption;
+	}
+
+	public Boolean getBodyAche() {
+		return bodyAche;
+	}
+
+	public void setBodyAche(Boolean bodyAche) {
+		this.bodyAche = bodyAche;
+	}
+
+	public Boolean getNumbness() {
+		return numbness;
+	}
+
+	public void setNumbness(Boolean numbness) {
+		this.numbness = numbness;
+	}
+
+	public Boolean getMuscleTwitching() {
+		return muscleTwitching;
+	}
+
+	public void setMuscleTwitching(Boolean muscleTwitching) {
+		this.muscleTwitching = muscleTwitching;
+	}
+
+	public Boolean getPunctureMarkAtWound() {
+		return punctureMarkAtWound;
+	}
+
+	public void setPunctureMarkAtWound(Boolean punctureMarkAtWound) {
+		this.punctureMarkAtWound = punctureMarkAtWound;
+	}
+
+	public Boolean getBleedingAroundBite() {
+		return bleedingAroundBite;
+	}
+
+	public void setBleedingAroundBite(Boolean bleedingAroundBite) {
+		this.bleedingAroundBite = bleedingAroundBite;
+	}
+
+	public Boolean getDisturbedVision() {
+		return disturbedVision;
+	}
+
+	public void setDisturbedVision(Boolean disturbedVision) {
+		this.disturbedVision = disturbedVision;
+	}
+
+	public Boolean getDiscoloredSkin() {
+		return discoloredSkin;
+	}
+
+	public void setDiscoloredSkin(Boolean discoloredSkin) {
+		this.discoloredSkin = discoloredSkin;
+	}
+
+	public Boolean getGrowthNodulesOnSkin() {
+		return growthNodulesOnSkin;
+	}
+
+	public void setGrowthNodulesOnSkin(Boolean growthNodulesOnSkin) {
+		this.growthNodulesOnSkin = growthNodulesOnSkin;
+	}
+
+	public Boolean getPainlessUlcer() {
+		return painlessUlcer;
+	}
+
+	public void setPainlessUlcer(Boolean painlessUlcer) {
+		this.painlessUlcer = painlessUlcer;
+	}
+
+	public Boolean getEyelashes() {
+		return eyelashes;
+	}
+
+	public void setEyelashes(Boolean eyelashes) {
+		this.eyelashes = eyelashes;
+	}
+
+	public Boolean getEnlargesNerves() {
+		return enlargesNerves;
+	}
+
+	public void setEnlargesNerves(Boolean enlargesNerves) {
+		this.enlargesNerves = enlargesNerves;
+	}
+
+	public Boolean getMuscleWeakness() {
+		return muscleWeakness;
+	}
+
+	public void setMuscleWeakness(Boolean muscleWeakness) {
+		this.muscleWeakness = muscleWeakness;
 	}
 }
