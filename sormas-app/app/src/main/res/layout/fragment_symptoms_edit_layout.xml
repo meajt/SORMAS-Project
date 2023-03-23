@@ -1357,6 +1357,56 @@
                 app:value="@={data.otherComplications}"
                 style="@style/ControlSingleColumnStyle" />
 
+
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_bodyAche"
+                app:value="@={data.bodyAche}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_numbness"
+                app:value="@={data.numbness}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_muscleTwitching"
+                app:value="@={data.muscleTwitching}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_punctureMarkAtWound"
+                app:value="@={data.punctureMarkAtWound}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_bleedingAroundBite"
+                app:value="@={data.bleedingAroundBite}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_disturbedVision"
+                app:value="@={data.disturbedVision}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_discoloredSkin"
+                app:value="@={data.discoloredSkin}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_growthNodulesOnSkin"
+                app:value="@={data.growthNodulesOnSkin}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_painlessUlcer"
+                app:value="@={data.painlessUlcer}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_eyelashes"
+                app:value="@={data.eyelashes}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_enlargesNerves"
+                app:value="@={data.enlargesNerves}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlCheckBoxField
+                android:id="@+id/symptoms_muscleWeakness"
+                app:value="@={data.muscleWeakness}"
+                style="@style/ControlSingleColumnStyle" />
+
             <de.symeda.sormas.app.component.controls.ControlTextEditField
                 android:id="@+id/symptoms_otherComplicationsText"
                 app:value="@={data.otherComplicationsText}"
