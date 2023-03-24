@@ -243,29 +243,29 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState otherComplications;
 	private String otherComplicationsText;
 
-	private Boolean bodyAche;
+	private SymptomState bodyAche;
 
-	private Boolean numbness;
+	private SymptomState numbness;
 
-	private Boolean muscleTwitching;
+	private SymptomState muscleTwitching;
 
-	private Boolean punctureMarkAtWound;
+	private SymptomState punctureMarkAtWound;
 
-	private Boolean bleedingAroundBite;
+	private SymptomState bleedingAroundBite;
 
-	private Boolean disturbedVision;
+	private SymptomState disturbedVision;
 
-	private Boolean discoloredSkin;
+	private SymptomState discoloredSkin;
 
-	private Boolean growthNodulesOnSkin;
+	private SymptomState growthNodulesOnSkin;
 
-	private Boolean painlessUlcer;
+	private SymptomState painlessUlcer;
 
-	private Boolean eyelashes;
+	private SymptomState eyelashes;
 
-	private Boolean enlargesNerves;
+	private SymptomState enlargesNerves;
 
-	private Boolean muscleWeakness;
+	private SymptomState muscleWeakness;
 
 
 	// when adding new fields make sure to extend toHumanString
@@ -1872,99 +1872,99 @@ public class Symptoms extends AbstractDomainObject {
 		this.otherComplicationsText = otherComplicationsText;
 	}
 
-	public Boolean getBodyAche() {
+	public SymptomState getBodyAche() {
 		return bodyAche;
 	}
 
-	public void setBodyAche(Boolean bodyAche) {
+	public void setBodyAche(SymptomState bodyAche) {
 		this.bodyAche = bodyAche;
 	}
 
-	public Boolean getNumbness() {
+	public SymptomState getNumbness() {
 		return numbness;
 	}
 
-	public void setNumbness(Boolean numbness) {
+	public void setNumbness(SymptomState numbness) {
 		this.numbness = numbness;
 	}
 
-	public Boolean getMuscleTwitching() {
+	public SymptomState getMuscleTwitching() {
 		return muscleTwitching;
 	}
 
-	public void setMuscleTwitching(Boolean muscleTwitching) {
+	public void setMuscleTwitching(SymptomState muscleTwitching) {
 		this.muscleTwitching = muscleTwitching;
 	}
 
-	public Boolean getPunctureMarkAtWound() {
+	public SymptomState getPunctureMarkAtWound() {
 		return punctureMarkAtWound;
 	}
 
-	public void setPunctureMarkAtWound(Boolean punctureMarkAtWound) {
+	public void setPunctureMarkAtWound(SymptomState punctureMarkAtWound) {
 		this.punctureMarkAtWound = punctureMarkAtWound;
 	}
 
-	public Boolean getBleedingAroundBite() {
+	public SymptomState getBleedingAroundBite() {
 		return bleedingAroundBite;
 	}
 
-	public void setBleedingAroundBite(Boolean bleedingAroundBite) {
+	public void setBleedingAroundBite(SymptomState bleedingAroundBite) {
 		this.bleedingAroundBite = bleedingAroundBite;
 	}
 
-	public Boolean getDisturbedVision() {
+	public SymptomState getDisturbedVision() {
 		return disturbedVision;
 	}
 
-	public void setDisturbedVision(Boolean disturbedVision) {
+	public void setDisturbedVision(SymptomState disturbedVision) {
 		this.disturbedVision = disturbedVision;
 	}
 
-	public Boolean getDiscoloredSkin() {
+	public SymptomState getDiscoloredSkin() {
 		return discoloredSkin;
 	}
 
-	public void setDiscoloredSkin(Boolean discoloredSkin) {
+	public void setDiscoloredSkin(SymptomState discoloredSkin) {
 		this.discoloredSkin = discoloredSkin;
 	}
 
-	public Boolean getGrowthNodulesOnSkin() {
+	public SymptomState getGrowthNodulesOnSkin() {
 		return growthNodulesOnSkin;
 	}
 
-	public void setGrowthNodulesOnSkin(Boolean growthNodulesOnSkin) {
+	public void setGrowthNodulesOnSkin(SymptomState growthNodulesOnSkin) {
 		this.growthNodulesOnSkin = growthNodulesOnSkin;
 	}
 
-	public Boolean getPainlessUlcer() {
+	public SymptomState getPainlessUlcer() {
 		return painlessUlcer;
 	}
 
-	public void setPainlessUlcer(Boolean painlessUlcer) {
+	public void setPainlessUlcer(SymptomState painlessUlcer) {
 		this.painlessUlcer = painlessUlcer;
 	}
 
-	public Boolean getEyelashes() {
+	public SymptomState getEyelashes() {
 		return eyelashes;
 	}
 
-	public void setEyelashes(Boolean eyelashes) {
+	public void setEyelashes(SymptomState eyelashes) {
 		this.eyelashes = eyelashes;
 	}
 
-	public Boolean getEnlargesNerves() {
+	public SymptomState getEnlargesNerves() {
 		return enlargesNerves;
 	}
 
-	public void setEnlargesNerves(Boolean enlargesNerves) {
+	public void setEnlargesNerves(SymptomState enlargesNerves) {
 		this.enlargesNerves = enlargesNerves;
 	}
 
-	public Boolean getMuscleWeakness() {
+	public SymptomState getMuscleWeakness() {
 		return muscleWeakness;
 	}
 
-	public void setMuscleWeakness(Boolean muscleWeakness) {
+	public void setMuscleWeakness(SymptomState muscleWeakness) {
 		this.muscleWeakness = muscleWeakness;
 	}
 }
