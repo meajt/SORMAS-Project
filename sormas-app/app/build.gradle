@@ -59,11 +59,14 @@ android {
             buildConfigField 'String', 'BASE_URL', '"http://192.168.13.37:6080/sormas-rest"'
             buildConfigField 'Boolean', 'IS_VALID_PIN', 'false'
         }
-
-          prd { 
-              buildConfigField 'String', 'BASE_URL', '"https://sormasnepal.org/sormas-rest"'
-              buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
-          }
+        prd {
+            buildConfigField 'String', 'BASE_URL', '"https://sormasnepal.org/sormas-rest"'
+            buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
+        }
+        stg {
+            buildConfigField 'String', 'BASE_URL', '"http://74.235.98.228:6080/sormas-rest"'
+            buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
+        }
     }
 
     lintOptions {
@@ -78,6 +81,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
     // needed for pre androidx testing. This will not make it's way into the apk
@@ -95,6 +99,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
     def lifecycle_version = "2.2.0"
     def paging_version = "3.0.1"
 

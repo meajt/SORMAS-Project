@@ -62,6 +62,7 @@
     <string name="action_edit_sample">Edit Sample</string>
     <string name="action_forgot_PIN">Forgot PIN?</string>
     <string name="action_help">Help</string>
+    <string name="action_print">Print</string>
     <string name="action_install_app">Install</string>
     <string name="action_install_later">Install later</string>
     <string name="action_loadMore">Load more</string>
