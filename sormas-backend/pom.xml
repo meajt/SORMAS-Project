@@ -120,10 +120,10 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
-	<!--	<dependency>
+		<dependency>
 			<groupId>info.novatec</groupId>
 			<artifactId>bean-test</artifactId>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld.se</groupId>
 			<artifactId>weld-se</artifactId>
