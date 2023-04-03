@@ -102,6 +102,12 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
                     fluidRowLocs(SampleDto.SHIPMENT_DATE, SampleDto.SHIPMENT_DETAILS) +
 
                     locCss(VSPACE_TOP_3, SampleDto.RECEIVED) +
+                    locCss(VSPACE_TOP_3, SampleDto.HAS_PREMIUM_HEALTH_PACKAGE) +
+                    locCss(VSPACE_TOP_3, SampleDto.HAS_RFT) +
+                    locCss(VSPACE_TOP_3, SampleDto.HAS_LIPID_PROFILE) +
+                    locCss(VSPACE_TOP_3, SampleDto.HAS_LFT) +
+                    locCss(VSPACE_TOP_3, SampleDto.HAS_URINE_RE) +
+                    locCss(VSPACE_TOP_3, SampleDto.HAS_COMPLETE_BLOOD_COUNT) +
                     fluidRowLocs(SampleDto.RECEIVED_DATE, SampleDto.LAB_SAMPLE_ID) +
 
                     fluidRowLocs(SampleDto.SPECIMEN_CONDITION, SampleDto.NO_TEST_POSSIBLE_REASON) +
@@ -116,7 +122,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 			type,
 			propertyI18nPrefix,
 			true,
-			FieldVisibilityCheckers.withDisease(disease).andWithCountry(FacadeProvider.getConfigFacade().getCountryLocale()),
+			FieldVisibilityCheckers.withDisease(disease).andWithCountry(FacadeProvider.getConfigFacade().getCountryLocale()) ,
 			fieldAccessCheckers);
 	}
 
@@ -151,6 +157,12 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 				+ I18nProperties.getDescription(Descriptions.descGdpr));
 		addField(SampleDto.SHIPPED, CheckBox.class);
 		addField(SampleDto.RECEIVED, CheckBox.class);
+		addField(SampleDto.HAS_PREMIUM_HEALTH_PACKAGE, CheckBox.class);
+		addField(SampleDto.HAS_RFT, CheckBox.class);
+		addField(SampleDto.HAS_LIPID_PROFILE, CheckBox.class);
+		addField(SampleDto.HAS_LFT, CheckBox.class);
+		addField(SampleDto.HAS_URINE_RE, CheckBox.class);
+		addField(SampleDto.HAS_COMPLETE_BLOOD_COUNT, CheckBox.class);
 
 		ComboBox testResultField = addField(SampleDto.PATHOGEN_TEST_RESULT, ComboBox.class);
 		testResultField.removeItem(PathogenTestResultType.NOT_DONE);
@@ -166,7 +178,14 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		addField(SampleDto.DELETION_REASON);
 		addField(SampleDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, SampleDto.DELETION_REASON, SampleDto.OTHER_DELETION_REASON);
-
+		setVisible(fieldVisibilityCheckers.isVisible(SampleDto.class, SampleDto.HAS_PREMIUM_HEALTH_PACKAGE),
+				SampleDto.HAS_PREMIUM_HEALTH_PACKAGE,
+				SampleDto.HAS_RFT,
+				SampleDto.HAS_LIPID_PROFILE,
+				SampleDto.HAS_LFT,
+				SampleDto.HAS_URINE_RE,
+				SampleDto.HAS_COMPLETE_BLOOD_COUNT
+				);
 	}
 
 	protected void defaultValueChangeListener() {
