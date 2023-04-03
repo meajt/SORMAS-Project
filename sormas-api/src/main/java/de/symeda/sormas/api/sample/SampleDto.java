@@ -14,8 +14,10 @@
  */
 package de.symeda.sormas.api.sample;
 
+import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
-import de.symeda.sormas.api.utils.DependingOnFeatureType;
+import de.symeda.sormas.api.utils.*;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -32,10 +34,6 @@ import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
 import de.symeda.sormas.api.sormastosormas.SormasToSormasShareableDto;
 import de.symeda.sormas.api.user.UserReferenceDto;
-import de.symeda.sormas.api.utils.DataHelper;
-import de.symeda.sormas.api.utils.FieldConstraints;
-import de.symeda.sormas.api.utils.Required;
-import de.symeda.sormas.api.utils.SensitiveData;
 
 @DependingOnFeatureType(featureType = FeatureType.SAMPLES_LAB)
 public class SampleDto extends SormasToSormasShareableDto {
@@ -78,6 +76,12 @@ public class SampleDto extends SormasToSormasShareableDto {
 	public static final String SAMPLING_REASON_DETAILS = "samplingReasonDetails";
 	public static final String DELETION_REASON = "deletionReason";
 	public static final String OTHER_DELETION_REASON = "otherDeletionReason";
+	public static final String HAS_PREMIUM_HEALTH_PACKAGE = "hasPremiumHealthPackage";
+	public static final String HAS_RFT = "hasRFT";
+	public static final String HAS_LIPID_PROFILE = "hasLipidProfile";
+	public static final String HAS_LFT = "hasLFT";
+	public static final String HAS_URINE_RE = "hasUrineRE";
+	public static final String HAS_COMPLETE_BLOOD_COUNT = "hasCompleteBloodCount";
 
 	private CaseReferenceDto associatedCase;
 	private ContactReferenceDto associatedContact;
@@ -152,6 +156,20 @@ public class SampleDto extends SormasToSormasShareableDto {
 	private DeletionReason deletionReason;
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String otherDeletionReason;
+
+	@Diseases({Disease.NCD})
+	private boolean hasPremiumHealthPackage;
+	@Diseases({Disease.NCD})
+	private boolean hasRFT;
+	@Diseases({Disease.NCD})
+	private boolean hasLipidProfile;
+	@Diseases({Disease.NCD})
+	private boolean hasLFT;
+	@Diseases({Disease.NCD})
+	private boolean hasUrineRE;
+	@Diseases({Disease.NCD})
+	private boolean hasCompleteBloodCount;
+
 
 	@ImportIgnore
 	public CaseReferenceDto getAssociatedCase() {
@@ -556,5 +574,53 @@ public class SampleDto extends SormasToSormasShareableDto {
 
 	public void setOtherDeletionReason(String otherDeletionReason) {
 		this.otherDeletionReason = otherDeletionReason;
+	}
+
+	public boolean isHasPremiumHealthPackage() {
+		return hasPremiumHealthPackage;
+	}
+
+	public void setHasPremiumHealthPackage(boolean hasPremiumHealthPackage) {
+		this.hasPremiumHealthPackage = hasPremiumHealthPackage;
+	}
+
+	public boolean isHasRFT() {
+		return hasRFT;
+	}
+
+	public void setHasRFT(boolean hasRFT) {
+		this.hasRFT = hasRFT;
+	}
+
+	public boolean isHasLipidProfile() {
+		return hasLipidProfile;
+	}
+
+	public void setHasLipidProfile(boolean hasLipidProfile) {
+		this.hasLipidProfile = hasLipidProfile;
+	}
+
+	public boolean isHasLFT() {
+		return hasLFT;
+	}
+
+	public void setHasLFT(boolean hasLFT) {
+		this.hasLFT = hasLFT;
+	}
+
+	public boolean isHasUrineRE() {
+		return hasUrineRE;
+	}
+
+	public void setHasUrineRE(boolean hasUrineRE) {
+		this.hasUrineRE = hasUrineRE;
+	}
+
+	public boolean isHasCompleteBloodCount() {
+		return hasCompleteBloodCount;
+	}
+
+	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
+		this.hasCompleteBloodCount = hasCompleteBloodCount;
 	}
 }
