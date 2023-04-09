@@ -1,9 +1,13 @@
-package de.symeda.sormas.api.sample.ncd;
+package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.sormas.api.EntityDto;
-import de.symeda.sormas.api.utils.PersonalData;
+import de.symeda.auditlog.api.Audited;
+import de.symeda.sormas.backend.common.AbstractDomainObject;
 
-public class LftSampleDto extends EntityDto {
+import javax.persistence.Entity;
+
+@Entity(name = "lft_sample")
+@Audited
+public class LftSample extends AbstractDomainObject {
     public static final String LFT_SAMPLE = "LftSampleDto";
     public static final String I18N_PREFIX = "LftSample";
     public static final String BILIRUBIN_T = "bilirubinT";
@@ -14,19 +18,19 @@ public class LftSampleDto extends EntityDto {
     public static final String SGOT = "sgot";
     public static final String VLDL = "vldl";
 
-    @PersonalData
+
     private Float bilirubinT;
-    @PersonalData
+
     private Float bilirubinD;
-    @PersonalData
+
     private Float alkalinePhospatase;
-    @PersonalData
+
     private Float kinetic;
-    @PersonalData
+
     private Float sgpt;
-    @PersonalData
+
     private Float sgot;
-    @PersonalData
+
     private Float vldl;
 
     public Float getBilirubinT() {

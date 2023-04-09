@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
 import org.apache.commons.lang3.StringUtils;
 
 import com.vaadin.navigator.Navigator;
@@ -272,11 +274,17 @@ public class SampleController {
 
 		final SampleCreateForm createForm = new SampleCreateForm(disease);
 		createForm.setValue(sampleDto);
+		if (disease == Disease.NCD) {
+			createForm.updateNcdSampleFormValue();
+		}
 		final CommitDiscardWrapperComponent<SampleCreateForm> editView =
 			new CommitDiscardWrapperComponent<>(createForm, UserProvider.getCurrent().hasUserRight(userRight), createForm.getFieldGroup());
 
 		editView.addCommitListener(() -> {
 			if (!createForm.getFieldGroup().isModified()) {
+				if (disease == Disease.NCD) {
+					createForm.updateNcdSampleDtoValue();
+				}
 				FacadeProvider.getSampleFacade().saveSample(sampleDto);
 				if (callback != null) {
 					callback.run();
@@ -352,6 +360,9 @@ public class SampleController {
 		form.setWidth(form.getWidth() * 10 / 12, Unit.PIXELS);
 		SampleDto dto = FacadeProvider.getSampleFacade().getSampleByUuid(sampleUuid);
 		form.setValue(dto);
+		if (disease == Disease.NCD) {
+			form.updateNcdSampleFormValue();
+		}
 		final CommitDiscardWrapperComponent<SampleEditForm> editView = new CommitDiscardWrapperComponent<SampleEditForm>(
 			form,
 			UserProvider.getCurrent().hasUserRight(UserRight.SAMPLE_EDIT),
@@ -359,7 +370,12 @@ public class SampleController {
 
 		editView.addCommitListener(() -> {
 			if (!form.getFieldGroup().isModified()) {
+				if (disease == Disease.NCD) {
+					form.updateNcdSampleDtoValue();
+				}
 				SampleDto changedDto = form.getValue();
+				CustomLoggerFactory.getLogger(LoggerType.WEB)
+						.logObj("SampleDtoToBeSave", changedDto);
 				SampleDto originalDto = FacadeProvider.getSampleFacade().getSampleByUuid(changedDto.getUuid());
 				FacadeProvider.getSampleFacade().saveSample(changedDto);
 				SormasUI.refreshView();

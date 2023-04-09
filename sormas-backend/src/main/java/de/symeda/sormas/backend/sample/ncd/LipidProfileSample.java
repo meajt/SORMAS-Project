@@ -1,10 +1,13 @@
-package de.symeda.sormas.api.sample.ncd;
+package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.sormas.api.EntityDto;
-import de.symeda.sormas.api.utils.PersonalData;
+import de.symeda.auditlog.api.Audited;
+import de.symeda.sormas.backend.common.AbstractDomainObject;
 
+import javax.persistence.Entity;
 
-public class LipidProfileSampleDto extends EntityDto {
+@Entity(name = "lipid_profile_sample")
+@Audited
+public class LipidProfileSample extends AbstractDomainObject {
     public static final String I18N_PREFIX = "LipidProfileSample";
     public static final String LIPID_PROFILE_SAMPLE = "lipidProfileSample";
     public static final String CHOLESTROL_METHOD = "cholestrolMethod";
@@ -15,22 +18,22 @@ public class LipidProfileSampleDto extends EntityDto {
     public static final String TOTAL_PROTEIN_METHOD = "totalProteinMethod";
     public static final String ALBUMIN_METHOD = "albuminMethod";
     public static final String CALCIUM_METHOD = "calciumMethod";
-    @PersonalData
+
     private Float cholestrolMethod;
-    @PersonalData
+
     private Float hdlMethod;
-    @PersonalData
+
     private Float ldlMethod;
-    @PersonalData
+
     private Float triglycerideMethod;
 
-    @PersonalData
+
     private Float uricAcidMethod;
-    @PersonalData
+
     private Float totalProteinMethod;
-    @PersonalData
+
     private Float albuminMethod;
-    @PersonalData
+
     private Float calciumMethod;
 
     public Float getCholestrolMethod() {

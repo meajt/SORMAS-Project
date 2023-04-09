@@ -24,7 +24,7 @@ public class CustomWebLogger implements CustomLogger{
         }catch (Exception exe)
         {
             logger.error("Error while logging object");
-           exe.printStackTrace();
+            logger.error(tag, exe);
         }
 
     }

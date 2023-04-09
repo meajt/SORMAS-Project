@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.v7.data.Property;
@@ -47,11 +48,19 @@ import de.symeda.sormas.api.sample.SampleMaterial;
 import de.symeda.sormas.api.sample.SamplePurpose;
 import de.symeda.sormas.api.sample.SamplingReason;
 import de.symeda.sormas.api.sample.SpecimenCondition;
+import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.sample.ncd.LipidProfileSampleDto;
+import de.symeda.sormas.api.sample.ncd.RftSampleDto;
 import de.symeda.sormas.api.user.UserReferenceDto;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.fieldaccess.UiFieldAccessCheckers;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
 import de.symeda.sormas.ui.UserProvider;
+import de.symeda.sormas.ui.samples.ncd.CompleteBloodCountSampleCreateForm;
+import de.symeda.sormas.ui.samples.ncd.LftSampleCreateForm;
+import de.symeda.sormas.ui.samples.ncd.LipidProfileSampleCreateForm;
+import de.symeda.sormas.ui.samples.ncd.RftSampleCreateForm;
 import de.symeda.sormas.ui.utils.AbstractEditForm;
 import de.symeda.sormas.ui.utils.CssStyles;
 import de.symeda.sormas.ui.utils.DateComparisonValidator;
@@ -72,6 +81,15 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 	protected static final String REQUESTED_ADDITIONAL_TESTS_READ_LOC = "requestedAdditionalTestsReadLoc";
 	protected static final String REPORT_INFO_LABEL_LOC = "reportInfoLabelLoc";
 	protected static final String REFERRED_FROM_BUTTON_LOC = "referredFromButtonLoc";
+
+	private LipidProfileSampleCreateForm lipidProfileSampleCreateForm;
+	private RftSampleCreateForm rftSampleCreateForm;
+	private LftSampleCreateForm lftSampleCreateForm;
+	private CompleteBloodCountSampleCreateForm completeBloodCountSampleCreateForm;
+	private CheckBox hadRftCheckBox;
+	private CheckBox hadLftCheckBox;
+	private CheckBox hadLipidProfileCheckBox;
+	private CheckBox hadCDCCheckBox;
 
 	//@formatter:off
     protected static final String SAMPLE_COMMON_HTML_LAYOUT =
@@ -98,18 +116,21 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
                     loc(SampleDto.REQUESTED_OTHER_ADDITIONAL_TESTS) +
                     loc(REQUESTED_ADDITIONAL_TESTS_READ_LOC) +
 
-                    locCss(VSPACE_TOP_3, SampleDto.SHIPPED) +
-                    fluidRowLocs(SampleDto.SHIPMENT_DATE, SampleDto.SHIPMENT_DETAILS) +
-
-                    locCss(VSPACE_TOP_3, SampleDto.RECEIVED) +
                     locCss(VSPACE_TOP_3, SampleDto.HAS_PREMIUM_HEALTH_PACKAGE) +
                     locCss(VSPACE_TOP_3, SampleDto.HAS_RFT) +
+					fluidRowLocs(RftSampleDto.RFT_SAMPLE) +
                     locCss(VSPACE_TOP_3, SampleDto.HAS_LIPID_PROFILE) +
+					fluidRowLocs(LipidProfileSampleDto.LIPID_PROFILE_SAMPLE) +
                     locCss(VSPACE_TOP_3, SampleDto.HAS_LFT) +
+					fluidRowLocs(LftSampleDto.LFT_SAMPLE) +
                     locCss(VSPACE_TOP_3, SampleDto.HAS_URINE_RE) +
                     locCss(VSPACE_TOP_3, SampleDto.HAS_COMPLETE_BLOOD_COUNT) +
-                    fluidRowLocs(SampleDto.RECEIVED_DATE, SampleDto.LAB_SAMPLE_ID) +
+					fluidRowLocs(CompleteBloodCountSampleDto.COMPLETE_BLOOD_COUNT_SAMPLE) +
 
+					locCss(VSPACE_TOP_3, SampleDto.SHIPPED) +
+					fluidRowLocs(SampleDto.SHIPMENT_DATE, SampleDto.SHIPMENT_DETAILS) +
+					locCss(VSPACE_TOP_3, SampleDto.RECEIVED) +
+                    fluidRowLocs(SampleDto.RECEIVED_DATE, SampleDto.LAB_SAMPLE_ID) +
                     fluidRowLocs(SampleDto.SPECIMEN_CONDITION, SampleDto.NO_TEST_POSSIBLE_REASON) +
                     fluidRowLocs(SampleDto.COMMENT) +
                     fluidRowLocs(SampleDto.PATHOGEN_TEST_RESULT) +
@@ -157,12 +178,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 				+ I18nProperties.getDescription(Descriptions.descGdpr));
 		addField(SampleDto.SHIPPED, CheckBox.class);
 		addField(SampleDto.RECEIVED, CheckBox.class);
-		addField(SampleDto.HAS_PREMIUM_HEALTH_PACKAGE, CheckBox.class);
-		addField(SampleDto.HAS_RFT, CheckBox.class);
-		addField(SampleDto.HAS_LIPID_PROFILE, CheckBox.class);
-		addField(SampleDto.HAS_LFT, CheckBox.class);
-		addField(SampleDto.HAS_URINE_RE, CheckBox.class);
-		addField(SampleDto.HAS_COMPLETE_BLOOD_COUNT, CheckBox.class);
+
 
 		ComboBox testResultField = addField(SampleDto.PATHOGEN_TEST_RESULT, ComboBox.class);
 		testResultField.removeItem(PathogenTestResultType.NOT_DONE);
@@ -178,14 +194,71 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		addField(SampleDto.DELETION_REASON);
 		addField(SampleDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, SampleDto.DELETION_REASON, SampleDto.OTHER_DELETION_REASON);
-		setVisible(fieldVisibilityCheckers.isVisible(SampleDto.class, SampleDto.HAS_PREMIUM_HEALTH_PACKAGE),
-				SampleDto.HAS_PREMIUM_HEALTH_PACKAGE,
-				SampleDto.HAS_RFT,
-				SampleDto.HAS_LIPID_PROFILE,
-				SampleDto.HAS_LFT,
-				SampleDto.HAS_URINE_RE,
-				SampleDto.HAS_COMPLETE_BLOOD_COUNT
-				);
+		addFieldsRelatedToNcdDisease();
+	}
+
+	private void addFieldsRelatedToNcdDisease() {
+		//addField(SampleDto.HAS_PREMIUM_HEALTH_PACKAGE, CheckBox.class);
+		boolean isNcdDisease = fieldVisibilityCheckers.isVisible(SampleDto.class, SampleDto.HAS_PREMIUM_HEALTH_PACKAGE);
+		if (!isNcdDisease)
+			return;
+
+
+		lipidProfileSampleCreateForm = new LipidProfileSampleCreateForm();
+		hadLipidProfileCheckBox = addNcdFieldForm(SampleDto.HAS_LIPID_PROFILE,  LipidProfileSampleDto.LIPID_PROFILE_SAMPLE, lipidProfileSampleCreateForm);
+
+		rftSampleCreateForm = new RftSampleCreateForm();
+		hadRftCheckBox = addNcdFieldForm(SampleDto.HAS_RFT, RftSampleDto.RFT_SAMPLE, rftSampleCreateForm);
+
+		lftSampleCreateForm = new LftSampleCreateForm();
+		hadLftCheckBox = addNcdFieldForm(SampleDto.HAS_LFT, LftSampleDto.LFT_SAMPLE, lftSampleCreateForm);
+
+		completeBloodCountSampleCreateForm = new CompleteBloodCountSampleCreateForm();
+		hadCDCCheckBox = addNcdFieldForm(SampleDto.HAS_COMPLETE_BLOOD_COUNT, CompleteBloodCountSampleDto.COMPLETE_BLOOD_COUNT_SAMPLE, completeBloodCountSampleCreateForm);
+
+		setVisible(false, LipidProfileSampleDto.LIPID_PROFILE_SAMPLE,
+				LftSampleDto.LFT_SAMPLE,
+				RftSampleDto.RFT_SAMPLE,
+				CompleteBloodCountSampleDto.COMPLETE_BLOOD_COUNT_SAMPLE);
+	}
+
+	public void updateNcdSampleFormValue() {
+		SampleDto sampleDto = getValue();
+		if (sampleDto != null) {
+			if (sampleDto.getRftSampleDto() != null) {
+//				hadRftCheckBox.setValue(true);
+				rftSampleCreateForm.setValue(getValue().getRftSampleDto());
+			} else  {
+				rftSampleCreateForm.setValue(new RftSampleDto());
+			}
+			if (sampleDto.getLftSampleDto() != null) {
+//				hadLftCheckBox.setValue(true);
+				lftSampleCreateForm.setValue(getValue().getLftSampleDto());
+			} else  {
+				lftSampleCreateForm.setValue(new LftSampleDto());
+			}
+			if (sampleDto.getLipidProfileSampleDto() != null) {
+//				hadLipidProfileCheckBox.setValue(true);
+				lipidProfileSampleCreateForm.setValue(sampleDto.getLipidProfileSampleDto());
+			} else {
+				lipidProfileSampleCreateForm.setValue(new LipidProfileSampleDto());
+			}
+			if (sampleDto.getCompleteBloodCountSampleDto() != null) {
+//				hadCDCCheckBox.setValue(true);
+				completeBloodCountSampleCreateForm.setValue(sampleDto.getCompleteBloodCountSampleDto());
+			} else {
+				completeBloodCountSampleCreateForm.setValue(new CompleteBloodCountSampleDto());
+			}
+		}
+
+	}
+
+	private CheckBox addNcdFieldForm(String checkBoxId, String fromId, Component form) {
+		CheckBox checkBox = addField(checkBoxId, CheckBox.class);
+		getContent().addComponent(form, fromId);
+		checkBox.addValueChangeListener(e -> setVisible(checkBox.getValue(), fromId));
+		form.setWidth(form.getWidth() * 9 / 12, Unit.PIXELS);
+		return checkBox;
 	}
 
 	protected void defaultValueChangeListener() {
@@ -477,4 +550,16 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 			getContent().removeComponent(REQUESTED_ADDITIONAL_TESTS_READ_LOC);
 		}
 	}
+
+	public void updateNcdSampleDtoValue() {
+		rftSampleCreateForm.commit();
+		 getValue().setRftSampleDto(rftSampleCreateForm.getValue());
+		 lftSampleCreateForm.commit();
+		 getValue().setLftSampleDto(lftSampleCreateForm.getValue());
+		 lipidProfileSampleCreateForm.commit();
+		 getValue().setLipidProfileSampleDto(lipidProfileSampleCreateForm.getValue());
+		 completeBloodCountSampleCreateForm.commit();
+		 getValue().setCompleteBloodCountSampleDto(completeBloodCountSampleCreateForm.getValue());
+	}
+
 }

@@ -42,6 +42,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.utils.Diseases;
+import de.symeda.sormas.backend.sample.ncd.CompleteBloodCountSample;
+import de.symeda.sormas.backend.sample.ncd.LftSample;
+import de.symeda.sormas.backend.sample.ncd.LipidProfileSample;
+import de.symeda.sormas.backend.sample.ncd.RftSample;
 import org.apache.commons.lang3.StringUtils;
 
 import de.symeda.auditlog.api.Audited;
@@ -162,12 +169,32 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 
 	private List<SampleReport> sampleReports = new ArrayList<>(0);
 
+	private RftSample rftSample;
+
+	private LftSample lftSample;
+
+	private LipidProfileSample lipidProfileSample;
+
+	private CompleteBloodCountSample completeBloodCountSample;
+
+
+	private boolean hasPremiumHealthPackage;
+
+	private boolean hasRFT;
+
+	private boolean hasLipidProfile;
+
+	private boolean hasLFT;
+
+	private boolean hasUrineRE;
+
+	private boolean hasCompleteBloodCount;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	public Case getAssociatedCase() {
 		return associatedCase;
 	}
-
 	public void setAssociatedCase(Case associatedCase) {
 		this.associatedCase = associatedCase;
 	}
@@ -236,7 +263,7 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 		return reportingUser;
 	}
 
-	public void setReportingUser(User reportingUser) {
+		public void setReportingUser(User reportingUser) {
 		this.reportingUser = reportingUser;
 	}
 
@@ -616,5 +643,89 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 
 	public void setSampleReports(List<SampleReport> externalMessages) {
 		this.sampleReports = externalMessages;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public RftSample getRftSample() {
+		return rftSample;
+	}
+
+	public void setRftSample(RftSample rftSample) {
+		this.rftSample = rftSample;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public LftSample getLftSample() {
+		return lftSample;
+	}
+
+	public void setLftSample(LftSample lftSample) {
+		this.lftSample = lftSample;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public LipidProfileSample getLipidProfileSample() {
+		return lipidProfileSample;
+	}
+
+	public void setLipidProfileSample(LipidProfileSample lipidProfileSample) {
+		this.lipidProfileSample = lipidProfileSample;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public CompleteBloodCountSample getCompleteBloodCountSample() {
+		return completeBloodCountSample;
+	}
+
+	public void setCompleteBloodCountSample(CompleteBloodCountSample completeBloodCountSample) {
+		this.completeBloodCountSample = completeBloodCountSample;
+	}
+
+	public boolean isHasPremiumHealthPackage() {
+		return hasPremiumHealthPackage;
+	}
+
+	public void setHasPremiumHealthPackage(boolean hasPremiumHealthPackage) {
+		this.hasPremiumHealthPackage = hasPremiumHealthPackage;
+	}
+
+	public boolean isHasRFT() {
+		return hasRFT;
+	}
+
+	public void setHasRFT(boolean hasRFT) {
+		this.hasRFT = hasRFT;
+	}
+
+	public boolean isHasLipidProfile() {
+		return hasLipidProfile;
+	}
+
+	public void setHasLipidProfile(boolean hasLipidProfile) {
+		this.hasLipidProfile = hasLipidProfile;
+	}
+
+	public boolean isHasLFT() {
+		return hasLFT;
+	}
+
+	public void setHasLFT(boolean hasLFT) {
+		this.hasLFT = hasLFT;
+	}
+
+	public boolean isHasUrineRE() {
+		return hasUrineRE;
+	}
+
+	public void setHasUrineRE(boolean hasUrineRE) {
+		this.hasUrineRE = hasUrineRE;
+	}
+
+	public boolean isHasCompleteBloodCount() {
+		return hasCompleteBloodCount;
+	}
+
+	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
+		this.hasCompleteBloodCount = hasCompleteBloodCount;
 	}
 }

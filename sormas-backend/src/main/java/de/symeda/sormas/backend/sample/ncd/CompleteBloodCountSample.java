@@ -1,9 +1,15 @@
-package de.symeda.sormas.api.sample.ncd;
+package de.symeda.sormas.backend.sample.ncd;
 
+import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.EntityDto;
 import de.symeda.sormas.api.utils.PersonalData;
+import de.symeda.sormas.backend.common.AbstractDomainObject;
 
-public class CompleteBloodCountSampleDto extends EntityDto {
+import javax.persistence.Entity;
+
+@Entity(name = "complete_blood_count_sample")
+@Audited
+public class CompleteBloodCountSample extends AbstractDomainObject {
     public static final String COMPLETE_BLOOD_COUNT_SAMPLE = "CompleteBloodCountSample";
     public static final String I18N_PREFIX = "CompleteBloodCountSample";
     public static final String TLC = "tlc";
@@ -22,35 +28,35 @@ public class CompleteBloodCountSampleDto extends EntityDto {
     public static final String RDW_CV = "rdwCv";
     public static final String HB_A1C = "hbA1c";
 
-    @PersonalData
+
     private Float tlc;
-    @PersonalData
+
     private Float neutrophils;
-    @PersonalData
+
     private Float lymphocytes;
-    @PersonalData
+
     private Float monocytes;
-    @PersonalData
+
     private Float eosinophils;
-    @PersonalData
+
     private Float basophils;
-    @PersonalData
+
     private Float platetetCount;
-    @PersonalData
+
     private Float rbc;
-    @PersonalData
+
     private Float hb;
-    @PersonalData
+
     private Float pcv;
-    @PersonalData
+
     private Float mcv;
-    @PersonalData
+
     private Float hch;
-    @PersonalData
+
     private Float mchc;
-    @PersonalData
+
     private Float rdwCv;
-    @PersonalData
+
     private Float hbA1c;
 
     public Float getTlc() {

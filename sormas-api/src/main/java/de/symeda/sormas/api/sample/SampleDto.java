@@ -16,6 +16,10 @@ package de.symeda.sormas.api.sample;
 
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.sample.ncd.LipidProfileSampleDto;
+import de.symeda.sormas.api.sample.ncd.RftSampleDto;
 import de.symeda.sormas.api.utils.*;
 
 import java.util.Date;
@@ -169,6 +173,11 @@ public class SampleDto extends SormasToSormasShareableDto {
 	private boolean hasUrineRE;
 	@Diseases({Disease.NCD})
 	private boolean hasCompleteBloodCount;
+
+	private RftSampleDto rftSampleDto;
+	private LftSampleDto lftSampleDto;
+	private LipidProfileSampleDto lipidProfileSampleDto;
+	private CompleteBloodCountSampleDto completeBloodCountSampleDto;
 
 
 	@ImportIgnore
@@ -622,5 +631,37 @@ public class SampleDto extends SormasToSormasShareableDto {
 
 	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
 		this.hasCompleteBloodCount = hasCompleteBloodCount;
+	}
+
+	public RftSampleDto getRftSampleDto() {
+		return rftSampleDto;
+	}
+
+	public void setRftSampleDto(RftSampleDto rftSampleDto) {
+		this.rftSampleDto = rftSampleDto;
+	}
+
+	public LftSampleDto getLftSampleDto() {
+		return lftSampleDto;
+	}
+
+	public void setLftSampleDto(LftSampleDto lftSampleDto) {
+		this.lftSampleDto = lftSampleDto;
+	}
+
+	public LipidProfileSampleDto getLipidProfileSampleDto() {
+		return lipidProfileSampleDto;
+	}
+
+	public void setLipidProfileSampleDto(LipidProfileSampleDto lipidProfileSampleDto) {
+		this.lipidProfileSampleDto = lipidProfileSampleDto;
+	}
+
+	public CompleteBloodCountSampleDto getCompleteBloodCountSampleDto() {
+		return completeBloodCountSampleDto;
+	}
+
+	public void setCompleteBloodCountSampleDto(CompleteBloodCountSampleDto completeBloodCountSampleDto) {
+		this.completeBloodCountSampleDto = completeBloodCountSampleDto;
 	}
 }
