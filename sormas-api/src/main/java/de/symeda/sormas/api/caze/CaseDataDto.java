@@ -29,6 +29,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.location.LocationDto;
 import org.apache.commons.lang3.StringUtils;
 
@@ -367,6 +368,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Valid
 	private HealthConditionsDto healthConditions;
 
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown pregnant;
 	@Diseases({
 		Disease.AFP,
@@ -465,9 +467,11 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	private String externalID;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_EXTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String externalToken;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_INTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String internalToken;
 	private boolean sharedToCountry;
 	@HideForCountriesExcept
@@ -521,6 +525,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 		COUNTRY_CODE_GERMANY,
 		COUNTRY_CODE_SWITZERLAND })
 	private Date quarantineOfficialOrderSentDate;
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown postpartum;
 	private Trimester trimester;
 	private FollowUpStatus followUpStatus;
