@@ -137,6 +137,7 @@ public class PersonEditForm extends AbstractEditForm<PersonDto> {
 					fluidRowLocs(PersonDto.EXTERNAL_ID, PersonDto.EXTERNAL_TOKEN) +
 					fluidRowLocs(PersonDto.INTERNAL_TOKEN, EXTERNAL_TOKEN_WARNING_LOC) +
 					fluidRowLocs(PersonDto.MOBILE_NO, "") +
+					fluidRow(fluidRowLocs(PersonDto.ETHNICITY, PersonDto.RELIGION)) +
 					fluidRowLocs(PersonDto.HAS_COVID_APP, PersonDto.COVID_CODE_DELIVERED) +
 
                     loc(OCCUPATION_HEADER) +
@@ -376,7 +377,8 @@ public class PersonEditForm extends AbstractEditForm<PersonDto> {
 		getContent().addComponent(externalTokenWarningLabel, EXTERNAL_TOKEN_WARNING_LOC);
 		addField(PersonDto.INTERNAL_TOKEN);
 		addField(PersonDto.MOBILE_NO, TextField.class);
-
+		addField(PersonDto.ETHNICITY, ComboBox.class);
+		addField(PersonDto.RELIGION, ComboBox.class);
 		addField(PersonDto.HAS_COVID_APP).addStyleName(CssStyles.FORCE_CAPTION_CHECKBOX);
 		addField(PersonDto.COVID_CODE_DELIVERED).addStyleName(CssStyles.FORCE_CAPTION_CHECKBOX);
 

@@ -1002,6 +1002,8 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setCitizenship(CountryFacadeEjb.toReferenceDto(source.getCitizenship()));
 		target.setAdditionalDetails(source.getAdditionalDetails());
 		target.setMobileNo(source.getMobileNo());
+		target.setReligion(source.getReligion());
+		target.setEthnicity(source.getEthnicity());
 		return target;
 	}
 
@@ -1745,6 +1747,8 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setCitizenship(countryService.getByReferenceDto(source.getCitizenship()));
 		target.setAdditionalDetails(source.getAdditionalDetails());
 		target.setMobileNo(source.getMobileNo());
+		target.setReligion(source.getReligion());
+		target.setEthnicity(source.getEthnicity());
 		return target;
 	}
 

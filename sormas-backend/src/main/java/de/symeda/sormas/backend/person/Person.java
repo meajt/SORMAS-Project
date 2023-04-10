@@ -46,19 +46,7 @@ import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.externaldata.HasExternalData;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
-import de.symeda.sormas.api.person.ApproximateAgeType;
-import de.symeda.sormas.api.person.ArmedForcesRelationType;
-import de.symeda.sormas.api.person.BurialConductor;
-import de.symeda.sormas.api.person.CauseOfDeath;
-import de.symeda.sormas.api.person.DeathPlaceType;
-import de.symeda.sormas.api.person.EducationType;
-import de.symeda.sormas.api.person.OccupationType;
-import de.symeda.sormas.api.person.PersonContactDetailType;
-import de.symeda.sormas.api.person.PersonReferenceDto;
-import de.symeda.sormas.api.person.PresentCondition;
-import de.symeda.sormas.api.person.Salutation;
-import de.symeda.sormas.api.person.Sex;
-import de.symeda.sormas.api.person.SymptomJournalStatus;
+import de.symeda.sormas.api.person.*;
 import de.symeda.sormas.backend.caze.Case;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.common.messaging.ManualMessageLog;
@@ -219,6 +207,10 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 	private List<EventParticipant> eventParticipants = new ArrayList<>();
 	private List<Immunization> immunizations = new ArrayList<>();
 	private List<TravelEntry> travelEntries = new ArrayList<>();
+
+	private Ethnicity ethnicity;
+
+	private Religion religion;
 
 	@Column(nullable = false, length = CHARACTER_LIMIT_DEFAULT)
 	public String getFirstName() {
@@ -820,5 +812,23 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
+	}
+
+	@Column
+	public Ethnicity getEthnicity() {
+		return ethnicity;
+	}
+
+	public void setEthnicity(Ethnicity ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	@Column
+	public Religion getReligion() {
+		return religion;
+	}
+
+	public void setReligion(Religion religion) {
+		this.religion = religion;
 	}
 }
