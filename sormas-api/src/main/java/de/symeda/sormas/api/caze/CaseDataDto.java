@@ -229,7 +229,11 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String EXTERNAL_DATA = "externalData";
 	public static final String DELETION_REASON = "deletionReason";
 	public static final String OTHER_DELETION_REASON = "otherDeletionReason";
-
+	public static final String TYPE_OF_SOURCE = "typeOfSource";
+	public static final String ROUTINE_DOSE_TAKEN = "routineDoseTaken";
+	public static final String DOSE_THROUGH_RI = "doseThroughRi";
+	public static final String DOSE_THROUGH_RIA = "doseThroughRia";
+	public static final String LAST_VACCINATION_DATE = "lastVaccinationDate";
 	// Fields are declared in the order they should appear in the import template
 
 	@Outbreaks
@@ -618,6 +622,13 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String otherDeletionReason;
+
+	private TypeOfInformationSource typeOfSource;
+
+	private VaccinationRoutineDoseTaken routineDoseTaken;
+	private Integer doseThroughRi;
+	private Integer doseThroughRia;
+	private Date lastVaccinationDate;
 
 	public static CaseDataDto build(PersonReferenceDto person, Disease disease) {
 		return build(person, disease, HealthConditionsDto.build());
@@ -1792,5 +1803,45 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Override
 	public String toString() {
 		return super.toString() + (StringUtils.isNotBlank(this.getExternalID()) ? " - " + this.getExternalID() : StringUtils.EMPTY);
+	}
+
+	public TypeOfInformationSource getTypeOfSource() {
+		return typeOfSource;
+	}
+
+	public void setTypeOfSource(TypeOfInformationSource typeOfSource) {
+		this.typeOfSource = typeOfSource;
+	}
+
+	public VaccinationRoutineDoseTaken getRoutineDoseTaken() {
+		return routineDoseTaken;
+	}
+
+	public void setRoutineDoseTaken(VaccinationRoutineDoseTaken routineDoseTaken) {
+		this.routineDoseTaken = routineDoseTaken;
+	}
+
+	public Integer getDoseThroughRi() {
+		return doseThroughRi;
+	}
+
+	public void setDoseThroughRi(Integer doseThroughRi) {
+		this.doseThroughRi = doseThroughRi;
+	}
+
+	public Integer getDoseThroughRia() {
+		return doseThroughRia;
+	}
+
+	public void setDoseThroughRia(Integer doseThroughRia) {
+		this.doseThroughRia = doseThroughRia;
+	}
+
+	public Date getLastVaccinationDate() {
+		return lastVaccinationDate;
+	}
+
+	public void setLastVaccinationDate(Date lastVaccinationDate) {
+		this.lastVaccinationDate = lastVaccinationDate;
 	}
 }

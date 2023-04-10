@@ -42,31 +42,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import de.symeda.sormas.api.caze.*;
 import org.hibernate.annotations.Type;
 
 import de.symeda.auditlog.api.Audited;
 import de.symeda.auditlog.api.AuditedIgnore;
 import de.symeda.sormas.api.Disease;
-import de.symeda.sormas.api.caze.CaseClassification;
-import de.symeda.sormas.api.caze.CaseIdentificationSource;
-import de.symeda.sormas.api.caze.CaseOrigin;
-import de.symeda.sormas.api.caze.CaseOutcome;
-import de.symeda.sormas.api.caze.CaseReferenceDefinition;
-import de.symeda.sormas.api.caze.CaseReferenceDto;
-import de.symeda.sormas.api.caze.ContactTracingContactType;
-import de.symeda.sormas.api.caze.DengueFeverType;
-import de.symeda.sormas.api.caze.EndOfIsolationReason;
-import de.symeda.sormas.api.caze.HospitalWardType;
-import de.symeda.sormas.api.caze.InfectionSetting;
-import de.symeda.sormas.api.caze.InvestigationStatus;
-import de.symeda.sormas.api.caze.PlagueType;
-import de.symeda.sormas.api.caze.QuarantineReason;
-import de.symeda.sormas.api.caze.RabiesType;
-import de.symeda.sormas.api.caze.ReinfectionDetail;
-import de.symeda.sormas.api.caze.ReinfectionStatus;
-import de.symeda.sormas.api.caze.ScreeningType;
-import de.symeda.sormas.api.caze.Trimester;
-import de.symeda.sormas.api.caze.VaccinationStatus;
 import de.symeda.sormas.api.contact.FollowUpStatus;
 import de.symeda.sormas.api.contact.QuarantineType;
 import de.symeda.sormas.api.disease.DiseaseVariant;
@@ -422,6 +403,13 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	private Long personId;
 
 	private Map<String, String> externalData;
+
+	private TypeOfInformationSource typeOfSource;
+
+	private VaccinationRoutineDoseTaken routineDoseTaken;
+	private Integer doseThroughRi;
+	private Integer doseThroughRia;
+	private Date lastVaccinationDate;
 
 	@Column(name = "person_id", updatable = false, insertable = false)
 	public Long getPersonId() {
@@ -1762,5 +1750,50 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 
 	public void setExternalData(Map<String, String> externalData) {
 		this.externalData = externalData;
+	}
+
+	@Column
+	public TypeOfInformationSource getTypeOfSource() {
+		return typeOfSource;
+	}
+
+	public void setTypeOfSource(TypeOfInformationSource typeOfSource) {
+		this.typeOfSource = typeOfSource;
+	}
+
+	@Column
+	public VaccinationRoutineDoseTaken getRoutineDoseTaken() {
+		return routineDoseTaken;
+	}
+
+	public void setRoutineDoseTaken(VaccinationRoutineDoseTaken routineDoseTaken) {
+		this.routineDoseTaken = routineDoseTaken;
+	}
+
+	@Column
+	public Integer getDoseThroughRi() {
+		return doseThroughRi;
+	}
+
+	public void setDoseThroughRi(Integer doseThroughRi) {
+		this.doseThroughRi = doseThroughRi;
+	}
+
+	@Column
+	public Integer getDoseThroughRia() {
+		return doseThroughRia;
+	}
+
+	public void setDoseThroughRia(Integer doseThroughRia) {
+		this.doseThroughRia = doseThroughRia;
+	}
+
+	@Column
+	public Date getLastVaccinationDate() {
+		return lastVaccinationDate;
+	}
+
+	public void setLastVaccinationDate(Date lastVaccinationDate) {
+		this.lastVaccinationDate = lastVaccinationDate;
 	}
 }

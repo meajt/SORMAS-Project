@@ -3004,7 +3004,11 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setDeleted(source.isDeleted());
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
-
+		target.setLastVaccinationDate(source.getLastVaccinationDate());
+		target.setTypeOfSource(source.getTypeOfSource());
+		target.setRoutineDoseTaken(source.getRoutineDoseTaken());
+		target.setDoseThroughRi(source.getDoseThroughRi());
+		target.setDoseThroughRia(source.getDoseThroughRia());
 		return target;
 	}
 
@@ -3203,7 +3207,11 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setDeleted(source.isDeleted());
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
-
+		target.setLastVaccinationDate(source.getLastVaccinationDate());
+		target.setTypeOfSource(source.getTypeOfSource());
+		target.setRoutineDoseTaken(source.getRoutineDoseTaken());
+		target.setDoseThroughRi(source.getDoseThroughRi());
+		target.setDoseThroughRia(source.getDoseThroughRia());
 		return target;
 	}
 

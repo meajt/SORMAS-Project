@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.caze.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -75,21 +76,6 @@ import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.EntityDto;
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.caze.CaseClassification;
-import de.symeda.sormas.api.caze.CaseConfirmationBasis;
-import de.symeda.sormas.api.caze.CaseDataDto;
-import de.symeda.sormas.api.caze.CaseIdentificationSource;
-import de.symeda.sormas.api.caze.CaseLogic;
-import de.symeda.sormas.api.caze.CaseOrigin;
-import de.symeda.sormas.api.caze.CaseOutcome;
-import de.symeda.sormas.api.caze.CaseReferenceDto;
-import de.symeda.sormas.api.caze.EndOfIsolationReason;
-import de.symeda.sormas.api.caze.HospitalWardType;
-import de.symeda.sormas.api.caze.InvestigationStatus;
-import de.symeda.sormas.api.caze.PreviousCaseDto;
-import de.symeda.sormas.api.caze.QuarantineReason;
-import de.symeda.sormas.api.caze.ReinfectionDetail;
-import de.symeda.sormas.api.caze.ReinfectionDetailGroup;
 import de.symeda.sormas.api.caze.classification.DiseaseClassificationCriteriaDto;
 import de.symeda.sormas.api.contact.ContactDto;
 import de.symeda.sormas.api.contact.FollowUpStatus;
@@ -256,7 +242,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					loc(MEDICAL_INFORMATION_LOC) +
 					fluidRowLocs(CaseDataDto.BLOOD_ORGAN_OR_TISSUE_DONATED) +
 					fluidRowLocs(CaseDataDto.PREGNANT, CaseDataDto.POSTPARTUM) + fluidRowLocs(CaseDataDto.TRIMESTER, "") +
-					fluidRowLocs(CaseDataDto.VACCINATION_STATUS, "") +
+					fluidRowLocs(CaseDataDto.VACCINATION_STATUS, CaseDataDto.LAST_VACCINATION_DATE) +
 					fluidRowLocs(CaseDataDto.SMALLPOX_VACCINATION_RECEIVED, CaseDataDto.SMALLPOX_VACCINATION_SCAR) +
 					fluidRowLocs(CaseDataDto.SMALLPOX_LAST_VACCINATION_DATE, "") +
 					fluidRowLocs(SMALLPOX_VACCINATION_SCAR_IMG) +
@@ -275,6 +261,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 	
 	private static final String PAPER_FORM_DATES_AND_HEALTH_CONDITIONS_HTML_LAYOUT =
 			fluidRowLocs(6, CaseDataDto.SURVEILLANCE_OFFICER) +
+					fluidRow( fluidRowLocs(CaseDataDto.TYPE_OF_SOURCE), fluidRowLocs(CaseDataDto.ROUTINE_DOSE_TAKEN) ) +
+					fluidRow( fluidRowLocs(CaseDataDto.DOSE_THROUGH_RI), fluidRowLocs(CaseDataDto.DOSE_THROUGH_RIA) ) +
 					loc(PAPER_FORM_DATES_LOC) +
 					fluidRowLocs(CaseDataDto.DISTRICT_LEVEL_DATE, CaseDataDto.REGION_LEVEL_DATE, CaseDataDto.NATIONAL_LEVEL_DATE) +
 					loc(GENERAL_COMMENT_LOC) + fluidRowLocs(CaseDataDto.ADDITIONAL_DETAILS) +
@@ -773,6 +761,10 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 
 		ComboBox surveillanceOfficerField = addField(CaseDataDto.SURVEILLANCE_OFFICER, ComboBox.class);
 		surveillanceOfficerField.setNullSelectionAllowed(true);
+		addField(CaseDataDto.TYPE_OF_SOURCE, NullableOptionGroup.class);
+		addField(CaseDataDto.ROUTINE_DOSE_TAKEN, NullableOptionGroup.class);
+		addField(CaseDataDto.DOSE_THROUGH_RI, TextField.class);
+		addField(CaseDataDto.DOSE_THROUGH_RIA, TextField.class);
 
 		differentPlaceOfStayJurisdiction = addCustomField(DIFFERENT_PLACE_OF_STAY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPlaceOfStayJurisdiction.addStyleName(VSPACE_3);
@@ -985,7 +977,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.POSTPARTUM, NullableOptionGroup.class);
 		addField(CaseDataDto.TRIMESTER, NullableOptionGroup.class);
 
-		addField(CaseDataDto.VACCINATION_STATUS);
+		ComboBox vaccinationStatusComboBox = addField(CaseDataDto.VACCINATION_STATUS, ComboBox.class);
+		addField(CaseDataDto.LAST_VACCINATION_DATE, DateField.class);
 		addFields(CaseDataDto.SMALLPOX_VACCINATION_SCAR, CaseDataDto.SMALLPOX_VACCINATION_RECEIVED);
 		addDateField(CaseDataDto.SMALLPOX_LAST_VACCINATION_DATE, DateField.class, 0);
 
@@ -1276,7 +1269,18 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.DELETION_REASON);
 		addField(CaseDataDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, CaseDataDto.DELETION_REASON, CaseDataDto.OTHER_DELETION_REASON);
-
+		setVisible(false,
+				CaseDataDto.LAST_VACCINATION_DATE,
+				CaseDataDto.ROUTINE_DOSE_TAKEN,
+				CaseDataDto.DOSE_THROUGH_RI,
+				CaseDataDto.DOSE_THROUGH_RIA,
+				CaseDataDto.TYPE_OF_SOURCE);
+		vaccinationStatusComboBox.addValueChangeListener( e -> setVisible(vaccinationStatusComboBox.getValue() == VaccinationStatus.AT_LEAST_ONCE,
+				CaseDataDto.LAST_VACCINATION_DATE,
+				CaseDataDto.ROUTINE_DOSE_TAKEN,
+				CaseDataDto.DOSE_THROUGH_RI,
+				CaseDataDto.DOSE_THROUGH_RIA,
+				CaseDataDto.TYPE_OF_SOURCE));
 		addValueChangeListener(e -> {
 			diseaseField.addValueChangeListener(new DiseaseChangeListener(diseaseField, getValue().getDisease()));
 

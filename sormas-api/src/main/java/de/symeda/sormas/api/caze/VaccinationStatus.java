@@ -23,6 +23,7 @@ public enum VaccinationStatus {
 
 	VACCINATED,
 	UNVACCINATED,
+	AT_LEAST_ONCE,
 	UNKNOWN;
 
 	@Override
