@@ -169,26 +169,6 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 
 	private List<SampleReport> sampleReports = new ArrayList<>(0);
 
-	private RftSample rftSample;
-
-	private LftSample lftSample;
-
-	private LipidProfileSample lipidProfileSample;
-
-	private CompleteBloodCountSample completeBloodCountSample;
-
-
-	private boolean hasPremiumHealthPackage;
-
-	private boolean hasRFT;
-
-	private boolean hasLipidProfile;
-
-	private boolean hasLFT;
-
-	private boolean hasUrineRE;
-
-	private boolean hasCompleteBloodCount;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
@@ -645,87 +625,4 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 		this.sampleReports = externalMessages;
 	}
 
-	@OneToOne( fetch = FetchType.LAZY)
-	public RftSample getRftSample() {
-		return rftSample;
-	}
-
-	public void setRftSample(RftSample rftSample) {
-		this.rftSample = rftSample;
-	}
-
-	@OneToOne( fetch = FetchType.LAZY)
-	public LftSample getLftSample() {
-		return lftSample;
-	}
-
-	public void setLftSample(LftSample lftSample) {
-		this.lftSample = lftSample;
-	}
-
-	@OneToOne( fetch = FetchType.LAZY)
-	public LipidProfileSample getLipidProfileSample() {
-		return lipidProfileSample;
-	}
-
-	public void setLipidProfileSample(LipidProfileSample lipidProfileSample) {
-		this.lipidProfileSample = lipidProfileSample;
-	}
-
-	@OneToOne( fetch = FetchType.LAZY)
-	public CompleteBloodCountSample getCompleteBloodCountSample() {
-		return completeBloodCountSample;
-	}
-
-	public void setCompleteBloodCountSample(CompleteBloodCountSample completeBloodCountSample) {
-		this.completeBloodCountSample = completeBloodCountSample;
-	}
-
-	public boolean isHasPremiumHealthPackage() {
-		return hasPremiumHealthPackage;
-	}
-
-	public void setHasPremiumHealthPackage(boolean hasPremiumHealthPackage) {
-		this.hasPremiumHealthPackage = hasPremiumHealthPackage;
-	}
-
-	public boolean isHasRFT() {
-		return hasRFT;
-	}
-
-	public void setHasRFT(boolean hasRFT) {
-		this.hasRFT = hasRFT;
-	}
-
-	public boolean isHasLipidProfile() {
-		return hasLipidProfile;
-	}
-
-	public void setHasLipidProfile(boolean hasLipidProfile) {
-		this.hasLipidProfile = hasLipidProfile;
-	}
-
-	public boolean isHasLFT() {
-		return hasLFT;
-	}
-
-	public void setHasLFT(boolean hasLFT) {
-		this.hasLFT = hasLFT;
-	}
-
-	public boolean isHasUrineRE() {
-		return hasUrineRE;
-	}
-
-	public void setHasUrineRE(boolean hasUrineRE) {
-		this.hasUrineRE = hasUrineRE;
-	}
-
-	public boolean isHasCompleteBloodCount() {
-		return hasCompleteBloodCount;
-	}
-
-	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
-		this.hasCompleteBloodCount = hasCompleteBloodCount;
-	}
 }

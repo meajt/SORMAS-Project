@@ -402,14 +402,7 @@ public class SampleFacadeEjb implements SampleFacade {
 		if (sample.getAdditionalTestingRequested() == null) {
 			sample.setAdditionalTestingRequested(false);
 		}
-		if (sample.getRftSample() != null)
-			em.persist(sample.getRftSample());
-		if (sample.getLftSample() != null)
-			em.persist(sample.getLftSample());
-		if (sample.getLipidProfileSample() != null)
-			em.persist(sample.getLipidProfileSample());
-		if (sample.getCompleteBloodCountSample() != null)
-			em.persist(sample.getCompleteBloodCountSample());
+		
 		sampleService.ensurePersisted(sample);
 
 		if (handleChanges) {
@@ -852,16 +845,7 @@ public class SampleFacadeEjb implements SampleFacade {
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
 
-		target.setHasPremiumHealthPackage(source.isHasPremiumHealthPackage());
-		target.setHasRFT(source.isHasRFT());
-		target.setHasLipidProfile(source.isHasLipidProfile());
-		target.setHasLFT(source.isHasLFT());
-		target.setHasUrineRE(source.isHasUrineRE());
-		target.setHasCompleteBloodCount(source.isHasCompleteBloodCount());
-		target.setRftSample(rftSampleFacade.fillOrBuildEntity(source.getRftSampleDto(), target.getRftSample(), false));
-		target.setLftSample(fillOrBuildLftSampleEntity(source.getLftSampleDto(), target.getLftSample(),false));
-		target.setLipidProfileSample(fillOrBuildLipidProfileSampleEntity(source.getLipidProfileSampleDto(), target.getLipidProfileSample(), false));
-		target.setCompleteBloodCountSample(fillOrBuildCdcSampleEntity(source.getCompleteBloodCountSampleDto(), target.getCompleteBloodCountSample(), false));
+	
 		return target;
 	}
 
@@ -1014,124 +998,10 @@ public class SampleFacadeEjb implements SampleFacade {
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
 
-		target.setHasPremiumHealthPackage(source.isHasPremiumHealthPackage());
-		target.setHasRFT(source.isHasRFT());
-		target.setHasLipidProfile(source.isHasLipidProfile());
-		target.setHasLFT(source.isHasLFT());
-		target.setHasUrineRE(source.isHasUrineRE());
-		target.setHasCompleteBloodCount(source.isHasCompleteBloodCount());
-		target.setRftSampleDto(RftSampleFacadeEjb.toDto(source.getRftSample(), target.getRftSampleDto()));
-		target.setLftSampleDto(toLftSampleDto(source.getLftSample()));
-		target.setLipidProfileSampleDto(toLipidProfileSampleDto(source.getLipidProfileSample()));
-		target.setCompleteBloodCountSampleDto(toCcdSampleDto(source.getCompleteBloodCountSample()));
+		
 		return target;
 	}
-
-	public static LftSampleDto toLftSampleDto(LftSample source) {
-		if (source == null)
-			return null;
-		LftSampleDto target = new LftSampleDto();
-		DtoHelper.fillDto(target, source);
-		target.setBilirubinT(source.getBilirubinT());
-		target.setBilirubinD(source.getBilirubinD());
-		target.setAlkalinePhospatase(source.getAlkalinePhospatase());
-		target.setKinetic(source.getKinetic());
-		target.setSgpt(source.getSgpt());
-		target.setSgot(source.getSgot());
-		target.setVldl(source.getVldl());
-		return target;
-	}
-
-	public static LipidProfileSampleDto toLipidProfileSampleDto(LipidProfileSample source) {
-		if (source == null)
-			return null;
-		LipidProfileSampleDto target = new LipidProfileSampleDto();
-		DtoHelper.fillDto(target, source);
-		target.setCholestrolMethod(source.getCholestrolMethod());
-		target.setHdlMethod(source.getHdlMethod());
-		target.setLdlMethod(source.getLdlMethod());
-		target.setTriglycerideMethod(source.getTriglycerideMethod());
-		target.setUricAcidMethod(source.getUricAcidMethod());
-		target.setTotalProteinMethod(source.getTotalProteinMethod());
-		target.setAlbuminMethod(source.getAlbuminMethod());
-		target.setCalciumMethod(source.getCalciumMethod());
-		return target;
-	}
-
-	public static CompleteBloodCountSampleDto toCcdSampleDto(CompleteBloodCountSample source) {
-		if (source == null)
-			return null;
-		CompleteBloodCountSampleDto target = new CompleteBloodCountSampleDto();
-		DtoHelper.fillDto(target, source);
-		target.setTlc(source.getTlc());
-		target.setNeutrophils(source.getNeutrophils());
-		target.setLymphocytes(source.getLymphocytes());
-		target.setMonocytes(source.getMonocytes());
-		target.setEosinophils(source.getEosinophils());
-		target.setBasophils(source.getBasophils());
-		target.setPlatetetCount(source.getPlatetetCount());
-		target.setRbc(source.getRbc());
-		target.setHb(source.getHb());
-		target.setPcv(source.getPcv());
-		target.setMcv(source.getMcv());
-		target.setHch(source.getHch());
-		target.setMchc(source.getMchc());
-		target.setRdwCv(source.getRdwCv());
-		target.setHbA1c(source.getHbA1c());
-		return target;
-	}
-
-	public LipidProfileSample fillOrBuildLipidProfileSampleEntity(LipidProfileSampleDto source, LipidProfileSample target, boolean checkChangeDate) {
-		if (source == null)
-			return null;
-		target = DtoHelper.fillOrBuildEntity(source, target, LipidProfileSample::new, checkChangeDate);
-		target.setCholestrolMethod(source.getCholestrolMethod());
-		target.setHdlMethod(source.getHdlMethod());
-		target.setLdlMethod(source.getLdlMethod());
-		target.setTriglycerideMethod(source.getTriglycerideMethod());
-		target.setUricAcidMethod(source.getUricAcidMethod());
-		target.setTotalProteinMethod(source.getTotalProteinMethod());
-		target.setAlbuminMethod(source.getAlbuminMethod());
-		target.setCalciumMethod(source.getCalciumMethod());
-		return target;
-	}
-
-	public LftSample fillOrBuildLftSampleEntity(LftSampleDto source, LftSample target, boolean checkChangeDate) {
-		if (source == null)
-			return null;
-		target = DtoHelper.fillOrBuildEntity(source, target, LftSample::new, checkChangeDate);
-		target.setBilirubinT(source.getBilirubinT());
-		target.setBilirubinD(source.getBilirubinD());
-		target.setAlkalinePhospatase(source.getAlkalinePhospatase());
-		target.setKinetic(source.getKinetic());
-		target.setSgpt(source.getSgpt());
-		target.setSgot(source.getSgot());
-		target.setVldl(source.getVldl());
-		return target;
-	}
-
-	public CompleteBloodCountSample fillOrBuildCdcSampleEntity(CompleteBloodCountSampleDto source, CompleteBloodCountSample target, boolean checkChangeDate) {
-		if (source == null)
-			return null;
-		target = DtoHelper.fillOrBuildEntity(source, target, CompleteBloodCountSample::new, checkChangeDate);
-		target.setTlc(source.getTlc());
-		target.setNeutrophils(source.getNeutrophils());
-		target.setLymphocytes(source.getLymphocytes());
-		target.setMonocytes(source.getMonocytes());
-		target.setEosinophils(source.getEosinophils());
-		target.setBasophils(source.getBasophils());
-		target.setPlatetetCount(source.getPlatetetCount());
-		target.setRbc(source.getRbc());
-		target.setHb(source.getHb());
-		target.setPcv(source.getPcv());
-		target.setMcv(source.getMcv());
-		target.setHch(source.getHch());
-		target.setMchc(source.getMchc());
-		target.setRdwCv(source.getRdwCv());
-		target.setHbA1c(source.getHbA1c());
-		return target;
-	}
-
+	
 	public static SampleReferenceDto toReferenceDto(Sample entity) {
 
 		if (entity == null) {

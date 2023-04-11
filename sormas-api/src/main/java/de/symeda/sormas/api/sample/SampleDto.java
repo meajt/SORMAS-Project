@@ -161,25 +161,6 @@ public class SampleDto extends SormasToSormasShareableDto {
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String otherDeletionReason;
 
-	@Diseases({Disease.NCD})
-	private boolean hasPremiumHealthPackage;
-	@Diseases({Disease.NCD})
-	private boolean hasRFT;
-	@Diseases({Disease.NCD})
-	private boolean hasLipidProfile;
-	@Diseases({Disease.NCD})
-	private boolean hasLFT;
-	@Diseases({Disease.NCD})
-	private boolean hasUrineRE;
-	@Diseases({Disease.NCD})
-	private boolean hasCompleteBloodCount;
-
-	private RftSampleDto rftSampleDto;
-	private LftSampleDto lftSampleDto;
-	private LipidProfileSampleDto lipidProfileSampleDto;
-	private CompleteBloodCountSampleDto completeBloodCountSampleDto;
-
-
 	@ImportIgnore
 	public CaseReferenceDto getAssociatedCase() {
 		return associatedCase;
@@ -585,83 +566,4 @@ public class SampleDto extends SormasToSormasShareableDto {
 		this.otherDeletionReason = otherDeletionReason;
 	}
 
-	public boolean isHasPremiumHealthPackage() {
-		return hasPremiumHealthPackage;
-	}
-
-	public void setHasPremiumHealthPackage(boolean hasPremiumHealthPackage) {
-		this.hasPremiumHealthPackage = hasPremiumHealthPackage;
-	}
-
-	public boolean isHasRFT() {
-		return hasRFT;
-	}
-
-	public void setHasRFT(boolean hasRFT) {
-		this.hasRFT = hasRFT;
-	}
-
-	public boolean isHasLipidProfile() {
-		return hasLipidProfile;
-	}
-
-	public void setHasLipidProfile(boolean hasLipidProfile) {
-		this.hasLipidProfile = hasLipidProfile;
-	}
-
-	public boolean isHasLFT() {
-		return hasLFT;
-	}
-
-	public void setHasLFT(boolean hasLFT) {
-		this.hasLFT = hasLFT;
-	}
-
-	public boolean isHasUrineRE() {
-		return hasUrineRE;
-	}
-
-	public void setHasUrineRE(boolean hasUrineRE) {
-		this.hasUrineRE = hasUrineRE;
-	}
-
-	public boolean isHasCompleteBloodCount() {
-		return hasCompleteBloodCount;
-	}
-
-	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
-		this.hasCompleteBloodCount = hasCompleteBloodCount;
-	}
-
-	public RftSampleDto getRftSampleDto() {
-		return rftSampleDto;
-	}
-
-	public void setRftSampleDto(RftSampleDto rftSampleDto) {
-		this.rftSampleDto = rftSampleDto;
-	}
-
-	public LftSampleDto getLftSampleDto() {
-		return lftSampleDto;
-	}
-
-	public void setLftSampleDto(LftSampleDto lftSampleDto) {
-		this.lftSampleDto = lftSampleDto;
-	}
-
-	public LipidProfileSampleDto getLipidProfileSampleDto() {
-		return lipidProfileSampleDto;
-	}
-
-	public void setLipidProfileSampleDto(LipidProfileSampleDto lipidProfileSampleDto) {
-		this.lipidProfileSampleDto = lipidProfileSampleDto;
-	}
-
-	public CompleteBloodCountSampleDto getCompleteBloodCountSampleDto() {
-		return completeBloodCountSampleDto;
-	}
-
-	public void setCompleteBloodCountSampleDto(CompleteBloodCountSampleDto completeBloodCountSampleDto) {
-		this.completeBloodCountSampleDto = completeBloodCountSampleDto;
-	}
 }
