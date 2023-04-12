@@ -35,6 +35,7 @@
 		<class>de.symeda.sormas.backend.sample.ncd.LftSample</class>
 		<class>de.symeda.sormas.backend.sample.ncd.LipidProfileSample</class>
 		<class>de.symeda.sormas.backend.sample.ncd.CompleteBloodCountSample</class>
+		<class>de.symeda.sormas.backend.sample.ncd.UrineRoutineExaminationSample</class>
 		<class>de.symeda.sormas.backend.sample.PathogenTest</class>
 		<class>de.symeda.sormas.backend.symptoms.Symptoms</class>
 		<class>de.symeda.sormas.backend.task.Task</class>

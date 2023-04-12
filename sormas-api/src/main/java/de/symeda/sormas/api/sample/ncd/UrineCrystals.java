@@ -1,0 +1,4 @@
+package de.symeda.sormas.api.sample.ncd;
+public enum UrineCrystals {
+    NOT_SEEN,URIC_ACID_CRYSTAL,CALCIUM_OXALATE_CRYSTAL,CALCIUM_CARBONATE,AMORPHOUS_URATES,TRIPLE_PHOSPHATE
+}
