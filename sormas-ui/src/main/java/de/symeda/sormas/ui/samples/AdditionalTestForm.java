@@ -5,8 +5,11 @@ import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_TOP_3;
 import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocs;
 import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocsCss;
 import static de.symeda.sormas.ui.utils.LayoutUtil.loc;
+import static de.symeda.sormas.ui.utils.LayoutUtil.locCss;
 
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.v7.ui.CheckBox;
 import com.vaadin.v7.ui.ComboBox;
 import com.vaadin.v7.ui.TextArea;
 import com.vaadin.v7.ui.TextField;
@@ -15,9 +18,12 @@ import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.sample.AdditionalTestDto;
 import de.symeda.sormas.api.sample.SampleDto;
+import de.symeda.sormas.api.sample.ncd.*;
+import de.symeda.sormas.ui.samples.ncd.*;
 import de.symeda.sormas.ui.utils.AbstractEditForm;
 import de.symeda.sormas.ui.utils.DateComparisonValidator;
 import de.symeda.sormas.ui.utils.DateTimeField;
+
 
 public class AdditionalTestForm extends AbstractEditForm<AdditionalTestDto> {
 
@@ -30,7 +36,7 @@ public class AdditionalTestForm extends AbstractEditForm<AdditionalTestDto> {
 			fluidRowLocs(AdditionalTestDto.TEST_DATE_TIME, "") +
 			fluidRowLocs(AdditionalTestDto.HAEMOGLOBINURIA, AdditionalTestDto.PROTEINURIA) +
 			fluidRowLocs(AdditionalTestDto.HEMATURIA, "") +
-					
+
 			loc(BLOOD_GAS_HEADING_LOC) +
 			fluidRowLocs(AdditionalTestDto.ARTERIAL_VENOUS_GAS_PH, AdditionalTestDto.ARTERIAL_VENOUS_GAS_PCO2,
 					AdditionalTestDto.ARTERIAL_VENOUS_GAS_PAO2, AdditionalTestDto.ARTERIAL_VENOUS_GAS_HCO3) +
@@ -41,9 +47,30 @@ public class AdditionalTestForm extends AbstractEditForm<AdditionalTestDto> {
 			fluidRowLocs(AdditionalTestDto.POTASSIUM, AdditionalTestDto.PLATELETS) +
 			fluidRowLocs(AdditionalTestDto.UREA, AdditionalTestDto.PROTHROMBIN_TIME) +
 			fluidRowLocs(AdditionalTestDto.HAEMOGLOBIN, "") +
-			loc(AdditionalTestDto.OTHER_TEST_RESULTS);
+			loc(AdditionalTestDto.OTHER_TEST_RESULTS) +
+
+			/*locCss(VSPACE_TOP_3, AdditionalTestDto.HAS_HEALTH_SCREENING_TEST) +
+			fluidRowLocs(HealthScreeningTestDto.HEALTH_SCREENING_TEST)+*/
+			locCss(VSPACE_TOP_3, AdditionalTestDto.HAS_RFT) +
+			fluidRowLocs(RftSampleDto.RFT_SAMPLE) +
+			locCss(VSPACE_TOP_3, AdditionalTestDto.HAS_LIPID_PROFILE) +
+			fluidRowLocs(LipidProfileSampleDto.LIPID_PROFILE_SAMPLE) +
+			locCss(VSPACE_TOP_3, AdditionalTestDto.HAS_LFT) +
+			fluidRowLocs(LftSampleDto.LFT_SAMPLE) +
+			locCss(VSPACE_TOP_3, AdditionalTestDto.HAS_URINE_RE) +
+			fluidRowLocs(UrineRoutineExaminationSampleDto.URINE_ROUTINE_EXAMINATION) +
+			locCss(VSPACE_TOP_3, AdditionalTestDto.HAS_COMPLETE_BLOOD_COUNT) +
+			fluidRowLocs(CompleteBloodCountSampleDto.COMPLETE_BLOOD_COUNT_SAMPLE) ;
+
 	//@formatter:on
 
+	private LipidProfileSampleCreateForm lipidProfileSampleCreateForm;
+	private RftSampleCreateForm rftSampleCreateForm;
+	private LftSampleCreateForm lftSampleCreateForm;
+	private CompleteBloodCountSampleCreateForm completeBloodCountSampleCreateForm;
+
+	//private HealthScreeningTestForm healthScreeningTestForm;
+	private UrineRoutineExaminationSampleForm urineRoutineExaminationForm;
 	private final SampleDto sample;
 
 	public AdditionalTestForm(SampleDto sample, boolean create) {
@@ -120,7 +147,95 @@ public class AdditionalTestForm extends AbstractEditForm<AdditionalTestDto> {
 		TextField prothrombinTimeField = addField(AdditionalTestDto.PROTHROMBIN_TIME, TextField.class);
 		prothrombinTimeField.setConversionError(I18nProperties.getValidationError(Validations.onlyNumbersAllowed, prothrombinTimeField.getCaption()));
 		addField(AdditionalTestDto.OTHER_TEST_RESULTS, TextArea.class).setRows(6);
+		addFieldsRelatedToNcdDisease();
 	}
+
+	private void addFieldsRelatedToNcdDisease() {
+		//addField(SampleDto.HAS_PREMIUM_HEALTH_PACKAGE, CheckBox.class);
+		boolean isNcdDisease = true;
+		if (!isNcdDisease)
+			return;
+
+		/*healthScreeningTestForm = new HealthScreeningTestForm();
+		addNcdFieldForm(AdditionalTestDto.HAS_HEALTH_SCREENING_TEST, HealthScreeningTestDto.HEALTH_SCREENING_TEST, healthScreeningTestForm);
+*/
+		lipidProfileSampleCreateForm = new LipidProfileSampleCreateForm();
+		addNcdFieldForm(AdditionalTestDto.HAS_LIPID_PROFILE, LipidProfileSampleDto.LIPID_PROFILE_SAMPLE, lipidProfileSampleCreateForm);
+
+		rftSampleCreateForm = new RftSampleCreateForm();
+		CheckBox hadRftCheckBox = addNcdFieldForm(AdditionalTestDto.HAS_RFT, RftSampleDto.RFT_SAMPLE, rftSampleCreateForm);
+
+		lftSampleCreateForm = new LftSampleCreateForm();
+		CheckBox hadLftCheckBox = addNcdFieldForm(AdditionalTestDto.HAS_LFT, LftSampleDto.LFT_SAMPLE, lftSampleCreateForm);
+
+		completeBloodCountSampleCreateForm = new CompleteBloodCountSampleCreateForm();
+		CheckBox hadCDCCheckBox = addNcdFieldForm(AdditionalTestDto.HAS_COMPLETE_BLOOD_COUNT, CompleteBloodCountSampleDto.COMPLETE_BLOOD_COUNT_SAMPLE, completeBloodCountSampleCreateForm);
+
+		urineRoutineExaminationForm = new UrineRoutineExaminationSampleForm();
+		addNcdFieldForm(AdditionalTestDto.HAS_URINE_RE, UrineRoutineExaminationSampleDto.URINE_ROUTINE_EXAMINATION, urineRoutineExaminationForm);
+		urineRoutineExaminationForm.setWidth(urineRoutineExaminationForm.getWidth() * 7 / 12, Unit.PIXELS);
+		setVisible(false, LipidProfileSampleDto.LIPID_PROFILE_SAMPLE,
+				LftSampleDto.LFT_SAMPLE,
+				RftSampleDto.RFT_SAMPLE,
+				CompleteBloodCountSampleDto.COMPLETE_BLOOD_COUNT_SAMPLE,
+				//HealthScreeningTestDto.HEALTH_SCREENING_TEST,
+				UrineRoutineExaminationSampleDto.URINE_ROUTINE_EXAMINATION);
+	}
+
+	private CheckBox addNcdFieldForm(String checkBoxId, String fromId, Component form) {
+		CheckBox checkBox = addField(checkBoxId, CheckBox.class);
+		getContent().addComponent(form, fromId);
+		checkBox.addValueChangeListener(e -> setVisible(checkBox.getValue(), fromId));
+		form.setWidth(form.getWidth() * 9 / 12, Unit.PIXELS);
+		return checkBox;
+	}
+
+
+	public void updateNcdSampleFormValue() {
+		AdditionalTestDto value = getValue();
+			if (value.getRftSampleDto() != null) {
+				rftSampleCreateForm.setValue(getValue().getRftSampleDto());
+			} else  {
+				rftSampleCreateForm.setValue(new RftSampleDto());
+			}
+			if (value.getLftSampleDto() != null) {
+				lftSampleCreateForm.setValue(getValue().getLftSampleDto());
+			} else  {
+				lftSampleCreateForm.setValue(new LftSampleDto());
+			}
+			if (value.getLipidProfileSampleDto() != null) {
+				lipidProfileSampleCreateForm.setValue(value.getLipidProfileSampleDto());
+			} else {
+				lipidProfileSampleCreateForm.setValue(new LipidProfileSampleDto());
+			}
+			if (value.getCompleteBloodCountSampleDto() != null) {
+				completeBloodCountSampleCreateForm.setValue(value.getCompleteBloodCountSampleDto());
+			} else {
+				completeBloodCountSampleCreateForm.setValue(new CompleteBloodCountSampleDto());
+			}
+			if (value.getUrineRoutineExaminationSampleDto() != null) {
+				urineRoutineExaminationForm.setValue(value.getUrineRoutineExaminationSampleDto());
+			} else {
+				urineRoutineExaminationForm.setValue(new UrineRoutineExaminationSampleDto());
+			}
+
+
+	}
+
+	public void updateNcdSampleDtoValue() {
+		rftSampleCreateForm.commit();
+		getValue().setRftSampleDto(rftSampleCreateForm.getValue());
+		lftSampleCreateForm.commit();
+		getValue().setLftSampleDto(lftSampleCreateForm.getValue());
+		lipidProfileSampleCreateForm.commit();
+		getValue().setLipidProfileSampleDto(lipidProfileSampleCreateForm.getValue());
+		completeBloodCountSampleCreateForm.commit();
+		getValue().setCompleteBloodCountSampleDto(completeBloodCountSampleCreateForm.getValue());
+		urineRoutineExaminationForm.commit();
+		getValue().setUrineRoutineExaminationSampleDto(urineRoutineExaminationForm.getValue());
+	}
+
+
 
 	@Override
 	protected String createHtmlLayout() {

@@ -33,6 +33,7 @@ public class AdditionalTestController {
 	public void openCreateComponent(String sampleUuid, Runnable callback) {
 		AdditionalTestForm form = new AdditionalTestForm(FacadeProvider.getSampleFacade().getSampleByUuid(sampleUuid), true);
 		form.setValue(AdditionalTestDto.build(FacadeProvider.getSampleFacade().getReferenceByUuid(sampleUuid)));
+		form.updateNcdSampleFormValue();
 		final CommitDiscardWrapperComponent<AdditionalTestForm> component =
 			new CommitDiscardWrapperComponent<>(form, UserProvider.getCurrent().hasUserRight(UserRight.ADDITIONAL_TEST_CREATE), form.getFieldGroup());
 
@@ -45,6 +46,7 @@ public class AdditionalTestController {
 			@Override
 			public void onCommit() {
 				if (!form.getFieldGroup().isModified()) {
+					form.updateNcdSampleDtoValue();
 					FacadeProvider.getAdditionalTestFacade().saveAdditionalTest(form.getValue());
 					Notification.show(I18nProperties.getString(Strings.messageAdditionalTestSaved), Type.TRAY_NOTIFICATION);
 					if (callback != null) {
@@ -60,7 +62,7 @@ public class AdditionalTestController {
 		AdditionalTestDto newDto = FacadeProvider.getAdditionalTestFacade().getByUuid(dto.getUuid());
 		AdditionalTestForm form = new AdditionalTestForm(FacadeProvider.getSampleFacade().getSampleByUuid(dto.getSample().getUuid()), false);
 		form.setValue(newDto);
-
+		form.updateNcdSampleFormValue();
 		final CommitDiscardWrapperComponent<AdditionalTestForm> component = new CommitDiscardWrapperComponent<>(
 			form,
 			UserProvider.getCurrent().hasUserRight(UserRight.ADDITIONAL_TEST_EDIT) && isEditAllowed,
@@ -78,6 +80,7 @@ public class AdditionalTestController {
 				@Override
 				public void onCommit() {
 					if (!form.getFieldGroup().isModified()) {
+						form.updateNcdSampleDtoValue();
 						FacadeProvider.getAdditionalTestFacade().saveAdditionalTest(form.getValue());
 						Notification.show(I18nProperties.getString(Strings.messageAdditionalTestSaved), Type.TRAY_NOTIFICATION);
 						if (callback != null) {

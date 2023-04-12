@@ -21,18 +21,12 @@ import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_BIG;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.sample.SimpleTestResultType;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
+import de.symeda.sormas.backend.sample.ncd.*;
 
 @Entity
 @Audited
@@ -67,6 +61,31 @@ public class AdditionalTest extends AbstractDomainObject {
 	private Float platelets;
 	private Float prothrombinTime;
 	private String otherTestResults;
+
+	private RftSample rftSample;
+
+	private LftSample lftSample;
+
+	private LipidProfileSample lipidProfileSample;
+
+	private CompleteBloodCountSample completeBloodCountSample;
+
+	private UrineRoutineExaminationSample urineRoutineExaminationSample;
+
+
+	private boolean hasPremiumHealthPackage;
+
+	private boolean hasRFT;
+
+	private boolean hasLipidProfile;
+
+	private boolean hasLFT;
+
+	private boolean hasUrineRE;
+
+	private boolean hasCompleteBloodCount;
+
+	private boolean hasUrineRoutineExamination;
 
 	@ManyToOne(cascade = {})
 	@JoinColumn(nullable = false)
@@ -252,4 +271,104 @@ public class AdditionalTest extends AbstractDomainObject {
 		this.otherTestResults = otherTestResults;
 	}
 
+	@OneToOne( fetch = FetchType.LAZY)
+	public RftSample getRftSample() {
+		return rftSample;
+	}
+
+	public void setRftSample(RftSample rftSample) {
+		this.rftSample = rftSample;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public LftSample getLftSample() {
+		return lftSample;
+	}
+
+	public void setLftSample(LftSample lftSample) {
+		this.lftSample = lftSample;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public LipidProfileSample getLipidProfileSample() {
+		return lipidProfileSample;
+	}
+
+	public void setLipidProfileSample(LipidProfileSample lipidProfileSample) {
+		this.lipidProfileSample = lipidProfileSample;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public CompleteBloodCountSample getCompleteBloodCountSample() {
+		return completeBloodCountSample;
+	}
+
+	public void setCompleteBloodCountSample(CompleteBloodCountSample completeBloodCountSample) {
+		this.completeBloodCountSample = completeBloodCountSample;
+	}
+
+	public boolean isHasPremiumHealthPackage() {
+		return hasPremiumHealthPackage;
+	}
+
+	public void setHasPremiumHealthPackage(boolean hasPremiumHealthPackage) {
+		this.hasPremiumHealthPackage = hasPremiumHealthPackage;
+	}
+
+	public boolean isHasRFT() {
+		return hasRFT;
+	}
+
+	public void setHasRFT(boolean hasRFT) {
+		this.hasRFT = hasRFT;
+	}
+
+	public boolean isHasLipidProfile() {
+		return hasLipidProfile;
+	}
+
+	public void setHasLipidProfile(boolean hasLipidProfile) {
+		this.hasLipidProfile = hasLipidProfile;
+	}
+
+	public boolean isHasLFT() {
+		return hasLFT;
+	}
+
+	public void setHasLFT(boolean hasLFT) {
+		this.hasLFT = hasLFT;
+	}
+
+	public boolean isHasUrineRE() {
+		return hasUrineRE;
+	}
+
+	public void setHasUrineRE(boolean hasUrineRE) {
+		this.hasUrineRE = hasUrineRE;
+	}
+
+	public boolean isHasCompleteBloodCount() {
+		return hasCompleteBloodCount;
+	}
+
+	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
+		this.hasCompleteBloodCount = hasCompleteBloodCount;
+	}
+
+	@OneToOne( fetch = FetchType.LAZY)
+	public UrineRoutineExaminationSample getUrineRoutineExaminationSample() {
+		return urineRoutineExaminationSample;
+	}
+
+	public void setUrineRoutineExaminationSample(UrineRoutineExaminationSample urineRoutineExaminationSample) {
+		this.urineRoutineExaminationSample = urineRoutineExaminationSample;
+	}
+
+	public boolean isHasUrineRoutineExamination() {
+		return hasUrineRoutineExamination;
+	}
+
+	public void setHasUrineRoutineExamination(boolean hasUrineRoutineExamination) {
+		this.hasUrineRoutineExamination = hasUrineRoutineExamination;
+	}
 }
