@@ -33,6 +33,9 @@ public class LipidProfileSampleDto extends EntityDto {
     @PersonalData
     private Float calciumMethod;
 
+    private Integer fasting;
+    private Integer postParandial;
+
     public Float getCholestrolMethod() {
         return cholestrolMethod;
     }
@@ -95,5 +98,21 @@ public class LipidProfileSampleDto extends EntityDto {
 
     public void setCalciumMethod(Float calciumMethod) {
         this.calciumMethod = calciumMethod;
+    }
+
+    public Integer getFasting() {
+        return fasting;
+    }
+
+    public void setFasting(Integer fasting) {
+        this.fasting = fasting;
+    }
+
+    public Integer getPostParandial() {
+        return postParandial;
+    }
+
+    public void setPostParandial(Integer postParandial) {
+        this.postParandial = postParandial;
     }
 }

@@ -249,6 +249,9 @@ public class AdditionalTestFacadeEjb implements AdditionalTestFacade {
 		target.setHasLFT(source.isHasLFT());
 		target.setHasUrineRE(source.isHasUrineRE());
 		target.setHasCompleteBloodCount(source.isHasCompleteBloodCount());
+		if (source.getLipidProfileSample() != null) {
+			target.setHasHealthScreeningTest(true);
+		}
 		target.setRftSampleDto(toRftSampleDto(source.getRftSample(), target.getRftSampleDto()));
 		target.setLftSampleDto(toLftSampleDto(source.getLftSample()));
 		target.setLipidProfileSampleDto(toLipidProfileSampleDto(source.getLipidProfileSample()));
@@ -285,6 +288,8 @@ public class AdditionalTestFacadeEjb implements AdditionalTestFacade {
 		target.setTotalProteinMethod(source.getTotalProteinMethod());
 		target.setAlbuminMethod(source.getAlbuminMethod());
 		target.setCalciumMethod(source.getCalciumMethod());
+		target.setFasting(source.getFasting());
+		target.setPostParandial(source.getPostParandial());
 		return target;
 	}
 
@@ -354,6 +359,8 @@ public class AdditionalTestFacadeEjb implements AdditionalTestFacade {
 		target.setTotalProteinMethod(source.getTotalProteinMethod());
 		target.setAlbuminMethod(source.getAlbuminMethod());
 		target.setCalciumMethod(source.getCalciumMethod());
+		target.setFasting(source.getFasting());
+		target.setPostParandial(source.getPostParandial());
 		return target;
 	}
 

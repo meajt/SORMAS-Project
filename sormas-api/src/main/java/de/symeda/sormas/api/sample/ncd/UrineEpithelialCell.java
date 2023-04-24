@@ -1,5 +1,12 @@
 package de.symeda.sormas.api.sample.ncd;
 
+import de.symeda.sormas.api.i18n.I18nProperties;
+
 public enum UrineEpithelialCell {
-    SIX, SEVEN, EIGHT
+    SIX, SEVEN, EIGHT;
+    @Override
+    public String toString() {
+        return I18nProperties.getEnumCaption(this);
+    }
+
 }

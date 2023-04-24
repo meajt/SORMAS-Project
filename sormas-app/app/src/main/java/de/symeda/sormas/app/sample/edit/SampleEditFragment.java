@@ -36,7 +36,6 @@ import androidx.annotation.Nullable;
 
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
-import de.symeda.sormas.api.formfilter.NepalFormFilter;
 import de.symeda.sormas.api.formfilter.NepalFormFilterConstance;
 import de.symeda.sormas.api.infrastructure.facility.FacilityDto;
 import de.symeda.sormas.api.sample.AdditionalTestType;
