@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.ui.utils.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.vaadin.icons.VaadinIcons;
@@ -88,7 +89,7 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 
 	private static final String HTML_LAYOUT =
 		"%s" + fluidRow(fluidRowLocs(PersonDto.BIRTH_DATE_YYYY, PersonDto.BIRTH_DATE_MM, PersonDto.BIRTH_DATE_DD), fluidRowLocs(PersonDto.SEX))
-			+ fluidRowLocs(PersonDto.MOBILE_NO)
+			+ fluidRow( fluidRowLocs(PersonDto.APPROXIMATE_AGE, PersonDto.APPROXIMATE_AGE_TYPE),fluidRowLocs(PersonDto.MOBILE_NO))
 			+fluidRow(fluidRowLocs(PersonDto.ETHNICITY, PersonDto.RELIGION))
 			+ fluidRowLocs(PersonDto.NATIONAL_HEALTH_ID, PersonDto.PASSPORT_NUMBER)
 			+ fluidRowLocs(PersonDto.PRESENT_CONDITION, SymptomsDto.ONSET_DATE) + fluidRowLocs(PersonDto.PHONE, PersonDto.EMAIL_ADDRESS)
@@ -180,7 +181,16 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 			birthDateYear.markAsDirty();
 			birthDateMonth.markAsDirty();
 		});
+		TextField approximateAgeField = addField(PersonDto.APPROXIMATE_AGE, TextField.class);
+		approximateAgeField
+				.setConversionError(I18nProperties.getValidationError(Validations.onlyIntegerNumbersAllowed, approximateAgeField.getCaption()));
+		ComboBox approximateAgeTypeField = addField(PersonDto.APPROXIMATE_AGE_TYPE, ComboBox.class);
 
+		approximateAgeField.addValidator(
+				new ApproximateAgeValidator(
+						approximateAgeField,
+						approximateAgeTypeField,
+						I18nProperties.getValidationError(Validations.softApproximateAgeTooHigh)));
 		ComboBox sex = addField(PersonDto.SEX, ComboBox.class);
 
 		addField(PersonDto.PASSPORT_NUMBER, TextField.class);
@@ -355,7 +365,8 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		person.setPresentCondition(personCreated.getPresentCondition());
 		person.setNationalHealthId(personCreated.getNationalHealthId());
 		person.setPassportNumber(personCreated.getPassportNumber());
-
+		person.setApproximateAge(personCreated.getApproximateAge());
+		person.setApproximateAgeType(personCreated.getApproximateAgeType());
 		if(StringUtils.isNotEmpty(personCreated.getMobileNo()))
 		{
 			person.setMobileNo(personCreated.getMobileNo());
