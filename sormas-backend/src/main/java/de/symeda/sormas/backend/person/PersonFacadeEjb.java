@@ -19,6 +19,7 @@ import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.maxBy;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1662,6 +1663,7 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setApproximateAge(source.getApproximateAge());
 		target.setApproximateAgeType(source.getApproximateAgeType());
 		target.setApproximateAgeReferenceDate(source.getApproximateAgeReferenceDate());
+		updateDateOfBirthFromApproximateAge(source, target);
 		target.setCauseOfDeath(source.getCauseOfDeath());
 		target.setCauseOfDeathDetails(source.getCauseOfDeathDetails());
 		target.setCauseOfDeathDisease(source.getCauseOfDeathDisease());
@@ -1746,6 +1748,15 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setAdditionalDetails(source.getAdditionalDetails());
 		target.setMobileNo(source.getMobileNo());
 		return target;
+	}
+
+	private void updateDateOfBirthFromApproximateAge(PersonDto source, Person target) {
+		if(source.getBirthdateYYYY() == null && target.getApproximateAge() != null) {
+			LocalDate dob = DateHelper.minusTimeFromCurrentDate(target.getApproximateAge(), target.getApproximateAgeType());
+			target.setBirthdateYYYY(dob.getYear());
+			target.setBirthdateMM(dob.getMonthValue());
+			target.setBirthdateDD(dob.getDayOfMonth());
+		}
 	}
 
 	// needed for tests

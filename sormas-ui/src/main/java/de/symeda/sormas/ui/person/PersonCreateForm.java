@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.ui.utils.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.vaadin.icons.VaadinIcons;
@@ -57,13 +58,6 @@ import de.symeda.sormas.api.utils.fieldaccess.UiFieldAccessCheckers;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
 import de.symeda.sormas.ui.ControllerProvider;
 import de.symeda.sormas.ui.location.LocationEditForm;
-import de.symeda.sormas.ui.utils.AbstractEditForm;
-import de.symeda.sormas.ui.utils.ButtonHelper;
-import de.symeda.sormas.ui.utils.CommitDiscardWrapperComponent;
-import de.symeda.sormas.ui.utils.CssStyles;
-import de.symeda.sormas.ui.utils.FieldHelper;
-import de.symeda.sormas.ui.utils.PhoneNumberValidator;
-import de.symeda.sormas.ui.utils.VaadinUiUtil;
 
 public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 
@@ -88,7 +82,7 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 
 	private static final String HTML_LAYOUT =
 		"%s" + fluidRow(fluidRowLocs(PersonDto.BIRTH_DATE_YYYY, PersonDto.BIRTH_DATE_MM, PersonDto.BIRTH_DATE_DD), fluidRowLocs(PersonDto.SEX))
-			+ fluidRowLocs(PersonDto.MOBILE_NO)
+			+ fluidRow( fluidRowLocs(PersonDto.APPROXIMATE_AGE, PersonDto.APPROXIMATE_AGE_TYPE),fluidRowLocs(PersonDto.MOBILE_NO))
 			+ fluidRowLocs(PersonDto.NATIONAL_HEALTH_ID, PersonDto.PASSPORT_NUMBER)
 			+ fluidRowLocs(PersonDto.PRESENT_CONDITION, SymptomsDto.ONSET_DATE) + fluidRowLocs(PersonDto.PHONE, PersonDto.EMAIL_ADDRESS)
 			+ fluidRowLocs(ENTER_HOME_ADDRESS_NOW) + loc(HOME_ADDRESS_HEADER) + divsCss(VSPACE_3, fluidRowLocs(HOME_ADDRESS_LOC));
@@ -179,7 +173,16 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 			birthDateYear.markAsDirty();
 			birthDateMonth.markAsDirty();
 		});
+		TextField approximateAgeField = addField(PersonDto.APPROXIMATE_AGE, TextField.class);
+		approximateAgeField
+				.setConversionError(I18nProperties.getValidationError(Validations.onlyIntegerNumbersAllowed, approximateAgeField.getCaption()));
+		ComboBox approximateAgeTypeField = addField(PersonDto.APPROXIMATE_AGE_TYPE, ComboBox.class);
 
+		approximateAgeField.addValidator(
+				new ApproximateAgeValidator(
+						approximateAgeField,
+						approximateAgeTypeField,
+						I18nProperties.getValidationError(Validations.softApproximateAgeTooHigh)));
 		ComboBox sex = addField(PersonDto.SEX, ComboBox.class);
 
 		addField(PersonDto.PASSPORT_NUMBER, TextField.class);
@@ -353,7 +356,8 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		person.setPresentCondition(personCreated.getPresentCondition());
 		person.setNationalHealthId(personCreated.getNationalHealthId());
 		person.setPassportNumber(personCreated.getPassportNumber());
-
+		person.setApproximateAge(personCreated.getApproximateAge());
+		person.setApproximateAgeType(personCreated.getApproximateAgeType());
 		if(StringUtils.isNotEmpty(personCreated.getMobileNo()))
 		{
 			person.setMobileNo(personCreated.getMobileNo());
