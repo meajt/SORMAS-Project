@@ -37,6 +37,8 @@ import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -228,6 +230,8 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 	}
 
 	public PathogenTestDto savePathogenTest(@Valid PathogenTestDto dto, boolean checkChangeDate, boolean syncShares) {
+		CustomLoggerFactory.getLogger(LoggerType.WEB)
+				.logObj("@savePathogenTest", dto);
 		PathogenTest existingSampleTest = pathogenTestService.getByUuid(dto.getUuid());
 		FacadeHelper.checkCreateAndEditRights(existingSampleTest, userService, UserRight.PATHOGEN_TEST_CREATE, UserRight.PATHOGEN_TEST_EDIT);
 
@@ -237,12 +241,31 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 
 		PathogenTest pathogenTest = fillOrBuildEntity(dto, existingSampleTest, checkChangeDate);
 		pathogenTestService.ensurePersisted(pathogenTest);
-
+		getMorePathogenTest(dto)
+				.forEach(pathogenTestService::ensurePersisted);
 		onPathogenTestChanged(existingSampleTestDto, pathogenTest);
 
 		handleAssociatedEntityChanges(pathogenTest, syncShares);
 
 		return convertToDto(pathogenTest, Pseudonymizer.getDefault(userService::hasRight));
+	}
+
+	List<PathogenTest> getMorePathogenTest(PathogenTestDto dto) {
+		List<PathogenTest> pathogenTests = new ArrayList<>();
+		if (dto.getMoreTestedDisease() != null && !dto.getMoreTestedDisease().isEmpty()) {
+			String prevUID = dto.getUuid();
+			for (int i = 0; i< dto.getMoreTestedDisease().size(); i++) {
+				if (dto.getMoreTestedDisease().get(i) != null && dto.getMoreTestResult().get(i) != null) {
+					dto.setUuid(null);
+					PathogenTest pathogenTest = fillOrBuildEntity(dto, null, false);
+					pathogenTest.setTestedDisease(dto.getMoreTestedDisease().get(i));
+					pathogenTest.setTestResult(dto.getMoreTestResult().get(i));
+					pathogenTests.add(pathogenTest);
+				}
+			}
+			dto.setUuid(prevUID);
+		}
+		return pathogenTests;
 	}
 
 	private void handleAssociatedEntityChanges(PathogenTest pathogenTest, boolean syncShares) {

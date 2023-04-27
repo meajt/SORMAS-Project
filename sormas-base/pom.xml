@@ -1507,7 +1507,7 @@
 		<module>../sormas-api</module>
 		<module>../sormas-backend</module>
 		<module>../sormas-ear</module>
-		<module>../sormas-keycloak-service-provider</module>
+<!--		<module>../sormas-keycloak-service-provider</module>-->
 		<module>../sormas-rest</module>
 		<module>../sormas-ui</module>
 		<module>./dependencies/serverlibs.pom</module>
