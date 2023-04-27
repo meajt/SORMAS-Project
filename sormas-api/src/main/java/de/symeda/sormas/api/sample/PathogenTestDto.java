@@ -15,7 +15,6 @@
 package de.symeda.sormas.api.sample;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.Size;
 
@@ -82,9 +81,6 @@ public class PathogenTestDto extends PseudonymizableDto {
 	private SampleReferenceDto sample;
 	@Required
 	private Disease testedDisease;
-
-	private List<Disease> moreTestedDisease;
-
 	private DiseaseVariant testedDiseaseVariant;
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
 	private String testedDiseaseDetails;
@@ -110,7 +106,6 @@ public class PathogenTestDto extends PseudonymizableDto {
 	private UserReferenceDto labUser;
 	@Required
 	private PathogenTestResultType testResult;
-	private List<PathogenTestResultType> moreTestResult;
 	@Required
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_BIG, message = Validations.textTooLong)
@@ -400,21 +395,5 @@ public class PathogenTestDto extends PseudonymizableDto {
 	@Override
 	public PathogenTestDto clone() throws CloneNotSupportedException {
 		return (PathogenTestDto) super.clone();
-	}
-
-	public List<Disease> getMoreTestedDisease() {
-		return moreTestedDisease;
-	}
-
-	public void setMoreTestedDisease(List<Disease> moreTestedDisease) {
-		this.moreTestedDisease = moreTestedDisease;
-	}
-
-	public List<PathogenTestResultType> getMoreTestResult() {
-		return moreTestResult;
-	}
-
-	public void setMoreTestResult(List<PathogenTestResultType> moreTestResult) {
-		this.moreTestResult = moreTestResult;
 	}
 }

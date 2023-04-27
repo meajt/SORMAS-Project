@@ -20,19 +20,25 @@ package de.symeda.sormas.ui.samples;
 import static de.symeda.sormas.ui.utils.CssStyles.H3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_TOP_4;
-import static de.symeda.sormas.ui.utils.LayoutUtil.*;
+import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocs;
+import static de.symeda.sormas.ui.utils.LayoutUtil.loc;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
-import com.vaadin.ui.Button;
-import com.vaadin.v7.ui.*;
-import de.symeda.sormas.api.logger.CustomLoggerFactory;
-import de.symeda.sormas.api.logger.LoggerType;
 import org.apache.commons.collections.CollectionUtils;
 
+import com.vaadin.ui.Label;
 import com.vaadin.v7.data.util.converter.Converter;
 import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.v7.ui.CheckBox;
+import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.v7.ui.DateField;
+import com.vaadin.v7.ui.TextArea;
+import com.vaadin.v7.ui.TextField;
 
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.FacadeProvider;
@@ -63,9 +69,7 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 	private static final long serialVersionUID = -1218707278398543154L;
 
 	private static final String PATHOGEN_TEST_HEADING_LOC = "pathogenTestHeadingLoc";
-	private static final String ADD_MORE_TESTED_DISEASE_BUTTON = "addMoreTestedDiseaseButton";
-	private static final String MORE_TESTED_DISEASE_CONTAINER = "moreTestedDiseaseContainer";
-	private static final String MORE_TESTED_RESULT_CONTAINER = "moreTestedResultContainer";
+
 	//@formatter:off
 	private static final String HTML_LAYOUT =
 			loc(PATHOGEN_TEST_HEADING_LOC) +
@@ -73,15 +77,12 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			fluidRowLocs(PathogenTestDto.EXTERNAL_ID, PathogenTestDto.EXTERNAL_ORDER_ID) +
 			fluidRowLocs(PathogenTestDto.TEST_TYPE, PathogenTestDto.TEST_TYPE_TEXT) +
 			fluidRowLocs(PathogenTestDto.PCR_TEST_SPECIFICATION, "") +
-			fluidRowLocs(PathogenTestDto.TESTED_DISEASE, ADD_MORE_TESTED_DISEASE_BUTTON) +
-			fluidRowLocs(MORE_TESTED_DISEASE_CONTAINER) +
-			fluidRowLocs(PathogenTestDto.TESTED_DISEASE_DETAILS) +
+			fluidRowLocs(PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TESTED_DISEASE_DETAILS) +
 			fluidRowLocs(PathogenTestDto.TESTED_DISEASE_VARIANT, PathogenTestDto.TESTED_DISEASE_VARIANT_DETAILS) +
 			fluidRowLocs(PathogenTestDto.TYPING_ID, "") +
 			fluidRowLocs(PathogenTestDto.TEST_DATE_TIME, PathogenTestDto.LAB) +
 			fluidRowLocs("", PathogenTestDto.LAB_DETAILS) +
 			fluidRowLocs(PathogenTestDto.TEST_RESULT, PathogenTestDto.TEST_RESULT_VERIFIED) +
-			fluidRowLocs(MORE_TESTED_RESULT_CONTAINER) +
 			fluidRowLocs(PathogenTestDto.PRELIMINARY, "") +
 			fluidRowLocs(PathogenTestDto.FOUR_FOLD_INCREASE_ANTIBODY_TITER, "") +
 			fluidRowLocs(PathogenTestDto.SEROTYPE, "") + 
@@ -100,8 +101,6 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 	private TextField testTypeTextField;
 	private ComboBox pcrTestSpecification;
 	private TextField typingIdField;
-	private List<ComboBox> moreDiseaseComboBox;
-	private List<ComboBox> moreTestedResultComboBox;
 
 	public PathogenTestForm(SampleDto sample, boolean create, int caseSampleCount, boolean isPseudonymized, boolean inJurisdiction) {
 		super(
@@ -312,35 +311,6 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			setRequired(true, PathogenTestDto.LAB);
 		}
 		setRequired(true, PathogenTestDto.TEST_TYPE, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
-		addMoreTestedDisease();
-	}
-
-	private void addMoreTestedDisease() {
-
-		VerticalLayout diseaseLayout = new VerticalLayout();
-		getContent().addComponent(diseaseLayout, MORE_TESTED_DISEASE_CONTAINER);
-		VerticalLayout resultLayout = new VerticalLayout();
-		getContent().addComponent(resultLayout, MORE_TESTED_RESULT_CONTAINER);
-
-		Button button = new Button();
-		button.setCaption("Add More");
-		getContent().addComponent(button, ADD_MORE_TESTED_DISEASE_BUTTON);
-		moreDiseaseComboBox = new ArrayList<>();
-		moreTestedResultComboBox = new ArrayList<>();
-
-		button.addClickListener( e -> {
-			CustomLoggerFactory.getLogger(LoggerType.WEB)
-					.logInfo("@addMoreTestedDisease", "add more buttton clicked");
-			ComboBox diseasComboBox = new ComboBox();
-			//diseasComboBox.setCaption(I18nProperties.getCaption(PathogenTestDto.TESTED_DISEASE, "Tested Disease np"));
-			diseasComboBox.addItems(Disease.values());
-			diseaseLayout.addComponent(diseasComboBox);
-			moreDiseaseComboBox.add(diseasComboBox);
-			ComboBox resultComboBox = new ComboBox();
-			resultComboBox.addItems(PathogenTestResultType.values());
-			resultLayout.addComponent(resultComboBox);
-			moreTestedResultComboBox.add(resultComboBox);
-		});
 	}
 
 	@Override
@@ -356,20 +326,8 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 	@Override
 	public void setValue(PathogenTestDto newFieldValue) throws ReadOnlyException, Converter.ConversionException {
 		super.setValue(newFieldValue);
-		newFieldValue.setMoreTestedDisease(new ArrayList<>());
-		newFieldValue.setMoreTestResult(new ArrayList<>());
 		pcrTestSpecification.setValue(newFieldValue.getPcrTestSpecification());
 		testTypeTextField.setValue(newFieldValue.getTestTypeText());
 		typingIdField.setValue(newFieldValue.getTypingId());
-	}
-
-	@Override
-	public PathogenTestDto getValue() {
-		PathogenTestDto dto = super.getValue();
-		for(int i = 0; i < moreDiseaseComboBox.size(); i++) {
-			dto.getMoreTestedDisease().add((Disease) moreDiseaseComboBox.get(i).getValue());
-			dto.getMoreTestResult().add((PathogenTestResultType) moreTestedResultComboBox.get(i).getValue());
-		}
-		return dto;
 	}
 }
