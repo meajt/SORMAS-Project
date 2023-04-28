@@ -29,8 +29,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class I18nConstantGenerator {
 
-	private static final String FILE_PATH_PATTERN = "src/main/java/de/symeda/sormas/api/i18n/%s.java";
-
+	//private static final String FILE_PATH_PATTERN = "src/main/java/de/symeda/sormas/api/i18n/%s.java";
+	private static final String FILE_PATH_PATTERN = "src\\main\\java\\de\\symeda\\sormas\\api/i18n\\%s.java";
 	private final String propertiesFileName;
 	private final String outputClassName;
 	private final String outputClassFilePath;
@@ -47,7 +47,7 @@ public class I18nConstantGenerator {
 
 		this.propertiesFileName = propertiesFileName;
 		this.outputClassName = outputClassName;
-		this.outputClassFilePath = String.format(FILE_PATH_PATTERN, outputClassName);
+		this.outputClassFilePath = String.format("sormas-api\\"+FILE_PATH_PATTERN, outputClassName);
 		this.ignoreChildren = ignoreChildren;
 	}
 
@@ -180,7 +180,7 @@ public class I18nConstantGenerator {
 		long startTime = System.currentTimeMillis();
 
 		// Check if this program is started with the module directory as working directory.
-		Path path = Paths.get(FILE_PATH_PATTERN.split("/")[0]);
+		Path path = Paths.get("sormas-api\\"+FILE_PATH_PATTERN.split("\\\\")[0]);
 		if (!Files.exists(path)) {
 			throw new IOException(
 				String.format(
