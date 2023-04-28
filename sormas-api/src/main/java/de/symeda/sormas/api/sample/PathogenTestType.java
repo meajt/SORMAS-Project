@@ -23,10 +23,10 @@ import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.api.utils.Diseases;
 
 public enum PathogenTestType {
-
+	PCR_RT_PCR,
+	RAPID_TEST,
 	ANTIBODY_DETECTION,
 	ANTIGEN_DETECTION,
-	RAPID_TEST,
 	CULTURE,
 	HISTOPATHOLOGY,
 	ISOLATION,
@@ -46,7 +46,6 @@ public enum PathogenTestType {
 		Disease.CORONAVIRUS }, hide = true)
 	MICROSCOPY,
 	NEUTRALIZING_ANTIBODIES,
-	PCR_RT_PCR,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
 	GRAM_STAIN,
