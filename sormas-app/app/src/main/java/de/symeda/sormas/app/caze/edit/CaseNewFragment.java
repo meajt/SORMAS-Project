@@ -38,6 +38,7 @@ import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.event.TypeOfPlace;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.infrastructure.facility.FacilityTypeGroup;
+import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PresentCondition;
 import de.symeda.sormas.api.person.Sex;
 import de.symeda.sormas.api.person.TimeUnit;
@@ -260,7 +261,7 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
             setPersonDateOfBirth(age, record.getPerson().getAgeUnit());
         });
         contentBinding.personAgeUnit.addValueChangedListener(e -> {
-            setPersonDateOfBirth(record.getPerson().getAge(),(TimeUnit) e.getValue());
+            setPersonDateOfBirth(record.getPerson().getAge(),(ApproximateAgeType) e.getValue());
         });
         contentBinding.personSex.initializeSpinner(sexList);
 
@@ -287,7 +288,7 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
         });
     }
 
-    private void setPersonDateOfBirth(Integer ageValue, TimeUnit timeUnit) {
+    private void setPersonDateOfBirth(Integer ageValue, ApproximateAgeType timeUnit) {
         Person person = record.getPerson();
         try {
             person.setAgeUnit(timeUnit);

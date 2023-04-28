@@ -109,7 +109,7 @@ public class Person extends PseudonymizableAdo {
 	private Integer age;
 
 	@Transient
-	private TimeUnit timeUnit;
+	private ApproximateAgeType timeUnit;
 	@Column
 	private Integer approximateAge;
 	@Enumerated(EnumType.STRING)
@@ -297,11 +297,11 @@ public class Person extends PseudonymizableAdo {
 		this.age = age;
 	}
 
-	public TimeUnit getAgeUnit() {
+	public ApproximateAgeType getAgeUnit() {
 		return timeUnit;
 	}
 
-	public void setAgeUnit(TimeUnit timeUnit) {
+	public void setAgeUnit(ApproximateAgeType timeUnit) {
 		this.timeUnit = timeUnit;
 	}
 
