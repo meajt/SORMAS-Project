@@ -60,5 +60,5 @@ public interface PathogenTestFacade {
 	List<PathogenTestDto> getAllActivePathogenTestsAfter(Date date, Integer batchSize, String lastSynchronizedUuid);
 
 	Page<PathogenTestDto> getIndexPage(PathogenTestCriteria pathogenTestCriteria, Integer offset, Integer size, List<SortProperty> sortProperties);
-
+	PathogenTestDto copyPathogenTest(PathogenTestDto source);
 }

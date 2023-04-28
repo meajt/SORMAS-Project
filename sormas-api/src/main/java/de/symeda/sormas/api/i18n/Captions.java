@@ -1663,6 +1663,7 @@ public interface Captions {
 	String PathogenTest_typingId = "PathogenTest.typingId";
 	String PathogenTest_viaLims = "PathogenTest.viaLims";
 	String pathogenTestAdd = "pathogenTestAdd";
+	String copyFromMain = "copyFromMain";
 	String pathogenTestCreateNew = "pathogenTestCreateNew";
 	String pathogenTestNewResult = "pathogenTestNewResult";
 	String pathogenTestNewTest = "pathogenTestNewTest";

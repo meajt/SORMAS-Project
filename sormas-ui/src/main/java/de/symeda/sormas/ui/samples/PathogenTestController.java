@@ -18,6 +18,7 @@
 package de.symeda.sormas.ui.samples;
 
 import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
+import static java.util.Objects.isNull;
 
 import java.util.Date;
 import java.util.List;
@@ -25,10 +26,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
+import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.*;
 
 import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
@@ -47,18 +47,13 @@ import de.symeda.sormas.api.event.EventParticipantReferenceDto;
 import de.symeda.sormas.api.i18n.Captions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
-import de.symeda.sormas.api.sample.PathogenTestDto;
-import de.symeda.sormas.api.sample.PathogenTestFacade;
-import de.symeda.sormas.api.sample.PathogenTestResultType;
-import de.symeda.sormas.api.sample.SampleDto;
-import de.symeda.sormas.api.sample.SampleReferenceDto;
+import de.symeda.sormas.api.sample.*;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.ui.ControllerProvider;
 import de.symeda.sormas.ui.SormasUI;
 import de.symeda.sormas.ui.UserProvider;
-import de.symeda.sormas.ui.utils.CommitDiscardWrapperComponent;
-import de.symeda.sormas.ui.utils.VaadinUiUtil;
+import de.symeda.sormas.ui.utils.*;
 
 public class PathogenTestController {
 
@@ -74,10 +69,45 @@ public class PathogenTestController {
 	public void create(SampleReferenceDto sampleRef, int caseSampleCount, BiConsumer<PathogenTestDto, Runnable> onSavedPathogenTest) {
 		SampleDto sampleDto = FacadeProvider.getSampleFacade().getSampleByUuid(sampleRef.getUuid());
 		final CommitDiscardWrapperComponent<PathogenTestForm> editView =
-			getPathogenTestCreateComponent(sampleDto, caseSampleCount, onSavedPathogenTest, false);
-
+		getPathogenTestCreateComponent(sampleDto, caseSampleCount, onSavedPathogenTest, false);
+		addPathogenTestFromAboveButton(editView, sampleDto);
 		VaadinUiUtil.showModalPopupWindow(editView, I18nProperties.getString(Strings.headingCreatePathogenTestResult));
 	}
+
+	public void addPathogenTestFromAboveButton(CommitDiscardWrapperComponent<PathogenTestForm> editForm, SampleDto sampleDto) {
+		Button addMoreButton = new Button("Copy From Main");
+		editForm.getButtonsPanel().addComponent(addMoreButton, 0);
+		PathogenTestDto mainPathogenTestDto = editForm.getWrappedComponent().getValue();
+		addMoreButton.addClickListener(e -> {
+			PathogenTestDto pathogenTestDto = FacadeProvider.getPathogenTestFacade().copyPathogenTest(mainPathogenTestDto);
+			addPathogenTestComponent(editForm, sampleDto, pathogenTestDto);
+		});
+
+		Button newTestButton = new Button(I18nProperties.getCaption(Captions.pathogenTestAdd));
+		editForm.getButtonsPanel().addComponent(newTestButton, 1);
+		newTestButton.addClickListener(e -> {
+			PathogenTestDto pathogenTestDto = PathogenTestDto.build(mainPathogenTestDto.getSample(), mainPathogenTestDto.getLabUser());
+			addPathogenTestComponent(editForm, sampleDto, pathogenTestDto);
+		});
+	}
+
+	private void addPathogenTestComponent(CommitDiscardWrapperComponent<PathogenTestForm> editForm, SampleDto sampleDto, PathogenTestDto pathogenTestDto) {
+		Label separator = new Label("<br/><hr/><br/>", ContentMode.HTML);
+		separator.setWidth(100f, Sizeable.Unit.PERCENTAGE);
+		editForm.addComponent(separator, editForm.getComponentCount() - 1);
+		PathogenTestForm pathogenTestForm = new PathogenTestForm(sampleDto, true, 0, false, false);
+		pathogenTestForm.setValue(pathogenTestDto);
+		CommitDiscardWrapperComponent.CommitListener savePathogenTest = () -> {
+			pathogenTestForm.commit();
+			ControllerProvider.getPathogenTestController().savePathogenTest(pathogenTestForm.getValue(), null, true, true);
+		};
+		editForm.addCommitListener(savePathogenTest);
+		CollapsiblePathogenTestForm collapsibleForm =
+				new CollapsiblePathogenTestForm(pathogenTestForm, true, true);
+		editForm.addComponent(collapsibleForm, editForm.getComponentCount() - 1);
+		editForm.addComponent(separator, editForm.getComponentCount() - 1);
+	}
+
 
 	public CommitDiscardWrapperComponent<PathogenTestForm> getPathogenTestCreateComponent(
 		SampleDto sampleDto,
