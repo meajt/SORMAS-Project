@@ -312,6 +312,8 @@ public abstract class BaseActivity extends BaseLocalizedActivity implements Noti
 					NavigationHelper.goToCampaigns(getContext());
 				} else if (id == R.id.menu_item_reports) {
 					NavigationHelper.goToReports(getContext());
+				} else if (id == R.id.menu_item_news) {
+					NavigationHelper.goToNews(getContext());
 				}
 
 				// necessary to prevent the drawer from staying open when the same entry is selected
