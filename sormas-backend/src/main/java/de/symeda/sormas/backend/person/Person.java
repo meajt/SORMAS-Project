@@ -47,6 +47,8 @@ import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.externaldata.HasExternalData;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.person.*;
+import de.symeda.sormas.api.utils.PersonalData;
+import de.symeda.sormas.api.utils.SensitiveData;
 import de.symeda.sormas.backend.caze.Case;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.common.messaging.ManualMessageLog;
@@ -201,6 +203,8 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 	private String additionalDetails;
 
 	private String mobileNo;
+	private Float weight;
+	//private String placeOfWork;
 
 	private List<Case> cases = new ArrayList<>();
 	private List<Contact> contacts = new ArrayList<>();
@@ -831,4 +835,13 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 	public void setReligion(Religion religion) {
 		this.religion = religion;
 	}
+
+	public Float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Float weight) {
+		this.weight = weight;
+	}
+
 }

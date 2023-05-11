@@ -130,6 +130,8 @@ public class PersonDto extends PseudonymizableDto {
 	public static final String MOBILE_NO = "mobileNo";
 	public static final String ETHNICITY = "ethnicity";
 	public static final String RELIGION = "religion";
+	public static final String WEIGHT = "weight";
+	public static final String PLACE_OF_WORK = "placeOfWork";
 	private static final long serialVersionUID = -8558187171374254398L;
 
 	// Fields are declared in the order they should appear in the import template
@@ -390,6 +392,14 @@ public class PersonDto extends PseudonymizableDto {
 	@PersonalData
 	@SensitiveData
 	private Religion religion;
+
+	@PersonalData
+	@SensitiveData
+	private Float weight;
+
+	@PersonalData
+	@SensitiveData
+	private String placeOfWork;
 
 	@SuppressWarnings("serial")
 	public static class SeveralNonPrimaryContactDetailsException extends RuntimeException {
@@ -1081,5 +1091,21 @@ public class PersonDto extends PseudonymizableDto {
 
 	public void setReligion(Religion religion) {
 		this.religion = religion;
+	}
+
+	public Float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Float weight) {
+		this.weight = weight;
+	}
+
+	public String getPlaceOfWork() {
+		return placeOfWork;
+	}
+
+	public void setPlaceOfWork(String placeOfWork) {
+		this.placeOfWork = placeOfWork;
 	}
 }
