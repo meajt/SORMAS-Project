@@ -64,7 +64,8 @@ android {
             buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
         }
         stg {
-            buildConfigField 'String', 'BASE_URL', '"http://74.235.98.228:6080/sormas-rest"'
+            applicationIdSuffix "stg"
+            buildConfigField 'String', 'BASE_URL', '"http://52.140.120.83/sormas-rest"'
             buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
         }
     }
