@@ -224,6 +224,7 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setEyelashes(source.getEyelashes());
 		target.setEnlargesNerves(source.getEnlargesNerves());
 		target.setMuscleWeakness(source.getMuscleWeakness());
+		target.setCaseCondition(source.getCaseCondition());
 		return target;
 	}
 
@@ -430,6 +431,7 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setEyelashes(source.getEyelashes());
 		target.setEnlargesNerves(source.getEnlargesNerves());
 		target.setMuscleWeakness(source.getMuscleWeakness());
+		target.setCaseCondition(source.getCaseCondition());
 		return target;
 	}
 

@@ -252,6 +252,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	public static final String EYE_LASHES = "eyelashes";
 	public static final String ENLARGES_NERVES = "enlargesNerves";
 	public static final String MUSCLE_WEAKNESS = "muscleWeakness";
+	public static final String CASE_CONDITION = "caseCondition";
 
 	// Fields are declared in the order they should appear in the import template
 
@@ -1630,6 +1631,12 @@ public class SymptomsDto extends PseudonymizableDto {
 		OTHER })
 	@Outbreaks
 	private Float temperature;
+
+	@Diseases({
+		MALARIA
+	})
+	@Outbreaks
+	private CaseCondition caseCondition;
 
 	@Diseases({
 		AFP,
@@ -4178,5 +4185,13 @@ public class SymptomsDto extends PseudonymizableDto {
 
 	public void setMuscleWeakness(SymptomState muscleWeakness) {
 		this.muscleWeakness = muscleWeakness;
+	}
+
+	public CaseCondition getCaseCondition() {
+		return caseCondition;
+	}
+
+	public void setCaseCondition(CaseCondition caseCondition) {
+		this.caseCondition = caseCondition;
 	}
 }
