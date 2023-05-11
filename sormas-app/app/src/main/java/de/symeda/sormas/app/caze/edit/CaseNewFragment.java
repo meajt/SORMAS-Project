@@ -41,7 +41,6 @@ import de.symeda.sormas.api.infrastructure.facility.FacilityTypeGroup;
 import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PresentCondition;
 import de.symeda.sormas.api.person.Sex;
-import de.symeda.sormas.api.person.TimeUnit;
 import de.symeda.sormas.api.user.JurisdictionLevel;
 import de.symeda.sormas.api.utils.DateHelper;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
@@ -247,8 +246,8 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
         int year = Calendar.getInstance().get(Calendar.YEAR);
         contentBinding.personBirthdateYYYY.setSelectionOnOpen(year - 35);
 
-        List<Item> ageUnitList = Arrays.stream(TimeUnit.values())
-                .map(it -> new Item<TimeUnit>(it.toString(), it))
+        List<Item> ageUnitList = Arrays.stream(ApproximateAgeType.values())
+                .map(it -> new Item<ApproximateAgeType>(it.toString(), it))
                 .collect(Collectors.toList());
         contentBinding.personAgeUnit.initializeSpinner(ageUnitList);
         contentBinding.personAge.addValueChangedListener(e -> {

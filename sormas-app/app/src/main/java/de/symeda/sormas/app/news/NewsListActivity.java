@@ -1,21 +1,38 @@
 package de.symeda.sormas.app.news;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.DataSource;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.symeda.sormas.app.PagedBaseListActivity;
 import de.symeda.sormas.app.PagedBaseListFragment;
 import de.symeda.sormas.app.R;
+import de.symeda.sormas.app.backend.news.News;
 import de.symeda.sormas.app.component.menu.PageMenuItem;
 
 public class NewsListActivity extends PagedBaseListActivity {
 
+    NewsListViewModel viewModel;
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         adapter = new NewsListAdapter();
+        viewModel = ViewModelProviders.of(this).get(NewsListViewModel.class);
 
+        viewModel.getNewsList().observe( this, news ->{
+            Log.d(this.getClass().getSimpleName(), "news size is "+news.size());
+            adapter.submitList(news);});
     }
 
 
