@@ -1,8 +1,11 @@
 package de.symeda.sormas.api.sample.ncd;
 
 import de.symeda.sormas.api.EntityDto;
+import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.utils.DependingOnFeatureType;
 import de.symeda.sormas.api.utils.PersonalData;
 
+@DependingOnFeatureType(featureType = FeatureType.ADDITIONAL_TESTS)
 public class LftSampleDto extends EntityDto {
     public static final String LFT_SAMPLE = "LftSampleDto";
     public static final String I18N_PREFIX = "LftSample";

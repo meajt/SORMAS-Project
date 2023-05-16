@@ -1,8 +1,11 @@
 package de.symeda.sormas.api.sample.ncd;
 
 import de.symeda.sormas.api.EntityDto;
+import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.utils.DependingOnFeatureType;
 import de.symeda.sormas.api.utils.PersonalData;
 
+@DependingOnFeatureType(featureType = FeatureType.ADDITIONAL_TESTS)
 public class RftSampleDto extends EntityDto {
     public static final String RFT_SAMPLE = "RftSampleDto";
     public static final String I18N_PREFIX = "RftSample";
