@@ -18,11 +18,7 @@
 package de.symeda.sormas.ui;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 import de.symeda.sormas.api.Disease;
@@ -808,8 +804,10 @@ public class TestDataCreator {
 
 	private void createUserRoles() {
 		Arrays.stream(DefaultUserRole.values()).forEach(defaultUserRole -> {
+			Set<UserRight> defaultUserRights = defaultUserRole.getDefaultUserRights();
+			defaultUserRights.add(UserRight.OTHER_USER_DATA);
 			UserRoleDto userRoleDto =
-				UserRoleDto.build(defaultUserRole.getDefaultUserRights().toArray(new UserRight[defaultUserRole.getDefaultUserRights().size()]));
+				UserRoleDto.build(defaultUserRights.toArray(new UserRight[defaultUserRights.size()]));
 			userRoleDto.setCaption(defaultUserRole.toString());
 			userRoleDto.setEnabled(true);
 			userRoleDto.setPortHealthUser(defaultUserRole.isPortHealthUser());
