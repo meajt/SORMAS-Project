@@ -47,7 +47,7 @@ public class I18nConstantGenerator {
 
 		this.propertiesFileName = propertiesFileName;
 		this.outputClassName = outputClassName;
-		this.outputClassFilePath = String.format("sormas-api\\"+FILE_PATH_PATTERN, outputClassName);
+		this.outputClassFilePath = String.format(FILE_PATH_PATTERN, outputClassName);
 		this.ignoreChildren = ignoreChildren;
 	}
 
@@ -78,7 +78,7 @@ public class I18nConstantGenerator {
 
 	private void generateI18nConstantClass() throws IOException {
 
-		Path path = Paths.get(outputClassFilePath);
+		Path path = Paths.get("sormas-api\\"+outputClassFilePath);
 		String sep = determineLineSeparator(path);
 
 		try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
