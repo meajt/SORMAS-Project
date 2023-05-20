@@ -279,6 +279,7 @@ public class SymptomsDto extends PseudonymizableDto {
 			ACUTE_VIRAL_HEPATITIS,
 			DIARRHEA_DEHYDRATION,
 			DIARRHEA_BLOOD,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountries
@@ -2372,6 +2373,7 @@ public class SymptomsDto extends PseudonymizableDto {
 	@Diseases({
 		CORONAVIRUS,
 			DIARRHEA_DEHYDRATION,
+			MALARIA,
 		UNDEFINED,
 		OTHER })
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
