@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.caze.*;
 import de.symeda.sormas.api.logger.CustomLoggerFactory;
 import de.symeda.sormas.api.logger.LoggerType;
 import org.apache.commons.collections.CollectionUtils;
@@ -56,15 +57,6 @@ import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.DiseaseHelper;
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.caze.CaseBulkEditData;
-import de.symeda.sormas.api.caze.CaseCriteria;
-import de.symeda.sormas.api.caze.CaseDataDto;
-import de.symeda.sormas.api.caze.CaseFacade;
-import de.symeda.sormas.api.caze.CaseIndexDto;
-import de.symeda.sormas.api.caze.CaseLogic;
-import de.symeda.sormas.api.caze.CaseOrigin;
-import de.symeda.sormas.api.caze.CaseSelectionDto;
-import de.symeda.sormas.api.caze.CaseSimilarityCriteria;
 import de.symeda.sormas.api.caze.classification.ClassificationHtmlRenderer;
 import de.symeda.sormas.api.caze.classification.DiseaseClassificationCriteriaDto;
 import de.symeda.sormas.api.caze.maternalhistory.MaternalHistoryDto;
@@ -183,6 +175,7 @@ public class CaseController {
 			navigator.addView(CaseVisitsView.VIEW_NAME, CaseVisitsView.class);
 		}
 
+		navigator.addView(CaseConclusionDataView.VIEW_NAME, CaseConclusionDataView.class);
 		navigator.addView(CaseExternalDataView.VIEW_NAME, CaseExternalDataView.class);
 	}
 
@@ -1437,6 +1430,13 @@ public class CaseController {
 			}
 		}
 
+		return editView;
+	}
+
+	public CommitDiscardWrapperComponent<CaseConclusionForm> getCaseConclusionComponent(){
+		CaseConclusionForm caseConclusionForm = new CaseConclusionForm();
+		caseConclusionForm.setValue(new CaseConclusionDto());
+		final CommitDiscardWrapperComponent<CaseConclusionForm> editView = new CommitDiscardWrapperComponent<>(caseConclusionForm, caseConclusionForm.getFieldGroup());
 		return editView;
 	}
 
