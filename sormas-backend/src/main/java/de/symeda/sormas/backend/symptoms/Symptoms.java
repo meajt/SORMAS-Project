@@ -31,6 +31,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import de.symeda.auditlog.api.Audited;
+import de.symeda.sormas.api.symptoms.CaseCondition;
 import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
 import de.symeda.sormas.api.symptoms.SymptomState;
 import de.symeda.sormas.api.symptoms.TemperatureSource;
@@ -266,6 +267,8 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState enlargesNerves;
 
 	private SymptomState muscleWeakness;
+
+	private CaseCondition caseCondition;
 
 
 	// when adding new fields make sure to extend toHumanString
@@ -1966,5 +1969,13 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setMuscleWeakness(SymptomState muscleWeakness) {
 		this.muscleWeakness = muscleWeakness;
+	}
+
+	public CaseCondition getCaseCondition() {
+		return caseCondition;
+	}
+
+	public void setCaseCondition(CaseCondition caseCondition) {
+		this.caseCondition = caseCondition;
 	}
 }

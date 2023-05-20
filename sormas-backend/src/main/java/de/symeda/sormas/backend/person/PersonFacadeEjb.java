@@ -1005,6 +1005,7 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setMobileNo(source.getMobileNo());
 		target.setReligion(source.getReligion());
 		target.setEthnicity(source.getEthnicity());
+		target.setWeight(source.getWeight());
 		return target;
 	}
 
@@ -1751,6 +1752,8 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setMobileNo(source.getMobileNo());
 		target.setReligion(source.getReligion());
 		target.setEthnicity(source.getEthnicity());
+		target.setWeight(source.getWeight());
+		//target.setPlaceOfWork(source.getPlaceOfWork());
 		return target;
 	}
 

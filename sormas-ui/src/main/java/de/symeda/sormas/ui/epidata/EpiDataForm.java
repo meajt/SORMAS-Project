@@ -19,10 +19,7 @@ package de.symeda.sormas.ui.epidata;
 
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_TOP_3;
-import static de.symeda.sormas.ui.utils.LayoutUtil.divsCss;
-import static de.symeda.sormas.ui.utils.LayoutUtil.h3;
-import static de.symeda.sormas.ui.utils.LayoutUtil.loc;
-import static de.symeda.sormas.ui.utils.LayoutUtil.locCss;
+import static de.symeda.sormas.ui.utils.LayoutUtil.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,9 +59,11 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 	private static final String LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING = "locActivityAsCaseInvestigationHeading";
 	private static final String LOC_SOURCE_CASE_CONTACTS_HEADING = "locSourceCaseContactsHeading";
 	private static final String LOC_EPI_DATA_FIELDS_HINT = "locEpiDataFieldsHint";
+	private static final String MALARIA_EPI_FROM = "malariaEpiFrom";
 
 	//@formatter:off
-	private static final String MAIN_HTML_LAYOUT = 
+	private static final String MAIN_HTML_LAYOUT =
+			fluidRowLocs(MALARIA_EPI_FROM)+
 			loc(LOC_EXPOSURE_INVESTIGATION_HEADING) + 
 			loc(EpiDataDto.EXPOSURE_DETAILS_KNOWN) +
 			loc(EpiDataDto.EXPOSURES) +
@@ -85,6 +84,7 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 	private final Class<? extends EntityDto> parentClass;
 	private final Consumer<Boolean> sourceContactsToggleCallback;
 	private final boolean isPseudonymized;
+	private MalariaEpiDataForm malariaEpiDataForm;
 
 	public EpiDataForm(
 		Disease disease,
@@ -113,7 +113,7 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 			return;
 		}
 
-		addHeadingsAndInfoTexts();
+	addHeadingsAndInfoTexts();
 
 		NullableOptionGroup ogExposureDetailsKnown = addField(EpiDataDto.EXPOSURE_DETAILS_KNOWN, NullableOptionGroup.class);
 		ExposuresField exposuresField = addField(EpiDataDto.EXPOSURES, ExposuresField.class);
@@ -150,6 +150,14 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 		exposuresField.addValueChangeListener(e -> {
 			ogExposureDetailsKnown.setEnabled(CollectionUtils.isEmpty(exposuresField.getValue()));
 		});
+
+		if (disease == Disease.MALARIA) {
+			malariaEpiDataForm = new MalariaEpiDataForm();
+			malariaEpiDataForm.setWidth(90, Unit.PERCENTAGE);
+			getContent().addComponent(malariaEpiDataForm, MALARIA_EPI_FROM);
+		}
+
+
 	}
 
 	private void addActivityAsCaseFields() {
