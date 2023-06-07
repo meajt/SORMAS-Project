@@ -28,6 +28,7 @@ public enum PresentCondition {
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
 	BURIED,
+	CREMATED,
 	UNKNOWN;
 
 	public boolean isDeceased() {
