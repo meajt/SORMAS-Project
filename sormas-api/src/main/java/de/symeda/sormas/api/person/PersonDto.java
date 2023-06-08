@@ -370,6 +370,7 @@ public class PersonDto extends PseudonymizableDto {
 	private String externalToken;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_INTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String internalToken;
 
 	@HideForCountriesExcept(countries = {})
