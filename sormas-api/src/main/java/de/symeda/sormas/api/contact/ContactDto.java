@@ -339,7 +339,7 @@ public class ContactDto extends SormasToSormasShareableDto {
 	@Diseases({
 		Disease.AFP,
 		Disease.GUINEA_WORM,
-		Disease.MEASLES,
+		Disease.MEASLES,Disease.CHICKENPOX,Disease.FEVER_WITH_RASH,
 		Disease.POLIO,
 		Disease.YELLOW_FEVER,
 		Disease.CSM,
