@@ -49,6 +49,7 @@ public enum Disease
 	PNEUMONIA(true, true, true, false, false, 0, true, false, false),
 	MALARIA(true, true, true, true, false, 0, true, false, false),
 	KALAZAR(true, true, true, false, false, 14, true, false, false),
+	SCRUB_TYPHUS(true, true, true, false, false, 14, true, false, false),
 	NCD(true, true, true, false, false, 14, false, false, false),
 	TYPHOID_FEVER(true, true, true, true, false, 0, true, false, false),
 	ACUTE_VIRAL_HEPATITIS(true, true, true, true, false, 0, true, false, false),
