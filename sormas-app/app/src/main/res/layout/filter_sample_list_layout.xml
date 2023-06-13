@@ -25,6 +25,7 @@
         <import type="de.symeda.sormas.api.i18n.I18nProperties" />
         <import type="de.symeda.sormas.api.i18n.Strings" />
         <import type="de.symeda.sormas.app.component.controls.ControlButtonType"/>
+        <variable name="criteria" type="de.symeda.sormas.app.backend.sample.SampleCriteria"/>
     </data>
 
     <ScrollView
@@ -37,6 +38,42 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
+
+            <de.symeda.sormas.app.component.controls.FilterTextField
+                android:id="@+id/text_filter"
+                app:hint="Sample Id,Person name, Reporting user"
+                app:showCaption="false"
+                app:value="@={criteria.textFilter}"
+                style="@style/ControlSingleColumnStyle" />
+
+
+            <de.symeda.sormas.app.component.controls.FilterSpinnerField
+                android:id="@+id/disease_filter"
+                app:hint="Disease"
+                app:showCaption="false"
+                app:value="@={criteria.disease}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+
+                <de.symeda.sormas.app.component.controls.ControlButton
+                    android:id="@+id/apply_filters"
+                    android:text="@string/action_apply_filters"
+                    app:buttonType="@{ControlButtonType.FILTER_PRIMARY}"
+                    style="@style/ControlFirstOfTwoColumnsStyle"/>
+
+                <de.symeda.sormas.app.component.controls.ControlButton
+                    android:id="@+id/reset_filters"
+                    android:text="@string/action_reset_filters"
+                    app:buttonType="@{ControlButtonType.FILTER_SECONDARY}"
+                    style="@style/ControlFirstOfTwoColumnsStyle" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
