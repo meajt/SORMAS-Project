@@ -53,6 +53,7 @@ import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.event.TypeOfPlace;
 import de.symeda.sormas.api.infrastructure.facility.FacilityDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityTypeGroup;
+import de.symeda.sormas.api.person.Sex;
 import de.symeda.sormas.api.user.JurisdictionLevel;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -265,6 +266,10 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 			contentBinding.caseDataEpidemiologicalConfirmation.setValue(null);
 			contentBinding.caseDataLaboratoryDiagnosticConfirmation.setValue(null);
 			contentBinding.caseDataCaseConfirmationBasis.setValue(null);
+		}
+		if (record.getPerson() != null && record.getPerson().getSex() == Sex.MALE) {
+			contentBinding.caseDataPostpartum.setVisibility(GONE);
+			contentBinding.caseDataPregnant.setVisibility(GONE);
 		}
 	}
 
