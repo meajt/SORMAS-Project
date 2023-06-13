@@ -149,6 +149,8 @@ public class PersonDtoHelper extends AdoDtoHelper<Person, PersonDto> {
 		target.setCitizenship(DatabaseHelper.getCountryDao().getByReferenceDto(source.getCitizenship()));
 		target.setAdditionalDetails(source.getAdditionalDetails());
 		target.setMobileNo(source.getMobileNo());
+		target.setEthnicity(source.getEthnicity());
+		target.setReligion(source.getReligion());
 	}
 
 	@Override
