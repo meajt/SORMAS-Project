@@ -27,6 +27,7 @@ public enum Disease
 
 	AFP(true, true, true, false, false, 0, true, false, false),
 	CHOLERA(true, true, true, false, true, 5, true, false, false),
+	DIARRHOEA(true, true, true, false, true, 5, true, false, false),
 	CONGENITAL_RUBELLA(true, false, true, false, true, 21, true, false, false),
 	CSM(true, false, true, false, false, 10, true, false, false),
 	DENGUE(true, true, true, false, false, 14, true, false, false),

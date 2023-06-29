@@ -268,13 +268,13 @@ public class SymptomsDto extends PseudonymizableDto {
             GUINEA_WORM,
             LASSA,
             NEW_INFLUENZA,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             YELLOW_FEVER,
             DENGUE,
             PLAGUE,
             POLIO,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             ACUTE_VIRAL_HEPATITIS,
             DIARRHEA_DEHYDRATION,
@@ -301,7 +301,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             CSM,
             MUMPS,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             POLIO,
             YELLOW_FEVER,
             UNSPECIFIED_VHF,
@@ -366,7 +366,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
             AFP,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             GUINEA_WORM,
             POLIO,
             YELLOW_FEVER,
@@ -445,7 +445,7 @@ public class SymptomsDto extends PseudonymizableDto {
             PLAGUE,
             POLIO,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             UNDEFINED,
             OTHER})
@@ -460,7 +460,7 @@ public class SymptomsDto extends PseudonymizableDto {
             PLAGUE,
             ANTHRAX,
             POLIO,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             MALARIA,
             ACUTE_VIRAL_HEPATITIS,
             DIARRHEA_DEHYDRATION,
@@ -505,7 +505,7 @@ public class SymptomsDto extends PseudonymizableDto {
             ANTHRAX,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNSPECIFIED_VHF,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -560,7 +560,7 @@ public class SymptomsDto extends PseudonymizableDto {
             EVD,
             GUINEA_WORM,
             LASSA,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             POLIO,
             DIARRHEA_DEHYDRATION,
             UNSPECIFIED_VHF,
@@ -577,12 +577,12 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             PLAGUE,
             POLIO,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             SNAKE_BITE,
             MALARIA,
             DIARRHEA_DEHYDRATION,
@@ -607,7 +607,7 @@ public class SymptomsDto extends PseudonymizableDto {
             UNSPECIFIED_VHF,
             RABIES,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -666,7 +666,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -676,7 +676,7 @@ public class SymptomsDto extends PseudonymizableDto {
             UNSPECIFIED_VHF,
             RABIES,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             KALAZAR, SCRUB_TYPHUS,
             MALARIA,
             DIARRHEA_DEHYDRATION,
@@ -697,7 +697,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -707,7 +707,7 @@ public class SymptomsDto extends PseudonymizableDto {
             UNSPECIFIED_VHF,
             RABIES,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             MALARIA,
             KALAZAR, SCRUB_TYPHUS,
             DIARRHEA_DEHYDRATION,
@@ -769,7 +769,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RABIES,
             ANTHRAX,
             MALARIA,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             SCRUB_TYPHUS,
             UNDEFINED,
             OTHER})
@@ -853,7 +853,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CSM,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             ACUTE_VIRAL_HEPATITIS,
             UNDEFINED,
@@ -1086,7 +1086,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState lossSkinTurgor;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -1154,14 +1154,14 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
             MONKEYPOX,
             PLAGUE,
             POLIO,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             SCRUB_TYPHUS,
             UNDEFINED,
@@ -1177,7 +1177,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             YELLOW_FEVER,
             DENGUE,
             MONKEYPOX,
@@ -1189,7 +1189,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MALARIA,
             SNAKE_BITE,
             ACUTE_VIRAL_HEPATITIS,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1309,7 +1309,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
             MONKEYPOX,
@@ -1318,7 +1318,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CONGENITAL_RUBELLA,
             POLIO,
             RABIES,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1332,7 +1332,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
             MONKEYPOX,
@@ -1340,7 +1340,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             UNSPECIFIED_VHF,
             CONGENITAL_RUBELLA,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1440,7 +1440,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
             AFP,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             DENGUE,
             GUINEA_WORM,
             POLIO,
@@ -1473,7 +1473,7 @@ public class SymptomsDto extends PseudonymizableDto {
             GUINEA_WORM,
             LASSA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             POLIO,
             UNSPECIFIED_VHF,
             RABIES,
@@ -1492,7 +1492,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             RESPIRATORY_SYNCYTIAL_VIRUS,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1557,7 +1557,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MONKEYPOX,
             ANTHRAX,
             POLIO,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             UNDEFINED,
             OTHER})
@@ -1613,7 +1613,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
             MONKEYPOX,
@@ -1621,7 +1621,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             UNSPECIFIED_VHF,
             CONGENITAL_RUBELLA,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @SensitiveData
@@ -1635,7 +1635,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -1645,7 +1645,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CONGENITAL_RUBELLA,
             POLIO,
             RABIES,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1664,7 +1664,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -1673,7 +1673,7 @@ public class SymptomsDto extends PseudonymizableDto {
             UNSPECIFIED_VHF,
             CONGENITAL_RUBELLA,
             POLIO,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1809,7 +1809,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -1824,7 +1824,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DIARRHEA_DEHYDRATION,
             DIARRHEA_BLOOD,
             ACUTE_VIRAL_HEPATITIS,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             OTHER})
     @Outbreaks
     @HideForCountries
@@ -1948,7 +1948,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState convulsion;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -1958,7 +1958,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState fluidInLungCavityAuscultation;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -1968,7 +1968,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState fluidInLungCavityXray;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -1978,7 +1978,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState abnormalLungXrayFindings;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -1987,7 +1987,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState conjunctivalInjection;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -1995,7 +1995,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState acuteRespiratoryDistressSyndrome;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2003,21 +2003,21 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState pneumoniaClinicalOrRadiologic;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.OTHER)
     private SymptomState lossOfTaste;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.OTHER)
     private SymptomState lossOfSmell;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNDEFINED,
             OTHER})
@@ -2027,7 +2027,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState wheezing;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             KALAZAR, SCRUB_TYPHUS,
             LEPROSY,
             UNDEFINED,
@@ -2039,7 +2039,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState skinUlcers;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -2049,7 +2049,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState inabilityToWalk;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -2059,7 +2059,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState inDrawingOfChestWall;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept
@@ -2068,7 +2068,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
             MALARIA,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             KALAZAR, SCRUB_TYPHUS,
             DIARRHEA_DEHYDRATION,
             DIARRHEA_BLOOD,
@@ -2081,7 +2081,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState feelingIll;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             DIARRHEA_DEHYDRATION,
             UNDEFINED,
             OTHER})
@@ -2092,7 +2092,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState fastHeartRate;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept
@@ -2110,7 +2110,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2130,13 +2130,13 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             PLAGUE,
             POLIO,
             UNSPECIFIED_VHF,
             RABIES,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -2211,7 +2211,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2221,7 +2221,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DENGUE,
             PLAGUE,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Complication
@@ -2235,7 +2235,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2245,7 +2245,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DENGUE,
             PLAGUE,
             ANTHRAX,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @DependantOn(OTHER_COMPLICATIONS)
@@ -2262,12 +2262,12 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
             RABIES,
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -2282,7 +2282,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2300,7 +2300,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA,
             CSM,
-            CHOLERA,
+            CHOLERA, DIARRHOEA,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             PLAGUE,
             ANTHRAX,
@@ -2315,14 +2315,14 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState shock;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
     @SymptomGrouping(SymptomGroup.GENERAL)
     private SymptomState feverishFeeling;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             MALARIA,
             KALAZAR, SCRUB_TYPHUS,
             ACUTE_VIRAL_HEPATITIS,
@@ -2334,7 +2334,7 @@ public class SymptomsDto extends PseudonymizableDto {
     @SymptomGrouping(SymptomGroup.GENERAL)
     private SymptomState weakness;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             MALARIA,
             KALAZAR, SCRUB_TYPHUS,
             ACUTE_VIRAL_HEPATITIS,
@@ -2345,14 +2345,14 @@ public class SymptomsDto extends PseudonymizableDto {
     @SymptomGrouping(SymptomGroup.GENERAL)
     private SymptomState fatigue;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
     private SymptomState coughWithoutSputum;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             SNAKE_BITE,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNDEFINED,
@@ -2361,35 +2361,35 @@ public class SymptomsDto extends PseudonymizableDto {
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
     private SymptomState breathlessness;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
     private SymptomState chestPressure;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
     private SymptomState blueLips;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
     @SymptomGrouping(SymptomGroup.CARDIOVASCULAR)
     private SymptomState bloodCirculationProblems;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
     @SymptomGrouping(SymptomGroup.CARDIOVASCULAR)
     private SymptomState palpitations;
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             DIARRHEA_DEHYDRATION,
             MALARIA,
             UNDEFINED,
@@ -2399,7 +2399,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState dizzinessStandingUp;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2407,7 +2407,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState highOrLowBloodPressure;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             UNDEFINED,
             OTHER})
     @HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_SWITZERLAND)
@@ -2415,7 +2415,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState urinaryRetention;
 
     @Diseases({
-            CORONAVIRUS,MUMPS,
+            CORONAVIRUS, MUMPS,
             MALARIA,
             UNDEFINED,
             OTHER})
@@ -4218,7 +4218,8 @@ public class SymptomsDto extends PseudonymizableDto {
     public SymptomState getEarPain() {
         return earPain;
     }
-    public void setEarPain (SymptomState earPain) {
+
+    public void setEarPain(SymptomState earPain) {
         this.earPain = earPain;
     }
 }
