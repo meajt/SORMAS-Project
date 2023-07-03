@@ -23,8 +23,6 @@
 
 <resources>
 
-    <string name="app_name">SORMAS TRAINING</string>
-
     <string name="and">and</string>
     <string name="no">No</string>
     <string name="notAnswered">Not answered</string>

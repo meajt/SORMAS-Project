@@ -56,16 +56,20 @@ android {
     }
     productFlavors {
         dev {
+            applicationIdSuffix "dev"
             buildConfigField 'String', 'BASE_URL', '"http://192.168.13.37:6080/sormas-rest"'
+            resValue 'string', 'app_name', '"S Dev"'
             buildConfigField 'Boolean', 'IS_VALID_PIN', 'false'
         }
         prd {
             buildConfigField 'String', 'BASE_URL', '"https://sormasnepal.org/sormas-rest"'
+            resValue 'string', 'app_name', '"SORMAS"'
             buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
         }
         stg {
             applicationIdSuffix "stg"
             buildConfigField 'String', 'BASE_URL', '"http://52.140.120.83/sormas-rest"'
+            resValue 'string', 'app_name', '"S Traning"'
             buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
         }
     }
