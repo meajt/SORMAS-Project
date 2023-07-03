@@ -116,6 +116,9 @@ public class Location extends PseudonymizableAdo {
 	@Column(columnDefinition = "text")
 	private String contactPersonEmail;
 
+	@Column(length = CHARACTER_LIMIT_DEFAULT)
+	private String otherFacilityType;
+
 	/**
 	 * Dirty fix for person-location association; doing this with a JoinTable is not
 	 * easy in SQLite; only locations that are part of the addresses field of a person
@@ -506,4 +509,11 @@ public class Location extends PseudonymizableAdo {
 		this.latLonAccuracy = latLonAccuracy;
 	}
 
+	public String getOtherFacilityType() {
+		return otherFacilityType;
+	}
+
+	public void setOtherFacilityType(String otherFacilityType) {
+		this.otherFacilityType = otherFacilityType;
+	}
 }
