@@ -20,24 +20,17 @@ package de.symeda.sormas.backend.action;
 import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_DEFAULT;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import de.symeda.auditlog.api.Audited;
-import de.symeda.sormas.api.action.ActionContext;
-import de.symeda.sormas.api.action.ActionMeasure;
-import de.symeda.sormas.api.action.ActionPriority;
-import de.symeda.sormas.api.action.ActionStatus;
+import de.symeda.sormas.api.action.*;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.event.Event;
 import de.symeda.sormas.backend.user.User;
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 
 @Entity
 @Audited
@@ -73,6 +66,7 @@ public class Action extends AbstractDomainObject {
 	private String description;
 	private String reply;
 	private User lastModifiedBy;
+	private List<ActionReply> actionReplies;
 
 	@Enumerated(EnumType.STRING)
 	public ActionContext getActionContext() {
@@ -180,5 +174,18 @@ public class Action extends AbstractDomainObject {
 
 	public void setActionMeasure(ActionMeasure actionMeasure) {
 		this.actionMeasure = actionMeasure;
+	}
+
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = ActionReply.ACTION)
+	public List<ActionReply> getActionReplies() {
+		return actionReplies;
+	}
+
+	public void setActionReplies(List<ActionReply> actionReplies) {
+		this.actionReplies = actionReplies;
+	}
+
+	public ActionReferenceDto toReference() {
+		return new ActionReferenceDto(getUuid());
 	}
 }

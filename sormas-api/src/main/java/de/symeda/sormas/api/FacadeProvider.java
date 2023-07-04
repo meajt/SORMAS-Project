@@ -19,6 +19,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import de.symeda.sormas.api.action.ActionFacade;
+import de.symeda.sormas.api.action.ActionReplyFacade;
 import de.symeda.sormas.api.audit.AuditLoggerFacade;
 import de.symeda.sormas.api.bagexport.BAGExportFacade;
 import de.symeda.sormas.api.campaign.CampaignFacade;
@@ -193,6 +194,10 @@ public class FacadeProvider {
 
 	public static ActionFacade getActionFacade() {
 		return get().lookupEjbRemote(ActionFacade.class);
+	}
+
+	public static ActionReplyFacade getActionReplyFacade() {
+		return get().lookupEjbRemote(ActionReplyFacade.class);
 	}
 
 	public static SampleFacade getSampleFacade() {

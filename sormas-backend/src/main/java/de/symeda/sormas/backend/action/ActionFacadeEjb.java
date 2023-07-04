@@ -16,6 +16,7 @@
 package de.symeda.sormas.backend.action;
 
 import static de.symeda.sormas.api.action.ActionContext.EVENT;
+import static de.symeda.sormas.backend.action.ActionReplyFacadeEjb.*;
 
 import java.util.Collections;
 import java.util.Date;
@@ -29,10 +30,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
-import de.symeda.sormas.api.action.ActionCriteria;
-import de.symeda.sormas.api.action.ActionDto;
-import de.symeda.sormas.api.action.ActionFacade;
-import de.symeda.sormas.api.action.ActionStatEntry;
+import com.google.common.base.Strings;
+import de.symeda.sormas.api.action.*;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.event.EventActionExportDto;
 import de.symeda.sormas.api.event.EventActionIndexDto;
@@ -62,6 +61,8 @@ public class ActionFacadeEjb implements ActionFacade {
 	private UserService userService;
 	@EJB
 	private EventService eventService;
+	@EJB
+	private ActionReplyFacadeEjbLocal actionReplyFacade;
 
 	public Action fillOrBuildEntity(ActionDto source, Action target, boolean checkChangeDate) {
 		if (source == null) {
@@ -133,8 +134,17 @@ public class ActionFacadeEjb implements ActionFacade {
 
 		Action existingAction = actionService.getByUuid(dto.getUuid());
 		FacadeHelper.checkCreateAndEditRights(existingAction, userService, UserRight.ACTION_CREATE, UserRight.ACTION_EDIT);
+		String replyStr = dto.getReply();
+		dto.setReply("");
 		Action ado = fillOrBuildEntity(dto, existingAction, true);
 		actionService.ensurePersisted(ado);
+		if (!Strings.isNullOrEmpty(replyStr)) {
+			ActionReplyDto actionReply = new ActionReplyDto();
+			actionReply.setCreatedBy(userService.getCurrentUser().toReference());
+			actionReply.setAction(ado.toReference());
+			actionReply.setReply(replyStr);
+			actionReplyFacade.saveActionReply(actionReply);
+		}
 		return toDto(ado);
 	}
 
