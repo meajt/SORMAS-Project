@@ -6,7 +6,7 @@
 
 		<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        
+
 		<class>de.symeda.sormas.backend.action.Action</class>
 		<class>de.symeda.sormas.backend.caze.Case</class>
 		<class>de.symeda.sormas.backend.common.AbstractDomainObject</class>
@@ -14,6 +14,7 @@
 		<class>de.symeda.sormas.backend.common.CoreAdo</class>
 		<class>de.symeda.sormas.backend.contact.Contact</class>
 		<class>de.symeda.sormas.backend.epidata.EpiData</class>
+		<class>de.symeda.sormas.backend.epidata.MalariaEpiData</class>
 		<class>de.symeda.sormas.backend.event.Event</class>
 		<class>de.symeda.sormas.backend.event.EventParticipant</class>
 		<class>de.symeda.sormas.backend.event.EventGroup</class>
@@ -30,6 +31,11 @@
 		<class>de.symeda.sormas.backend.report.WeeklyReport</class>
 		<class>de.symeda.sormas.backend.report.WeeklyReportEntry</class>
 		<class>de.symeda.sormas.backend.sample.Sample</class>
+		<class>de.symeda.sormas.backend.sample.ncd.RftSample</class>
+		<class>de.symeda.sormas.backend.sample.ncd.LftSample</class>
+		<class>de.symeda.sormas.backend.sample.ncd.LipidProfileSample</class>
+		<class>de.symeda.sormas.backend.sample.ncd.CompleteBloodCountSample</class>
+		<class>de.symeda.sormas.backend.sample.ncd.UrineRoutineExaminationSample</class>
 		<class>de.symeda.sormas.backend.sample.PathogenTest</class>
 		<class>de.symeda.sormas.backend.symptoms.Symptoms</class>
 		<class>de.symeda.sormas.backend.task.Task</class>

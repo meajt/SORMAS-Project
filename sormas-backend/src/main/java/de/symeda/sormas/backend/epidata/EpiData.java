@@ -21,11 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -57,6 +53,7 @@ public class EpiData extends AbstractDomainObject {
 	private List<ActivityAsCase> activitiesAsCase = new ArrayList<>();
 	@NotExposedToApi
 	private Date changeDateOfEmbeddedLists;
+	private MalariaEpiData malariaEpiData;
 
 	@Enumerated(EnumType.STRING)
 	public YesNoUnknown getExposureDetailsKnown() {
@@ -139,5 +136,13 @@ public class EpiData extends AbstractDomainObject {
 
 	public void setContactWithSourceCaseKnown(YesNoUnknown contactWithSourceCaseKnown) {
 		this.contactWithSourceCaseKnown = contactWithSourceCaseKnown;
+	}
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	public MalariaEpiData getMalariaEpiData() {
+		return malariaEpiData;
+	}
+
+	public void setMalariaEpiData(MalariaEpiData malariaEpiData) {
+		this.malariaEpiData = malariaEpiData;
 	}
 }

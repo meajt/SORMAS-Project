@@ -85,7 +85,7 @@ public class MalariaEpiDataDto extends PseudonymizableDto {
     @PersonalData
     private Boolean hasPreviousMalaria;
     private RegionReferenceDto pastRegion;
-    private RegionReferenceDto pastDate;
+    private Date pastDate;
     @PersonalData
     private DistrictReferenceDto pastDistrict;
     @PersonalData
@@ -115,11 +115,11 @@ public class MalariaEpiDataDto extends PseudonymizableDto {
         this.activeCaseDetection = activeCaseDetection;
     }
 
-    public RegionReferenceDto getPastDate() {
+    public Date getPastDate() {
         return pastDate;
     }
 
-    public void setPastDate(RegionReferenceDto pastDate) {
+    public void setPastDate(Date pastDate) {
         this.pastDate = pastDate;
     }
 

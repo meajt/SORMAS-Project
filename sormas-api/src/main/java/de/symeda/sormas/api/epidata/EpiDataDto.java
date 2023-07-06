@@ -72,6 +72,7 @@ public class EpiDataDto extends PseudonymizableDto {
 
 	@Valid
 	private List<ActivityAsCaseDto> activitiesAsCase = new ArrayList<>();
+	private MalariaEpiDataDto malariaEpiData;
 
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -164,5 +165,13 @@ public class EpiDataDto extends PseudonymizableDto {
 		clone.getExposures().addAll(exposureDtos);
 
 		return clone;
+	}
+
+	public MalariaEpiDataDto getMalariaEpiData() {
+		return malariaEpiData;
+	}
+
+	public void setMalariaEpiData(MalariaEpiDataDto malariaEpiData) {
+		this.malariaEpiData = malariaEpiData;
 	}
 }

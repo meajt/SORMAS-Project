@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.vaadin.v7.data.util.converter.Converter;
+import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.shared.ui.ContentMode;
@@ -160,6 +162,10 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 
 	}
 
+	public MalariaEpiDataForm getMalariaEpiDataForm() {
+		return malariaEpiDataForm;
+	}
+
 	private void addActivityAsCaseFields() {
 
 		getContent().addComponent(
@@ -220,5 +226,17 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 	@Override
 	protected String createHtmlLayout() {
 		return parentClass == CaseDataDto.class ? MAIN_HTML_LAYOUT + SOURCE_CONTACTS_HTML_LAYOUT : MAIN_HTML_LAYOUT;
+	}
+
+	@Override
+	public void setValue(EpiDataDto newFieldValue) throws ReadOnlyException, Converter.ConversionException {
+		super.setValue(newFieldValue);
+		if (malariaEpiDataForm != null) {
+			if (newFieldValue.getMalariaEpiData() != null) {
+				malariaEpiDataForm.setValue(newFieldValue.getMalariaEpiData());
+			} else {
+				malariaEpiDataForm.setValue(new MalariaEpiDataDto());
+			}
+		}
 	}
 }
