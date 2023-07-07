@@ -34,6 +34,8 @@ public enum Disease
 	GUINEA_WORM(true, false, true, false, false, 0, true, false, false),
 	LASSA(true, false, true, false, true, 21, true, false, false),
 	MEASLES(true, true, true, false, false, 21, true, true, false),
+	CHICKENPOX(true, true, true, false, false, 21, true, true, false),
+	FEVER_WITH_RASH(true, true, true, false, false, 21, true, true, false),
 	MONKEYPOX(true, true, true, false, true, 21, true, false, false),
 	NEW_INFLUENZA(true, true, true, false, true, 17, true, false, false),
 	PLAGUE(true, true, true, false, true, 7, true, false, false),
@@ -47,6 +49,7 @@ public enum Disease
 	PNEUMONIA(true, true, true, false, false, 0, true, false, false),
 	MALARIA(true, true, true, true, false, 0, true, false, false),
 	KALAZAR(true, true, true, false, false, 14, true, false, false),
+	SCRUB_TYPHUS(true, true, true, false, false, 14, true, false, false),
 	NCD(true, true, true, false, false, 14, false, false, false),
 	TYPHOID_FEVER(true, true, true, true, false, 0, true, false, false),
 	ACUTE_VIRAL_HEPATITIS(true, true, true, true, false, 0, true, false, false),
@@ -86,6 +89,7 @@ public enum Disease
 	POST_IMMUNIZATION_ADVERSE_EVENTS_MILD(true, false, false, true, false, 0, true, false, false),
 	POST_IMMUNIZATION_ADVERSE_EVENTS_SEVERE(true, false, false, true, false, 0, true, false, false),
 	FHA(true, false, false, true, false, 0, true, false, false),
+	MUMPS(true, true, true, false, true, 14, true, true, true),
 	OTHER(true, true, true, false, true, 21, false, false, false),
 	UNDEFINED(true, true, true, false, true, 0, false, false, false);
 

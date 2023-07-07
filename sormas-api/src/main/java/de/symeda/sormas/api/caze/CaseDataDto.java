@@ -372,12 +372,11 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Valid
 	private HealthConditionsDto healthConditions;
 
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown pregnant;
 	@Diseases({
 		Disease.AFP,
 		Disease.GUINEA_WORM,
-		Disease.MEASLES,
+		Disease.MEASLES,Disease.CHICKENPOX,Disease.FEVER_WITH_RASH,
 		Disease.POLIO,
 		Disease.YELLOW_FEVER,
 		Disease.CSM,
@@ -529,7 +528,6 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 		COUNTRY_CODE_GERMANY,
 		COUNTRY_CODE_SWITZERLAND })
 	private Date quarantineOfficialOrderSentDate;
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown postpartum;
 	private Trimester trimester;
 	private FollowUpStatus followUpStatus;

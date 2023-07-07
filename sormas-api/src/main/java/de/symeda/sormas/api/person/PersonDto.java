@@ -163,7 +163,9 @@ public class PersonDto extends PseudonymizableDto {
 	@PersonalData
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
-	@HideForCountries
+	@HideForCountries(countries = {
+			CountryHelper.COUNTRY_CODE_NEPAL,
+			CountryHelper.COUNTRY_CODE_GERMANY})
 	private String nickname;
 	@PersonalData
 	@SensitiveData
@@ -177,7 +179,8 @@ public class PersonDto extends PseudonymizableDto {
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_SMALL, message = Validations.textTooLong)
 	@HideForCountries(countries = {
 		CountryHelper.COUNTRY_CODE_GERMANY,
-		CountryHelper.COUNTRY_CODE_FRANCE })
+		CountryHelper.COUNTRY_CODE_FRANCE,
+		CountryHelper.COUNTRY_CODE_NEPAL})
 	private String mothersMaidenName;
 	@PersonalData
 	@SensitiveData
@@ -367,6 +370,7 @@ public class PersonDto extends PseudonymizableDto {
 	private String externalToken;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_INTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String internalToken;
 
 	@HideForCountriesExcept(countries = {})
