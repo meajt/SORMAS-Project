@@ -27,6 +27,8 @@ public class EventCriteria implements Serializable {
 	private Case caze;
 	private Disease disease;
 
+	private String textFilter;
+
 	public EventCriteria eventStatus(EventStatus eventStatus) {
 		this.eventStatus = eventStatus;
 		return this;
@@ -51,5 +53,13 @@ public class EventCriteria implements Serializable {
 
 	public void setDisease(Disease disease) {
 		this.disease = disease;
+	}
+
+	public String getTextFilter() {
+		return textFilter;
+	}
+
+	public void setTextFilter(String textFilter) {
+		this.textFilter = textFilter;
 	}
 }

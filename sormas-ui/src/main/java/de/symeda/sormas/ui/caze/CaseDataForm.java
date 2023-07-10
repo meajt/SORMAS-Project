@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import de.symeda.sormas.api.caze.*;
+import de.symeda.sormas.api.person.Sex;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -976,7 +977,9 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.PREGNANT, NullableOptionGroup.class);
 		addField(CaseDataDto.POSTPARTUM, NullableOptionGroup.class);
 		addField(CaseDataDto.TRIMESTER, NullableOptionGroup.class);
-
+		if(person.getSex() == Sex.MALE) {
+			setVisible(false, CaseDataDto.PREGNANT, CaseDataDto.POSTPARTUM);
+		}
 		ComboBox vaccinationStatusComboBox = addField(CaseDataDto.VACCINATION_STATUS, ComboBox.class);
 		addField(CaseDataDto.LAST_VACCINATION_DATE, DateField.class);
 		addFields(CaseDataDto.SMALLPOX_VACCINATION_SCAR, CaseDataDto.SMALLPOX_VACCINATION_RECEIVED);

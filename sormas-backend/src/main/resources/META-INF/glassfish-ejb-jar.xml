@@ -853,6 +853,11 @@
     </security-role-mapping>
 
     <security-role-mapping>
+        <role-name>OTHER_USER_DATA</role-name>
+        <group-name>OTHER_USER_DATA</group-name>
+    </security-role-mapping>
+
+    <security-role-mapping>
         <role-name>SORMAS_TO_SORMAS_CLIENT</role-name>
         <group-name>SORMAS_TO_SORMAS_CLIENT</group-name>
     </security-role-mapping>

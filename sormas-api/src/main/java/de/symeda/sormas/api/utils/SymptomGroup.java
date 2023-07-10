@@ -13,6 +13,7 @@ public enum SymptomGroup {
 	SKIN,
 	MUSCULAR,
 	EYE,
+	EAR,
 	OTHER;
 
 	@Override

@@ -16,15 +16,18 @@
 package de.symeda.sormas.app.backend.sample;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NonUniqueResultException;
 
+import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import de.symeda.sormas.api.Disease;
@@ -35,6 +38,9 @@ import de.symeda.sormas.app.backend.common.AbstractDomainObject;
 import de.symeda.sormas.app.backend.common.DaoException;
 import de.symeda.sormas.app.backend.common.DatabaseHelper;
 import de.symeda.sormas.app.backend.config.ConfigProvider;
+import de.symeda.sormas.app.backend.event.Event;
+import de.symeda.sormas.app.backend.person.Person;
+import de.symeda.sormas.app.backend.user.User;
 
 /**
  * Created by Mate Strysewske on 06.02.2017.
@@ -147,8 +153,9 @@ public class SampleDao extends AbstractAdoDao<Sample> {
 
 	private QueryBuilder<Sample, Long> buildQueryBuilder(SampleCriteria criteria) throws SQLException {
 		QueryBuilder<Sample, Long> queryBuilder = queryBuilder();
+		List<Where<Sample, Long>> whereStatements = new ArrayList<>();
 		Where<Sample, Long> where = queryBuilder.where().eq(AbstractDomainObject.SNAPSHOT, false);
-
+		whereStatements.add(where);
 		if (criteria.getCaze() != null) {
 			where.and().eq(Sample.ASSOCIATED_CASE + "_id", criteria.getCaze());
 		} else {
@@ -179,9 +186,29 @@ public class SampleDao extends AbstractAdoDao<Sample> {
 					throw new IllegalArgumentException(criteria.getShipmentStatus().toString());
 				}
 			}
+			if (!TextUtils.isEmpty(criteria.getTextFilter()) || criteria.getDisease() != null) {
+				QueryBuilder<Case, Long> caseLongQueryBuilder = DatabaseHelper.getCaseDao().queryBuilder();
+				queryBuilder.leftJoin(caseLongQueryBuilder);
+				if (criteria.getDisease() != null) {
+					where.and().raw(Case.TABLE_NAME+"."+Case.DISEASE +" = '"+ criteria.getDisease()+"'");
+				}
+				if (!TextUtils.isEmpty(criteria.getTextFilter())) {
+					QueryBuilder<Person, Long> personLongQueryBuilder = DatabaseHelper.getPersonDao().queryBuilder();
+					caseLongQueryBuilder.leftJoin(personLongQueryBuilder);
+					QueryBuilder<User, Long> userLongQueryBuilder = DatabaseHelper.getUserDao().queryBuilder();
+					queryBuilder.leftJoin(userLongQueryBuilder);
+					String filterText = "%" + criteria.getTextFilter().toLowerCase() + "%";
+					whereStatements.add(
+						where.or(where.raw(Sample.TABLE_NAME+"."+Sample.UUID+" LIKE '" + filterText.replaceAll("'", "''") + "'"),
+								where.raw(Person.TABLE_NAME+"."+Person.FIRST_NAME+" LIKE '" + filterText.replaceAll("'", "''") + "'"),
+								where.raw(Person.TABLE_NAME+"."+Person.LAST_NAME+" LIKE '" + filterText.replaceAll("'", "''") + "'"),
+								where.raw(User.TABLE_NAME+"."+User.FIRST_NAME+ " LIKE '"+filterText.replaceAll("'", "''") + "'"),
+								where.raw(User.TABLE_NAME+"."+User.LAST_NAME+ " LIKE '"+filterText.replaceAll("'", "''") + "'")));
+				}
+			}
 		}
-
-		queryBuilder.setWhere(where);
+		Where<Sample, Long> whereStatement = where.and(whereStatements.size());
+		queryBuilder.setWhere(whereStatement);
 		return queryBuilder;
 	}
 

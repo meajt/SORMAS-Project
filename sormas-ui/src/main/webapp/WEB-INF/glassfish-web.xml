@@ -870,4 +870,9 @@
         <group-name>DEV_MODE</group-name>
     </security-role-mapping>
 
+    <security-role-mapping>
+        <role-name>OTHER_USER_DATA</role-name>
+        <group-name>OTHER_USER_DATA</group-name>
+    </security-role-mapping>
+
 </glassfish-web-app>

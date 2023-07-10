@@ -110,6 +110,7 @@ public class Location extends AbstractDomainObject {
 	private String contactPersonLastName;
 	private String contactPersonPhone;
 	private String contactPersonEmail;
+	private String otherFacilityType;
 
 	private Person person;
 
@@ -341,6 +342,15 @@ public class Location extends AbstractDomainObject {
 
 	public void setContactPersonEmail(String contactPersonEmail) {
 		this.contactPersonEmail = contactPersonEmail;
+	}
+
+	@Column(columnDefinition = "text")
+	public String getOtherFacilityType() {
+		return otherFacilityType;
+	}
+
+	public void setOtherFacilityType(String otherFacilityType) {
+		this.otherFacilityType = otherFacilityType;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
