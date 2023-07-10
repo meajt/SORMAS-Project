@@ -52,10 +52,15 @@ public class EpiDataDto extends PseudonymizableDto {
 	public static final String HIGH_TRANSMISSION_RISK_AREA = "highTransmissionRiskArea";
 	public static final String LARGE_OUTBREAKS_AREA = "largeOutbreaksArea";
 
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private YesNoUnknown exposureDetailsKnown;
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private YesNoUnknown activityAsCaseDetailsKnown;
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private YesNoUnknown contactWithSourceCaseKnown;
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private YesNoUnknown highTransmissionRiskArea;
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private YesNoUnknown largeOutbreaksArea;
 	@Diseases({
 		Disease.AFP,
@@ -68,10 +73,13 @@ public class EpiDataDto extends PseudonymizableDto {
 	private YesNoUnknown areaInfectedAnimals;
 
 	@Valid
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private List<ExposureDto> exposures = new ArrayList<>();
 
 	@Valid
+	@Diseases(value = {Disease.MALARIA}, hide = true)
 	private List<ActivityAsCaseDto> activitiesAsCase = new ArrayList<>();
+	private MalariaEpiDataDto malariaEpiData;
 
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -164,5 +172,13 @@ public class EpiDataDto extends PseudonymizableDto {
 		clone.getExposures().addAll(exposureDtos);
 
 		return clone;
+	}
+
+	public MalariaEpiDataDto getMalariaEpiData() {
+		return malariaEpiData;
+	}
+
+	public void setMalariaEpiData(MalariaEpiDataDto malariaEpiData) {
+		this.malariaEpiData = malariaEpiData;
 	}
 }

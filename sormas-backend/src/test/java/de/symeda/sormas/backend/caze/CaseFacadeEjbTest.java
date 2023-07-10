@@ -51,6 +51,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hamcrest.MatcherAssert;
 import org.hibernate.internal.SessionImpl;
@@ -3149,6 +3150,22 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		List<CaseDataDto> duplicatedCases = getCaseFacade().getDuplicatesWithPathogenTest(covidCase.getPerson(), pathogenTestDto);
 		assertEquals(1, duplicatedCases.size());
 		assertEquals(anthraxCase.getUuid(), duplicatedCases.get(0).getUuid());
+	}
+
+	@Test
+	public void saveMalariaEpiDataTest() {
+		RDCF rdcf = creator.createRDCF();
+		PersonReferenceDto personDto = creator.createPerson().toReference();
+		CaseDataDto savedCaze1 = createCaseOfFacilityType(rdcf, personDto, FacilityType.HOSPITAL);
+		MalariaEpiDataDto malariaEpiDataDto = new MalariaEpiDataDto();
+		savedCaze1.getEpiData().setMalariaEpiData(malariaEpiDataDto);
+		getCaseFacade().save(savedCaze1);
+		savedCaze1 = getCaseFacade().getCaseDataByUuid(savedCaze1.getUuid());
+		assertNotNull(savedCaze1.getEpiData().getMalariaEpiData());
+		savedCaze1.getEpiData().setMalariaEpiData(null);
+		savedCaze1 = getCaseFacade().save(savedCaze1);
+		savedCaze1 = getCaseFacade().getCaseDataByUuid(savedCaze1.getUuid());
+		assertNull(savedCaze1.getEpiData().getMalariaEpiData());
 	}
 
 	private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";

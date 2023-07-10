@@ -1419,6 +1419,12 @@ public class CaseController {
 
 		editView.addCommitListener(() -> {
 			CaseDataDto cazeDto = FacadeProvider.getCaseFacade().getCaseDataByUuid(caseUuid);
+			if(epiDataForm.getMalariaEpiDataForm() != null) {
+				epiDataForm.getMalariaEpiDataForm().commit();
+				epiDataForm.getValue().setMalariaEpiData(epiDataForm.getMalariaEpiDataForm().getValue());
+			} else {
+				epiDataForm.getValue().setMalariaEpiData(null);
+			}
 			cazeDto.setEpiData(epiDataForm.getValue());
 			saveCase(cazeDto);
 		});
