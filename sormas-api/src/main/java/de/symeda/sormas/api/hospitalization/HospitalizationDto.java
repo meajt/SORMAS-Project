@@ -78,6 +78,9 @@ public class HospitalizationDto extends EntityDto {
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_BIG, message = Validations.textTooLong)
 	private String description;
 
+	private String registrationNo;
+	private RegistrationType registrationType;
+
 	public static HospitalizationDto build() {
 		HospitalizationDto hospitalization = new HospitalizationDto();
 		hospitalization.setUuid(DataHelper.createUuid());
@@ -196,5 +199,21 @@ public class HospitalizationDto extends EntityDto {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getRegistrationNo() {
+		return registrationNo;
+	}
+
+	public void setRegistrationNo(String registrationNo) {
+		this.registrationNo = registrationNo;
+	}
+
+	public RegistrationType getRegistrationType() {
+		return registrationType;
+	}
+
+	public void setRegistrationType(RegistrationType registrationType) {
+		this.registrationType = registrationType;
 	}
 }
