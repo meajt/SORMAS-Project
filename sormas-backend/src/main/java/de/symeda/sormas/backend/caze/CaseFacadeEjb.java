@@ -1839,8 +1839,6 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 			throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noCommunityInDistrict));
 		}
 		if (caze.getHealthFacility() != null) {
-			FacilityDto healthFacility = facilityFacade.getByUuid(caze.getHealthFacility().getUuid());
-
 			if (caze.getFacilityType() == null) {
 				if (!FacilityDto.NONE_FACILITY_UUID.equals(caze.getHealthFacility().getUuid())) {
 					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityType));
