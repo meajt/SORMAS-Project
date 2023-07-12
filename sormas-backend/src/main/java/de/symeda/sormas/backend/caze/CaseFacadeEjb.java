@@ -1850,33 +1850,6 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 					I18nProperties.getValidationError(Validations.notAccomodationFacilityType, caze.getFacilityType()));
 			}
 
-			if (caze.getRegion() == null) {
-				if (caze.getResponsibleCommunity() == null
-					&& healthFacility.getDistrict() != null
-					&& !healthFacility.getDistrict().equals(caze.getResponsibleDistrict())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInResponsibleDistrict));
-				}
-				if (caze.getResponsibleCommunity() != null
-					&& healthFacility.getCommunity() != null
-					&& !caze.getResponsibleCommunity().equals(healthFacility.getCommunity())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInResponsibleCommunity));
-				}
-				if (healthFacility.getRegion() != null && !caze.getResponsibleRegion().equals(healthFacility.getRegion())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInResponsibleRegion));
-				}
-			} else {
-				if (caze.getCommunity() == null && healthFacility.getDistrict() != null && !healthFacility.getDistrict().equals(caze.getDistrict())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInDistrict));
-				}
-				if (caze.getCommunity() != null
-					&& healthFacility.getCommunity() != null
-					&& !caze.getCommunity().equals(healthFacility.getCommunity())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInCommunity));
-				}
-				if (healthFacility.getRegion() != null && !caze.getRegion().equals(healthFacility.getRegion())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInRegion));
-				}
-			}
 		}
 	}
 
