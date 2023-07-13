@@ -72,6 +72,7 @@ public class HospitalizationForm extends AbstractEditForm<HospitalizationDto> {
 	//@formatter:off
 	private static final String HTML_LAYOUT =
 			loc(HOSPITALIZATION_HEADING_LOC) +
+			fluidRowLocs(HospitalizationDto.REGISTRATION_TYPE, HospitalizationDto.REGISTRATION_NO) +
 			fluidRowLocs(HospitalizationDto.ADMITTED_TO_HEALTH_FACILITY) +
 			fluidRowLocs(HEALTH_FACILITY) +
 			fluidRowLocs(HospitalizationDto.ADMISSION_DATE, HospitalizationDto.DISCHARGE_DATE, HospitalizationDto.LEFT_AGAINST_ADVICE, "") +
@@ -128,6 +129,8 @@ public class HospitalizationForm extends AbstractEditForm<HospitalizationDto> {
 		facilityField.setReadOnly(true);
 
 		final NullableOptionGroup admittedToHealthFacilityField = addField(HospitalizationDto.ADMITTED_TO_HEALTH_FACILITY, NullableOptionGroup.class);
+		addField(HospitalizationDto.REGISTRATION_TYPE);
+		addField(HospitalizationDto.REGISTRATION_NO);
 		final DateField admissionDateField = addField(HospitalizationDto.ADMISSION_DATE, DateField.class);
 		final DateField dischargeDateField = addDateField(HospitalizationDto.DISCHARGE_DATE, DateField.class, 7);
 		intensiveCareUnit = addField(HospitalizationDto.INTENSIVE_CARE_UNIT, NullableOptionGroup.class);

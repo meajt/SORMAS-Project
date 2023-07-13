@@ -55,6 +55,8 @@ public class HospitalizationDto extends EntityDto {
 	public static final String HOSPITALIZATION_REASON = "hospitalizationReason";
 	public static final String OTHER_HOSPITALIZATION_REASON = "otherHospitalizationReason";
 	public static final String DESCRIPTION = "description";
+	public static final String REGISTRATION_NO = "registrationNo";
+	public static final String REGISTRATION_TYPE = "registrationType";
 
 	// Fields are declared in the order they should appear in the import template
 
