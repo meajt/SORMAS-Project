@@ -2,14 +2,11 @@ package de.symeda.sormas.ui.utils.components.linelisting.person;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.BinderValidationStatus;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-
+import com.vaadin.ui.*;
 import de.symeda.sormas.api.i18n.I18nProperties;
+import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.Sex;
+import de.symeda.sormas.ui.configuration.validator.StringToNumberValidator;
 import de.symeda.sormas.ui.utils.CssStyles;
 import de.symeda.sormas.ui.utils.components.birthdate.BirthDateField;
 
@@ -21,12 +18,16 @@ public class PersonField extends CustomField<PersonFieldDto> {
 	private final TextField lastname;
 	private final BirthDateField birthDate;
 	private final ComboBox<Sex> sex;
+	private final TextField approximateAge;
+	private final ComboBox<ApproximateAgeType> approximateAgeType;
 
 	public PersonField() {
 		firstname = new TextField();
 		lastname = new TextField();
 		birthDate = new BirthDateField();
 		sex = new ComboBox<>();
+		approximateAge = new TextField();
+		approximateAgeType = new ComboBox<>();
 	}
 
 	@Override
@@ -45,13 +46,24 @@ public class PersonField extends CustomField<PersonFieldDto> {
 
 		birthDate.setId("birthDate");
 		binder.forField(birthDate).bind(PersonFieldDto.BIRTH_DATE);
+		birthDate.setVisible(false);
+		approximateAge.setId("approximateAge");
+		approximateAge.setWidth(80, Unit.PIXELS);
+		binder.forField(approximateAge)
+				.withValidator(new StringToNumberValidator("Must be number"))
+				.bind(PersonFieldDto.AGE);
+
+		approximateAgeType.setId("approximateAgeType");
+		approximateAgeType.setWidth(100, Unit.PIXELS);
+		binder.forField(approximateAgeType).bind(PersonFieldDto.APPROXIMATE_AGE_TYPE);
+		approximateAgeType.setItems(ApproximateAgeType.values());
 
 		sex.setId("sex");
 		sex.setItems(Sex.values());
 		sex.setWidth(100, Unit.PIXELS);
 		binder.forField(sex).asRequired().bind(PersonFieldDto.SEX);
 
-		layout.addComponents(firstname, lastname, birthDate, sex);
+		layout.addComponents(firstname, lastname, sex, approximateAge, approximateAgeType);
 
 		return layout;
 	}
@@ -87,6 +99,8 @@ public class PersonField extends CustomField<PersonFieldDto> {
 		birthDate.setCaption(I18nProperties.getPrefixCaption(PersonFieldDto.I18N_PREFIX, PersonFieldDto.BIRTH_DATE));
 		sex.setCaption(I18nProperties.getPrefixCaption(PersonFieldDto.I18N_PREFIX, PersonFieldDto.SEX));
 		sex.removeStyleName(CssStyles.CAPTION_HIDDEN);
+		approximateAge.setCaption(I18nProperties.getPrefixCaption(PersonFieldDto.I18N_PREFIX, PersonFieldDto.AGE));
+		approximateAgeType.setCaption(I18nProperties.getPrefixCaption(PersonFieldDto.I18N_PREFIX, PersonFieldDto.APPROXIMATE_AGE_TYPE));
 	}
 
 	public void hideCaptions() {

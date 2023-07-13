@@ -1541,6 +1541,7 @@ public interface Captions {
 	String LftSample_sgpt = "LftSample.sgpt";
 	String LftSample_vldl = "LftSample.vldl";
 	String lineListing = "lineListing";
+	String hospitalLineListing = "hospitalLineListing";
 	String lineListingAddLine = "lineListingAddLine";
 	String lineListingDisableAll = "lineListingDisableAll";
 	String lineListingDisableAllShort = "lineListingDisableAllShort";

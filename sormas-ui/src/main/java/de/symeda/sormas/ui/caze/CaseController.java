@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 import de.symeda.sormas.api.caze.*;
 import de.symeda.sormas.api.logger.CustomLoggerFactory;
 import de.symeda.sormas.api.logger.LoggerType;
+import de.symeda.sormas.ui.caze.components.linelisting.CaseLineListSave;
+import de.symeda.sormas.ui.caze.components.linelisting.HospitalLineListLayout;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.navigator.Navigator;
@@ -1713,10 +1715,16 @@ public class CaseController {
 	}
 
 	public void openLineListingWindow() {
+		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
+		LineListingLayout lineListingForm = new LineListingLayout(window);
+		lineListingForm.setSaveCallback(cases -> saveCasesFromLineListing(lineListingForm, cases));
+		openLineListingWindow(lineListingForm);
+	}
+
+	public void openLineListingWindow(CaseLineListSave lineListingForm) {
 
 		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
 
-		LineListingLayout lineListingForm = new LineListingLayout(window);
 		lineListingForm.setSaveCallback(cases -> saveCasesFromLineListing(lineListingForm, cases));
 
 		if (UserProvider.getCurrent().hasUserRight(UserRight.CASE_CHANGE_EPID_NUMBER)) {
@@ -1733,7 +1741,14 @@ public class CaseController {
 		UI.getCurrent().addWindow(window);
 	}
 
-	private void saveCasesFromLineListing(LineListingLayout lineListingForm, LinkedList<LineDto<CaseDataDto>> cases) {
+	public void openHospitalLineListingWindow() {
+		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
+		HospitalLineListLayout hospitalLineListLayout = new HospitalLineListLayout(window);
+		hospitalLineListLayout.setSaveCallback(cases -> saveCasesFromLineListing(hospitalLineListLayout, cases));
+		openLineListingWindow(hospitalLineListLayout);
+	}
+
+	private void saveCasesFromLineListing(CaseLineListSave lineListingForm, LinkedList<LineDto<CaseDataDto>> cases) {
 		try {
 			lineListingForm.validate();
 		} catch (ValidationRuntimeException e) {
