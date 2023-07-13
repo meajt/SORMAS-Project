@@ -1,5 +1,6 @@
 package de.symeda.sormas.ui.utils.components.linelisting.person;
 
+import com.google.common.base.Strings;
 import de.symeda.sormas.api.caze.BirthDateDto;
 import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.Sex;
@@ -57,6 +58,13 @@ public class PersonFieldDto implements Serializable {
 
 	public String getApproximateAge() {
 		return approximateAge;
+	}
+
+	public Integer getApproximateAgeValue() {
+		if (!Strings.isNullOrEmpty(approximateAge)) {
+			return Integer.parseInt(approximateAge);
+		}
+		return null;
 	}
 
 	public void setApproximateAge(String approximateAge) {

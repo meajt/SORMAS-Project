@@ -53,7 +53,7 @@ import de.symeda.sormas.ui.utils.components.linelisting.person.PersonField;
 import de.symeda.sormas.ui.utils.components.linelisting.person.PersonFieldDto;
 import de.symeda.sormas.ui.utils.components.linelisting.section.LineListingSection;
 
-public class LineListingLayout extends VerticalLayout {
+public class LineListingLayout extends CaseLineListSave {
 
 	private static final long serialVersionUID = -5565485322654993085L;
 
@@ -311,39 +311,7 @@ public class LineListingLayout extends VerticalLayout {
 	private LinkedList<LineDto<CaseDataDto>> getCaseLineDtos() {
 		return caseLines.stream().map(line -> {
 			CaseLineDto caseLineDto = line.getBean();
-			LineDto<CaseDataDto> result = new LineDto<>();
-
-			CaseDataDto caze = CaseDataDto.build(PersonDto.build().toReference(), caseLineDto.getDisease());
-
-			caze.setDiseaseDetails(caseLineDto.getDiseaseDetails());
-			caze.setResponsibleRegion(caseLineDto.getRegion());
-			caze.setResponsibleDistrict(caseLineDto.getDistrict());
-			caze.setReportDate(UtilDate.from(caseLineDto.getDateOfReport()));
-			caze.setEpidNumber(caseLineDto.getEpidNumber());
-			caze.setResponsibleCommunity(caseLineDto.getCommunity());
-			caze.setFacilityType(caseLineDto.getFacilityType());
-			caze.setHealthFacility(caseLineDto.getFacility());
-			caze.setHealthFacilityDetails(caseLineDto.getFacilityDetails());
-			if (caseLineDto.getDateOfOnset() != null) {
-				caze.getSymptoms().setOnsetDate(UtilDate.from(caseLineDto.getDateOfOnset()));
-			}
-			if (UserProvider.getCurrent() != null) {
-				caze.setReportingUser(UserProvider.getCurrent().getUserReference());
-			}
-			result.setEntity(caze);
-
-			final PersonDto person = PersonDto.build();
-			person.setFirstName(caseLineDto.getPerson().getFirstName());
-			person.setLastName(caseLineDto.getPerson().getLastName());
-			if (caseLineDto.getPerson().getBirthDate() != null) {
-				person.setBirthdateYYYY(caseLineDto.getPerson().getBirthDate().getDateOfBirthYYYY());
-				person.setBirthdateMM(caseLineDto.getPerson().getBirthDate().getDateOfBirthMM());
-				person.setBirthdateDD(caseLineDto.getPerson().getBirthDate().getDateOfBirthDD());
-			}
-			person.setSex(caseLineDto.getPerson().getSex());
-			result.setPerson(person);
-
-			return result;
+			return getCaseDataDtoLineDto(caseLineDto);
 		}).collect(Collectors.toCollection(LinkedList::new));
 	}
 
