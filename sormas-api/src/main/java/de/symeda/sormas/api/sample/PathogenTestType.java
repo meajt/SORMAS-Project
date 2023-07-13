@@ -56,6 +56,7 @@ public enum PathogenTestType {
 	SEQUENCING,
 	DNA_MICROARRAY,
 	RDT,
+	WIDAL,
 	OTHER;
 
 	@Override

@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import de.symeda.sormas.api.action.ActionReplyFacade;
+import de.symeda.sormas.backend.action.ActionReplyFacadeEjb;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -485,6 +487,10 @@ public abstract class AbstractBeanTest extends BaseBeanTest {
 
 	public ActionFacade getActionFacade() {
 		return getBean(ActionFacadeEjb.ActionFacadeEjbLocal.class);
+	}
+
+	public ActionReplyFacade getActionReplyFacade() {
+		return getBean(ActionReplyFacadeEjb.ActionReplyFacadeEjbLocal.class);
 	}
 
 	public AggregateReportFacade getAggregateReportFacade() {

@@ -108,6 +108,12 @@
                 app:value="@={data.facility}" />
 
             <de.symeda.sormas.app.component.controls.ControlTextEditField
+                android:id="@+id/location_otherFacilityType"
+                style="@style/ControlSingleColumnStyle"
+                android:visibility="gone"
+                app:value="@={data.otherFacilityType}" />
+
+            <de.symeda.sormas.app.component.controls.ControlTextEditField
                 android:id="@+id/location_facilityDetails"
                 style="@style/ControlSingleColumnStyle"
                 app:required="true"
