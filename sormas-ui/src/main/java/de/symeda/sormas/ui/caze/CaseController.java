@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import de.symeda.sormas.api.caze.*;
@@ -1715,16 +1717,13 @@ public class CaseController {
 	}
 
 	public void openLineListingWindow() {
-		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
-		LineListingLayout lineListingForm = new LineListingLayout(window);
-		lineListingForm.setSaveCallback(cases -> saveCasesFromLineListing(lineListingForm, cases));
-		openLineListingWindow(lineListingForm);
+		openLineListingWindow(LineListingLayout::new);
 	}
 
-	public void openLineListingWindow(CaseLineListSave lineListingForm) {
+	public void openLineListingWindow(Function<Window, CaseLineListSave> lineListSaveFunction) {
 
 		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
-
+		CaseLineListSave lineListingForm = lineListSaveFunction.apply(window);
 		lineListingForm.setSaveCallback(cases -> saveCasesFromLineListing(lineListingForm, cases));
 
 		if (UserProvider.getCurrent().hasUserRight(UserRight.CASE_CHANGE_EPID_NUMBER)) {
@@ -1742,10 +1741,7 @@ public class CaseController {
 	}
 
 	public void openHospitalLineListingWindow() {
-		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
-		HospitalLineListLayout hospitalLineListLayout = new HospitalLineListLayout(window);
-		hospitalLineListLayout.setSaveCallback(cases -> saveCasesFromLineListing(hospitalLineListLayout, cases));
-		openLineListingWindow(hospitalLineListLayout);
+		openLineListingWindow(HospitalLineListLayout::new);
 	}
 
 	private void saveCasesFromLineListing(CaseLineListSave lineListingForm, LinkedList<LineDto<CaseDataDto>> cases) {
