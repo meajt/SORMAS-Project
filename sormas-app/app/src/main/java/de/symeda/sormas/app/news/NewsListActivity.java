@@ -10,6 +10,8 @@ import androidx.paging.PagedList;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
@@ -20,6 +22,11 @@ import de.symeda.sormas.app.PagedBaseListFragment;
 import de.symeda.sormas.app.R;
 import de.symeda.sormas.app.backend.news.News;
 import de.symeda.sormas.app.component.menu.PageMenuItem;
+import de.symeda.sormas.app.news.rest.NewsBodyResponse;
+import de.symeda.sormas.app.news.rest.NewsRetroProvider;
+import de.symeda.sormas.app.rest.ApiVersionException;
+import de.symeda.sormas.app.rest.ServerCommunicationException;
+import de.symeda.sormas.app.rest.ServerConnectionException;
 
 public class NewsListActivity extends PagedBaseListActivity {
 
@@ -29,7 +36,7 @@ public class NewsListActivity extends PagedBaseListActivity {
         super.onCreate(saveInstanceState);
         adapter = new NewsListAdapter();
         viewModel = ViewModelProviders.of(this).get(NewsListViewModel.class);
-
+        viewModel.setContext(this);
         viewModel.getNewsList().observe( this, news ->{
             Log.d(this.getClass().getSimpleName(), "news size is "+news.size());
             adapter.submitList(news);});

@@ -21,7 +21,9 @@ public class NewsListAdapter extends BindingPagedListAdapter<News, RowNewsListIt
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        BindingViewHolder<News, RowNewsListItemLayoutBinding> pageHolder = (BindingViewHolder<News, RowNewsListItemLayoutBinding>) holder;
-        pageHolder.setOnListItemClickListener(this.mOnListItemClickListener);
+        if (holder instanceof BindingViewHolder) {
+            BindingViewHolder<News, RowNewsListItemLayoutBinding> pageHolder = (BindingViewHolder<News, RowNewsListItemLayoutBinding>) holder;
+            pageHolder.setOnListItemClickListener(this.mOnListItemClickListener);
+        }
     }
 }
