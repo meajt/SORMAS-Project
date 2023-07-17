@@ -51,6 +51,15 @@ public class NewsListViewModel extends ViewModel {
         newsList = newsPageListBuilder.build();
     }
 
+    void notifyCriteriaUpdated() {
+        if (newsList.getValue() != null) {
+            newsList.getValue().getDataSource().invalidate();
+            if (!newsList.getValue().isEmpty()) {
+                newsList.getValue().loadAround(0);
+            }
+        }
+    }
+
     public void setContext(Context context) {
         NewsListViewModel.context = context;
     }

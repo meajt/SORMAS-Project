@@ -546,6 +546,8 @@ public interface Captions {
 	String CaseHospitalization_leftAgainstAdvice = "CaseHospitalization.leftAgainstAdvice";
 	String CaseHospitalization_otherHospitalizationReason = "CaseHospitalization.otherHospitalizationReason";
 	String CaseHospitalization_previousHospitalizations = "CaseHospitalization.previousHospitalizations";
+	String CaseHospitalization_registrationNo = "CaseHospitalization.registrationNo";
+	String CaseHospitalization_registrationType = "CaseHospitalization.registrationType";
 	String caseImportErrorDescription = "caseImportErrorDescription";
 	String caseImportMergeCase = "caseImportMergeCase";
 	String caseInfrastructureDataChanged = "caseInfrastructureDataChanged";
@@ -1457,6 +1459,7 @@ public interface Captions {
 	String HealthConditions_otherConditions = "HealthConditions.otherConditions";
 	String HealthConditions_sickleCellDisease = "HealthConditions.sickleCellDisease";
 	String HealthConditions_tuberculosis = "HealthConditions.tuberculosis";
+	String hospitalLineListing = "hospitalLineListing";
 	String Immunization = "Immunization";
 	String Immunization_additionalDetails = "Immunization.additionalDetails";
 	String Immunization_ageAndBirthDate = "Immunization.ageAndBirthDate";
@@ -1541,7 +1544,6 @@ public interface Captions {
 	String LftSample_sgpt = "LftSample.sgpt";
 	String LftSample_vldl = "LftSample.vldl";
 	String lineListing = "lineListing";
-	String hospitalLineListing = "hospitalLineListing";
 	String lineListingAddLine = "lineListingAddLine";
 	String lineListingDisableAll = "lineListingDisableAll";
 	String lineListingDisableAllShort = "lineListingDisableAllShort";
@@ -1688,6 +1690,7 @@ public interface Captions {
 	String moreActions = "moreActions";
 	String name = "name";
 	String nationalHealthId = "nationalHealthId";
+	String newsSearch = "newsSearch";
 	String notAvailableShort = "notAvailableShort";
 	String notificationType = "notificationType";
 	String notificationType_caption = "notificationType.caption";

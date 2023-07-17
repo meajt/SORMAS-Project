@@ -3,6 +3,7 @@ package de.symeda.sormas.app.backend.news;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.symeda.sormas.api.Disease;
@@ -17,14 +18,22 @@ public class News extends PseudonymizableAdo {
     private String newsSource;
     private String date;
     private String region;
-
+    private  static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
     public static News buildFromNewsResponse(NewsResponseDto responseDto) {
         News news = new News();
+        news.setUuid(responseDto.getId()+"");
         news.setTitle(responseDto.getTitle());
         news.setNewsLink(responseDto.getNewsLink());
         news.setDate(responseDto.getDate().split(" ")[0]);
         news.setSummary(responseDto.getSummary());
         news.setRegion(responseDto.getProvince());
+        try {
+            Date linkDate = dateFormat.parse(responseDto.getDate());
+            news.setCreationDate(linkDate);
+            news.setLocalChangeDate(linkDate);
+        }catch (Exception exe) {
+            exe.printStackTrace();
+        }
         return news;
     }
 
