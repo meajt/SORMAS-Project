@@ -66,6 +66,35 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:701045705207:android:38bffe16f113f2729206f2",
+        "android_client_info": {
+          "package_name": "de.symeda.sormas.app.dev.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXoCQ1i8YMgIWqQjhTgk_AfDdZHXpPRLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:701045705207:android:05891edaa46af6b59206f2",
         "android_client_info": {
           "package_name": "de.symeda.sormas.app.stg.debug"
