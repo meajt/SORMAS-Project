@@ -51,12 +51,14 @@ public class NewsListActivity extends PagedBaseListActivity {
         View newsListFilterView = getLayoutInflater().inflate(R.layout.filter_news_list_layout, null);
         filterBinding = DataBindingUtil.bind(newsListFilterView);
         pageMenu.addFilter(newsListFilterView);
-        List<Item> initialRegions = InfrastructureDaoHelper.loadRegionsByServerCountry();
-        InfrastructureFieldsDependencyHandler.instance
-                .initializeRegionFields(filterBinding.regionFilter, initialRegions, null,
-                        filterBinding.districtFilter, List.of(), null,
-                        filterBinding.communityFilter, List.of(), null);
-        filterBinding.priorityFilter.initializeSpinner(DataUtils.getEnumItems(ActionPriority.class));
+        runOnUiThread(() -> {
+            List<Item> initialRegions = InfrastructureDaoHelper.loadRegionsByServerCountry();
+            InfrastructureFieldsDependencyHandler.instance
+                    .initializeRegionFields(filterBinding.regionFilter, initialRegions, null,
+                            filterBinding.districtFilter, List.of(), null,
+                            filterBinding.communityFilter, List.of(), null);
+            filterBinding.priorityFilter.initializeSpinner(DataUtils.getEnumItems(ActionPriority.class));
+        });
         filterBinding.applyFilters.setOnClickListener(e -> {
             showPreloader();
             pageMenu.hideAll();

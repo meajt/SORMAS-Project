@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.symeda.sormas.app.PagedBaseListFragment;
 import de.symeda.sormas.app.R;
-import de.symeda.sormas.app.backend.news.News;
 import de.symeda.sormas.app.core.adapter.databinding.OnListItemClickListener;
 
 public class NewsListFragment extends PagedBaseListFragment<NewsListAdapter> implements OnListItemClickListener {

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="de.symeda.sormas.app.backend.news.News" />
+            type="de.symeda.sormas.app.news.News" />
     </data>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"

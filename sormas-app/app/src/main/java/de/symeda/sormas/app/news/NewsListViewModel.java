@@ -12,22 +12,11 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import androidx.paging.PositionalDataSource;
 
-import com.google.gson.Gson;
-
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import de.symeda.sormas.api.Disease;
-import de.symeda.sormas.app.backend.news.News;
 import de.symeda.sormas.app.news.rest.NewsBodyResponse;
-import de.symeda.sormas.app.news.rest.NewsFacadeRetro;
 import de.symeda.sormas.app.news.rest.NewsFilterCriteria;
-import de.symeda.sormas.app.news.rest.NewsResponseDto;
 import de.symeda.sormas.app.news.rest.NewsRetroProvider;
 import de.symeda.sormas.app.util.Consumer;
 
