@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.action.ActionPriority;
+import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.app.backend.common.PseudonymizableAdo;
 import de.symeda.sormas.app.news.rest.NewsResponseDto;
 
@@ -15,7 +17,8 @@ public class News extends PseudonymizableAdo {
     private String newsSource;
     private String date;
     private String region;
-    private  static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
+    private ActionPriority priority;
+    private  static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
     public static News buildFromNewsResponse(NewsResponseDto responseDto) {
         News news = new News();
         news.setUuid(responseDto.getId()+"");
@@ -24,6 +27,7 @@ public class News extends PseudonymizableAdo {
         news.setDate(responseDto.getDate().split(" ")[0]);
         news.setSummary(responseDto.getSummary());
         news.setRegion(responseDto.getProvince());
+        news.setPriority(actionPriorityFromCaption(responseDto.getEpidemiologicalRiskLevel()));
         try {
             Date linkDate = dateFormat.parse(responseDto.getDate());
             news.setCreationDate(linkDate);
@@ -32,6 +36,14 @@ public class News extends PseudonymizableAdo {
             exe.printStackTrace();
         }
         return news;
+    }
+
+    private static ActionPriority actionPriorityFromCaption(String priorityCaption) {
+        if (I18nProperties.getEnumCaption(ActionPriority.HIGH).equals(priorityCaption))
+            return ActionPriority.HIGH;
+        if (I18nProperties.getEnumCaption(ActionPriority.NORMAL).equals(priorityCaption))
+            return ActionPriority.NORMAL;
+        return ActionPriority.LOW;
     }
 
     public String getNewsLink() {
@@ -88,5 +100,13 @@ public class News extends PseudonymizableAdo {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public ActionPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(ActionPriority priority) {
+        this.priority = priority;
     }
 }

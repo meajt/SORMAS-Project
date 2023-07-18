@@ -29,7 +29,7 @@ public class NewsListActivity extends PagedBaseListActivity {
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         showPreloader();
-        adapter = new NewsListAdapter();
+        adapter = new NewsListAdapter(getContext());
         viewModel = ViewModelProviders.of(this).get(NewsListViewModel.class);
         viewModel.setContext(this);
         viewModel.getNewsList().observe(this, news -> {

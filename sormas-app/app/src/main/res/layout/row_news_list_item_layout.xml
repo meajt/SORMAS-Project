@@ -71,6 +71,25 @@
                android:fontFamily="sans-serif-medium"
                android:text="@{data.date}"
                />
+           <View
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"/>
+           <LinearLayout
+               android:id="@+id/newsData_priorityContainer"
+               android:layout_width="25dp"
+               android:layout_height="25dp">
+               <Button
+                   android:id="@+id/newsData_actionPriority"
+                   android:layout_width="10dp"
+                   android:layout_height="10dp"
+                   android:background="@drawable/background_legend_low_priority"
+                   android:layout_gravity="center"
+                   android:clickable="false"
+                   android:layout_marginLeft="7.5dp"
+                   />
+           </LinearLayout>
+
        </LinearLayout>
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
