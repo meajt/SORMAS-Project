@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.symeda.sormas.api.action.ActionPriority;
+import de.symeda.sormas.api.event.RiskLevel;
 import de.symeda.sormas.app.R;
 import de.symeda.sormas.app.core.adapter.databinding.BindingPagedListAdapter;
 import de.symeda.sormas.app.core.adapter.databinding.BindingViewHolder;
@@ -32,10 +33,12 @@ public class NewsListAdapter extends BindingPagedListAdapter<News, RowNewsListIt
 
     private void setColorInPriorityButton(View pageHolder, News data) {
         if (context != null) {
-            if (data.getPriority() == ActionPriority.HIGH) {
+            if (data.getRiskLevel() == RiskLevel.HIGH) {
                 pageHolder.setBackground(context.getDrawable(R.drawable.background_legend_high_priority));
-            } else if (data.getPriority() == ActionPriority.NORMAL) {
+            } else if (data.getRiskLevel() == RiskLevel.MODERATE) {
                 pageHolder.setBackground(context.getDrawable(R.drawable.background_legend_normal_priority));
+            } else if (data.getRiskLevel() == RiskLevel.LOW) {
+                pageHolder.setBackground(context.getDrawable(R.drawable.background_legend_low_priority));
             }
         }
     }

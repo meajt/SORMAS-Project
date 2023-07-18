@@ -8,7 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 
-import de.symeda.sormas.api.action.ActionPriority;
+import de.symeda.sormas.api.event.RiskLevel;
+import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.app.backend.region.Community;
 import de.symeda.sormas.app.backend.region.District;
 import de.symeda.sormas.app.backend.region.Region;
@@ -55,7 +56,7 @@ public class NewsFilterCriteria {
     Region region;
     District district;
     Community community;
-    ActionPriority priority;
+    RiskLevel riskLevel;
 
 
     public Map<String, Object> toFilterMap() {
@@ -65,19 +66,9 @@ public class NewsFilterCriteria {
         this.setProvinceName(region == null? null: region.getName());
         this.setDistrictName(district == null? null: district.getName());
         this.setPalikaName(community == null? null: community.getName());
-        this.setEpidemiologicalRiskLevel(actionPriorityToFilterRiskString(priority));
+        this.setEpidemiologicalRiskLevel(riskLevel == null? null: I18nProperties.getEnumCaption(riskLevel));
         return gson.fromJson(gson.toJson(this), new TypeToken<Map<String, Object>>() {
         }.getType());
-    }
-
-    public String actionPriorityToFilterRiskString(ActionPriority priority) {
-        if (priority == ActionPriority.HIGH)
-            return HIGH_RISK;
-        if (priority == ActionPriority.NORMAL)
-            return MODERATE_RISK;
-        if (priority == ActionPriority.LOW)
-            return LOW_RISK;
-        return null;
     }
 
     public String getCategories() {
@@ -168,12 +159,12 @@ public class NewsFilterCriteria {
         this.community = community;
     }
 
-    public ActionPriority getPriority() {
-        return priority;
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
     }
 
-    public void setPriority(ActionPriority priority) {
-        this.priority = priority;
+    public void setRiskLevel(RiskLevel riskLevel) {
+        this.riskLevel = riskLevel;
     }
 
     public String getEpidemiologicalRiskLevel() {

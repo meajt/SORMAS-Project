@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.symeda.sormas.api.Disease;
-import de.symeda.sormas.api.action.ActionPriority;
+import de.symeda.sormas.api.event.RiskLevel;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.app.backend.common.PseudonymizableAdo;
 import de.symeda.sormas.app.news.rest.NewsResponseDto;
@@ -17,7 +17,7 @@ public class News extends PseudonymizableAdo {
     private String newsSource;
     private String date;
     private String region;
-    private ActionPriority priority;
+    private RiskLevel riskLevel;
     private  static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
     public static News buildFromNewsResponse(NewsResponseDto responseDto) {
         News news = new News();
@@ -27,7 +27,7 @@ public class News extends PseudonymizableAdo {
         news.setDate(responseDto.getDate().split(" ")[0]);
         news.setSummary(responseDto.getSummary());
         news.setRegion(responseDto.getProvince());
-        news.setPriority(actionPriorityFromCaption(responseDto.getEpidemiologicalRiskLevel()));
+        news.setRiskLevel(actionPriorityFromCaption(responseDto.getEpidemiologicalRiskLevel()));
         try {
             Date linkDate = dateFormat.parse(responseDto.getDate());
             news.setCreationDate(linkDate);
@@ -38,12 +38,14 @@ public class News extends PseudonymizableAdo {
         return news;
     }
 
-    private static ActionPriority actionPriorityFromCaption(String priorityCaption) {
-        if (I18nProperties.getEnumCaption(ActionPriority.HIGH).equals(priorityCaption))
-            return ActionPriority.HIGH;
-        if (I18nProperties.getEnumCaption(ActionPriority.NORMAL).equals(priorityCaption))
-            return ActionPriority.NORMAL;
-        return ActionPriority.LOW;
+    private static RiskLevel actionPriorityFromCaption(String priorityCaption) {
+        if (I18nProperties.getEnumCaption(RiskLevel.HIGH).equals(priorityCaption))
+            return RiskLevel.HIGH;
+        if (I18nProperties.getEnumCaption(RiskLevel.MODERATE).equals(priorityCaption))
+            return RiskLevel.MODERATE.MODERATE;
+        if (I18nProperties.getEnumCaption(RiskLevel.LOW).equals(priorityCaption))
+            return RiskLevel.LOW;
+        return RiskLevel.UNKNOWN;
     }
 
     public String getNewsLink() {
@@ -102,11 +104,11 @@ public class News extends PseudonymizableAdo {
         this.region = region;
     }
 
-    public ActionPriority getPriority() {
-        return priority;
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
     }
 
-    public void setPriority(ActionPriority priority) {
-        this.priority = priority;
+    public void setRiskLevel(RiskLevel riskLevel) {
+        this.riskLevel = riskLevel;
     }
 }

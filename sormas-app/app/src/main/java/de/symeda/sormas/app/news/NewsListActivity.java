@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import java.util.List;
 
 import de.symeda.sormas.api.action.ActionPriority;
+import de.symeda.sormas.api.event.RiskLevel;
 import de.symeda.sormas.app.PagedBaseListActivity;
 import de.symeda.sormas.app.PagedBaseListFragment;
 import de.symeda.sormas.app.R;
@@ -57,7 +58,7 @@ public class NewsListActivity extends PagedBaseListActivity {
                     .initializeRegionFields(filterBinding.regionFilter, initialRegions, null,
                             filterBinding.districtFilter, List.of(), null,
                             filterBinding.communityFilter, List.of(), null);
-            filterBinding.priorityFilter.initializeSpinner(DataUtils.getEnumItems(ActionPriority.class));
+            filterBinding.priorityFilter.initializeSpinner(DataUtils.getEnumItems(RiskLevel.class));
         });
         filterBinding.applyFilters.setOnClickListener(e -> {
             showPreloader();
@@ -71,7 +72,7 @@ public class NewsListActivity extends PagedBaseListActivity {
             viewModel.getNewsFilterCriteria().setRegion(null);
             viewModel.getNewsFilterCriteria().setDistrict(null);
             viewModel.getNewsFilterCriteria().setCommunity(null);
-            viewModel.getNewsFilterCriteria().setPriority(null);
+            viewModel.getNewsFilterCriteria().setRiskLevel(null);
             filterBinding.invalidateAll();
             viewModel.notifyCriteriaUpdated();
         });

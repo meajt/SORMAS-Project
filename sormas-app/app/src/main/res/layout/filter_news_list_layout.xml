@@ -73,7 +73,7 @@
                 android:id="@+id/priority_filter"
                 app:hint="@{I18nProperties.getPrefixCaption(ActionDto.I18N_PREFIX, ActionDto.PRIORITY)}"
                 app:showCaption="false"
-                app:value="@={criteria.priority}"
+                app:value="@={criteria.riskLevel}"
                 style="@style/ControlSingleColumnStyle" />
 
             <LinearLayout
