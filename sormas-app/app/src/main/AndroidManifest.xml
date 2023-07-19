@@ -25,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/SormasTheme">
         <activity
+            android:name=".CustomWebView"
+            android:exported="false" />
+        <activity
             android:name=".NewsListActivity"
             android:exported="false" />
         <activity

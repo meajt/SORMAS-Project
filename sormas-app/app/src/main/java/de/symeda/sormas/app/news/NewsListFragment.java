@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import de.symeda.sormas.app.CustomWebView;
 import de.symeda.sormas.app.PagedBaseListFragment;
 import de.symeda.sormas.app.R;
 import de.symeda.sormas.app.core.adapter.databinding.OnListItemClickListener;
@@ -40,9 +41,7 @@ public class NewsListFragment extends PagedBaseListFragment<NewsListAdapter> imp
     @Override
     public void onListItemClick(View view, int position, Object item) {
         News news = (News) item;
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(news.getNewsLink()));
-        startActivity(browserIntent);
-        Log.d(this.getTag(), "starting browser");
+        CustomWebView.startActivity(getContext(), news.getNewsLink());
     }
 
     @Override
