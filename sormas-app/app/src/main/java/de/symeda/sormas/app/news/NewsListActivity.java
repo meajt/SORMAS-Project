@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.List;
 
@@ -27,20 +26,28 @@ public class NewsListActivity extends PagedBaseListActivity {
 
     NewsListViewModel viewModel;
     FilterNewsListLayoutBinding filterBinding;
+    Boolean isFirstCreate = true;
 
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        showPreloader();
         adapter = new NewsListAdapter(getContext());
         viewModel = ViewModelProviders.of(this).get(NewsListViewModel.class);
         viewModel.setContext(this);
         viewModel.getNewsList().observe(this, news -> {
-            Log.d(this.getClass().getSimpleName(), "news size is " + news.size());
             adapter.submitList(news);
             hidePreloader();
         });
         filterBinding.setCriteria(viewModel.getNewsFilterCriteria());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFirstCreate) {
+            isFirstCreate = false;
+            showPreloader();
+        }
     }
 
 
