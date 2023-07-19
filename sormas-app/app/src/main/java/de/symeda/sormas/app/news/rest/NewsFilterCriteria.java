@@ -1,23 +1,29 @@
 package de.symeda.sormas.app.news.rest;
 
+import android.util.Log;
+
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalField;
+import java.util.Date;
 import java.util.Map;
 
+import de.symeda.sormas.api.NewsDateFilter;
 import de.symeda.sormas.api.event.RiskLevel;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.app.backend.region.Community;
 import de.symeda.sormas.app.backend.region.District;
 import de.symeda.sormas.app.backend.region.Region;
+import de.symeda.sormas.app.news.News;
 
 public class NewsFilterCriteria {
-    final String HIGH_RISK= "High risk";
-    final String MODERATE_RISK= "Moderate risk";
-    final String LOW_RISK= "Low risk";
     @Expose
     @SerializedName("categories")
     String categories;
@@ -49,14 +55,23 @@ public class NewsFilterCriteria {
     @Expose
     @SerializedName("search")
     String textFilter;
-   @Expose
+    @Expose
     @SerializedName("epidemiological_risk_level")
     String epidemiologicalRiskLevel;
+
+    @Expose
+    @SerializedName("start_date")
+    String fromDateQuery;
+
+    @Expose
+    @SerializedName("end_date")
+    String toDateQuery;
 
     Region region;
     District district;
     Community community;
     RiskLevel riskLevel;
+    NewsDateFilter newsDateFilter;
 
 
     public Map<String, Object> toFilterMap() {
@@ -67,8 +82,16 @@ public class NewsFilterCriteria {
         this.setDistrictName(district == null? null: district.getName());
         this.setPalikaName(community == null? null: community.getName());
         this.setEpidemiologicalRiskLevel(riskLevel == null? null: I18nProperties.getEnumCaption(riskLevel));
+        if (newsDateFilter != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+           LocalDate localDate = LocalDate.now();
+           toDateQuery = formatter.format(localDate);
+           localDate = localDate.minusDays(newsDateFilter.getValue());
+           fromDateQuery = formatter.format(localDate);
+        }
         return gson.fromJson(gson.toJson(this), new TypeToken<Map<String, Object>>() {
         }.getType());
+
     }
 
     public String getCategories() {
@@ -173,5 +196,29 @@ public class NewsFilterCriteria {
 
     public void setEpidemiologicalRiskLevel(String epidemiologicalRiskLevel) {
         this.epidemiologicalRiskLevel = epidemiologicalRiskLevel;
+    }
+
+    public NewsDateFilter getNewsDateFilter() {
+        return newsDateFilter;
+    }
+
+    public void setNewsDateFilter(NewsDateFilter newsDateFilter) {
+        this.newsDateFilter = newsDateFilter;
+    }
+
+    public String getFromDateQuery() {
+        return fromDateQuery;
+    }
+
+    public void setFromDateQuery(String fromDateQuery) {
+        this.fromDateQuery = fromDateQuery;
+    }
+
+    public String getToDateQuery() {
+        return toDateQuery;
+    }
+
+    public void setToDateQuery(String toDateQuery) {
+        this.toDateQuery = toDateQuery;
     }
 }

@@ -75,6 +75,12 @@
                 app:showCaption="false"
                 app:value="@={criteria.riskLevel}"
                 style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.FilterSpinnerField
+                android:id="@+id/date_filter"
+                app:hint="@{I18nProperties.getCaption(Captions.date)}"
+                app:showCaption="false"
+                app:value="@={criteria.newsDateFilter}"
+                style="@style/ControlSingleColumnStyle" />
 
             <LinearLayout
                 android:layout_width="match_parent"

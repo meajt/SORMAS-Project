@@ -7,9 +7,11 @@ import android.view.View;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.util.List;
 
-import de.symeda.sormas.api.action.ActionPriority;
+import de.symeda.sormas.api.NewsDateFilter;
 import de.symeda.sormas.api.event.RiskLevel;
 import de.symeda.sormas.app.PagedBaseListActivity;
 import de.symeda.sormas.app.PagedBaseListFragment;
@@ -52,14 +54,16 @@ public class NewsListActivity extends PagedBaseListActivity {
         View newsListFilterView = getLayoutInflater().inflate(R.layout.filter_news_list_layout, null);
         filterBinding = DataBindingUtil.bind(newsListFilterView);
         pageMenu.addFilter(newsListFilterView);
+
         runOnUiThread(() -> {
             List<Item> initialRegions = InfrastructureDaoHelper.loadRegionsByServerCountry();
             InfrastructureFieldsDependencyHandler.instance
                     .initializeRegionFields(filterBinding.regionFilter, initialRegions, null,
                             filterBinding.districtFilter, List.of(), null,
                             filterBinding.communityFilter, List.of(), null);
-            filterBinding.priorityFilter.initializeSpinner(DataUtils.getEnumItems(RiskLevel.class));
         });
+        filterBinding.dateFilter.initializeSpinner(DataUtils.getEnumItems(NewsDateFilter.class));
+        filterBinding.priorityFilter.initializeSpinner(DataUtils.getEnumItems(RiskLevel.class));
         filterBinding.applyFilters.setOnClickListener(e -> {
             showPreloader();
             pageMenu.hideAll();
