@@ -77,6 +77,7 @@ public class NewsListActivity extends PagedBaseListActivity {
             viewModel.getNewsFilterCriteria().setDistrict(null);
             viewModel.getNewsFilterCriteria().setCommunity(null);
             viewModel.getNewsFilterCriteria().setRiskLevel(null);
+            viewModel.getNewsFilterCriteria().setNewsDateFilter(null);
             filterBinding.invalidateAll();
             viewModel.notifyCriteriaUpdated();
         });
