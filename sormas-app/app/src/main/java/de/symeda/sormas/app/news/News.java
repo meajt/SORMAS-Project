@@ -28,6 +28,7 @@ public class News extends PseudonymizableAdo {
         news.setSummary(responseDto.getSummary());
         news.setRegion(responseDto.getProvince());
         news.setRiskLevel(actionPriorityFromCaption(responseDto.getEpidemiologicalRiskLevel()));
+        news.setNewsSource(responseDto.getNewsSource());
         try {
             Date linkDate = dateFormat.parse(responseDto.getDate());
             news.setCreationDate(linkDate);
