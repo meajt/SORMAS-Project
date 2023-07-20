@@ -68,6 +68,7 @@ public class NewsListViewModel extends ViewModel {
         }
         @Override
         public void loadInitial(@NonNull LoadInitialParams loadInitialParams, @NonNull LoadInitialCallback<News> loadInitialCallback) {
+            criteria.setPage(1);
             pullData(criteria, newsResponse -> {
                 List<News> news = newsResponse.getNewsList().stream().map(News::buildFromNewsResponse).collect(Collectors.toList());
                 loadInitialCallback.onResult(news, 0, newsResponse.getNewsMetaResponse().getTotal());
@@ -76,7 +77,7 @@ public class NewsListViewModel extends ViewModel {
 
         @Override
         public void loadRange(@NonNull LoadRangeParams loadRangeParams, @NonNull LoadRangeCallback<News> loadRangeCallback) {
-           criteria.setPage(loadRangeParams.startPosition % NEWS_LOAD_SIZE + 1);
+           criteria.setPage(loadRangeParams.startPosition / NEWS_LOAD_SIZE + 1);
            pullData(criteria, newsResponse -> {
                List<News> news = newsResponse.getNewsList().stream().map(News::buildFromNewsResponse).collect(Collectors.toList());
                 loadRangeCallback.onResult(news);

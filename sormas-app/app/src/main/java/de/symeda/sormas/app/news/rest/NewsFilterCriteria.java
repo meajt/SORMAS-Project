@@ -89,9 +89,10 @@ public class NewsFilterCriteria {
            localDate = localDate.minusDays(newsDateFilter.getValue());
            fromDateQuery = formatter.format(localDate);
         }
-        return gson.fromJson(gson.toJson(this), new TypeToken<Map<String, Object>>() {
+        Map<String, Object> queryMap = gson.fromJson(gson.toJson(this), new TypeToken<Map<String, Object>>() {
         }.getType());
-
+        queryMap.put("page", getPage());
+        return queryMap;
     }
 
     public String getCategories() {
