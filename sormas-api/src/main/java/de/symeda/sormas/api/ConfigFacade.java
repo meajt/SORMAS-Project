@@ -64,6 +64,7 @@ public interface ConfigFacade {
 
 	char getCsvSeparator();
 
+	String getAppVersion();
 	String getAppLegacyUrl();
 
 	void validateAppUrls();

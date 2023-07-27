@@ -35,6 +35,10 @@ public class InfoResource {
 	@GET
 	@Path("/version")
 	public String getVersion() {
+		String appVersionFromSormasPropertyFile = FacadeProvider.getConfigFacade().getAppVersion();
+		if(appVersionFromSormasPropertyFile != null) {
+			return appVersionFromSormasPropertyFile;
+		}
 		return InfoProvider.get().getVersion();
 	}
 

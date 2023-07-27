@@ -83,6 +83,7 @@ public class ConfigFacadeEjb implements ConfigFacade {
 	public static final String CUSTOM_BRANDING_LOGIN_BACKGROUND_PATH = "custombranding.loginbackground.path";
 
 	public static final String APP_URL = "app.url";
+	public static final String APP_VERSION = "app.version";
 	public static final String APP_LEGACY_URL = "app.legacy.url";
 
 	public static final String FEATURE_AUTOMATIC_CASE_CLASSIFICATION = "feature.automaticcaseclassification";
@@ -358,6 +359,12 @@ public class ConfigFacadeEjb implements ConfigFacade {
 			appUrl = appUrl.replaceAll(VERSION_PLACEHOLER, InfoProvider.get().getVersion());
 		}
 		return appUrl;
+	}
+
+	@Override
+	public String getAppVersion() {
+		return getProperty(APP_VERSION, null);
+
 	}
 
 	@Override
