@@ -264,8 +264,8 @@ public class LoginActivity extends BaseLocalizedActivity implements ActivityComp
 	}
 
 	private void initializeFirebase() {
-		((SormasApplication) getApplication()).getFirebaseAnalytics().setUserId(ConfigProvider.getUser().getUuid());
-		FirebaseCrashlytics.getInstance().setUserId(ConfigProvider.getUser().getUuid());
+		((SormasApplication) getApplication()).getFirebaseAnalytics().setUserId(ConfigProvider.getUser().getUserName()+"--"+ConfigProvider.getUser().getUuid());
+		FirebaseCrashlytics.getInstance().setUserId(ConfigProvider.getUser().getUserName()+"--"+ConfigProvider.getUser().getUuid());
 	}
 
 	private void openLandingActivity() {
