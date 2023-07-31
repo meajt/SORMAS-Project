@@ -460,6 +460,8 @@ public class Symptoms extends PseudonymizableAdo {
 
 	@Enumerated(EnumType.STRING)
 	private SymptomState muscleWeakness;
+	@Enumerated(EnumType.STRING)
+	private SymptomState earPain;
 
 	@Override
 	public String getI18nPrefix() {
@@ -2032,5 +2034,13 @@ public class Symptoms extends PseudonymizableAdo {
 
 	public void setMuscleWeakness(SymptomState muscleWeakness) {
 		this.muscleWeakness = muscleWeakness;
+	}
+
+	public SymptomState getEarPain() {
+		return earPain;
+	}
+
+	public void setEarPain(SymptomState earPain) {
+		this.earPain = earPain;
 	}
 }
