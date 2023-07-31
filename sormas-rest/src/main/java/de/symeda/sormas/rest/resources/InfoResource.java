@@ -27,6 +27,7 @@ import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.utils.CompatibilityCheckResponse;
 import de.symeda.sormas.api.utils.InfoProvider;
 import de.symeda.sormas.api.utils.VersionHelper;
+import org.apache.commons.lang3.StringUtils;
 
 @Path("/info")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
@@ -72,6 +73,10 @@ public class InfoResource {
 	@GET
 	@Path("/checkcompatibility")
 	public CompatibilityCheckResponse isCompatibleToApi(@QueryParam("appVersion") String appVersion) {
+		String appVersionFromSormasPropertyFile = FacadeProvider.getConfigFacade().getAppVersion();
+		if (StringUtils.isNotEmpty(appVersionFromSormasPropertyFile)) {
+			return InfoProvider.get().isCompatibleToApi(appVersion, appVersionFromSormasPropertyFile);
+		}
 		return InfoProvider.get().isCompatibleToApi(appVersion);
 	}
 

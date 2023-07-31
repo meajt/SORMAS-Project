@@ -133,23 +133,28 @@ public class InfoProvider {
 		return isCompatibleToApi(VersionHelper.extractVersion(appVersionInput));
 	}
 
+	public CompatibilityCheckResponse isCompatibleToApi(String appVersionInput, String appServerVersion) {
+		return isCompatibleToApi(VersionHelper.extractVersion(appVersionInput), VersionHelper.extractVersion(appServerVersion));
+	}
+
 	/**
 	 * Checks if the app version is compatible with the api version. This is true when the version is at least as high as the
 	 * MINIMUM_REQUIRED_VERSION and lower or equal to the version returned by getVersion().
 	 */
 	public CompatibilityCheckResponse isCompatibleToApi(int[] appVersion) {
-
+		int[] serverVersion = VersionHelper.extractVersion(getVersion());
+		return isCompatibleToApi(appVersion, serverVersion);
+	}
+	public CompatibilityCheckResponse isCompatibleToApi(int[] appVersion, int[] serverVersion) {
+		int[] minVersion = VersionHelper.extractVersion(getMinimumRequiredVersion());
 		if (!VersionHelper.isVersion(appVersion)) {
 			throw new IllegalArgumentException("No proper app version provided");
 		}
-
-		int[] minVersion = VersionHelper.extractVersion(getMinimumRequiredVersion());
 
 		if (VersionHelper.isBefore(appVersion, minVersion)) {
 			return CompatibilityCheckResponse.TOO_OLD;
 		}
 
-		int[] serverVersion = VersionHelper.extractVersion(getVersion());
 		if (VersionHelper.isAfter(appVersion, serverVersion)) {
 			return CompatibilityCheckResponse.TOO_NEW;
 		}
