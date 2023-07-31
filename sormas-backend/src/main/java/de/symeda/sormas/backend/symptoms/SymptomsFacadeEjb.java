@@ -225,6 +225,7 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setEnlargesNerves(source.getEnlargesNerves());
 		target.setMuscleWeakness(source.getMuscleWeakness());
 		target.setCaseCondition(source.getCaseCondition());
+		target.setEarPain(source.getEarPain());
 		return target;
 	}
 
@@ -432,6 +433,7 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setEnlargesNerves(source.getEnlargesNerves());
 		target.setMuscleWeakness(source.getMuscleWeakness());
 		target.setCaseCondition(source.getCaseCondition());
+		target.setEarPain(source.getEarPain());
 		return target;
 	}
 

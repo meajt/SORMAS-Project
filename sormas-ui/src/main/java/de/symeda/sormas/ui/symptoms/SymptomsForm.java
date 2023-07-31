@@ -100,6 +100,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	private static final String SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC = "skinSignsAndSymptomsHeadingLoc";
 	private static final String MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "muscularSignsAndSymptomsHeadingLoc";
 	private static final String EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC = "eyeSignsAndSymptomsHeadingLoc";
+	private static final String EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "eyeSignsAndSymptomsHeadingLoc";
 	private static final String OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC = "otherSignsAndSymptomsHeadingLoc";
 	private static final String BUTTONS_LOC = "buttonsLoc";
 	private static final String LESIONS_LOCATIONS_LOC = "lesionsLocationsLoc";
@@ -133,6 +134,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 					createSymptomGroupLayout(SymptomGroup.SKIN, SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.MUSCULAR, MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.EYE, EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
+					createSymptomGroupLayout(SymptomGroup.EAR, EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.OTHER, OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					locsCss(VSPACE_3, PATIENT_ILL_LOCATION, SYMPTOMS_COMMENTS) +
 					fluidRowLocsCss(VSPACE_3, ONSET_SYMPTOM, ONSET_DATE) +
@@ -474,7 +476,8 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			PAINLESS_ULCER,
 			EYE_LASHES,
 			ENLARGES_NERVES,
-			MUSCLE_WEAKNESS);
+			MUSCLE_WEAKNESS,
+			EAR_PAIN);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
@@ -695,7 +698,8 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			MENINGEAL_SIGNS,
 			SEIZURES,
 			SEPSIS,
-			SHOCK);
+			SHOCK,
+			EAR_PAIN);
 
 		// Set visibilities
 

@@ -56,6 +56,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     //Symptoms
     public static final String ABDOMINAL_PAIN = "abdominalPain";
+    public static final String EAR_PAIN = "earPain";
     public static final String ABNORMAL_LUNG_XRAY_FINDINGS = "abnormalLungXrayFindings";
     public static final String ACUTE_RESPIRATORY_DISTRESS_SYNDROME = "acuteRespiratoryDistressSyndrome";
     public static final String AEROPHOBIA = "aerophobia";
@@ -289,7 +290,6 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
             MUMPS,
-
             OTHER})
     @HideForCountries
     @SymptomGrouping(SymptomGroup.EAR)

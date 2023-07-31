@@ -269,7 +269,7 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState muscleWeakness;
 
 	private CaseCondition caseCondition;
-
+	private SymptomState earPain;
 
 	// when adding new fields make sure to extend toHumanString
 
@@ -1977,5 +1977,13 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setCaseCondition(CaseCondition caseCondition) {
 		this.caseCondition = caseCondition;
+	}
+
+	public SymptomState getEarPain() {
+		return earPain;
+	}
+
+	public void setEarPain(SymptomState earPain) {
+		this.earPain = earPain;
 	}
 }
