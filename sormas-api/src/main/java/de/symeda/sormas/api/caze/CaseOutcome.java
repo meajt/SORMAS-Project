@@ -27,6 +27,10 @@ public enum CaseOutcome
 	NO_OUTCOME,
 	DECEASED,
 	RECOVERED,
+	RELEASED_FROM_TREATMENT,
+	TRANSFER_OUT,
+	LOSS_T0_FOLLOW_UP,
+	OTHERS,
 	UNKNOWN;
 
 	public String getName() {

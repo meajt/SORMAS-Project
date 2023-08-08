@@ -66,11 +66,7 @@ import de.symeda.sormas.api.i18n.Strings;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PersonDto;
-import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
-import de.symeda.sormas.api.symptoms.SymptomState;
-import de.symeda.sormas.api.symptoms.SymptomsContext;
-import de.symeda.sormas.api.symptoms.SymptomsDto;
-import de.symeda.sormas.api.symptoms.SymptomsHelper;
+import de.symeda.sormas.api.symptoms.*;
 import de.symeda.sormas.api.utils.DateComparator;
 import de.symeda.sormas.api.utils.SymptomGroup;
 import de.symeda.sormas.api.utils.SymptomGrouping;
@@ -110,12 +106,18 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	private static final String MONKEYPOX_LESIONS_IMG4 = "monkeypoxLesionsImg4";
 	private static final String SYMPTOMS_HINT_LOC = "symptomsHintLoc";
 	private static final String COMPLICATIONS_HEADING = "complicationsHeading";
+	private static final String DISABLITY_GRADING_HEADING = "disablityGradingHeading";
 
 	private static Map<String, List<String>> symptomGroupMap = new HashMap();
 
 	//@formatter:off
 	private static final String HTML_LAYOUT =
 			loc(CLINICAL_MEASUREMENTS_HEADING_LOC) +
+					fluidRowLocs(TYPE_OF_LEPROSY, IS_LEPROSY_REACTION) +
+					fluidRowLocs(LEPROSY_STAGE, DATE_OF_DIAGNOSIS) +
+					fluidRowLocs(TREATMENT_GIVE, EHF_SCORE) +
+					loc(DISABLITY_GRADING_HEADING) +
+					fluidRowLocs(TIME_OF_DIAGNOSIS, TIME_OF_RFT) +
 					fluidRowLocs(TEMPERATURE, TEMPERATURE_SOURCE) +
 					fluidRowLocs(BLOOD_PRESSURE_SYSTOLIC, BLOOD_PRESSURE_DIASTOLIC, HEART_RATE, RESPIRATORY_RATE) +
 					fluidRowLocs(GLASGOW_COMA_SCALE, WEIGHT, HEIGHT, MID_UPPER_ARM_CIRCUMFERENCE) +
@@ -700,9 +702,21 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			SEPSIS,
 			SHOCK,
 			EAR_PAIN);
-
+		addField(TYPE_OF_LEPROSY, NullableOptionGroup.class);
+		addField(LEPROSY_STAGE, NullableOptionGroup.class);
+		addField(IS_LEPROSY_REACTION, NullableOptionGroup.class);
+		addFields(DATE_OF_DIAGNOSIS, TREATMENT_GIVE, EHF_SCORE);
+		addField(TIME_OF_DIAGNOSIS, NullableOptionGroup.class);
+		addField(TIME_OF_RFT, NullableOptionGroup.class);
+		initializeVisibilitiesAndAllowedVisibilities();
+		List<String> fieldDependOnLeprosyType = Arrays.asList(LEPROSY_STAGE, IS_LEPROSY_REACTION, DATE_OF_DIAGNOSIS, TIME_OF_DIAGNOSIS, TIME_OF_RFT, TREATMENT_GIVE, EHF_SCORE);
 		// Set visibilities
-
+		setVisible(false, LEPROSY_STAGE, IS_LEPROSY_REACTION, DATE_OF_DIAGNOSIS, TIME_OF_DIAGNOSIS, TIME_OF_RFT);
+		FieldHelper.setVisibleWhen(getFieldGroup(),
+				fieldDependOnLeprosyType,
+				TYPE_OF_LEPROSY,
+				Arrays.asList(TypeOfLeprosy.MB, TypeOfLeprosy.PB),
+				true);
 		NullableOptionGroup feverField = (NullableOptionGroup) getFieldGroup().getField(FEVER);
 		feverField.setImmediate(true);
 
