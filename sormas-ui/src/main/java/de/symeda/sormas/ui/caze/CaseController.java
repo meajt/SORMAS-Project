@@ -142,6 +142,7 @@ import de.symeda.sormas.ui.utils.components.automaticdeletion.DeletionLabel;
 import de.symeda.sormas.ui.utils.components.linelisting.model.LineDto;
 import de.symeda.sormas.ui.utils.components.page.title.TitleLayout;
 import de.symeda.sormas.ui.utils.components.page.title.TitleLayoutHelper;
+import org.apache.commons.lang3.StringUtils;
 
 public class CaseController {
 
@@ -548,7 +549,10 @@ public class CaseController {
 			cazeDto.setReinfectionDetails(Collections.emptyMap());
 			cazeDto.setReinfectionStatus(null);
 		}
-
+		if (StringUtils.isNotEmpty(cazeDto.getRegistrationNo()) && cazeDto.getHospitalization() != null) {
+			cazeDto.getHospitalization().setRegistrationNo(cazeDto.getRegistrationNo());
+			cazeDto.setRegistrationNo(null);
+		}
 		// Compare old and new case
 		CaseDataDto existingDto = FacadeProvider.getCaseFacade().getCaseDataByUuid(cazeDto.getUuid());
 		CaseDataDto resultDto = FacadeProvider.getCaseFacade().save(cazeDto);

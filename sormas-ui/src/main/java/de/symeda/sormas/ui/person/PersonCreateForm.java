@@ -386,6 +386,13 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		person.setPassportNumber(personCreated.getPassportNumber());
 		person.setApproximateAge(personCreated.getApproximateAge());
 		person.setApproximateAgeType(personCreated.getApproximateAgeType());
+		person.setEducationType(personCreated.getEducationType());
+		person.setEducationDetails(personCreated.getEducationDetails());
+
+		person.setOccupationType(personCreated.getOccupationType());
+		person.setOccupationDetails(personCreated.getOccupationDetails());
+		person.setArmedForcesRelationType(personCreated.getArmedForcesRelationType());
+		person.setMaritalStatus(personCreated.getMaritalStatus());
 		if(StringUtils.isNotEmpty(personCreated.getMobileNo()))
 		{
 			person.setMobileNo(personCreated.getMobileNo());
