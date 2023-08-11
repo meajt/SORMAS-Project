@@ -41,7 +41,7 @@
     <!-- Suppress "No configuration found" -->
     <logger name="net.sf.ehcache.config.ConfigurationFactory" level="ERROR" />
 
-    <root level="error">
+    <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
 
