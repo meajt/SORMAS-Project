@@ -226,6 +226,13 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setMuscleWeakness(source.getMuscleWeakness());
 		target.setCaseCondition(source.getCaseCondition());
 		target.setEarPain(source.getEarPain());
+		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
+		target.setLeprosyReaction(source.getLeprosyReaction());
+		target.setDateOfDiagnosis(source.getDateOfDiagnosis());
+		target.setTreatmentGiven(source.getTreatmentGiven());
+		target.setEhfScore(source.getEhfScore());
+		target.setTimeOfDiagnosis(source.getTimeOfDiagnosis());
+		target.setTimeOfRFT(source.getTimeOfRFT());
 		return target;
 	}
 
@@ -434,6 +441,13 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setMuscleWeakness(source.getMuscleWeakness());
 		target.setCaseCondition(source.getCaseCondition());
 		target.setEarPain(source.getEarPain());
+		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
+		target.setLeprosyReaction(source.getLeprosyReaction());
+		target.setDateOfDiagnosis(source.getDateOfDiagnosis());
+		target.setTreatmentGiven(source.getTreatmentGiven());
+		target.setEhfScore(source.getEhfScore());
+		target.setTimeOfDiagnosis(source.getTimeOfDiagnosis());
+		target.setTimeOfRFT(source.getTimeOfRFT());
 		return target;
 	}
 

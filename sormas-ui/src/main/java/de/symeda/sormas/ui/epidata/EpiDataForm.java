@@ -27,6 +27,9 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.vaadin.v7.data.util.converter.Converter;
+import com.vaadin.v7.ui.ComboBox;
+import de.symeda.sormas.api.epidata.CaseDetectionMethod;
+import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -65,7 +68,8 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 
     //@formatter:off
     private static final String MAIN_HTML_LAYOUT =
-            fluidRowLocs(MALARIA_EPI_FROM) +
+                    fluidRowLocs(EpiDataDto.CASE_DETECTION_METHOD_GROUP,EpiDataDto.CASE_DETECTION_METHOD) +
+                    fluidRowLocs(MALARIA_EPI_FROM) +
                     loc(LOC_EXPOSURE_INVESTIGATION_HEADING) +
                     loc(EpiDataDto.EXPOSURE_DETAILS_KNOWN) +
                     loc(EpiDataDto.EXPOSURES) +
@@ -114,19 +118,16 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
         if (disease == null) {
             return;
         }
-        if (disease != Disease.MALARIA) {
-            addHeadingsAndInfoTexts();
-        }
+        ComboBox caseDetectionGroup = addField(EpiDataDto.CASE_DETECTION_METHOD_GROUP, ComboBox.class);
+        ComboBox caseDetectionMethod = addField(EpiDataDto.CASE_DETECTION_METHOD);
+        caseDetectionGroup.addValueChangeListener(
+                e -> FieldHelper.updateEnumData(caseDetectionMethod,
+                        CaseDetectionMethod.getCaseDetectionMethod((CaseDetectionMethodGroup) caseDetectionGroup.getValue(), disease)));
         NullableOptionGroup ogExposureDetailsKnown = addField(EpiDataDto.EXPOSURE_DETAILS_KNOWN, NullableOptionGroup.class);
         ExposuresField exposuresField = addField(EpiDataDto.EXPOSURES, ExposuresField.class);
         exposuresField.setEpiDataParentClass(parentClass);
         exposuresField.setWidthFull();
         exposuresField.setPseudonymized(isPseudonymized);
-
-        if (parentClass == CaseDataDto.class && disease != Disease.MALARIA) {
-            addActivityAsCaseFields();
-        }
-
         addField(EpiDataDto.HIGH_TRANSMISSION_RISK_AREA, NullableOptionGroup.class);
         addField(EpiDataDto.LARGE_OUTBREAKS_AREA, NullableOptionGroup.class);
         addField(EpiDataDto.AREA_INFECTED_ANIMALS, NullableOptionGroup.class);
@@ -151,13 +152,6 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
             malariaEpiDataForm = new MalariaEpiDataForm();
             malariaEpiDataForm.setWidth(90, Unit.PERCENTAGE);
             getContent().addComponent(malariaEpiDataForm, MALARIA_EPI_FROM);
-        } else {
-            FieldHelper.setVisibleWhen(
-                    getFieldGroup(),
-                    EpiDataDto.EXPOSURES,
-                    EpiDataDto.EXPOSURE_DETAILS_KNOWN,
-                    Collections.singletonList(YesNoUnknown.YES),
-                    true);
         }
 
 

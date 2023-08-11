@@ -254,6 +254,14 @@ public class SymptomsDto extends PseudonymizableDto {
     public static final String ENLARGES_NERVES = "enlargesNerves";
     public static final String MUSCLE_WEAKNESS = "muscleWeakness";
     public static final String CASE_CONDITION = "caseCondition";
+    public static final String TYPE_OF_LEPROSY = "typeOfLeprosy";
+    public static final String IS_LEPROSY_REACTION = "leprosyReaction";
+    public static final String LEPROSY_STAGE = "leprosyStage";
+    public static final String DATE_OF_DIAGNOSIS = "dateOfDiagnosis";
+    public static final String TREATMENT_GIVE = "treatmentGiven";
+    public static final String EHF_SCORE = "ehfScore";
+    public static final String TIME_OF_DIAGNOSIS = "timeOfDiagnosis";
+    public static final String TIME_OF_RFT = "timeOfRFT";
 
     // Fields are declared in the order they should appear in the import template
 
@@ -2498,6 +2506,23 @@ public class SymptomsDto extends PseudonymizableDto {
     })
     @SymptomGrouping(SymptomGroup.MUSCULAR)
     private SymptomState muscleWeakness;
+    
+    @Diseases({LEPROSY})
+    private TypeOfLeprosy typeOfLeprosy;
+    @Diseases({LEPROSY})
+    private Boolean leprosyReaction;
+    @Diseases({LEPROSY})
+    private LeprosyStage leprosyStage;
+    @Diseases({LEPROSY})
+    private Date dateOfDiagnosis;
+    @Diseases({LEPROSY})
+    private String treatmentGiven;
+    @Diseases({LEPROSY})
+    private Integer ehfScore;
+    @Diseases({LEPROSY})
+    private DisabilityGrading timeOfDiagnosis;
+    @Diseases({LEPROSY})
+    private DisabilityGrading timeOfRFT;
 
 
     @Order(0)
@@ -4221,5 +4246,69 @@ public class SymptomsDto extends PseudonymizableDto {
 
     public void setEarPain(SymptomState earPain) {
         this.earPain = earPain;
+    }
+
+    public TypeOfLeprosy getTypeOfLeprosy() {
+        return typeOfLeprosy;
+    }
+
+    public void setTypeOfLeprosy(TypeOfLeprosy typeOfLeprosy) {
+        this.typeOfLeprosy = typeOfLeprosy;
+    }
+
+    public Boolean getLeprosyReaction() {
+        return leprosyReaction;
+    }
+
+    public void setLeprosyReaction(Boolean leprosyReaction) {
+        this.leprosyReaction = leprosyReaction;
+    }
+
+    public LeprosyStage getLeprosyStage() {
+        return leprosyStage;
+    }
+
+    public void setLeprosyStage(LeprosyStage leprosyStage) {
+        this.leprosyStage = leprosyStage;
+    }
+
+    public Date getDateOfDiagnosis() {
+        return dateOfDiagnosis;
+    }
+
+    public void setDateOfDiagnosis(Date dateOfDiagnosis) {
+        this.dateOfDiagnosis = dateOfDiagnosis;
+    }
+
+    public String getTreatmentGiven() {
+        return treatmentGiven;
+    }
+
+    public void setTreatmentGiven(String treatmentGiven) {
+        this.treatmentGiven = treatmentGiven;
+    }
+
+    public Integer getEhfScore() {
+        return ehfScore;
+    }
+
+    public void setEhfScore(Integer ehfScore) {
+        this.ehfScore = ehfScore;
+    }
+
+    public DisabilityGrading getTimeOfDiagnosis() {
+        return timeOfDiagnosis;
+    }
+
+    public void setTimeOfDiagnosis(DisabilityGrading timeOfDiagnosis) {
+        this.timeOfDiagnosis = timeOfDiagnosis;
+    }
+
+    public DisabilityGrading getTimeOfRFT() {
+        return timeOfRFT;
+    }
+
+    public void setTimeOfRFT(DisabilityGrading timeOfRFT) {
+        this.timeOfRFT = timeOfRFT;
     }
 }

@@ -206,6 +206,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					) +
 					fluidRowLocs(9, CaseDataDto.OUTCOME, 3, CaseDataDto.OUTCOME_DATE) +
 					fluidRowLocs(3, CaseDataDto.SEQUELAE, 9, CaseDataDto.SEQUELAE_DETAILS) +
+					fluidRowLocs(9, CaseDataDto.CASE_OUTCOME_OTHER_DETAILS) +
 					fluidRowLocs(CaseDataDto.CASE_IDENTIFICATION_SOURCE, CaseDataDto.SCREENING_TYPE) +
 					fluidRowLocs(CaseDataDto.CASE_ORIGIN, "") +
 					fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC) +
@@ -391,7 +392,6 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 			CaseDataDto.CLINICIAN_NAME,
 			CaseDataDto.CLINICIAN_PHONE,
 			CaseDataDto.CLINICIAN_EMAIL);
-
 		TextField epidField = addField(CaseDataDto.EPID_NUMBER, TextField.class);
 		epidField.setInvalidCommitted(true);
 		epidField.setMaxLength(24);
@@ -432,7 +432,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.BLOOD_ORGAN_OR_TISSUE_DONATED, NullableOptionGroup.class);
 		addField(CaseDataDto.SEQUELAE, NullableOptionGroup.class);
 
-		addFields(CaseDataDto.INVESTIGATED_DATE, CaseDataDto.OUTCOME_DATE, CaseDataDto.SEQUELAE_DETAILS);
+		addFields(CaseDataDto.INVESTIGATED_DATE, CaseDataDto.OUTCOME_DATE, CaseDataDto.SEQUELAE_DETAILS, CaseDataDto.CASE_OUTCOME_OTHER_DETAILS);
 
 		addField(CaseDataDto.CASE_IDENTIFICATION_SOURCE);
 		addField(CaseDataDto.SCREENING_TYPE);
@@ -1176,7 +1176,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 				getFieldGroup(),
 				CaseDataDto.OUTCOME_DATE,
 				CaseDataDto.OUTCOME,
-				Arrays.asList(CaseOutcome.DECEASED, CaseOutcome.RECOVERED, CaseOutcome.UNKNOWN),
+				Arrays.asList(CaseOutcome.DECEASED, CaseOutcome.RECOVERED, CaseOutcome.UNKNOWN,
+						CaseOutcome.TRANSFER_OUT, CaseOutcome.LOSS_T0_FOLLOW_UP),
 				true);
 		}
 		if (isVisibleAllowed(CaseDataDto.SEQUELAE)) {
@@ -1189,6 +1190,12 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		}
 		if (isVisibleAllowed(CaseDataDto.SEQUELAE_DETAILS)) {
 			FieldHelper.setVisibleWhen(getFieldGroup(), CaseDataDto.SEQUELAE_DETAILS, CaseDataDto.SEQUELAE, Arrays.asList(YesNoUnknown.YES), true);
+		}
+		if (isVisibleAllowed(CaseDataDto.CASE_OUTCOME_OTHER_DETAILS)) {
+			FieldHelper.setVisibleWhen(getFieldGroup(),
+				CaseDataDto.CASE_OUTCOME_OTHER_DETAILS,
+				CaseDataDto.OUTCOME, Arrays.asList(CaseOutcome.OTHERS),
+				true);
 		}
 		if (isVisibleAllowed(CaseDataDto.NOTIFYING_CLINIC_DETAILS)) {
 			FieldHelper.setVisibleWhen(

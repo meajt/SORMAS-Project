@@ -1006,6 +1006,7 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setReligion(source.getReligion());
 		target.setEthnicity(source.getEthnicity());
 		target.setWeight(source.getWeight());
+		target.setMaritalStatus(source.getMaritalStatus());
 		return target;
 	}
 
@@ -1753,6 +1754,7 @@ public class PersonFacadeEjb extends AbstractBaseEjb<Person, PersonDto, PersonIn
 		target.setReligion(source.getReligion());
 		target.setEthnicity(source.getEthnicity());
 		target.setWeight(source.getWeight());
+		target.setMaritalStatus(source.getMaritalStatus());
 		//target.setPlaceOfWork(source.getPlaceOfWork());
 		return target;
 	}

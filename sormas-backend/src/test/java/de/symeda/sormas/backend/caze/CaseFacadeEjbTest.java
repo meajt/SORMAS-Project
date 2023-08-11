@@ -52,6 +52,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
+import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hamcrest.MatcherAssert;
 import org.hibernate.internal.SessionImpl;
@@ -3166,6 +3167,24 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		savedCaze1 = getCaseFacade().save(savedCaze1);
 		savedCaze1 = getCaseFacade().getCaseDataByUuid(savedCaze1.getUuid());
 		assertNull(savedCaze1.getEpiData().getMalariaEpiData());
+	}
+
+	@Test
+	public void saveLeprosyCaseDataTest() {
+		RDCF rdcf = creator.createRDCF();
+		UserDto user = creator.createUser(rdcf, creator.getUserRoleReference(DefaultUserRole.NATIONAL_USER));
+		PersonReferenceDto personDto = creator.createPerson().toReference();
+		CaseDataDto leprosyCase = creator.createCase(user.toReference(), rdcf, (c) -> {
+			c.setPerson(personDto);
+			c.setDisease(Disease.LEPROSY);
+		});
+		leprosyCase = getCaseFacade().save(leprosyCase);
+		SymptomsDto symptomsDto = leprosyCase.getSymptoms();
+		symptomsDto.setTypeOfLeprosy(TypeOfLeprosy.MB);
+		leprosyCase.setSymptoms(symptomsDto);
+		leprosyCase = getCaseFacade().save(leprosyCase);
+		symptomsDto = leprosyCase.getSymptoms();
+		assertEquals(symptomsDto.getTypeOfLeprosy(), TypeOfLeprosy.MB);
 	}
 
 	private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";

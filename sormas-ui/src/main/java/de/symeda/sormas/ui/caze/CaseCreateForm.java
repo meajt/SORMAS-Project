@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+
 import org.apache.commons.collections.CollectionUtils;
 
 import com.google.common.collect.Sets;
@@ -118,7 +119,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private final TravelEntryDto convertedTravelEntry;
 
 	//@formatter:off
-    private static final String HTML_LAYOUT = fluidRowLocs(CaseDataDto.CASE_ORIGIN, "")
+    private static final String HTML_LAYOUT = fluidRowLocs(CaseDataDto.CASE_ORIGIN, CaseDataDto.REGISTRATION_NO)
         + fluidRowLocs(CaseDataDto.REPORT_DATE, CaseDataDto.EPID_NUMBER, CaseDataDto.EXTERNAL_ID)
         + fluidRow(
         fluidColumnLoc(6, 0, CaseDataDto.DISEASE),
@@ -172,7 +173,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		NullableOptionGroup ogCaseOrigin = addField(CaseDataDto.CASE_ORIGIN, NullableOptionGroup.class);
 		ogCaseOrigin.setRequired(true);
-
+		addField(CaseDataDto.REGISTRATION_NO);
 		TextField epidField = addField(CaseDataDto.EPID_NUMBER, TextField.class);
 		epidField.setInvalidCommitted(true);
 		style(epidField, ERROR_COLOR_PRIMARY);

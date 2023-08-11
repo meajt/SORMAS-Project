@@ -17,8 +17,7 @@ import static de.symeda.sormas.ui.utils.LayoutUtil.*;
 public class MalariaEpiDataForm extends AbstractEditForm<MalariaEpiDataDto> {
 
     private final String LAYOUT_HTML =
-            fluidRow(fluidRowLocs(MalariaEpiDataDto.CASE_DETECTION_METHOD), fluidRowLocs(MalariaEpiDataDto.ACTIVE_CASE_DETECTION))
-            +"<div>Length of residence at current/present home address</div>"
+            "<div>Length of residence at current/present home address</div>"
             +fluidRow(fluidRowLocs(MalariaEpiDataDto.LENGTH_OF_RESIDENCE_Y_Y), fluidRowLocs(MalariaEpiDataDto.LENGTH_OF_RESIDENCE_M_M))
                     +"<div>if resident in current address is less than one year</div>"
                     +fluidRow(fluidRowLocs(MalariaEpiDataDto.RESIDENT_REGION), fluidRowLocs(MalariaEpiDataDto.RESIDENT_DISTRICT))
@@ -55,8 +54,6 @@ public class MalariaEpiDataForm extends AbstractEditForm<MalariaEpiDataDto> {
 
     @Override
     protected void addFields() {
-        addField(MalariaEpiDataDto.CASE_DETECTION_METHOD);
-        addField(MalariaEpiDataDto.ACTIVE_CASE_DETECTION);
         addField(MalariaEpiDataDto.LENGTH_OF_RESIDENCE_Y_Y, TextField.class);
         addField(MalariaEpiDataDto.LENGTH_OF_RESIDENCE_M_M, TextField.class);
 

@@ -1,17 +1,13 @@
 package de.symeda.sormas.api.epidata;
 
-import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.infrastructure.community.CommunityReferenceDto;
 import de.symeda.sormas.api.infrastructure.district.DistrictReferenceDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
 import de.symeda.sormas.api.infrastructure.region.RegionReferenceDto;
-import de.symeda.sormas.api.location.LocationDto;
-import de.symeda.sormas.api.location.LocationReferenceDto;
 import de.symeda.sormas.api.symptoms.PlasmodiumSpecies;
 import de.symeda.sormas.api.utils.*;
 import de.symeda.sormas.api.utils.pseudonymization.PseudonymizableDto;
 
-import java.time.Duration;
 import java.util.Date;
 
 public class MalariaEpiDataDto extends PseudonymizableDto {
@@ -46,8 +42,8 @@ public class MalariaEpiDataDto extends PseudonymizableDto {
     public static final String CASE_DETECTION_METHOD = "caseDetectionMethod";
     public static final String ACTIVE_CASE_DETECTION = "activeCaseDetection";
 
+    private CaseDetectionMethodGroup caseDetectionMethodGroup;
     private CaseDetectionMethod caseDetectionMethod;
-    private ActiveCaseDetection activeCaseDetection;
 
     @PersonalData
     private Integer lengthOfResidenceYY;
@@ -99,20 +95,20 @@ public class MalariaEpiDataDto extends PseudonymizableDto {
     @PersonalData
     private YesNoUnknown hasTreatedNMTP;
 
-    public CaseDetectionMethod getCaseDetectionMethod() {
+    public CaseDetectionMethodGroup getCaseDetectionMethod() {
+        return caseDetectionMethodGroup;
+    }
+
+    public void setCaseDetectionMethod(CaseDetectionMethodGroup caseDetectionMethodGroup) {
+        this.caseDetectionMethodGroup = caseDetectionMethodGroup;
+    }
+
+    public CaseDetectionMethod getActiveCaseDetection() {
         return caseDetectionMethod;
     }
 
-    public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
+    public void setActiveCaseDetection(CaseDetectionMethod caseDetectionMethod) {
         this.caseDetectionMethod = caseDetectionMethod;
-    }
-
-    public ActiveCaseDetection getActiveCaseDetection() {
-        return activeCaseDetection;
-    }
-
-    public void setActiveCaseDetection(ActiveCaseDetection activeCaseDetection) {
-        this.activeCaseDetection = activeCaseDetection;
     }
 
     public Date getPastDate() {

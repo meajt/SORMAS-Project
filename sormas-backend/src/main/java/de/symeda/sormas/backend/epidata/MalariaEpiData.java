@@ -1,8 +1,8 @@
 package de.symeda.sormas.backend.epidata;
 
 import de.symeda.auditlog.api.Audited;
-import de.symeda.sormas.api.epidata.ActiveCaseDetection;
 import de.symeda.sormas.api.epidata.CaseDetectionMethod;
+import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.epidata.PreventiveMeasures;
 import de.symeda.sormas.api.symptoms.PlasmodiumSpecies;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -21,8 +21,8 @@ import java.util.Date;
 @Entity
 @Audited
 public class MalariaEpiData extends AbstractDomainObject {
+    private CaseDetectionMethodGroup caseDetectionMethodGroup;
     private CaseDetectionMethod caseDetectionMethod;
-    private ActiveCaseDetection activeCaseDetection;
     private Integer lengthOfResidenceYY;
     private Integer lengthOfResidenceMM;
     private Region residentRegion;
@@ -52,20 +52,20 @@ public class MalariaEpiData extends AbstractDomainObject {
     private YesNoUnknown hasTreatedNMTP;
 
     @Enumerated(EnumType.STRING)
-    public CaseDetectionMethod getCaseDetectionMethod() {
-        return caseDetectionMethod;
+    public CaseDetectionMethodGroup getCaseDetectionMethod() {
+        return caseDetectionMethodGroup;
     }
-    public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
-        this.caseDetectionMethod = caseDetectionMethod;
+    public void setCaseDetectionMethod(CaseDetectionMethodGroup caseDetectionMethodGroup) {
+        this.caseDetectionMethodGroup = caseDetectionMethodGroup;
     }
 
     @Enumerated(EnumType.STRING)
-    public ActiveCaseDetection getActiveCaseDetection() {
-        return activeCaseDetection;
+    public CaseDetectionMethod getActiveCaseDetection() {
+        return caseDetectionMethod;
     }
 
-    public void setActiveCaseDetection(ActiveCaseDetection activeCaseDetection) {
-        this.activeCaseDetection = activeCaseDetection;
+    public void setActiveCaseDetection(CaseDetectionMethod caseDetectionMethod) {
+        this.caseDetectionMethod = caseDetectionMethod;
     }
 
     public Integer getLengthOfResidenceYY() {

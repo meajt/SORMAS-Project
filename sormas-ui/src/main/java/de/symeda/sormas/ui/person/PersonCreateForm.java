@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.customizableenum.CustomizableEnumType;
+import de.symeda.sormas.api.person.OccupationType;
 import de.symeda.sormas.ui.utils.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -90,7 +92,12 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 	private static final String HTML_LAYOUT =
 		"%s" + fluidRow(fluidRowLocs(PersonDto.BIRTH_DATE_YYYY, PersonDto.BIRTH_DATE_MM, PersonDto.BIRTH_DATE_DD), fluidRowLocs(PersonDto.SEX))
 			+ fluidRow( fluidRowLocs(PersonDto.APPROXIMATE_AGE, PersonDto.APPROXIMATE_AGE_TYPE),fluidRowLocs(PersonDto.MOBILE_NO))
-			+fluidRow(fluidRowLocs(PersonDto.ETHNICITY, PersonDto.RELIGION))
+			+ fluidRowLocs(PersonDto.ETHNICITY, PersonDto.RELIGION, PersonDto.MARITAL_STATUS)
+			+ divsCss(VSPACE_3,
+				fluidRowLocs(PersonDto.OCCUPATION_TYPE, PersonDto.OCCUPATION_DETAILS) +
+				fluidRowLocs(PersonDto.ARMED_FORCES_RELATION_TYPE, PersonDto.PLACE_OF_WORK),
+				fluidRowLocs(PersonDto.EDUCATION_TYPE, PersonDto.EDUCATION_DETAILS)
+			)
 			+ fluidRowLocs(PersonDto.NATIONAL_HEALTH_ID, PersonDto.PASSPORT_NUMBER)
 			+ fluidRowLocs(PersonDto.PRESENT_CONDITION, SymptomsDto.ONSET_DATE) + fluidRowLocs(PersonDto.PHONE, PersonDto.EMAIL_ADDRESS)
 			+ fluidRowLocs(ENTER_HOME_ADDRESS_NOW) + loc(HOME_ADDRESS_HEADER) + divsCss(VSPACE_3, fluidRowLocs(HOME_ADDRESS_LOC));
@@ -198,6 +205,7 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		addField(PersonDto.MOBILE_NO, TextField.class);
 		addField(PersonDto.ETHNICITY, ComboBox.class);
 		addField(PersonDto.RELIGION, ComboBox.class);
+		addField(PersonDto.MARITAL_STATUS, ComboBox.class);
 		ComboBox presentCondition = addField(PersonDto.PRESENT_CONDITION, ComboBox.class);
 		presentCondition.setVisible(showPresentCondition);
 		FieldHelper.addSoftRequiredStyle(presentCondition, sex);
@@ -214,6 +222,17 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		phone.setCaption(I18nProperties.getCaption(Captions.Person_phone));
 		TextField email = addCustomField(PersonDto.EMAIL_ADDRESS, String.class, TextField.class);
 		email.setCaption(I18nProperties.getCaption(Captions.Person_emailAddress));
+
+		ComboBox occupationTypeField = addField(PersonDto.OCCUPATION_TYPE, ComboBox.class);
+		TextField occupationTypeDetailsField = addField(PersonDto.OCCUPATION_DETAILS, TextField.class);
+		occupationTypeDetailsField.setVisible(false);
+		FieldHelper
+				.updateItems(occupationTypeField, FacadeProvider.getCustomizableEnumFacade().getEnumValues(CustomizableEnumType.OCCUPATION_TYPE, null));
+		occupationTypeField.addValueChangeListener(e -> {
+			OccupationType occupationType = (OccupationType) e.getProperty().getValue();
+			occupationTypeDetailsField.setVisible(occupationType != null && occupationType.matchPropertyValue(OccupationType.HAS_DETAILS, true));
+		});
+
 
 		phone.addValidator(new PhoneNumberValidator(I18nProperties.getValidationError(Validations.validPhoneNumber, phone.getCaption())));
 		email.addValidator(new EmailValidator(I18nProperties.getValidationError(Validations.validEmailAddress, email.getCaption())));
@@ -367,6 +386,13 @@ public class PersonCreateForm extends AbstractEditForm<PersonDto> {
 		person.setPassportNumber(personCreated.getPassportNumber());
 		person.setApproximateAge(personCreated.getApproximateAge());
 		person.setApproximateAgeType(personCreated.getApproximateAgeType());
+		person.setEducationType(personCreated.getEducationType());
+		person.setEducationDetails(personCreated.getEducationDetails());
+
+		person.setOccupationType(personCreated.getOccupationType());
+		person.setOccupationDetails(personCreated.getOccupationDetails());
+		person.setArmedForcesRelationType(personCreated.getArmedForcesRelationType());
+		person.setMaritalStatus(personCreated.getMaritalStatus());
 		if(StringUtils.isNotEmpty(personCreated.getMobileNo()))
 		{
 			person.setMobileNo(personCreated.getMobileNo());

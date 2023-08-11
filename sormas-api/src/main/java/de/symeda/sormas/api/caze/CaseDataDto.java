@@ -153,12 +153,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String OUTCOME_DATE = "outcomeDate";
 	public static final String SEQUELAE = "sequelae";
 	public static final String SEQUELAE_DETAILS = "sequelaeDetails";
+	public static final String CASE_OUTCOME_OTHER_DETAILS = "caseOutcomeOtherDetails";
 	public static final String CLINICIAN_NAME = "clinicianName";
 	public static final String CLINICIAN_PHONE = "clinicianPhone";
 	public static final String CLINICIAN_EMAIL = "clinicianEmail";
 	public static final String NOTIFYING_CLINIC = "notifyingClinic";
 	public static final String NOTIFYING_CLINIC_DETAILS = "notifyingClinicDetails";
 	public static final String CASE_ORIGIN = "caseOrigin";
+	public static final String REGISTRATION_NO = "registrationNo";
 	public static final String POINT_OF_ENTRY = "pointOfEntry";
 	public static final String POINT_OF_ENTRY_DETAILS = "pointOfEntryDetails";
 	public static final String ADDITIONAL_DETAILS = "additionalDetails";
@@ -234,6 +236,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String DOSE_THROUGH_RI = "doseThroughRi";
 	public static final String DOSE_THROUGH_RIA = "doseThroughRia";
 	public static final String LAST_VACCINATION_DATE = "lastVaccinationDate";
+	public static final String CASE_OUTCOME = "caseOutcome";
 	// Fields are declared in the order they should appear in the import template
 
 	@Outbreaks
@@ -321,6 +324,10 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
 	private String sequelaeDetails;
+
+	@SensitiveData
+	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
+	private String caseOutcomeOtherDetails;
 
 	@Required
 	private RegionReferenceDto responsibleRegion;
@@ -451,6 +458,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Valid
 	private PortHealthInfoDto portHealthInfo;
 	private CaseOrigin caseOrigin;
+	private String registrationNo;
 	@PersonalData(mandatoryField = true)
 	@SensitiveData(mandatoryField = true)
 	private PointOfEntryReferenceDto pointOfEntry;
@@ -627,6 +635,8 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	private Integer doseThroughRi;
 	private Integer doseThroughRia;
 	private Date lastVaccinationDate;
+	@Diseases({Disease.LEPROSY})
+	private CaseOutcome caseOutcome;
 
 	public static CaseDataDto build(PersonReferenceDto person, Disease disease) {
 		return build(person, disease, HealthConditionsDto.build());
@@ -1234,6 +1244,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 		this.sequelaeDetails = sequelaeDetails;
 	}
 
+	public String getCaseOutcomeOtherDetails() {
+		return caseOutcomeOtherDetails;
+	}
+
+	public void setCaseOutcomeOtherDetails(String caseOutcomeOtherDetails) {
+		this.caseOutcomeOtherDetails = caseOutcomeOtherDetails;
+	}
+
 	public HospitalWardType getNotifyingClinic() {
 		return notifyingClinic;
 	}
@@ -1265,6 +1283,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setCaseOrigin(CaseOrigin caseOrigin) {
 		this.caseOrigin = caseOrigin;
+	}
+
+	public String getRegistrationNo() {
+		return registrationNo;
+	}
+
+	public void setRegistrationNo(String registrationNo) {
+		this.registrationNo = registrationNo;
 	}
 
 	public PointOfEntryReferenceDto getPointOfEntry() {
@@ -1841,5 +1867,13 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setLastVaccinationDate(Date lastVaccinationDate) {
 		this.lastVaccinationDate = lastVaccinationDate;
+	}
+
+	public CaseOutcome getCaseOutcome() {
+		return caseOutcome;
+	}
+
+	public void setCaseOutcome(CaseOutcome caseOutcome) {
+		this.caseOutcome = caseOutcome;
 	}
 }

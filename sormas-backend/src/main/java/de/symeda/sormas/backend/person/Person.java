@@ -216,6 +216,8 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 
 	private Religion religion;
 
+	private MaritalStatus maritalStatus;
+
 	@Column(nullable = false, length = CHARACTER_LIMIT_DEFAULT)
 	public String getFirstName() {
 		return firstName;
@@ -844,4 +846,12 @@ public class Person extends AbstractDomainObject implements HasExternalData {
 		this.weight = weight;
 	}
 
+	@Enumerated(EnumType.STRING)
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
 }

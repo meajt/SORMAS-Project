@@ -31,10 +31,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import de.symeda.auditlog.api.Audited;
-import de.symeda.sormas.api.symptoms.CaseCondition;
-import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
-import de.symeda.sormas.api.symptoms.SymptomState;
-import de.symeda.sormas.api.symptoms.TemperatureSource;
+import de.symeda.sormas.api.symptoms.*;
 import de.symeda.sormas.api.utils.Diseases;
 import de.symeda.sormas.api.utils.SymptomGroup;
 import de.symeda.sormas.api.utils.SymptomGrouping;
@@ -270,6 +267,23 @@ public class Symptoms extends AbstractDomainObject {
 
 	private CaseCondition caseCondition;
 	private SymptomState earPain;
+
+
+	private TypeOfLeprosy typeOfLeprosy;
+
+	private Boolean leprosyReaction;
+
+	private LeprosyStage leprosyStage;
+
+	private Date dateOfDiagnosis;
+
+	private String treatmentGiven;
+
+	private Integer ehfScore;
+
+	private DisabilityGrading timeOfDiagnosis;
+
+	private DisabilityGrading timeOfRFT;
 
 	// when adding new fields make sure to extend toHumanString
 
@@ -1985,5 +1999,73 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setEarPain(SymptomState earPain) {
 		this.earPain = earPain;
+	}
+
+	public TypeOfLeprosy getTypeOfLeprosy() {
+		return typeOfLeprosy;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public void setTypeOfLeprosy(TypeOfLeprosy typeOfLeprosy) {
+		this.typeOfLeprosy = typeOfLeprosy;
+	}
+
+	public Boolean getLeprosyReaction() {
+		return leprosyReaction;
+	}
+
+	public void setLeprosyReaction(Boolean leprosyReaction) {
+		this.leprosyReaction = leprosyReaction;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public LeprosyStage getLeprosyStage() {
+		return leprosyStage;
+	}
+
+	public void setLeprosyStage(LeprosyStage leprosyStage) {
+		this.leprosyStage = leprosyStage;
+	}
+
+	public Date getDateOfDiagnosis() {
+		return dateOfDiagnosis;
+	}
+
+	public void setDateOfDiagnosis(Date dateOfDiagnosis) {
+		this.dateOfDiagnosis = dateOfDiagnosis;
+	}
+
+	public String getTreatmentGiven() {
+		return treatmentGiven;
+	}
+
+	public void setTreatmentGiven(String treatmentGiven) {
+		this.treatmentGiven = treatmentGiven;
+	}
+
+	public Integer getEhfScore() {
+		return ehfScore;
+	}
+
+	public void setEhfScore(Integer ehfScore) {
+		this.ehfScore = ehfScore;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public DisabilityGrading getTimeOfDiagnosis() {
+		return timeOfDiagnosis;
+	}
+
+	public void setTimeOfDiagnosis(DisabilityGrading timeOfDiagnosis) {
+		this.timeOfDiagnosis = timeOfDiagnosis;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public DisabilityGrading getTimeOfRFT() {
+		return timeOfRFT;
+	}
+
+	public void setTimeOfRFT(DisabilityGrading timeOfRFT) {
+		this.timeOfRFT = timeOfRFT;
 	}
 }

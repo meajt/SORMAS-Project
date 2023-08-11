@@ -22,16 +22,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.ImportIgnore;
 import de.symeda.sormas.api.activityascase.ActivityAsCaseDto;
 import de.symeda.sormas.api.exposure.ExposureDto;
 import de.symeda.sormas.api.feature.FeatureType;
-import de.symeda.sormas.api.location.LocationDto;
-import de.symeda.sormas.api.utils.DataHelper;
-import de.symeda.sormas.api.utils.DependingOnFeatureType;
-import de.symeda.sormas.api.utils.Diseases;
-import de.symeda.sormas.api.utils.YesNoUnknown;
+import de.symeda.sormas.api.utils.*;
 import de.symeda.sormas.api.utils.pseudonymization.PseudonymizableDto;
 
 @DependingOnFeatureType(featureType = {
@@ -51,17 +48,21 @@ public class EpiDataDto extends PseudonymizableDto {
 	public static final String AREA_INFECTED_ANIMALS = "areaInfectedAnimals";
 	public static final String HIGH_TRANSMISSION_RISK_AREA = "highTransmissionRiskArea";
 	public static final String LARGE_OUTBREAKS_AREA = "largeOutbreaksArea";
+	public static final String CASE_DETECTION_METHOD = "caseDetectionMethod";
+	public static final String CASE_DETECTION_METHOD_GROUP = "caseDetectionMethodGroup";
 
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown exposureDetailsKnown;
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown activityAsCaseDetailsKnown;
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown contactWithSourceCaseKnown;
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown highTransmissionRiskArea;
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown largeOutbreaksArea;
+	private CaseDetectionMethodGroup caseDetectionMethodGroup;
+	private CaseDetectionMethod caseDetectionMethod;
 	@Diseases({
 		Disease.AFP,
 		Disease.GUINEA_WORM,
@@ -70,14 +71,15 @@ public class EpiDataDto extends PseudonymizableDto {
 		Disease.POLIO,
 		Disease.UNDEFINED,
 		Disease.OTHER })
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown areaInfectedAnimals;
 
 	@Valid
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private List<ExposureDto> exposures = new ArrayList<>();
 
 	@Valid
-	@Diseases(value = {Disease.MALARIA}, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private List<ActivityAsCaseDto> activitiesAsCase = new ArrayList<>();
 	private MalariaEpiDataDto malariaEpiData;
 
@@ -180,5 +182,21 @@ public class EpiDataDto extends PseudonymizableDto {
 
 	public void setMalariaEpiData(MalariaEpiDataDto malariaEpiData) {
 		this.malariaEpiData = malariaEpiData;
+	}
+
+	public CaseDetectionMethodGroup getCaseDetectionMethodGroup() {
+		return caseDetectionMethodGroup;
+	}
+
+	public void setCaseDetectionMethodGroup(CaseDetectionMethodGroup caseDetectionMethodGroup) {
+		this.caseDetectionMethodGroup = caseDetectionMethodGroup;
+	}
+
+	public CaseDetectionMethod getCaseDetectionMethod() {
+		return caseDetectionMethod;
+	}
+
+	public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
+		this.caseDetectionMethod = caseDetectionMethod;
 	}
 }
