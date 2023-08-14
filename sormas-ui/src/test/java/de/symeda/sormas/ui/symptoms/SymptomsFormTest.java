@@ -33,6 +33,13 @@ class SymptomsFormTest extends AbstractBeanTest {
         Assertions.assertFalse(maleriaSymptomsForm.getField(SymptomsDto.TYPE_OF_LEPROSY).isVisible());
     }
 
+    @Test
+    void testForSAPHUDisease() {
+        SymptomsForm saphuSymForm = createSymptomsForm(Disease.SAPHU);
+        Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.CIRCUMCILIARY_CONGESTION).isVisible());
+        Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.PTHTHISIS_BULBI).isVisible());
+    }
+
     private SymptomsForm createSymptomsForm(Disease disease) {
         var caseDto = new CaseDataDto();
         var personDto = new PersonDto();
