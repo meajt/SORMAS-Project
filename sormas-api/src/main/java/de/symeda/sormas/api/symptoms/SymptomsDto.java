@@ -710,6 +710,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MALARIA,
             DIARRHEA_DEHYDRATION,
             ACUTE_VIRAL_HEPATITIS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1522,6 +1523,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             CORONAVIRUS, MUMPS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
