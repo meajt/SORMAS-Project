@@ -96,7 +96,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	private static final String SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC = "skinSignsAndSymptomsHeadingLoc";
 	private static final String MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "muscularSignsAndSymptomsHeadingLoc";
 	private static final String EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC = "eyeSignsAndSymptomsHeadingLoc";
-	private static final String EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "eyeSignsAndSymptomsHeadingLoc";
+	private static final String EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "earSignsAndSymptomsHeadingLoc";
 	private static final String OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC = "otherSignsAndSymptomsHeadingLoc";
 	private static final String BUTTONS_LOC = "buttonsLoc";
 	private static final String LESIONS_LOCATIONS_LOC = "lesionsLocationsLoc";
@@ -145,7 +145,9 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 							fluidColumn(6, 0,
 									locsCss(VSPACE_3,
 											ALTERED_CONSCIOUSNESS, CONFUSED_DISORIENTED, HEMORRHAGIC_SYNDROME,
-											HYPERGLYCEMIA, HYPOGLYCEMIA, OTHER_COMPLICATIONS,
+											RETINAL_DETACHMENT, RETINAL_NECROSIS, HYOPTONY,
+											HYPERGLYCEMIA, HYPOGLYCEMIA,
+											CATARACT, PTHTHISIS_BULBI, OTHER_COMPLICATIONS,
 											OTHER_COMPLICATIONS_TEXT)),
 							fluidColumn(6, 0,
 									locsCss(VSPACE_3,
@@ -252,6 +254,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		final Label skinSymptomsHeadingLabel = createLabel(SymptomGroup.SKIN.toString(), H4, SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label muscularSymptomsHeadingLabel = createLabel(SymptomGroup.MUSCULAR.toString(), H4, MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label eyeSymptomsHeadingLabel = createLabel(SymptomGroup.EYE.toString(), H4, EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC);
+		final Label earSymptomsHeadingLabel = createLabel(SymptomGroup.EYE.toString(), H4, EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label otherSymptomsHeadingLabel = createLabel(SymptomGroup.OTHER.toString(), H4, OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 
 		DateField onsetDateField = addField(ONSET_DATE, DateField.class);
@@ -479,7 +482,23 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			EYE_LASHES,
 			ENLARGES_NERVES,
 			MUSCLE_WEAKNESS,
-			EAR_PAIN);
+			EAR_PAIN,
+			RED_EYE_WITHOUT_DISCHARGE,
+			LEUKOCORIA,
+			UNILATERAL_INVOLVEMENT,
+			DECREASE_VISION,
+			CIRCUMCILIARY_CONGESTION,
+			FIBRINOID_ANT_CHAMBER_RXN,
+			HYPOPYON,
+			SHALLO_ANT_CHAMBER,
+			DECREASE_INTRAOCU_PRESSURE,
+			PHOTOPHOBIA,
+			SUDDENANTOFRXN,
+			REDANT_WHITERXN,
+			LOSSANT_CORNEAL_RXN,
+			REDUCE_VIALEQUI_EQUITY,
+			REDUC_EYE_O_P,
+			PORRED_GLOW);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
@@ -498,7 +517,12 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			MENINGEAL_SIGNS,
 			SEIZURES,
 			SEPSIS,
-			SHOCK };
+			SHOCK,
+			RETINAL_DETACHMENT,
+			RETINAL_NECROSIS,
+			HYOPTONY,
+			CATARACT,
+			PTHTHISIS_BULBI};
 
 		addFields(complicationsFieldIds);
 
@@ -691,6 +715,23 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			EYE_LASHES,
 			ENLARGES_NERVES,
 			MUSCLE_WEAKNESS,
+			EAR_PAIN,
+			RED_EYE_WITHOUT_DISCHARGE,
+			LEUKOCORIA,
+			UNILATERAL_INVOLVEMENT,
+			DECREASE_VISION,
+			CIRCUMCILIARY_CONGESTION,
+			FIBRINOID_ANT_CHAMBER_RXN,
+			HYPOPYON,
+			SHALLO_ANT_CHAMBER,
+			DECREASE_INTRAOCU_PRESSURE,
+			PHOTOPHOBIA,
+			SUDDENANTOFRXN,
+			REDANT_WHITERXN,
+			LOSSANT_CORNEAL_RXN,
+			REDUCE_VIALEQUI_EQUITY,
+			REDUC_EYE_O_P,
+			PORRED_GLOW,
 			// complications
 			ALTERED_CONSCIOUSNESS,
 			CONFUSED_DISORIENTED,
@@ -701,7 +742,11 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			SEIZURES,
 			SEPSIS,
 			SHOCK,
-			EAR_PAIN);
+			RETINAL_DETACHMENT,
+			RETINAL_NECROSIS,
+			HYOPTONY,
+			CATARACT,
+			PTHTHISIS_BULBI);
 		addField(TYPE_OF_LEPROSY, NullableOptionGroup.class);
 		addField(LEPROSY_STAGE, NullableOptionGroup.class);
 		addField(IS_LEPROSY_REACTION, NullableOptionGroup.class);

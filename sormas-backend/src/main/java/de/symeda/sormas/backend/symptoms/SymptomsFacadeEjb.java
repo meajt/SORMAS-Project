@@ -233,6 +233,27 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setEhfScore(source.getEhfScore());
 		target.setTimeOfDiagnosis(source.getTimeOfDiagnosis());
 		target.setTimeOfRFT(source.getTimeOfRFT());
+		target.setRedEyeWithoutDischarge(source.getRedEyeWithoutDischarge());
+		target.setLeukocoria(source.getLeukocoria());
+		target.setUnilateralInvolvement(source.getUnilateralInvolvement());
+		target.setDecreaseVision(source.getDecreaseVision());
+		target.setCircumciliaryCongestion(source.getCircumciliaryCongestion());
+		target.setFibrinoidAntChamberRxn(source.getFibrinoidAntChamberRxn());
+		target.setHypopyon(source.getHypopyon());
+		target.setShalloAntChamber(source.getShalloAntChamber());
+		target.setDecreaseIntraocuPressure(source.getDecreaseIntraocuPressure());
+		target.setPhotophobia(source.getPhotophobia());
+		target.setSuddenantofrxn(source.getSuddenantofrxn());
+		target.setRedantWhiterxn(source.getRedantWhiterxn());
+		target.setLossantCornealRxn(source.getLossantCornealRxn());
+		target.setReduceVialequiEquity(source.getReduceVialequiEquity());
+		target.setReducEyeOP(source.getReducEyeOP());
+		target.setPorredGlow(source.getPorredGlow());
+		target.setRetinalDetachment(source.getRetinalDetachment());
+		target.setRetinalNecrosis(source.getRetinalNecrosis());
+		target.setHyoptony(source.getHyoptony());
+		target.setCataract(source.getCataract());
+		target.setPththisisBulbi(source.getPththisisBulbi());
 		return target;
 	}
 
@@ -448,6 +469,27 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setEhfScore(source.getEhfScore());
 		target.setTimeOfDiagnosis(source.getTimeOfDiagnosis());
 		target.setTimeOfRFT(source.getTimeOfRFT());
+		target.setRedEyeWithoutDischarge(source.getRedEyeWithoutDischarge());
+		target.setLeukocoria(source.getLeukocoria());
+		target.setUnilateralInvolvement(source.getUnilateralInvolvement());
+		target.setDecreaseVision(source.getDecreaseVision());
+		target.setCircumciliaryCongestion(source.getCircumciliaryCongestion());
+		target.setFibrinoidAntChamberRxn(source.getFibrinoidAntChamberRxn());
+		target.setHypopyon(source.getHypopyon());
+		target.setShalloAntChamber(source.getShalloAntChamber());
+		target.setDecreaseIntraocuPressure(source.getDecreaseIntraocuPressure());
+		target.setPhotophobia(source.getPhotophobia());
+		target.setSuddenantofrxn(source.getSuddenantofrxn());
+		target.setRedantWhiterxn(source.getRedantWhiterxn());
+		target.setLossantCornealRxn(source.getLossantCornealRxn());
+		target.setReduceVialequiEquity(source.getReduceVialequiEquity());
+		target.setReducEyeOP(source.getReducEyeOP());
+		target.setPorredGlow(source.getPorredGlow());
+		target.setRetinalDetachment(source.getRetinalDetachment());
+		target.setRetinalNecrosis(source.getRetinalNecrosis());
+		target.setHyoptony(source.getHyoptony());
+		target.setCataract(source.getCataract());
+		target.setPththisisBulbi(source.getPththisisBulbi());
 		return target;
 	}
 

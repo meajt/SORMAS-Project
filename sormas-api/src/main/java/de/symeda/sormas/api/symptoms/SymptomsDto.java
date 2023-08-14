@@ -262,7 +262,27 @@ public class SymptomsDto extends PseudonymizableDto {
     public static final String EHF_SCORE = "ehfScore";
     public static final String TIME_OF_DIAGNOSIS = "timeOfDiagnosis";
     public static final String TIME_OF_RFT = "timeOfRFT";
-
+    public static final String RED_EYE_WITHOUT_DISCHARGE = "redEyeWithoutDischarge";
+    public static final String LEUKOCORIA = "leukocoria";
+    public static final String UNILATERAL_INVOLVEMENT = "unilateralInvolvement";
+    public static final String DECREASE_VISION = "decreaseVision";
+    public static final String CIRCUMCILIARY_CONGESTION = "circumciliaryCongestion";
+    public static final String FIBRINOID_ANT_CHAMBER_RXN = "fibrinoidAntChamberRxn";
+    public static final String HYPOPYON = "hypopyon";
+    public static final String SHALLO_ANT_CHAMBER = "shalloAntChamber";
+    public static final String DECREASE_INTRAOCU_PRESSURE = "decreaseIntraocuPressure";
+    public static final String PHOTOPHOBIA = "photophobia";
+    public static final String SUDDENANTOFRXN = "suddenantofrxn";
+    public static final String REDANT_WHITERXN = "redantWhiterxn";
+    public static final String LOSSANT_CORNEAL_RXN = "lossantCornealRxn";
+    public static final String REDUCE_VIALEQUI_EQUITY = "reduceVialequiEquity";
+    public static final String REDUC_EYE_O_P = "reducEyeOP";
+    public static final String PORRED_GLOW = "porredGlow";
+    public static final String RETINAL_DETACHMENT = "retinalDetachment";
+    public static final String RETINAL_NECROSIS = "retinalNecrosis";
+    public static final String HYOPTONY = "hyoptony";
+    public static final String CATARACT = "cataract";
+    public static final String PTHTHISIS_BULBI = "pththisisBulbi";
     // Fields are declared in the order they should appear in the import template
 
     public static SymptomsDto build() {
@@ -647,6 +667,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MONKEYPOX,
             POLIO,
             UNSPECIFIED_VHF,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -2466,7 +2487,8 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState bleedingAroundBite;
 
     @Diseases({
-            SNAKE_BITE
+        SNAKE_BITE,
+        SAPHU
     })
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState disturbedVision;
@@ -2524,6 +2546,69 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({LEPROSY})
     private DisabilityGrading timeOfRFT;
 
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState redEyeWithoutDischarge;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState leukocoria;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState unilateralInvolvement;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState decreaseVision;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState circumciliaryCongestion;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState fibrinoidAntChamberRxn;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState hypopyon;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState shalloAntChamber;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState decreaseIntraocuPressure;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState photophobia;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState suddenantofrxn;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState redantWhiterxn;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState lossantCornealRxn;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState reduceVialequiEquity;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState reducEyeOP;
+    @Diseases({SAPHU})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState porredGlow;
+    @Diseases({SAPHU})
+    @Complication
+    private SymptomState retinalDetachment;
+    @Diseases({SAPHU})
+    @Complication
+    private SymptomState retinalNecrosis;
+    @Diseases({SAPHU})
+    @Complication
+    private SymptomState hyoptony;
+    @Diseases({SAPHU})
+    @Complication
+    private SymptomState cataract;
+    @Diseases({SAPHU})
+    @Complication
+    private SymptomState pththisisBulbi;
 
     @Order(0)
     public Float getTemperature() {
@@ -4310,5 +4395,173 @@ public class SymptomsDto extends PseudonymizableDto {
 
     public void setTimeOfRFT(DisabilityGrading timeOfRFT) {
         this.timeOfRFT = timeOfRFT;
+    }
+
+    public SymptomState getRedEyeWithoutDischarge() {
+        return redEyeWithoutDischarge;
+    }
+
+    public void setRedEyeWithoutDischarge(SymptomState redEyeWithoutDischarge) {
+        this.redEyeWithoutDischarge = redEyeWithoutDischarge;
+    }
+
+    public SymptomState getLeukocoria() {
+        return leukocoria;
+    }
+
+    public void setLeukocoria(SymptomState leukocoria) {
+        this.leukocoria = leukocoria;
+    }
+
+    public SymptomState getUnilateralInvolvement() {
+        return unilateralInvolvement;
+    }
+
+    public void setUnilateralInvolvement(SymptomState unilateralInvolvement) {
+        this.unilateralInvolvement = unilateralInvolvement;
+    }
+
+    public SymptomState getDecreaseVision() {
+        return decreaseVision;
+    }
+
+    public void setDecreaseVision(SymptomState decreaseVision) {
+        this.decreaseVision = decreaseVision;
+    }
+
+    public SymptomState getCircumciliaryCongestion() {
+        return circumciliaryCongestion;
+    }
+
+    public void setCircumciliaryCongestion(SymptomState circumciliaryCongestion) {
+        this.circumciliaryCongestion = circumciliaryCongestion;
+    }
+
+    public SymptomState getFibrinoidAntChamberRxn() {
+        return fibrinoidAntChamberRxn;
+    }
+
+    public void setFibrinoidAntChamberRxn(SymptomState fibrinoidAntChamberRxn) {
+        this.fibrinoidAntChamberRxn = fibrinoidAntChamberRxn;
+    }
+
+    public SymptomState getHypopyon() {
+        return hypopyon;
+    }
+
+    public void setHypopyon(SymptomState hypopyon) {
+        this.hypopyon = hypopyon;
+    }
+
+    public SymptomState getShalloAntChamber() {
+        return shalloAntChamber;
+    }
+
+    public void setShalloAntChamber(SymptomState shalloAntChamber) {
+        this.shalloAntChamber = shalloAntChamber;
+    }
+
+    public SymptomState getDecreaseIntraocuPressure() {
+        return decreaseIntraocuPressure;
+    }
+
+    public void setDecreaseIntraocuPressure(SymptomState decreaseIntraocuPressure) {
+        this.decreaseIntraocuPressure = decreaseIntraocuPressure;
+    }
+
+    public SymptomState getPhotophobia() {
+        return photophobia;
+    }
+
+    public void setPhotophobia(SymptomState photophobia) {
+        this.photophobia = photophobia;
+    }
+
+    public SymptomState getSuddenantofrxn() {
+        return suddenantofrxn;
+    }
+
+    public void setSuddenantofrxn(SymptomState suddenantofrxn) {
+        this.suddenantofrxn = suddenantofrxn;
+    }
+
+    public SymptomState getRedantWhiterxn() {
+        return redantWhiterxn;
+    }
+
+    public void setRedantWhiterxn(SymptomState redantWhiterxn) {
+        this.redantWhiterxn = redantWhiterxn;
+    }
+
+    public SymptomState getLossantCornealRxn() {
+        return lossantCornealRxn;
+    }
+
+    public void setLossantCornealRxn(SymptomState lossantCornealRxn) {
+        this.lossantCornealRxn = lossantCornealRxn;
+    }
+
+    public SymptomState getReduceVialequiEquity() {
+        return reduceVialequiEquity;
+    }
+
+    public void setReduceVialequiEquity(SymptomState reduceVialequiEquity) {
+        this.reduceVialequiEquity = reduceVialequiEquity;
+    }
+
+    public SymptomState getReducEyeOP() {
+        return reducEyeOP;
+    }
+
+    public void setReducEyeOP(SymptomState reducEyeOP) {
+        this.reducEyeOP = reducEyeOP;
+    }
+
+    public SymptomState getPorredGlow() {
+        return porredGlow;
+    }
+
+    public void setPorredGlow(SymptomState porredGlow) {
+        this.porredGlow = porredGlow;
+    }
+
+    public SymptomState getRetinalDetachment() {
+        return retinalDetachment;
+    }
+
+    public void setRetinalDetachment(SymptomState retinalDetachment) {
+        this.retinalDetachment = retinalDetachment;
+    }
+
+    public SymptomState getRetinalNecrosis() {
+        return retinalNecrosis;
+    }
+
+    public void setRetinalNecrosis(SymptomState retinalNecrosis) {
+        this.retinalNecrosis = retinalNecrosis;
+    }
+
+    public SymptomState getHyoptony() {
+        return hyoptony;
+    }
+
+    public void setHyoptony(SymptomState hyoptony) {
+        this.hyoptony = hyoptony;
+    }
+
+    public SymptomState getCataract() {
+        return cataract;
+    }
+
+    public void setCataract(SymptomState cataract) {
+        this.cataract = cataract;
+    }
+
+    public SymptomState getPththisisBulbi() {
+        return pththisisBulbi;
+    }
+
+    public void setPththisisBulbi(SymptomState pththisisBulbi) {
+        this.pththisisBulbi = pththisisBulbi;
     }
 }
