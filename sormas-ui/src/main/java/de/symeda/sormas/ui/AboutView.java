@@ -177,7 +177,12 @@ public class AboutView extends VerticalLayout implements View {
 			I18nProperties.getCaption(Captions.aboutChangelog),
 			new ExternalResource("https://github.com/hzi-braunschweig/SORMAS-Project/releases"));
 		changelogLink.setTargetName("_blank");
-		infoLayout.addComponent(changelogLink);
+
+		Link sormasAppLink = new Link(
+				"Download App",
+				new ExternalResource(FacadeProvider.getConfigFacade().getAppUrl()));
+		changelogLink.setTargetName("_blank");
+		infoLayout.addComponent(sormasAppLink);
 
 		return infoLayout;
 	}
