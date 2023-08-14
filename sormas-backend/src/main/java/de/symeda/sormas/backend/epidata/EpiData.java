@@ -24,6 +24,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import de.symeda.auditlog.api.Audited;
+import de.symeda.sormas.api.epidata.CaseDetectionMethod;
+import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.backend.activityascase.ActivityAsCase;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
@@ -54,6 +56,8 @@ public class EpiData extends AbstractDomainObject {
 	@NotExposedToApi
 	private Date changeDateOfEmbeddedLists;
 	private MalariaEpiData malariaEpiData;
+	private CaseDetectionMethodGroup caseDetectionMethodGroup;
+	private CaseDetectionMethod caseDetectionMethod;
 
 	@Enumerated(EnumType.STRING)
 	public YesNoUnknown getExposureDetailsKnown() {
@@ -144,5 +148,23 @@ public class EpiData extends AbstractDomainObject {
 
 	public void setMalariaEpiData(MalariaEpiData malariaEpiData) {
 		this.malariaEpiData = malariaEpiData;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public CaseDetectionMethodGroup getCaseDetectionMethodGroup() {
+		return caseDetectionMethodGroup;
+	}
+
+	public void setCaseDetectionMethodGroup(CaseDetectionMethodGroup caseDetectionMethodGroup) {
+		this.caseDetectionMethodGroup = caseDetectionMethodGroup;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public CaseDetectionMethod getCaseDetectionMethod() {
+		return caseDetectionMethod;
+	}
+
+	public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
+		this.caseDetectionMethod = caseDetectionMethod;
 	}
 }

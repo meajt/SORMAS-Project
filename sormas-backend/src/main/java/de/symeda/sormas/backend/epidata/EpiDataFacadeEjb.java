@@ -104,6 +104,8 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		target.getActivitiesAsCase().clear();
 		target.getActivitiesAsCase().addAll(activitiesAsCase);
 		target.setMalariaEpiData(malariaEpiDataFacadeEjbLocal.fillOrBuildEntity(source.getMalariaEpiData(), target.getMalariaEpiData(), checkChangeDate));
+		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
+		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
 		return target;
 	}
 
@@ -245,6 +247,8 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		}
 		target.setActivitiesAsCase(activityAsCaseDtos);
 		target.setMalariaEpiData(MalariaEpiDataFacadeEjb.toDto(source.getMalariaEpiData()));
+		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
+		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
 		return target;
 	}
 
