@@ -534,6 +534,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNSPECIFIED_VHF,
             CORONAVIRUS, MUMPS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -636,6 +637,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RABIES,
             ANTHRAX,
             CORONAVIRUS, MUMPS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -743,6 +745,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DIARRHEA_BLOOD,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             ACUTE_VIRAL_HEPATITIS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -885,6 +888,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             ACUTE_VIRAL_HEPATITIS,
+            SAPHU,
             UNDEFINED,
             SCRUB_TYPHUS,
             OTHER})
@@ -1193,6 +1197,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             SCRUB_TYPHUS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1588,6 +1593,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1675,6 +1681,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             RABIES,
             CORONAVIRUS, MUMPS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1703,6 +1710,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CONGENITAL_RUBELLA,
             POLIO,
             CORONAVIRUS, MUMPS,
+            SAPHU,
             UNDEFINED,
             OTHER})
     @Outbreaks
