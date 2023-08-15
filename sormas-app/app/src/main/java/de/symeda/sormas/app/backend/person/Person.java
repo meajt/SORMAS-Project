@@ -45,6 +45,7 @@ import de.symeda.sormas.api.person.CauseOfDeath;
 import de.symeda.sormas.api.person.DeathPlaceType;
 import de.symeda.sormas.api.person.EducationType;
 import de.symeda.sormas.api.person.Ethnicity;
+import de.symeda.sormas.api.person.MaritalStatus;
 import de.symeda.sormas.api.person.OccupationType;
 import de.symeda.sormas.api.person.PresentCondition;
 import de.symeda.sormas.api.person.Religion;
@@ -210,6 +211,9 @@ public class Person extends PseudonymizableAdo {
 
     @Enumerated(EnumType.STRING)
     private Religion religion;
+
+  @Enumerated(EnumType.STRING)
+    private MaritalStatus maritalStatus;
 
     public Person() {
     }
@@ -696,4 +700,12 @@ public class Person extends PseudonymizableAdo {
 	public void setReligion(Religion religion) {
 		this.religion = religion;
 	}
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
 }
