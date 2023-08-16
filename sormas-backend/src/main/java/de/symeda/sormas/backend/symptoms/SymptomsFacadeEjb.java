@@ -254,6 +254,7 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setHyoptony(source.getHyoptony());
 		target.setCataract(source.getCataract());
 		target.setPththisisBulbi(source.getPththisisBulbi());
+		target.setOtherSymptoms(source.getOtherSymptoms());
 		return target;
 	}
 
@@ -490,6 +491,7 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setHyoptony(source.getHyoptony());
 		target.setCataract(source.getCataract());
 		target.setPththisisBulbi(source.getPththisisBulbi());
+		target.setOtherSymptoms(source.getOtherSymptoms());
 		return target;
 	}
 

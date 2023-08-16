@@ -498,7 +498,8 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			LOSSANT_CORNEAL_RXN,
 			REDUCE_VIALEQUI_EQUITY,
 			REDUC_EYE_O_P,
-			PORRED_GLOW);
+			PORRED_GLOW,
+			OTHER_SYMPTOMS);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
@@ -732,6 +733,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			REDUCE_VIALEQUI_EQUITY,
 			REDUC_EYE_O_P,
 			PORRED_GLOW,
+			OTHER_SYMPTOMS,
 			// complications
 			ALTERED_CONSCIOUSNESS,
 			CONFUSED_DISORIENTED,
