@@ -305,6 +305,7 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState hyoptony;
 	private SymptomState cataract;
 	private SymptomState pththisisBulbi;
+	private String otherSymptoms;
 	// when adding new fields make sure to extend toHumanString
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -2274,5 +2275,13 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setPththisisBulbi(SymptomState pththisisBulbi) {
 		this.pththisisBulbi = pththisisBulbi;
+	}
+
+	public String getOtherSymptoms() {
+		return otherSymptoms;
+	}
+
+	public void setOtherSymptoms(String otherSymptoms) {
+		this.otherSymptoms = otherSymptoms;
 	}
 }

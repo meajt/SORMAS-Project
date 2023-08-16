@@ -283,6 +283,7 @@ public class SymptomsDto extends PseudonymizableDto {
     public static final String HYOPTONY = "hyoptony";
     public static final String CATARACT = "cataract";
     public static final String PTHTHISIS_BULBI = "pththisisBulbi";
+    public static final String OTHER_SYMPTOMS = "otherSymptoms";
     // Fields are declared in the order they should appear in the import template
 
     public static SymptomsDto build() {
@@ -534,7 +535,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNSPECIFIED_VHF,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -637,7 +638,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RABIES,
             ANTHRAX,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -669,7 +670,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MONKEYPOX,
             POLIO,
             UNSPECIFIED_VHF,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -712,7 +713,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MALARIA,
             DIARRHEA_DEHYDRATION,
             ACUTE_VIRAL_HEPATITIS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -746,7 +747,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DIARRHEA_BLOOD,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             ACUTE_VIRAL_HEPATITIS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -889,7 +890,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             ACUTE_VIRAL_HEPATITIS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             SCRUB_TYPHUS,
             OTHER})
@@ -1198,7 +1199,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             SCRUB_TYPHUS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1528,7 +1529,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1595,7 +1596,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1683,7 +1684,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             RABIES,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1712,7 +1713,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CONGENITAL_RUBELLA,
             POLIO,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUCTIVES,
+             SAPHU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -2498,7 +2499,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
         SNAKE_BITE,
-         SAPHU, CONJUCTIVES
+         SAPHU, CONJUNCTIVITIES
     })
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState disturbedVision;
@@ -2556,69 +2557,73 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({LEPROSY})
     private DisabilityGrading timeOfRFT;
 
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState redEyeWithoutDischarge;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState leukocoria;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState unilateralInvolvement;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState decreaseVision;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState circumciliaryCongestion;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState fibrinoidAntChamberRxn;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState hypopyon;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState shalloAntChamber;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState decreaseIntraocuPressure;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState photophobia;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState suddenantofrxn;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState redantWhiterxn;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState lossantCornealRxn;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState reduceVialequiEquity;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState reducEyeOP;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState porredGlow;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState retinalDetachment;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState retinalNecrosis;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState hyoptony;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState cataract;
-    @Diseases({ SAPHU, CONJUCTIVES})
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState pththisisBulbi;
+
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @SymptomGrouping(SymptomGroup.OTHER)
+    private String otherSymptoms;
 
     @Order(0)
     public Float getTemperature() {
@@ -4573,5 +4578,13 @@ public class SymptomsDto extends PseudonymizableDto {
 
     public void setPththisisBulbi(SymptomState pththisisBulbi) {
         this.pththisisBulbi = pththisisBulbi;
+    }
+
+    public String getOtherSymptoms() {
+        return otherSymptoms;
+    }
+
+    public void setOtherSymptoms(String otherSymptoms) {
+        this.otherSymptoms = otherSymptoms;
     }
 }
