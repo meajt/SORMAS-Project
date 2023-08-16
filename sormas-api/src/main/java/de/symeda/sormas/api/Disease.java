@@ -95,7 +95,7 @@ public enum Disease
 	FHA(true, false, false, true, false, 0, true, false, false),
 	MUMPS(true, true, true, false, true, 14, true, true, true),
 	SAPHU(true, true, true, false, true, 14, true, true, true),
-	CONJUCTIVES(true, true, true, false, true, 14, true, true, true),
+	CONJUNCTIVITIES(true, true, true, false, true, 14, true, true, true),
 	OTHER(true, true, true, false, true, 21, false, false, false),
 	UNDEFINED(true, true, true, false, true, 0, false, false, false);
 
