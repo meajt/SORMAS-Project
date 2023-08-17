@@ -18,7 +18,7 @@ public class News extends PseudonymizableAdo {
     private String date;
     private String region;
     private RiskLevel riskLevel;
-    private  static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
+    private  static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static News buildFromNewsResponse(NewsResponseDto responseDto) {
         News news = new News();
         news.setUuid(responseDto.getId()+"");
