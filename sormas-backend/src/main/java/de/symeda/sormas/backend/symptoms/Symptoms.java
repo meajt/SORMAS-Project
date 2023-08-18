@@ -306,6 +306,16 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState cataract;
 	private SymptomState pththisisBulbi;
 	private String otherSymptoms;
+	private SymptomState eyeSwelling;
+	private SymptomState increasedTearProduction;
+	private SymptomState eyeItchingIrritationBurning;
+	private SymptomState eyeDischarge;
+	private SymptomState crustingEyeLidLashes;
+	private SymptomState punctateKeratitis;
+	private SymptomState bacterialSuperinfection;
+	private SymptomState conjunctivalScarring;
+	private SymptomState cornealUlceration;
+	private SymptomState chronicInfection;
 	// when adding new fields make sure to extend toHumanString
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -2283,5 +2293,95 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setOtherSymptoms(String otherSymptoms) {
 		this.otherSymptoms = otherSymptoms;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getEyeSwelling() {
+		return eyeSwelling;
+	}
+
+	public void setEyeSwelling(SymptomState eyeSwelling) {
+		this.eyeSwelling = eyeSwelling;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getIncreasedTearProduction() {
+		return increasedTearProduction;
+	}
+
+	public void setIncreasedTearProduction(SymptomState increasedTearProduction) {
+		this.increasedTearProduction = increasedTearProduction;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getEyeItchingIrritationBurning() {
+		return eyeItchingIrritationBurning;
+	}
+
+	public void setEyeItchingIrritationBurning(SymptomState eyeItchingIrritationBurning) {
+		this.eyeItchingIrritationBurning = eyeItchingIrritationBurning;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getEyeDischarge() {
+		return eyeDischarge;
+	}
+
+	public void setEyeDischarge(SymptomState eyeDischarge) {
+		this.eyeDischarge = eyeDischarge;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getCrustingEyeLidLashes() {
+		return crustingEyeLidLashes;
+	}
+
+	public void setCrustingEyeLidLashes(SymptomState crustingEyeLidLashes) {
+		this.crustingEyeLidLashes = crustingEyeLidLashes;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getPunctateKeratitis() {
+		return punctateKeratitis;
+	}
+
+	public void setPunctateKeratitis(SymptomState punctateKeratitis) {
+		this.punctateKeratitis = punctateKeratitis;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getBacterialSuperinfection() {
+		return bacterialSuperinfection;
+	}
+
+	public void setBacterialSuperinfection(SymptomState bacterialSuperinfection) {
+		this.bacterialSuperinfection = bacterialSuperinfection;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getConjunctivalScarring() {
+		return conjunctivalScarring;
+	}
+
+	public void setConjunctivalScarring(SymptomState conjunctivalScarring) {
+		this.conjunctivalScarring = conjunctivalScarring;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getCornealUlceration() {
+		return cornealUlceration;
+	}
+
+	public void setCornealUlceration(SymptomState cornealUlceration) {
+		this.cornealUlceration = cornealUlceration;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getChronicInfection() {
+		return chronicInfection;
+	}
+
+	public void setChronicInfection(SymptomState chronicInfection) {
+		this.chronicInfection = chronicInfection;
 	}
 }

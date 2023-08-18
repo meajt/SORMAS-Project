@@ -37,7 +37,7 @@ class SymptomsFormTest extends AbstractBeanTest {
     void testForSAPHUDisease() {
         SymptomsForm saphuSymForm = createSymptomsForm(Disease.SAPHU);
         Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.CIRCUMCILIARY_CONGESTION).isVisible());
-        Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.PTHTHISIS_BULBI).isVisible());
+        Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.PUNCTATE_KERATITIS).isVisible());
     }
 
     private SymptomsForm createSymptomsForm(Disease disease) {

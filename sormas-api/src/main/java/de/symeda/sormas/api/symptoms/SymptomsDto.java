@@ -284,6 +284,17 @@ public class SymptomsDto extends PseudonymizableDto {
     public static final String CATARACT = "cataract";
     public static final String PTHTHISIS_BULBI = "pththisisBulbi";
     public static final String OTHER_SYMPTOMS = "otherSymptoms";
+    public static final String EYE_SWELLING = "eyeSwelling";
+    public static final String INCREASED_TEAR_PRODUCTION = "increasedTearProduction";
+    public static final String EYE_ITCHING_IRRITATION_BURNING = "eyeItchingIrritationBurning";
+    public static final String EYE_DISCHARGE = "eyeDischarge";
+    public static final String CRUSTING_EYE_LID_LASHES = "crustingEyeLidLashes";
+    public static final String PUNCTATE_KERATITIS = "punctateKeratitis";
+    public static final String BACTERIAL_SUPERINFECTION = "bacterialSuperinfection";
+    public static final String CONJUNCTIVAL_SCARRING = "conjunctivalScarring";
+    public static final String CORNEAL_ULCERATION = "cornealUlceration";
+    public static final String CHRONIC_INFECTION = "chronicInfection";
+
     // Fields are declared in the order they should appear in the import template
 
     public static SymptomsDto build() {
@@ -2605,26 +2616,56 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState porredGlow;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    ////@Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState retinalDetachment;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    //@Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState retinalNecrosis;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    //@Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState hyoptony;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    //@Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState cataract;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    //@Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState pththisisBulbi;
 
     @Diseases({ SAPHU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.OTHER)
     private String otherSymptoms;
-
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState eyeSwelling;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState increasedTearProduction;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState eyeItchingIrritationBurning;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState eyeDischarge;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @SymptomGrouping(SymptomGroup.EYE)
+    private SymptomState crustingEyeLidLashes;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Complication
+    private SymptomState punctateKeratitis;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Complication
+    private SymptomState bacterialSuperinfection;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Complication
+    private SymptomState conjunctivalScarring;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Complication
+    private SymptomState cornealUlceration;
+    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Complication
+    private SymptomState chronicInfection;
+    
     @Order(0)
     public Float getTemperature() {
         return temperature;
@@ -4586,5 +4627,85 @@ public class SymptomsDto extends PseudonymizableDto {
 
     public void setOtherSymptoms(String otherSymptoms) {
         this.otherSymptoms = otherSymptoms;
+    }
+
+    public SymptomState getEyeSwelling() {
+        return eyeSwelling;
+    }
+
+    public void setEyeSwelling(SymptomState eyeSwelling) {
+        this.eyeSwelling = eyeSwelling;
+    }
+
+    public SymptomState getIncreasedTearProduction() {
+        return increasedTearProduction;
+    }
+
+    public void setIncreasedTearProduction(SymptomState increasedTearProduction) {
+        this.increasedTearProduction = increasedTearProduction;
+    }
+
+    public SymptomState getEyeItchingIrritationBurning() {
+        return eyeItchingIrritationBurning;
+    }
+
+    public void setEyeItchingIrritationBurning(SymptomState eyeItchingIrritationBurning) {
+        this.eyeItchingIrritationBurning = eyeItchingIrritationBurning;
+    }
+
+    public SymptomState getEyeDischarge() {
+        return eyeDischarge;
+    }
+
+    public void setEyeDischarge(SymptomState eyeDischarge) {
+        this.eyeDischarge = eyeDischarge;
+    }
+
+    public SymptomState getCrustingEyeLidLashes() {
+        return crustingEyeLidLashes;
+    }
+
+    public void setCrustingEyeLidLashes(SymptomState crustingEyeLidLashes) {
+        this.crustingEyeLidLashes = crustingEyeLidLashes;
+    }
+
+    public SymptomState getPunctateKeratitis() {
+        return punctateKeratitis;
+    }
+
+    public void setPunctateKeratitis(SymptomState punctateKeratitis) {
+        this.punctateKeratitis = punctateKeratitis;
+    }
+
+    public SymptomState getBacterialSuperinfection() {
+        return bacterialSuperinfection;
+    }
+
+    public void setBacterialSuperinfection(SymptomState bacterialSuperinfection) {
+        this.bacterialSuperinfection = bacterialSuperinfection;
+    }
+
+    public SymptomState getConjunctivalScarring() {
+        return conjunctivalScarring;
+    }
+
+    public void setConjunctivalScarring(SymptomState conjunctivalScarring) {
+        this.conjunctivalScarring = conjunctivalScarring;
+    }
+
+    public SymptomState getCornealUlceration() {
+        return cornealUlceration;
+    }
+
+    public void setCornealUlceration(SymptomState cornealUlceration) {
+        this.cornealUlceration = cornealUlceration;
+    }
+
+    public SymptomState getChronicInfection() {
+        return chronicInfection;
+    }
+
+    public void setChronicInfection(SymptomState chronicInfection) {
+        this.chronicInfection = chronicInfection;
     }
 }

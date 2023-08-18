@@ -255,6 +255,16 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setCataract(source.getCataract());
 		target.setPththisisBulbi(source.getPththisisBulbi());
 		target.setOtherSymptoms(source.getOtherSymptoms());
+		target.setEyeSwelling(source.getEyeSwelling());
+		target.setIncreasedTearProduction(source.getIncreasedTearProduction());
+		target.setEyeItchingIrritationBurning(source.getEyeItchingIrritationBurning());
+		target.setEyeDischarge(source.getEyeDischarge());
+		target.setCrustingEyeLidLashes(source.getCrustingEyeLidLashes());
+		target.setPunctateKeratitis(source.getPunctateKeratitis());
+		target.setBacterialSuperinfection(source.getBacterialSuperinfection());
+		target.setConjunctivalScarring(source.getConjunctivalScarring());
+		target.setCornealUlceration(source.getCornealUlceration());
+		target.setChronicInfection(source.getChronicInfection());
 		return target;
 	}
 
@@ -492,6 +502,16 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setCataract(source.getCataract());
 		target.setPththisisBulbi(source.getPththisisBulbi());
 		target.setOtherSymptoms(source.getOtherSymptoms());
+		target.setEyeSwelling(source.getEyeSwelling());
+		target.setIncreasedTearProduction(source.getIncreasedTearProduction());
+		target.setEyeItchingIrritationBurning(source.getEyeItchingIrritationBurning());
+		target.setEyeDischarge(source.getEyeDischarge());
+		target.setCrustingEyeLidLashes(source.getCrustingEyeLidLashes());
+		target.setPunctateKeratitis(source.getPunctateKeratitis());
+		target.setBacterialSuperinfection(source.getBacterialSuperinfection());
+		target.setConjunctivalScarring(source.getConjunctivalScarring());
+		target.setCornealUlceration(source.getCornealUlceration());
+		target.setChronicInfection(source.getChronicInfection());
 		return target;
 	}
 

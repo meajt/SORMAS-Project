@@ -147,6 +147,11 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 											ALTERED_CONSCIOUSNESS, CONFUSED_DISORIENTED, HEMORRHAGIC_SYNDROME,
 											RETINAL_DETACHMENT, RETINAL_NECROSIS, HYOPTONY,
 											HYPERGLYCEMIA, HYPOGLYCEMIA,
+											PUNCTATE_KERATITIS,
+											BACTERIAL_SUPERINFECTION,
+											CONJUNCTIVAL_SCARRING,
+											CORNEAL_ULCERATION,
+											CHRONIC_INFECTION,
 											CATARACT, PTHTHISIS_BULBI, OTHER_COMPLICATIONS,
 											OTHER_COMPLICATIONS_TEXT)),
 							fluidColumn(6, 0,
@@ -499,7 +504,12 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			REDUCE_VIALEQUI_EQUITY,
 			REDUC_EYE_O_P,
 			PORRED_GLOW,
-			OTHER_SYMPTOMS);
+			OTHER_SYMPTOMS,
+			EYE_SWELLING,
+			INCREASED_TEAR_PRODUCTION,
+			EYE_ITCHING_IRRITATION_BURNING,
+			EYE_DISCHARGE,
+			CRUSTING_EYE_LID_LASHES);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
@@ -519,11 +529,11 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			SEIZURES,
 			SEPSIS,
 			SHOCK,
-			RETINAL_DETACHMENT,
-			RETINAL_NECROSIS,
-			HYOPTONY,
-			CATARACT,
-			PTHTHISIS_BULBI};
+			PUNCTATE_KERATITIS,
+			BACTERIAL_SUPERINFECTION,
+			CONJUNCTIVAL_SCARRING,
+			CORNEAL_ULCERATION,
+			CHRONIC_INFECTION};
 
 		addFields(complicationsFieldIds);
 
@@ -744,11 +754,11 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			SEIZURES,
 			SEPSIS,
 			SHOCK,
-			RETINAL_DETACHMENT,
-			RETINAL_NECROSIS,
-			HYOPTONY,
-			CATARACT,
-			PTHTHISIS_BULBI);
+			PUNCTATE_KERATITIS,
+			BACTERIAL_SUPERINFECTION,
+			CONJUNCTIVAL_SCARRING,
+			CORNEAL_ULCERATION,
+			CHRONIC_INFECTION);
 		addField(TYPE_OF_LEPROSY, NullableOptionGroup.class);
 		addField(LEPROSY_STAGE, NullableOptionGroup.class);
 		addField(IS_LEPROSY_REACTION, NullableOptionGroup.class);
