@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import de.symeda.sormas.api.nepalsfeature.news.NewsConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.slf4j.Logger;
@@ -182,6 +183,8 @@ public class ConfigFacadeEjb implements ConfigFacade {
 	public static final int DEFAULT_DOCUMENT_UPLOAD_SIZE_LIMIT_MB = 20;
 	public static final String IMPORT_FILE_SIZE_LIMIT_MB = "importFileSizeLimitMb";
 	public static final int DEFAULT_IMPOR_FILE_SIZE_LIMIT_MB = 20;
+	public static final String NEWS_BASE_URL = "news.baseUrl";
+	public static final String NEWS_AUTH_TOKEN = "news.authToken";
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -794,6 +797,14 @@ public class ConfigFacadeEjb implements ConfigFacade {
 	@Override
 	public void resetRequestContext() {
 		RequestContextHolder.reset();
+	}
+
+	@Override
+	public NewsConfig getNewsConfig() {
+		NewsConfig config = new NewsConfig();
+		config.setBaseUrl(getProperty(NEWS_BASE_URL, ""));
+		config.setAuthToken(getProperty(NEWS_AUTH_TOKEN, ""));
+		return config;
 	}
 
 	@LocalBean
