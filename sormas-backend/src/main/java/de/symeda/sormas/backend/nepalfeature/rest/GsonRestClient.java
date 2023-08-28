@@ -16,6 +16,12 @@ public class GsonRestClient extends RestClient {
     @Override
     protected  <T> T handleResponse(Response response , Class<T> responseType) {
         String strRes = response.readEntity(String.class);
-        return gson.fromJson(strRes, responseType);
+        try {
+            return gson.fromJson(strRes, responseType);
+        }catch (Exception exe) {
+            LoggerFactory.getLogger(GsonRestClient.class)
+                    .error("Error while parsing {}", strRes);
+            throw exe;
+        }
     }
 }

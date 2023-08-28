@@ -10,9 +10,11 @@ import de.symeda.sormas.api.event.RiskLevel;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.nepalsfeature.news.NewsCriteria;
 import de.symeda.sormas.api.nepalsfeature.news.NewsDto;
+import de.symeda.sormas.api.utils.HtmlHelper;
 import de.symeda.sormas.ui.ControllerProvider;
 import de.symeda.sormas.ui.utils.FilteredGrid;
 import de.symeda.sormas.ui.utils.ShowDetailsListener;
+import elemental.json.JsonValue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,12 @@ public class NewsGrid extends FilteredGrid<NewsDto, NewsCriteria> {
         getColumn(NewsDto.PROVINCE).setWidth(80);
         getColumn(NewsDto.DISTRICT).setWidth(80);
         getColumn(NewsDto.RISK_LEVEL).setWidth(80);
+        ((Column<NewsDto, String>)getColumn(NewsDto.TITLE)).setRenderer(new HtmlRenderer(){
+            @Override
+            public JsonValue encode(String value) {
+                return super.encode(HtmlHelper.buildHyperlinkTitle(value, value));
+            }
+        });
         addItemClickListener(new ShowDetailsListener<>(NewsDto.TITLE, e -> getUI().getPage().open(e.getNewsLink(), "_blank")));
 
     }

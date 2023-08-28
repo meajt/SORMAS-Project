@@ -47,7 +47,14 @@ public class NewsFacadeEjb implements NewsFacade {
         RestClient restClient = new RestClient()
                 .setAuthHeader(String.format("Bearer %s", newsConfig.getAuthToken()));
         String responseStr =  restClient.get(newsConfig.getBaseUrl()+GET_NEWS, getFilterQueryMap(criteria, first, max),String.class);
-        return gson.fromJson(responseStr, new TypeToken<List<NewsDto>>(){}.getType());
+       try {
+           return gson.fromJson(responseStr, new TypeToken<List<NewsDto>>() {
+           }.getType());
+       }catch (Exception exception) {
+           LoggerFactory.getLogger(NewsFacadeEjb.class)
+                   .error("Error while parsing {}", responseStr);
+           throw exception;
+       }
     }
 
     private Map<String, Object> getFilterQueryMap(NewsCriteria criteria, Integer first, Integer max) {
