@@ -25,8 +25,8 @@ final public class NewsRetroProvider {
     private static boolean connecting = false;
     private Context context;
     private NewsFacadeRetro newsFacadeRetro;
-    private final String BASE_URL = "http://172.177.142.86/";
-    private final String BEARER_TOKEN = "1|zPCfbXStpwsCrIEWQWQKutgdVVuYk657YiDcYDC7";
+    private final String BASE_URL = "http://202.166.212.180/";
+    private final String BEARER_TOKEN = "1|s0xqFm96hDsdZSukBHUp2AsLkWS4i4EELVFEv8uR";
 
     private NewsRetroProvider(Context context) {
         this.context = context;
