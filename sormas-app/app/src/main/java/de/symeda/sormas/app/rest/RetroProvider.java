@@ -23,6 +23,7 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -317,13 +318,20 @@ public final class RetroProvider {
 	}
 
 	public static Integer getNumberOfEntitiesToBePulledInOneBatch(long approximateJsonSizeInBytes, Context context) throws ServerConnectionException {
-		double compressedJsonSizeInBits = approximateJsonSizeInBytes * 8 / JSON_COMPRESSION_FACTOR;
-		int batchSize =
-			Math.toIntExact(Math.round(getNetworkDownloadSpeedInKbps(context) * ASSUMED_TRANSFER_TIME_IN_SECONDS * 1024 / compressedJsonSizeInBits));
-		// Restrict the batch size to a maximum value to avoid backend queries leading to a timeout
-		batchSize = Math.max(10, batchSize);
-		batchSize = Math.min(MAX_BATCH_SIZE, (int) (10 * Math.sqrt(batchSize / 10f)));
-		return batchSize;
+		try {
+			double compressedJsonSizeInBits = approximateJsonSizeInBytes * 8 / JSON_COMPRESSION_FACTOR;
+			int batchSize =
+					Math.toIntExact(Math.round(getNetworkDownloadSpeedInKbps(context) * ASSUMED_TRANSFER_TIME_IN_SECONDS * 1024 / compressedJsonSizeInBits));
+			// Restrict the batch size to a maximum value to avoid backend queries leading to a timeout
+			batchSize = Math.max(10, batchSize);
+			batchSize = Math.min(MAX_BATCH_SIZE, (int) (10 * Math.sqrt(batchSize / 10f)));
+			return batchSize;
+		}catch (Exception exe) {
+			Log.e(RetroProvider.class.getSimpleName(), "Error is "+exe.getMessage()+" p="+approximateJsonSizeInBytes);
+			FirebaseCrashlytics.getInstance()
+					.log("Exception on @getNumberOfEntitiesToBePulledInOneBatch "+exe.getMessage());
+			return 10;
+		}
 	}
 
 	public static long getNetworkDownloadSpeedInKbps(Context context) throws ServerConnectionException {

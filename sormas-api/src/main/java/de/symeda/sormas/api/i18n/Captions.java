@@ -2197,6 +2197,7 @@ public interface Captions {
 	String Symptoms_anxietyStates = "Symptoms.anxietyStates";
 	String Symptoms_ascendingFlaccidParalysis = "Symptoms.ascendingFlaccidParalysis";
 	String Symptoms_backache = "Symptoms.backache";
+	String Symptoms_bacterialSuperinfection = "Symptoms.bacterialSuperinfection";
 	String Symptoms_bedridden = "Symptoms.bedridden";
 	String Symptoms_bilateralCataracts = "Symptoms.bilateralCataracts";
 	String Symptoms_blackeningDeathOfTissue = "Symptoms.blackeningDeathOfTissue";
@@ -2217,6 +2218,7 @@ public interface Captions {
 	String Symptoms_chestPain = "Symptoms.chestPain";
 	String Symptoms_chestPressure = "Symptoms.chestPressure";
 	String Symptoms_chillsSweats = "Symptoms.chillsSweats";
+	String Symptoms_chronicInfection = "Symptoms.chronicInfection";
 	String Symptoms_circumciliaryCongestion = "Symptoms.circumciliaryCongestion";
 	String Symptoms_coma = "Symptoms.coma";
 	String Symptoms_confusedDisoriented = "Symptoms.confusedDisoriented";
@@ -2225,13 +2227,16 @@ public interface Captions {
 	String Symptoms_congenitalHeartDiseaseDetails = "Symptoms.congenitalHeartDiseaseDetails";
 	String Symptoms_congenitalHeartDiseaseType = "Symptoms.congenitalHeartDiseaseType";
 	String Symptoms_conjunctivalInjection = "Symptoms.conjunctivalInjection";
+	String Symptoms_conjunctivalScarring = "Symptoms.conjunctivalScarring";
 	String Symptoms_conjunctivitis = "Symptoms.conjunctivitis";
 	String Symptoms_convulsion = "Symptoms.convulsion";
+	String Symptoms_cornealUlceration = "Symptoms.cornealUlceration";
 	String Symptoms_cough = "Symptoms.cough";
 	String Symptoms_coughingBlood = "Symptoms.coughingBlood";
 	String Symptoms_coughWithHeamoptysis = "Symptoms.coughWithHeamoptysis";
 	String Symptoms_coughWithoutSputum = "Symptoms.coughWithoutSputum";
 	String Symptoms_coughWithSputum = "Symptoms.coughWithSputum";
+	String Symptoms_crustingEyeLidLashes = "Symptoms.crustingEyeLidLashes";
 	String Symptoms_darkUrine = "Symptoms.darkUrine";
 	String Symptoms_decreaseIntraocuPressure = "Symptoms.decreaseIntraocuPressure";
 	String Symptoms_decreaseVision = "Symptoms.decreaseVision";
@@ -2250,9 +2255,12 @@ public interface Captions {
 	String Symptoms_erraticBehaviour = "Symptoms.erraticBehaviour";
 	String Symptoms_excessSalivation = "Symptoms.excessSalivation";
 	String Symptoms_excitation = "Symptoms.excitation";
+	String Symptoms_eyeDischarge = "Symptoms.eyeDischarge";
+	String Symptoms_eyeItchingIrritationBurning = "Symptoms.eyeItchingIrritationBurning";
 	String Symptoms_eyelashes = "Symptoms.eyelashes";
 	String Symptoms_eyePainLightSensitive = "Symptoms.eyePainLightSensitive";
 	String Symptoms_eyesBleeding = "Symptoms.eyesBleeding";
+	String Symptoms_eyeSwelling = "Symptoms.eyeSwelling";
 	String Symptoms_fastHeartRate = "Symptoms.fastHeartRate";
 	String Symptoms_fatigue = "Symptoms.fatigue";
 	String Symptoms_fatigueWeakness = "Symptoms.fatigueWeakness";
@@ -2281,6 +2289,7 @@ public interface Captions {
 	String Symptoms_hypoglycemia = "Symptoms.hypoglycemia";
 	String Symptoms_hypopyon = "Symptoms.hypopyon";
 	String Symptoms_inabilityToWalk = "Symptoms.inabilityToWalk";
+	String Symptoms_increasedTearProduction = "Symptoms.increasedTearProduction";
 	String Symptoms_inDrawingOfChestWall = "Symptoms.inDrawingOfChestWall";
 	String Symptoms_injectionSiteBleeding = "Symptoms.injectionSiteBleeding";
 	String Symptoms_insomnia = "Symptoms.insomnia";
@@ -2359,6 +2368,7 @@ public interface Captions {
 	String Symptoms_pneumoniaClinicalOrRadiologic = "Symptoms.pneumoniaClinicalOrRadiologic";
 	String Symptoms_porredGlow = "Symptoms.porredGlow";
 	String Symptoms_pththisisBulbi = "Symptoms.pththisisBulbi";
+	String Symptoms_punctateKeratitis = "Symptoms.punctateKeratitis";
 	String Symptoms_punctureMarkAtWound = "Symptoms.punctureMarkAtWound";
 	String Symptoms_purpuricRash = "Symptoms.purpuricRash";
 	String Symptoms_radiolucentBoneDisease = "Symptoms.radiolucentBoneDisease";

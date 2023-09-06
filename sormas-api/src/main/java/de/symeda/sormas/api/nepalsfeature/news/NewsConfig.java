@@ -1,5 +1,8 @@
 package de.symeda.sormas.api.nepalsfeature.news;
 
+import de.symeda.sormas.api.audit.AuditedClass;
+
+@AuditedClass
 public class NewsConfig {
     private String baseUrl;
     private String authToken;
