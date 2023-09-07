@@ -15,10 +15,12 @@ public enum CaseDetectionMethod {
     CONTACT_EXAMINATION,
     SKIN_LAMP,
     VOLUNTARY,
-    HOSPITAL_VISIT_FOR_OTHER_PURPOSE;
+    HOSPITAL_VISIT_FOR_OTHER_PURPOSE,
+    SURVEY,
+    LEPROSY_POST_EXPOSURE_PROPHYLAXIS_PROGRAM;
 
-    private static final List<CaseDetectionMethod> activeLeprosyMethod = List.of(REFER, CONTACT_EXAMINATION, SKIN_LAMP);
-    private static final List<CaseDetectionMethod> passiveLeprosyMethod = List.of(VOLUNTARY, HOSPITAL_VISIT_FOR_OTHER_PURPOSE);
+    private static final List<CaseDetectionMethod> activeLeprosyMethod = List.of(REFER, CONTACT_EXAMINATION);
+    private static final List<CaseDetectionMethod> passiveLeprosyMethod = List.of(VOLUNTARY, HOSPITAL_VISIT_FOR_OTHER_PURPOSE, SURVEY, LEPROSY_POST_EXPOSURE_PROPHYLAXIS_PROGRAM);
     private static final List<CaseDetectionMethod> activeMethod = List.of(HOUSE_TO_HOUSE_VISIT, MOBILE_MALARIA_CLINIC, CONTACT_SURVEY, FEVER_SURVEY, POPULATION_BASE_SURVEY);
 
 

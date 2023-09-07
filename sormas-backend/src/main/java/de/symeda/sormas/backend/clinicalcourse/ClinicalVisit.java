@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.clinicalcourse.TypeOfClinicalMeasurement;
+import de.symeda.sormas.api.symptoms.DisabilityGrading;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.symptoms.Symptoms;
 
@@ -42,6 +44,10 @@ public class ClinicalVisit extends AbstractDomainObject {
 	private Date visitDateTime;
 	private String visitRemarks;
 	private String visitingPerson;
+	private TypeOfClinicalMeasurement typeOfClinicalMeasurement;
+	private Integer ehfScore;
+	private DisabilityGrading disabilityGrading;
+	private Boolean ulcer;
 
 	@ManyToOne(cascade = {})
 	@JoinColumn(nullable = false)
@@ -99,5 +105,39 @@ public class ClinicalVisit extends AbstractDomainObject {
 
 	public void setVisitingPerson(String visitingPerson) {
 		this.visitingPerson = visitingPerson;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public TypeOfClinicalMeasurement getTypeOfClinicalMeasurement() {
+		return typeOfClinicalMeasurement;
+	}
+
+	public void setTypeOfClinicalMeasurement(TypeOfClinicalMeasurement typeOfClinicalMeasurement) {
+		this.typeOfClinicalMeasurement = typeOfClinicalMeasurement;
+	}
+
+	public Integer getEhfScore() {
+		return ehfScore;
+	}
+
+	public void setEhfScore(Integer ehfScore) {
+		this.ehfScore = ehfScore;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public DisabilityGrading getDisabilityGrading() {
+		return disabilityGrading;
+	}
+
+	public void setDisabilityGrading(DisabilityGrading disabilityGrading) {
+		this.disabilityGrading = disabilityGrading;
+	}
+
+	public Boolean getUlcer() {
+		return ulcer;
+	}
+
+	public void setUlcer(Boolean ulcer) {
+		this.ulcer = ulcer;
 	}
 }

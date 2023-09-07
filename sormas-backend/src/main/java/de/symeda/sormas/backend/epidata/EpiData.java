@@ -26,6 +26,7 @@ import javax.persistence.*;
 import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.epidata.CaseDetectionMethod;
 import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
+import de.symeda.sormas.api.symptoms.DisabilityGrading;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.backend.activityascase.ActivityAsCase;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
@@ -58,7 +59,13 @@ public class EpiData extends AbstractDomainObject {
 	private MalariaEpiData malariaEpiData;
 	private CaseDetectionMethodGroup caseDetectionMethodGroup;
 	private CaseDetectionMethod caseDetectionMethod;
-
+	private Boolean familyHistoryOfLeprosy;
+	private Boolean contactExaminationDone;
+	private Integer noOfFamilyContact;
+	private Integer noOfNeighbourContact;
+	private Integer noOfSocialContact;
+	private Boolean skinSmearTestPositive;
+	private DisabilityGrading leprosyResult;
 	@Enumerated(EnumType.STRING)
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -166,5 +173,61 @@ public class EpiData extends AbstractDomainObject {
 
 	public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
 		this.caseDetectionMethod = caseDetectionMethod;
+	}
+
+	public Boolean getFamilyHistoryOfLeprosy() {
+		return familyHistoryOfLeprosy;
+	}
+
+	public void setFamilyHistoryOfLeprosy(Boolean familyHistoryOfLeprosy) {
+		this.familyHistoryOfLeprosy = familyHistoryOfLeprosy;
+	}
+
+	public Boolean getContactExaminationDone() {
+		return contactExaminationDone;
+	}
+
+	public void setContactExaminationDone(Boolean contactExaminationDone) {
+		this.contactExaminationDone = contactExaminationDone;
+	}
+
+	public Integer getNoOfFamilyContact() {
+		return noOfFamilyContact;
+	}
+
+	public void setNoOfFamilyContact(Integer noOfFamilyContact) {
+		this.noOfFamilyContact = noOfFamilyContact;
+	}
+
+	public Integer getNoOfNeighbourContact() {
+		return noOfNeighbourContact;
+	}
+
+	public void setNoOfNeighbourContact(Integer noOfNeighbourContact) {
+		this.noOfNeighbourContact = noOfNeighbourContact;
+	}
+
+	public Integer getNoOfSocialContact() {
+		return noOfSocialContact;
+	}
+
+	public void setNoOfSocialContact(Integer noOfSocialContact) {
+		this.noOfSocialContact = noOfSocialContact;
+	}
+
+	public Boolean getSkinSmearTestPositive() {
+		return skinSmearTestPositive;
+	}
+
+	public void setSkinSmearTestPositive(Boolean skinSmearTestPositive) {
+		this.skinSmearTestPositive = skinSmearTestPositive;
+	}
+
+	public DisabilityGrading getLeprosyResult() {
+		return leprosyResult;
+	}
+
+	public void setLeprosyResult(DisabilityGrading result) {
+		this.leprosyResult = result;
 	}
 }

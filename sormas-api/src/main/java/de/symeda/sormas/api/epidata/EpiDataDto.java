@@ -28,6 +28,7 @@ import de.symeda.sormas.api.ImportIgnore;
 import de.symeda.sormas.api.activityascase.ActivityAsCaseDto;
 import de.symeda.sormas.api.exposure.ExposureDto;
 import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.symptoms.DisabilityGrading;
 import de.symeda.sormas.api.utils.*;
 import de.symeda.sormas.api.utils.pseudonymization.PseudonymizableDto;
 
@@ -50,6 +51,13 @@ public class EpiDataDto extends PseudonymizableDto {
 	public static final String LARGE_OUTBREAKS_AREA = "largeOutbreaksArea";
 	public static final String CASE_DETECTION_METHOD = "caseDetectionMethod";
 	public static final String CASE_DETECTION_METHOD_GROUP = "caseDetectionMethodGroup";
+	public static final String FAMILY_HISTORY_OF_LEPROSY = "familyHistoryOfLeprosy";
+	public static final String CONTACT_EXAMINATION_DONE = "contactExaminationDone";
+	public static final String NO_OF_FAMILY_CONTACT = "noOfFamilyContact";
+	public static final String NO_OF_NEIGHBOUR_CONTACT = "noOfNeighbourContact";
+	public static final String NO_OF_SOCIAL_CONTACT = "noOfSocialContact";
+	public static final String SKIN_TEST_POSITIVE = "skinSmearTestPositive";
+	public static final String SKIN_TEST_LEPROSY_RESULT = "leprosyResult";
 
 	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown exposureDetailsKnown;
@@ -82,6 +90,21 @@ public class EpiDataDto extends PseudonymizableDto {
 	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private List<ActivityAsCaseDto> activitiesAsCase = new ArrayList<>();
 	private MalariaEpiDataDto malariaEpiData;
+
+	@Diseases({Disease.LEPROSY})
+	private Boolean familyHistoryOfLeprosy;
+	@Diseases({Disease.LEPROSY})
+	private Boolean contactExaminationDone ;
+	@Diseases({Disease.LEPROSY})
+	private Integer noOfFamilyContact;
+	@Diseases({Disease.LEPROSY})
+	private Integer noOfNeighbourContact;
+	@Diseases({Disease.LEPROSY})
+	private Integer noOfSocialContact;
+	@Diseases({Disease.LEPROSY})
+	private Boolean skinSmearTestPositive;
+	@Diseases({Disease.LEPROSY})
+	private DisabilityGrading leprosyResult;
 
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -198,5 +221,61 @@ public class EpiDataDto extends PseudonymizableDto {
 
 	public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
 		this.caseDetectionMethod = caseDetectionMethod;
+	}
+
+	public Boolean getFamilyHistoryOfLeprosy() {
+		return familyHistoryOfLeprosy;
+	}
+
+	public void setFamilyHistoryOfLeprosy(Boolean familyHistoryOfLeprosy) {
+		this.familyHistoryOfLeprosy = familyHistoryOfLeprosy;
+	}
+
+	public Boolean getContactExaminationDone() {
+		return contactExaminationDone;
+	}
+
+	public void setContactExaminationDone(Boolean contactExaminationDone) {
+		this.contactExaminationDone = contactExaminationDone;
+	}
+
+	public Integer getNoOfFamilyContact() {
+		return noOfFamilyContact;
+	}
+
+	public void setNoOfFamilyContact(Integer noOfFamilyContact) {
+		this.noOfFamilyContact = noOfFamilyContact;
+	}
+
+	public Integer getNoOfNeighbourContact() {
+		return noOfNeighbourContact;
+	}
+
+	public void setNoOfNeighbourContact(Integer noOfNeighbourContact) {
+		this.noOfNeighbourContact = noOfNeighbourContact;
+	}
+
+	public Integer getNoOfSocialContact() {
+		return noOfSocialContact;
+	}
+
+	public void setNoOfSocialContact(Integer noOfSocialContact) {
+		this.noOfSocialContact = noOfSocialContact;
+	}
+
+	public Boolean getSkinSmearTestPositive() {
+		return skinSmearTestPositive;
+	}
+
+	public void setSkinSmearTestPositive(Boolean skinSmearTestPositive) {
+		this.skinSmearTestPositive = skinSmearTestPositive;
+	}
+
+	public DisabilityGrading getLeprosyResult() {
+		return leprosyResult;
+	}
+
+	public void setLeprosyResult(DisabilityGrading leprosyResult) {
+		this.leprosyResult = leprosyResult;
 	}
 }

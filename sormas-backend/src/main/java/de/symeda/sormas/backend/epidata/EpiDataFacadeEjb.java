@@ -106,6 +106,13 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		target.setMalariaEpiData(malariaEpiDataFacadeEjbLocal.fillOrBuildEntity(source.getMalariaEpiData(), target.getMalariaEpiData(), checkChangeDate));
 		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
 		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
+		target.setFamilyHistoryOfLeprosy(source.getFamilyHistoryOfLeprosy());
+		target.setContactExaminationDone(source.getContactExaminationDone());
+		target.setNoOfFamilyContact(source.getNoOfFamilyContact());
+		target.setNoOfNeighbourContact(source.getNoOfNeighbourContact());
+		target.setNoOfSocialContact(source.getNoOfSocialContact());
+		target.setSkinSmearTestPositive(source.getSkinSmearTestPositive());
+		target.setLeprosyResult(source.getLeprosyResult());
 		return target;
 	}
 
@@ -249,6 +256,13 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		target.setMalariaEpiData(MalariaEpiDataFacadeEjb.toDto(source.getMalariaEpiData()));
 		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
 		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
+		target.setFamilyHistoryOfLeprosy(source.getFamilyHistoryOfLeprosy());
+		target.setContactExaminationDone(source.getContactExaminationDone());
+		target.setNoOfFamilyContact(source.getNoOfFamilyContact());
+		target.setNoOfNeighbourContact(source.getNoOfNeighbourContact());
+		target.setNoOfSocialContact(source.getNoOfSocialContact());
+		target.setSkinSmearTestPositive(source.getSkinSmearTestPositive());
+		target.setLeprosyResult(source.getLeprosyResult());
 		return target;
 	}
 

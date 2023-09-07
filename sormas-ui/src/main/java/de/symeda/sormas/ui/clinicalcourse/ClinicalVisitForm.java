@@ -17,6 +17,7 @@ import de.symeda.sormas.ui.UserProvider;
 import de.symeda.sormas.ui.symptoms.SymptomsForm;
 import de.symeda.sormas.ui.utils.AbstractEditForm;
 import de.symeda.sormas.ui.utils.DateTimeField;
+import de.symeda.sormas.ui.utils.NullableOptionGroup;
 
 public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 
@@ -24,6 +25,8 @@ public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 
 	private static final String HTML_LAYOUT = fluidRowLocs(ClinicalVisitDto.VISIT_DATE_TIME, ClinicalVisitDto.VISITING_PERSON)
 		+ loc(ClinicalVisitDto.VISIT_REMARKS)
+		+ fluidRowLocs(ClinicalVisitDto.TYPE_OF_CLINICAL_MEASUREMENT)
+		+ fluidRowLocs(ClinicalVisitDto.EHF_SCORE, ClinicalVisitDto.DISABILITY_GRADING, ClinicalVisitDto.ULCER)
 		+ fluidRowLocs(ClinicalVisitDto.SYMPTOMS);
 
 	private final Disease disease;
@@ -35,7 +38,7 @@ public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 			ClinicalVisitDto.class,
 			ClinicalVisitDto.I18N_PREFIX,
 			false,
-			new FieldVisibilityCheckers(),
+			FieldVisibilityCheckers.withDisease(disease),
 			UiFieldAccessCheckers.forDataAccessLevel(UserProvider.getCurrent().getPseudonymizableDataAccessLevel(inJurisdiction), isPseudonymized));
 		if (create) {
 			hideValidationUntilNextCommit();
@@ -74,9 +77,12 @@ public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 		symptomsForm = new SymptomsForm(null, disease, person, SymptomsContext.CLINICAL_VISIT, null, fieldAccessCheckers);
 		getFieldGroup().bind(symptomsForm, ClinicalVisitDto.SYMPTOMS);
 		getContent().addComponent(symptomsForm, ClinicalVisitDto.SYMPTOMS);
-
+		addField(ClinicalVisitDto.TYPE_OF_CLINICAL_MEASUREMENT, NullableOptionGroup.class);
+		addField(ClinicalVisitDto.EHF_SCORE);
+		addField(ClinicalVisitDto.DISABILITY_GRADING, NullableOptionGroup.class);
+		addField(ClinicalVisitDto.ULCER, NullableOptionGroup.class);
 		setRequired(true, ClinicalVisitDto.VISIT_DATE_TIME);
-
+		initializeVisibilitiesAndAllowedVisibilities();
 		initializeAccessAndAllowedAccesses();
 	}
 

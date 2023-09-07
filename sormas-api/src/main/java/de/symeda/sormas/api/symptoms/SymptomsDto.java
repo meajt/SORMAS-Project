@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
 
 import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.ImportIgnore;
+import de.symeda.sormas.api.epidata.RegisteredAs;
 import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.utils.Complication;
@@ -294,6 +295,7 @@ public class SymptomsDto extends PseudonymizableDto {
     public static final String CONJUNCTIVAL_SCARRING = "conjunctivalScarring";
     public static final String CORNEAL_ULCERATION = "cornealUlceration";
     public static final String CHRONIC_INFECTION = "chronicInfection";
+    public static final String REGISTER_AS = "registeredAs";
 
     // Fields are declared in the order they should appear in the import template
 
@@ -1295,10 +1297,12 @@ public class SymptomsDto extends PseudonymizableDto {
     @SymptomGrouping(SymptomGroup.CARDIOVASCULAR)
     private SymptomState oedemaLowerExtremity;
 
+    @Diseases(value = {LEPROSY}, hide = true)
     @Outbreaks
     private Date onsetDate;
 
     @Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
+    @Diseases(value = {LEPROSY}, hide = true)
     private String onsetSymptom;
 
     @Diseases({
@@ -2080,7 +2084,6 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({
             CORONAVIRUS, MUMPS,
             KALAZAR, SCRUB_TYPHUS,
-            LEPROSY,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -2484,8 +2487,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState bodyAche;
 
     @Diseases({
-            SNAKE_BITE,
-            LEPROSY
+            SNAKE_BITE
     })
     @SymptomGrouping(SymptomGroup.MUSCULAR)
     private SymptomState numbness;
@@ -2665,6 +2667,9 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({ SAPHU, CONJUNCTIVITIES})
     @Complication
     private SymptomState chronicInfection;
+
+    @Diseases({LEPROSY})
+     private RegisteredAs registeredAs;
     
     @Order(0)
     public Float getTemperature() {
@@ -4707,5 +4712,13 @@ public class SymptomsDto extends PseudonymizableDto {
 
     public void setChronicInfection(SymptomState chronicInfection) {
         this.chronicInfection = chronicInfection;
+    }
+
+    public RegisteredAs getRegisteredAs() {
+        return registeredAs;
+    }
+
+    public void setRegisteredAs(RegisteredAs registeredAs) {
+        this.registeredAs = registeredAs;
     }
 }

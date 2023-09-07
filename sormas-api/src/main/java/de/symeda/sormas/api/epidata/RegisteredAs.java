@@ -1,16 +1,13 @@
-package de.symeda.sormas.api.symptoms;
+package de.symeda.sormas.api.epidata;
 
 import de.symeda.sormas.api.i18n.I18nProperties;
 
-public enum DisabilityGrading {
-    ZERO,
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX;
-
+public enum RegisteredAs {
+    NEW_CASE,
+    TRANSFERED_ID,
+    RE_STARTED,
+    RELAPSED,
+    OTHER;
     @Override
     public String toString() {
         return I18nProperties.getEnumCaption(this);

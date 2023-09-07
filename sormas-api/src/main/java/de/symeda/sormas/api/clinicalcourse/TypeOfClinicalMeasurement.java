@@ -1,15 +1,11 @@
-package de.symeda.sormas.api.symptoms;
+package de.symeda.sormas.api.clinicalcourse;
 
 import de.symeda.sormas.api.i18n.I18nProperties;
 
-public enum DisabilityGrading {
-    ZERO,
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX;
+public enum TypeOfClinicalMeasurement {
+    DIAGNOSIS,
+    CONTINUATION,
+    RFT;
 
     @Override
     public String toString() {

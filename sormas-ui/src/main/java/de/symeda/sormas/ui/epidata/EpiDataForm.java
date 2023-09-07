@@ -21,6 +21,7 @@ import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_TOP_3;
 import static de.symeda.sormas.ui.utils.LayoutUtil.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -69,6 +70,10 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
     //@formatter:off
     private static final String MAIN_HTML_LAYOUT =
                     fluidRowLocs(EpiDataDto.CASE_DETECTION_METHOD_GROUP,EpiDataDto.CASE_DETECTION_METHOD) +
+                    fluidRowLocs(EpiDataDto.FAMILY_HISTORY_OF_LEPROSY, EpiDataDto.CONTACT_EXAMINATION_DONE) +
+                    fluidRowLocs(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT) +
+                    fluidRowLocs(EpiDataDto.NO_OF_SOCIAL_CONTACT) +
+                    fluidRowLocs(EpiDataDto.SKIN_TEST_POSITIVE, EpiDataDto.SKIN_TEST_LEPROSY_RESULT) +
                     fluidRowLocs(MALARIA_EPI_FROM) +
                     loc(LOC_EXPOSURE_INVESTIGATION_HEADING) +
                     loc(EpiDataDto.EXPOSURE_DETAILS_KNOWN) +
@@ -132,7 +137,22 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
         addField(EpiDataDto.LARGE_OUTBREAKS_AREA, NullableOptionGroup.class);
         addField(EpiDataDto.AREA_INFECTED_ANIMALS, NullableOptionGroup.class);
         NullableOptionGroup ogContactWithSourceCaseKnown = addField(EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN, NullableOptionGroup.class);
+        addField(EpiDataDto.FAMILY_HISTORY_OF_LEPROSY, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_EXAMINATION_DONE, NullableOptionGroup.class);
+        addFields(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT, EpiDataDto.NO_OF_SOCIAL_CONTACT);
+        addField(EpiDataDto.SKIN_TEST_POSITIVE, NullableOptionGroup.class);
+        addField(EpiDataDto.SKIN_TEST_LEPROSY_RESULT, NullableOptionGroup.class);
 
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT, EpiDataDto.NO_OF_SOCIAL_CONTACT),
+                EpiDataDto.CONTACT_EXAMINATION_DONE,
+                Arrays.asList(true),
+               true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.SKIN_TEST_LEPROSY_RESULT),
+                EpiDataDto.SKIN_TEST_POSITIVE,
+                Arrays.asList(true),
+                true);
         if (sourceContactsToggleCallback != null) {
             ogContactWithSourceCaseKnown.addValueChangeListener(e -> {
                 YesNoUnknown sourceContactsKnown = (YesNoUnknown) FieldHelper.getNullableSourceFieldValue((Field) e.getProperty());
