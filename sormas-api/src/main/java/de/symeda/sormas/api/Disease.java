@@ -67,7 +67,7 @@ public enum Disease
 	SNAKE_BITE(true, true, true, true, false, 0, true, false, false),
 	RUBELLA(true, false, false, true, false, 0, true, false, false),
 	TUBERCULOSIS(true, true, true, true, false, 0, true, false, false),
-	LEPROSY(true, true, true, true, false, 0, true, false, false),
+	LEPROSY(true, true, true, true, true, 0, true, false, false),
 	LYMPHATIC_FILARIASIS(true, false, false, true, false, 0, true, false, false),
 	BURULI_ULCER(true, false, false, true, false, 0, true, false, false),
 	PERTUSSIS(true, false, false, true, false, 0, true, false, false),
