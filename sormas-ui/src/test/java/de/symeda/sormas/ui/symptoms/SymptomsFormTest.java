@@ -1,20 +1,16 @@
 package de.symeda.sormas.ui.symptoms;
 
-import com.vaadin.v7.ui.Field;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.caze.CaseDataDto;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.symptoms.SymptomsContext;
 import de.symeda.sormas.api.symptoms.SymptomsDto;
-import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import de.symeda.sormas.api.user.PseudonymizableDataAccessLevel;
 import de.symeda.sormas.api.utils.fieldaccess.UiFieldAccessCheckers;
 import de.symeda.sormas.ui.AbstractBeanTest;
 import de.symeda.sormas.ui.utils.ViewMode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SymptomsFormTest extends AbstractBeanTest {
 
@@ -31,7 +27,7 @@ class SymptomsFormTest extends AbstractBeanTest {
 
     @Test
     void testForSAPHUDisease() {
-        SymptomsForm saphuSymForm = createSymptomsForm(Disease.SAPHU);
+        SymptomsForm saphuSymForm = createSymptomsForm(Disease.SHAPU);
         Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.CIRCUMCILIARY_CONGESTION).isVisible());
         Assertions.assertTrue(saphuSymForm.getField(SymptomsDto.PUNCTATE_KERATITIS).isVisible());
     }
