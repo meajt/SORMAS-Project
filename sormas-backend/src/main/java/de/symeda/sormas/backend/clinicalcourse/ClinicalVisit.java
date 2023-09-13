@@ -20,6 +20,7 @@ import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.clinicalcourse.TypeOfClinicalMeasurement;
 import de.symeda.sormas.api.symptoms.DisabilityGrading;
+import de.symeda.sormas.api.symptoms.LeprosyStage;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.symptoms.Symptoms;
 
@@ -48,6 +49,14 @@ public class ClinicalVisit extends AbstractDomainObject {
 	private Integer ehfScore;
 	private DisabilityGrading disabilityGrading;
 	private Boolean ulcer;
+	private Boolean leprosyReaction;
+
+	private LeprosyStage leprosyStage;
+
+	private Date dateOfDiagnosis;
+
+	private String treatmentGiven;
+
 
 	@ManyToOne(cascade = {})
 	@JoinColumn(nullable = false)
@@ -140,4 +149,38 @@ public class ClinicalVisit extends AbstractDomainObject {
 	public void setUlcer(Boolean ulcer) {
 		this.ulcer = ulcer;
 	}
+
+	public Boolean getLeprosyReaction() {
+		return leprosyReaction;
+	}
+
+	public void setLeprosyReaction(Boolean leprosyReaction) {
+		this.leprosyReaction = leprosyReaction;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public LeprosyStage getLeprosyStage() {
+		return leprosyStage;
+	}
+
+	public void setLeprosyStage(LeprosyStage leprosyStage) {
+		this.leprosyStage = leprosyStage;
+	}
+
+	public Date getDateOfDiagnosis() {
+		return dateOfDiagnosis;
+	}
+
+	public void setDateOfDiagnosis(Date dateOfDiagnosis) {
+		this.dateOfDiagnosis = dateOfDiagnosis;
+	}
+
+	public String getTreatmentGiven() {
+		return treatmentGiven;
+	}
+
+	public void setTreatmentGiven(String treatmentGiven) {
+		this.treatmentGiven = treatmentGiven;
+	}
+
 }

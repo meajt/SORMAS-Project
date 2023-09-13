@@ -11,9 +11,12 @@ import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.symptoms.DisabilityGrading;
+import de.symeda.sormas.api.symptoms.LeprosyStage;
 import de.symeda.sormas.api.symptoms.SymptomsDto;
 import de.symeda.sormas.api.utils.*;
 import de.symeda.sormas.api.utils.pseudonymization.PseudonymizableDto;
+
+import static de.symeda.sormas.api.Disease.LEPROSY;
 
 @DependingOnFeatureType(featureType = FeatureType.CLINICAL_MANAGEMENT)
 public class ClinicalVisitDto extends PseudonymizableDto {
@@ -34,6 +37,10 @@ public class ClinicalVisitDto extends PseudonymizableDto {
 	public static final String EHF_SCORE = "ehfScore";
 	public static final String DISABILITY_GRADING = "disabilityGrading";
 	public static final String ULCER = "ulcer";
+	public static final String IS_LEPROSY_REACTION = "leprosyReaction";
+	public static final String LEPROSY_STAGE = "leprosyStage";
+	public static final String DATE_OF_DIAGNOSIS = "dateOfDiagnosis";
+	public static final String TREATMENT_GIVE = "treatmentGiven";
 
 	private ClinicalCourseReferenceDto clinicalCourse;
 	@Valid
@@ -60,6 +67,14 @@ public class ClinicalVisitDto extends PseudonymizableDto {
 
 	@Diseases({Disease.LEPROSY})
 	private Boolean ulcer;
+	@Diseases({LEPROSY})
+	private Boolean leprosyReaction;
+	@Diseases({LEPROSY})
+	private LeprosyStage leprosyStage;
+	@Diseases({LEPROSY})
+	private Date dateOfDiagnosis;
+	@Diseases({LEPROSY})
+	private String treatmentGiven;
 
 	public static ClinicalVisitDto build(ClinicalCourseReferenceDto clinicalCourse, Disease disease) {
 
@@ -151,4 +166,37 @@ public class ClinicalVisitDto extends PseudonymizableDto {
 	public void setUlcer(Boolean ulcer) {
 		this.ulcer = ulcer;
 	}
+
+	public Boolean getLeprosyReaction() {
+		return leprosyReaction;
+	}
+
+	public void setLeprosyReaction(Boolean leprosyReaction) {
+		this.leprosyReaction = leprosyReaction;
+	}
+
+	public LeprosyStage getLeprosyStage() {
+		return leprosyStage;
+	}
+
+	public void setLeprosyStage(LeprosyStage leprosyStage) {
+		this.leprosyStage = leprosyStage;
+	}
+
+	public Date getDateOfDiagnosis() {
+		return dateOfDiagnosis;
+	}
+
+	public void setDateOfDiagnosis(Date dateOfDiagnosis) {
+		this.dateOfDiagnosis = dateOfDiagnosis;
+	}
+
+	public String getTreatmentGiven() {
+		return treatmentGiven;
+	}
+
+	public void setTreatmentGiven(String treatmentGiven) {
+		this.treatmentGiven = treatmentGiven;
+	}
+
 }

@@ -5,11 +5,7 @@ import de.symeda.sormas.api.i18n.I18nProperties;
 public enum DisabilityGrading {
     ZERO,
     ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX;
+    TWO;
 
     @Override
     public String toString() {

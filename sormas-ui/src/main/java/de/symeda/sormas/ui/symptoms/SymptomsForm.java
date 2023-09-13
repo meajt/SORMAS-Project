@@ -113,13 +113,6 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	//@formatter:off
 	private static final String HTML_LAYOUT =
 			loc(CLINICAL_MEASUREMENTS_HEADING_LOC) +
-					fluidRowLocs(REGISTER_AS) +
-					fluidRowLocs(TYPE_OF_LEPROSY, IS_LEPROSY_REACTION) +
-					fluidRowLocs(LEPROSY_STAGE, DATE_OF_DIAGNOSIS) +
-					fluidRowLocs(TREATMENT_GIVE) +
-					fluidRowLocs(EHF_SCORE) +
-					loc(DISABLITY_GRADING_HEADING) +
-					fluidRowLocs(TIME_OF_DIAGNOSIS, TIME_OF_RFT) +
 					fluidRowLocs(TEMPERATURE, TEMPERATURE_SOURCE) +
 					fluidRowLocs(BLOOD_PRESSURE_SYSTOLIC, BLOOD_PRESSURE_DIASTOLIC, HEART_RATE, RESPIRATORY_RATE) +
 					fluidRowLocs(GLASGOW_COMA_SCALE, WEIGHT, HEIGHT, MID_UPPER_ARM_CIRCUMFERENCE) +
@@ -761,32 +754,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			CONJUNCTIVAL_SCARRING,
 			CORNEAL_ULCERATION,
 			CHRONIC_INFECTION);
-		addField(REGISTER_AS, NullableOptionGroup.class);
-		addField(TYPE_OF_LEPROSY, NullableOptionGroup.class);
-		addField(LEPROSY_STAGE, NullableOptionGroup.class);
-		addField(IS_LEPROSY_REACTION, NullableOptionGroup.class);
-		addFields(DATE_OF_DIAGNOSIS, TREATMENT_GIVE, EHF_SCORE);
-		addField(TIME_OF_DIAGNOSIS, NullableOptionGroup.class);
-		addField(TIME_OF_RFT, NullableOptionGroup.class);
-		initializeVisibilitiesAndAllowedVisibilities();
-		List<String> fieldDependOnLeprosyType = Arrays.asList(IS_LEPROSY_REACTION, TIME_OF_DIAGNOSIS, TIME_OF_RFT, EHF_SCORE);
-		// Set visibilities
-		setVisible(false, LEPROSY_STAGE, IS_LEPROSY_REACTION, DATE_OF_DIAGNOSIS, TIME_OF_DIAGNOSIS, TIME_OF_RFT, TREATMENT_GIVE);
-		FieldHelper.setVisibleWhen(getFieldGroup(),
-				fieldDependOnLeprosyType,
-				TYPE_OF_LEPROSY,
-				Arrays.asList(TypeOfLeprosy.MB, TypeOfLeprosy.PB),
-				true);
-		FieldHelper.setVisibleWhen(getFieldGroup(),
-				Arrays.asList(LEPROSY_STAGE),
-				IS_LEPROSY_REACTION,
-				Arrays.asList(true),
-				true);
-		FieldHelper.setVisibleWhen(getFieldGroup(),
-				Arrays.asList(DATE_OF_DIAGNOSIS, TREATMENT_GIVE),
-				LEPROSY_STAGE,
-				Arrays.asList(LeprosyStage.TYPE_I, LeprosyStage.TYPE_II, LeprosyStage.NEURITIS),
-				true);
+
 		NullableOptionGroup feverField = (NullableOptionGroup) getFieldGroup().getField(FEVER);
 		feverField.setImmediate(true);
 

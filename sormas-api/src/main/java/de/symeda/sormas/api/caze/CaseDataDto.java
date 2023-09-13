@@ -18,6 +18,7 @@ package de.symeda.sormas.api.caze;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_FRANCE;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_GERMANY;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_SWITZERLAND;
+import static de.symeda.sormas.api.Disease.LEPROSY;
 import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_BIG;
 
 import java.util.Date;
@@ -30,7 +31,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import de.symeda.sormas.api.CountryHelper;
+import de.symeda.sormas.api.epidata.RegisteredAs;
 import de.symeda.sormas.api.location.LocationDto;
+import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -237,6 +240,9 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String DOSE_THROUGH_RIA = "doseThroughRia";
 	public static final String LAST_VACCINATION_DATE = "lastVaccinationDate";
 	public static final String CASE_OUTCOME = "caseOutcome";
+	public static final String TYPE_OF_LEPROSY = "typeOfLeprosy";
+	public static final String REGISTER_AS = "registeredAs";
+
 	// Fields are declared in the order they should appear in the import template
 
 	@Outbreaks
@@ -637,6 +643,10 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	private Date lastVaccinationDate;
 	@Diseases({Disease.LEPROSY})
 	private CaseOutcome caseOutcome;
+	@Diseases({LEPROSY})
+	private TypeOfLeprosy typeOfLeprosy;
+	@Diseases({LEPROSY})
+	private RegisteredAs registeredAs;
 
 	public static CaseDataDto build(PersonReferenceDto person, Disease disease) {
 		return build(person, disease, HealthConditionsDto.build());
@@ -1875,5 +1885,21 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setCaseOutcome(CaseOutcome caseOutcome) {
 		this.caseOutcome = caseOutcome;
+	}
+
+	public TypeOfLeprosy getTypeOfLeprosy() {
+		return typeOfLeprosy;
+	}
+
+	public void setTypeOfLeprosy(TypeOfLeprosy typeOfLeprosy) {
+		this.typeOfLeprosy = typeOfLeprosy;
+	}
+
+	public RegisteredAs getRegisteredAs() {
+		return registeredAs;
+	}
+
+	public void setRegisteredAs(RegisteredAs registeredAs) {
+		this.registeredAs = registeredAs;
 	}
 }

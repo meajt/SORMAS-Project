@@ -26,11 +26,7 @@ class SymptomsFormTest extends AbstractBeanTest {
     @Test
     void testForDisease() {
         var leprosySymptomsForm = createSymptomsForm(Disease.LEPROSY);
-        Assertions.assertTrue(leprosySymptomsForm.getField(SymptomsDto.TYPE_OF_LEPROSY).isVisible());
-        Assertions.assertFalse(leprosySymptomsForm.getField(SymptomsDto.TIME_OF_RFT).isVisible());
 
-        var maleriaSymptomsForm = createSymptomsForm(Disease.MALARIA);
-        Assertions.assertFalse(maleriaSymptomsForm.getField(SymptomsDto.TYPE_OF_LEPROSY).isVisible());
     }
 
     @Test

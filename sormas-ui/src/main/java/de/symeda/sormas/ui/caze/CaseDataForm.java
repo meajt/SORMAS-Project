@@ -192,8 +192,10 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 									CaseDataDto.DISEASE_DETAILS,
 									CaseDataDto.PLAGUE_TYPE,
 									CaseDataDto.DENGUE_FEVER_TYPE,
-									CaseDataDto.RABIES_TYPE))) +
+									CaseDataDto.RABIES_TYPE,
+									CaseDataDto.TYPE_OF_LEPROSY))) +
 					fluidRowLocs(CaseDataDto.DISEASE_VARIANT, CaseDataDto.DISEASE_VARIANT_DETAILS) +
+					fluidRowLocs(CaseDataDto.REGISTER_AS) +
 					fluidRow(
 							fluidColumnLoc(4, 0, CaseDataDto.RE_INFECTION),
 							fluidColumnLoc(1, 0, REINFECTION_INFO_LOC),
@@ -706,7 +708,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.QUARANTINE_HOME_POSSIBLE_COMMENT, TextField.class);
 		addField(CaseDataDto.QUARANTINE_HOME_SUPPLY_ENSURED, NullableOptionGroup.class);
 		addField(CaseDataDto.QUARANTINE_HOME_SUPPLY_ENSURED_COMMENT, TextField.class);
-
+		addField(CaseDataDto.TYPE_OF_LEPROSY, NullableOptionGroup.class);
+		addField(CaseDataDto.REGISTER_AS, NullableOptionGroup.class);
 		FieldHelper.setVisibleWhen(
 			getFieldGroup(),
 			Arrays.asList(CaseDataDto.QUARANTINE_FROM, CaseDataDto.QUARANTINE_TO, CaseDataDto.QUARANTINE_HELP_NEEDED),

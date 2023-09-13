@@ -226,13 +226,6 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setMuscleWeakness(source.getMuscleWeakness());
 		target.setCaseCondition(source.getCaseCondition());
 		target.setEarPain(source.getEarPain());
-		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
-		target.setLeprosyReaction(source.getLeprosyReaction());
-		target.setDateOfDiagnosis(source.getDateOfDiagnosis());
-		target.setTreatmentGiven(source.getTreatmentGiven());
-		target.setEhfScore(source.getEhfScore());
-		target.setTimeOfDiagnosis(source.getTimeOfDiagnosis());
-		target.setTimeOfRFT(source.getTimeOfRFT());
 		target.setRedEyeWithoutDischarge(source.getRedEyeWithoutDischarge());
 		target.setLeukocoria(source.getLeukocoria());
 		target.setUnilateralInvolvement(source.getUnilateralInvolvement());
@@ -473,13 +466,6 @@ public class SymptomsFacadeEjb implements SymptomsFacade {
 		target.setMuscleWeakness(source.getMuscleWeakness());
 		target.setCaseCondition(source.getCaseCondition());
 		target.setEarPain(source.getEarPain());
-		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
-		target.setLeprosyReaction(source.getLeprosyReaction());
-		target.setDateOfDiagnosis(source.getDateOfDiagnosis());
-		target.setTreatmentGiven(source.getTreatmentGiven());
-		target.setEhfScore(source.getEhfScore());
-		target.setTimeOfDiagnosis(source.getTimeOfDiagnosis());
-		target.setTimeOfRFT(source.getTimeOfRFT());
 		target.setRedEyeWithoutDischarge(source.getRedEyeWithoutDischarge());
 		target.setLeukocoria(source.getLeukocoria());
 		target.setUnilateralInvolvement(source.getUnilateralInvolvement());

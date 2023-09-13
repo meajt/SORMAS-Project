@@ -10,6 +10,7 @@ import de.symeda.sormas.api.clinicalcourse.ClinicalVisitDto;
 import de.symeda.sormas.api.i18n.Descriptions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.person.PersonDto;
+import de.symeda.sormas.api.symptoms.LeprosyStage;
 import de.symeda.sormas.api.symptoms.SymptomsContext;
 import de.symeda.sormas.api.utils.fieldaccess.UiFieldAccessCheckers;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
@@ -17,7 +18,10 @@ import de.symeda.sormas.ui.UserProvider;
 import de.symeda.sormas.ui.symptoms.SymptomsForm;
 import de.symeda.sormas.ui.utils.AbstractEditForm;
 import de.symeda.sormas.ui.utils.DateTimeField;
+import de.symeda.sormas.ui.utils.FieldHelper;
 import de.symeda.sormas.ui.utils.NullableOptionGroup;
+
+import java.util.Arrays;
 
 public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 
@@ -26,7 +30,9 @@ public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 	private static final String HTML_LAYOUT = fluidRowLocs(ClinicalVisitDto.VISIT_DATE_TIME, ClinicalVisitDto.VISITING_PERSON)
 		+ loc(ClinicalVisitDto.VISIT_REMARKS)
 		+ fluidRowLocs(ClinicalVisitDto.TYPE_OF_CLINICAL_MEASUREMENT)
-		+ fluidRowLocs(ClinicalVisitDto.EHF_SCORE, ClinicalVisitDto.DISABILITY_GRADING, ClinicalVisitDto.ULCER)
+		+ fluidRowLocs(ClinicalVisitDto.DISABILITY_GRADING, ClinicalVisitDto.ULCER ,ClinicalVisitDto.EHF_SCORE)
+		+ fluidRowLocs(ClinicalVisitDto.IS_LEPROSY_REACTION)
+		+ fluidRowLocs(ClinicalVisitDto.LEPROSY_STAGE, ClinicalVisitDto.DATE_OF_DIAGNOSIS, ClinicalVisitDto.TREATMENT_GIVE)
 		+ fluidRowLocs(ClinicalVisitDto.SYMPTOMS);
 
 	private final Disease disease;
@@ -81,9 +87,21 @@ public class ClinicalVisitForm extends AbstractEditForm<ClinicalVisitDto> {
 		addField(ClinicalVisitDto.EHF_SCORE);
 		addField(ClinicalVisitDto.DISABILITY_GRADING, NullableOptionGroup.class);
 		addField(ClinicalVisitDto.ULCER, NullableOptionGroup.class);
+		addField(ClinicalVisitDto.IS_LEPROSY_REACTION, NullableOptionGroup.class);
+		addField(ClinicalVisitDto.LEPROSY_STAGE, NullableOptionGroup.class);
+		addFields(ClinicalVisitDto.DATE_OF_DIAGNOSIS, ClinicalVisitDto.TREATMENT_GIVE);
 		setRequired(true, ClinicalVisitDto.VISIT_DATE_TIME);
 		initializeVisibilitiesAndAllowedVisibilities();
 		initializeAccessAndAllowedAccesses();
+		setVisible(false, ClinicalVisitDto.LEPROSY_STAGE, ClinicalVisitDto.DATE_OF_DIAGNOSIS, ClinicalVisitDto.TREATMENT_GIVE);
+		FieldHelper.setVisibleWhen(getFieldGroup(),
+				Arrays.asList(ClinicalVisitDto.LEPROSY_STAGE),
+				ClinicalVisitDto.IS_LEPROSY_REACTION,
+				Arrays.asList(true), true);
+		FieldHelper.setVisibleWhen(getFieldGroup(),
+				Arrays.asList(ClinicalVisitDto.DATE_OF_DIAGNOSIS, ClinicalVisitDto.TREATMENT_GIVE),
+				ClinicalVisitDto.LEPROSY_STAGE,
+				Arrays.asList(LeprosyStage.TYPE_I, LeprosyStage.TYPE_II, LeprosyStage.NEURITIS), true );
 	}
 
 	@Override
