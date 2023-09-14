@@ -134,6 +134,8 @@ import de.symeda.sormas.ui.utils.VaadinUiUtil;
 import de.symeda.sormas.ui.utils.ValidationUtils;
 import de.symeda.sormas.ui.utils.ViewMode;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 
 	private static final long serialVersionUID = 1L;
@@ -1425,6 +1427,10 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					CaseDataDto.QUARANTINE_ORDERED_VERBALLY_DATE,
 					CaseDataDto.QUARANTINE_OFFICIAL_ORDER_SENT,
 					CaseDataDto.QUARANTINE_OFFICIAL_ORDER_SENT_DATE);
+			}
+
+			if(disease == Disease.LEPROSY) {
+				setVisible(false, CaseDataDto.HEALTH_CONDITIONS);
 			}
 
 			// Make external ID field read-only when SORMAS is connected to a SurvNet instance

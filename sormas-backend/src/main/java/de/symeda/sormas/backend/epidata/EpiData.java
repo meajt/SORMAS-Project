@@ -27,6 +27,7 @@ import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.epidata.CaseDetectionMethod;
 import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.symptoms.DisabilityGrading;
+import de.symeda.sormas.api.symptoms.LeprosyResult;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.backend.activityascase.ActivityAsCase;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
@@ -65,7 +66,7 @@ public class EpiData extends AbstractDomainObject {
 	private Integer noOfNeighbourContact;
 	private Integer noOfSocialContact;
 	private Boolean skinSmearTestPositive;
-	private DisabilityGrading leprosyResult;
+	private LeprosyResult leprosyResult;
 	@Enumerated(EnumType.STRING)
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -223,11 +224,11 @@ public class EpiData extends AbstractDomainObject {
 		this.skinSmearTestPositive = skinSmearTestPositive;
 	}
 
-	public DisabilityGrading getLeprosyResult() {
+	public LeprosyResult getLeprosyResult() {
 		return leprosyResult;
 	}
 
-	public void setLeprosyResult(DisabilityGrading result) {
+	public void setLeprosyResult(LeprosyResult result) {
 		this.leprosyResult = result;
 	}
 }

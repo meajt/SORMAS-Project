@@ -125,9 +125,6 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
         }
         ComboBox caseDetectionGroup = addField(EpiDataDto.CASE_DETECTION_METHOD_GROUP, ComboBox.class);
         ComboBox caseDetectionMethod = addField(EpiDataDto.CASE_DETECTION_METHOD);
-        caseDetectionGroup.addValueChangeListener(
-                e -> FieldHelper.updateEnumData(caseDetectionMethod,
-                        CaseDetectionMethod.getCaseDetectionMethod((CaseDetectionMethodGroup) caseDetectionGroup.getValue(), disease)));
         NullableOptionGroup ogExposureDetailsKnown = addField(EpiDataDto.EXPOSURE_DETAILS_KNOWN, NullableOptionGroup.class);
         ExposuresField exposuresField = addField(EpiDataDto.EXPOSURES, ExposuresField.class);
         exposuresField.setEpiDataParentClass(parentClass);
@@ -163,6 +160,11 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 
         initializeVisibilitiesAndAllowedVisibilities();
         initializeAccessAndAllowedAccesses();
+        setVisible(false, EpiDataDto.CASE_DETECTION_METHOD);
+        FieldHelper.setVisibleWhenSourceNotNull(getFieldGroup(), Arrays.asList(EpiDataDto.CASE_DETECTION_METHOD), EpiDataDto.CASE_DETECTION_METHOD_GROUP, true);
+        caseDetectionGroup.addValueChangeListener(
+                e -> FieldHelper.updateEnumData(caseDetectionMethod,
+                        CaseDetectionMethod.getCaseDetectionMethod((CaseDetectionMethodGroup) caseDetectionGroup.getValue(), disease)));
 
         exposuresField.addValueChangeListener(e -> {
             ogExposureDetailsKnown.setEnabled(CollectionUtils.isEmpty(exposuresField.getValue()));

@@ -29,6 +29,7 @@ import de.symeda.sormas.api.activityascase.ActivityAsCaseDto;
 import de.symeda.sormas.api.exposure.ExposureDto;
 import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.symptoms.DisabilityGrading;
+import de.symeda.sormas.api.symptoms.LeprosyResult;
 import de.symeda.sormas.api.utils.*;
 import de.symeda.sormas.api.utils.pseudonymization.PseudonymizableDto;
 
@@ -104,7 +105,7 @@ public class EpiDataDto extends PseudonymizableDto {
 	@Diseases({Disease.LEPROSY})
 	private Boolean skinSmearTestPositive;
 	@Diseases({Disease.LEPROSY})
-	private DisabilityGrading leprosyResult;
+	private LeprosyResult leprosyResult;
 
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -271,11 +272,11 @@ public class EpiDataDto extends PseudonymizableDto {
 		this.skinSmearTestPositive = skinSmearTestPositive;
 	}
 
-	public DisabilityGrading getLeprosyResult() {
+	public LeprosyResult getLeprosyResult() {
 		return leprosyResult;
 	}
 
-	public void setLeprosyResult(DisabilityGrading leprosyResult) {
+	public void setLeprosyResult(LeprosyResult leprosyResult) {
 		this.leprosyResult = leprosyResult;
 	}
 }
