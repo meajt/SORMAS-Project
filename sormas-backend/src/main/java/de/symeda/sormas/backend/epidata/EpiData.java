@@ -24,8 +24,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import de.symeda.auditlog.api.Audited;
+import de.symeda.sormas.api.epidata.*;
 import de.symeda.sormas.api.epidata.CaseDetectionMethod;
-import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.symptoms.DisabilityGrading;
 import de.symeda.sormas.api.symptoms.LeprosyResult;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -33,6 +33,8 @@ import de.symeda.sormas.backend.activityascase.ActivityAsCase;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.common.NotExposedToApi;
 import de.symeda.sormas.backend.exposure.Exposure;
+
+import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_BIG;
 
 @Entity
 @Audited
@@ -67,6 +69,17 @@ public class EpiData extends AbstractDomainObject {
 	private Integer noOfSocialContact;
 	private Boolean skinSmearTestPositive;
 	private LeprosyResult leprosyResult;
+	private YesNoUnknown exposureToMothOrOthers;
+	private ShapuExposureType shapuExposureType;
+	private DirectIndirectExposure directIndirectExposure;
+	private ContactArea contactArea;
+	private ContactItem contactItem;
+	private String otherExposureType;
+	private Date exposureDate;
+	private String remark;
+	private String otherContactArea;
+	private String otherContactItem;
+
 	@Enumerated(EnumType.STRING)
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -230,5 +243,91 @@ public class EpiData extends AbstractDomainObject {
 
 	public void setLeprosyResult(LeprosyResult result) {
 		this.leprosyResult = result;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public YesNoUnknown getExposureToMothOrOthers() {
+		return exposureToMothOrOthers;
+	}
+
+	public void setExposureToMothOrOthers(YesNoUnknown exposureToMothOrOthers) {
+		this.exposureToMothOrOthers = exposureToMothOrOthers;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public ShapuExposureType getShapuExposureType() {
+		return shapuExposureType;
+	}
+
+	public void setShapuExposureType(ShapuExposureType shapuExposureType) {
+		this.shapuExposureType = shapuExposureType;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public DirectIndirectExposure getDirectIndirectExposure() {
+		return directIndirectExposure;
+	}
+
+	public void setDirectIndirectExposure(DirectIndirectExposure directIndirectExposure) {
+		this.directIndirectExposure = directIndirectExposure;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public ContactArea getContactArea() {
+		return contactArea;
+	}
+
+	public void setContactArea(ContactArea contactArea) {
+		this.contactArea = contactArea;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public ContactItem getContactItem() {
+		return contactItem;
+	}
+
+	public void setContactItem(ContactItem contactItem) {
+		this.contactItem = contactItem;
+	}
+
+	public String getOtherExposureType() {
+		return otherExposureType;
+	}
+
+	public void setOtherExposureType(String otherExposureType) {
+		this.otherExposureType = otherExposureType;
+	}
+
+	public Date getExposureDate() {
+		return exposureDate;
+	}
+
+	public void setExposureDate(Date exposureDate) {
+		this.exposureDate = exposureDate;
+	}
+
+	@Column(length = CHARACTER_LIMIT_BIG)
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getOtherContactArea() {
+		return otherContactArea;
+	}
+
+	public void setOtherContactArea(String otherContactArea) {
+		this.otherContactArea = otherContactArea;
+	}
+
+	public String getOtherContactItem() {
+		return otherContactItem;
+	}
+
+	public void setOtherContactItem(String otherContactItem) {
+		this.otherContactItem = otherContactItem;
 	}
 }
