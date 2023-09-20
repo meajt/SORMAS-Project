@@ -73,15 +73,15 @@ public class EpiDataDto extends PseudonymizableDto {
 	public static final String REMARK = "remark";
 	public static final String OTHER_CONTACT_AREA = "otherContactArea";
 	public static final String OTHER_CONTACT_ITEM = "otherContactItem";
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown exposureDetailsKnown;
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown activityAsCaseDetailsKnown;
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown contactWithSourceCaseKnown;
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown highTransmissionRiskArea;
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown largeOutbreaksArea;
 	@Diseases(value = {Disease.SHAPU}, hide = true)
 	private CaseDetectionMethodGroup caseDetectionMethodGroup;
@@ -94,15 +94,15 @@ public class EpiDataDto extends PseudonymizableDto {
 		Disease.POLIO,
 		Disease.UNDEFINED,
 		Disease.OTHER })
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private YesNoUnknown areaInfectedAnimals;
 
 	@Valid
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private List<ExposureDto> exposures = new ArrayList<>();
 
 	@Valid
-	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
+	//@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private List<ActivityAsCaseDto> activitiesAsCase = new ArrayList<>();
 	private MalariaEpiDataDto malariaEpiData;
 
