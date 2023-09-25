@@ -199,7 +199,7 @@ public class DashboardFacadeEjbTest extends AbstractBeanTest {
 		CaseDataDto caze = creator.createCase(
 			user.toReference(),
 			cazePerson.toReference(),
-			Disease.EVD,
+			Disease.CORONAVIRUS,
 			CaseClassification.PROBABLE,
 			InvestigationStatus.PENDING,
 			DateHelper.subtractDays(referenceDate, 2),
@@ -209,7 +209,7 @@ public class DashboardFacadeEjbTest extends AbstractBeanTest {
 		CaseDataDto caze2 = creator.createCase(
 			user.toReference(),
 			cazePerson2.toReference(),
-			Disease.EVD,
+			Disease.CORONAVIRUS,
 			CaseClassification.PROBABLE,
 			InvestigationStatus.PENDING,
 			DateHelper.addDays(referenceDate, 1),
@@ -219,7 +219,7 @@ public class DashboardFacadeEjbTest extends AbstractBeanTest {
 		CaseDataDto caze3 = creator.createCase(
 			user.toReference(),
 			cazePerson3.toReference(),
-			Disease.EVD,
+			Disease.CORONAVIRUS,
 			CaseClassification.PROBABLE,
 			InvestigationStatus.PENDING,
 			DateHelper.addDays(referenceDate, 2),
@@ -229,7 +229,7 @@ public class DashboardFacadeEjbTest extends AbstractBeanTest {
 		CaseDataDto caze4 = creator.createCase(
 			user.toReference(),
 			cazePerson4.toReference(),
-			Disease.EVD,
+			Disease.CORONAVIRUS,
 			CaseClassification.PROBABLE,
 			InvestigationStatus.PENDING,
 			referenceDate,
@@ -244,7 +244,7 @@ public class DashboardFacadeEjbTest extends AbstractBeanTest {
 			DateHelper.getEndOfDay(DateHelper.subtractDays(referenceDate, 1)),
 			NewCaseDateType.MOST_RELEVANT);
 
-		DiseaseBurdenDto evdBurden = diseaseBurdenForDashboard.stream().filter(dto -> dto.getDisease() == Disease.EVD).findFirst().get();
+		DiseaseBurdenDto evdBurden = diseaseBurdenForDashboard.stream().filter(dto -> dto.getDisease() == Disease.CORONAVIRUS).findFirst().get();
 		assertEquals(new Long(3), evdBurden.getCaseCount());
 		assertEquals(new Long(1), evdBurden.getPreviousCaseCount());
 		assertEquals(rdcf.district.getCaption(), evdBurden.getLastReportedDistrictName());

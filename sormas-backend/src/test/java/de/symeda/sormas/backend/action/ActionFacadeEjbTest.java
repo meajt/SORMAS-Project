@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.symeda.sormas.api.action.ActionReplyDto;
 import org.junit.jupiter.api.Test;
 
 import de.symeda.sormas.api.Disease;
@@ -122,5 +123,21 @@ public class ActionFacadeEjbTest extends AbstractBeanTest {
 		sortProperties.add(new SortProperty(EventActionIndexDto.ACTION_LAST_MODIFIED_BY));
 
 		assertEquals(2, getActionFacade().getEventActionList(new EventCriteria(), null, null, sortProperties).size());
+	}
+
+	@Test
+	public void testActionReplay() {
+		TestDataCreator.RDCF rdcf = creator.createRDCF("Region", "District", "Community", "Facility");
+		UserDto user = creator.createUser(rdcf, creator.getUserRoleReference(DefaultUserRole.SURVEILLANCE_SUPERVISOR));
+		EventDto eventDto = creator.createEvent(user.toReference());
+		ActionDto actionDto = creator.createAction(eventDto.toReference());
+		actionDto.setReply("add");
+		actionDto = getActionFacade().saveAction(actionDto);
+		assertEquals("", actionDto.getReply());
+		actionDto.setReply("add More");
+		actionDto = getActionFacade().saveAction(actionDto);
+		List<ActionReplyDto> actionReplyDtoList = getActionReplyFacade().getActionReply(actionDto.toReference());
+		assertEquals(2, actionReplyDtoList.size());
+
 	}
 }

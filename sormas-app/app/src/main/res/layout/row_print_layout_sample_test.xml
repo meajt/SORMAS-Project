@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tested_type"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"/>
+            <TextView
+                android:id="@+id/tested_disease"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"/>
+            <TextView
+                android:id="@+id/tested_result"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+</layout>

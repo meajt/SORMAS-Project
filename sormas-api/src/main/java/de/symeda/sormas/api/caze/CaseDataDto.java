@@ -18,6 +18,7 @@ package de.symeda.sormas.api.caze;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_FRANCE;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_GERMANY;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_SWITZERLAND;
+import static de.symeda.sormas.api.Disease.LEPROSY;
 import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_BIG;
 
 import java.util.Date;
@@ -30,6 +31,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import de.symeda.sormas.api.CountryHelper;
+import de.symeda.sormas.api.epidata.RegisteredAs;
+import de.symeda.sormas.api.location.LocationDto;
+import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -116,9 +121,11 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String RESPONSIBLE_REGION = "responsibleRegion";
 	public static final String RESPONSIBLE_DISTRICT = "responsibleDistrict";
 	public static final String RESPONSIBLE_COMMUNITY = "responsibleCommunity";
+	public static final String RESPONSIBLE_WARD_NO = "responsibleWardNo";
 	public static final String REGION = "region";
 	public static final String DISTRICT = "district";
 	public static final String COMMUNITY = "community";
+	public static final String WARD_NO = "wardNo";
 	public static final String HEALTH_FACILITY = "healthFacility";
 	public static final String HEALTH_FACILITY_DETAILS = "healthFacilityDetails";
 	public static final String REPORTING_USER = "reportingUser";
@@ -149,12 +156,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String OUTCOME_DATE = "outcomeDate";
 	public static final String SEQUELAE = "sequelae";
 	public static final String SEQUELAE_DETAILS = "sequelaeDetails";
+	public static final String CASE_OUTCOME_OTHER_DETAILS = "caseOutcomeOtherDetails";
 	public static final String CLINICIAN_NAME = "clinicianName";
 	public static final String CLINICIAN_PHONE = "clinicianPhone";
 	public static final String CLINICIAN_EMAIL = "clinicianEmail";
 	public static final String NOTIFYING_CLINIC = "notifyingClinic";
 	public static final String NOTIFYING_CLINIC_DETAILS = "notifyingClinicDetails";
 	public static final String CASE_ORIGIN = "caseOrigin";
+	public static final String REGISTRATION_NO = "registrationNo";
 	public static final String POINT_OF_ENTRY = "pointOfEntry";
 	public static final String POINT_OF_ENTRY_DETAILS = "pointOfEntryDetails";
 	public static final String ADDITIONAL_DETAILS = "additionalDetails";
@@ -225,6 +234,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String EXTERNAL_DATA = "externalData";
 	public static final String DELETION_REASON = "deletionReason";
 	public static final String OTHER_DELETION_REASON = "otherDeletionReason";
+	public static final String TYPE_OF_SOURCE = "typeOfSource";
+	public static final String ROUTINE_DOSE_TAKEN = "routineDoseTaken";
+	public static final String DOSE_THROUGH_RI = "doseThroughRi";
+	public static final String DOSE_THROUGH_RIA = "doseThroughRia";
+	public static final String LAST_VACCINATION_DATE = "lastVaccinationDate";
+	public static final String CASE_OUTCOME = "caseOutcome";
+	public static final String TYPE_OF_LEPROSY = "typeOfLeprosy";
+	public static final String REGISTER_AS = "registeredAs";
 
 	// Fields are declared in the order they should appear in the import template
 
@@ -319,6 +336,16 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@PersonalData
 	@SensitiveData
 	private CommunityReferenceDto responsibleCommunity;
+    @SensitiveData
+    @Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
+    private String caseOutcomeOtherDetails;
+
+	@Outbreaks
+	@PersonalData
+	@SensitiveData
+	@Min(value = LocationDto.MIN_WARD_NO_VALUE, message = Validations.numberTooSmall)
+	@Max(value = LocationDto.MAX_WARD_NO_VALUE, message = Validations.numberTooBig)
+	private Integer responsibleWardNo;
 
 	@Outbreaks
 	private RegionReferenceDto region;
@@ -328,6 +355,13 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@PersonalData
 	@SensitiveData
 	private CommunityReferenceDto community;
+
+	@Outbreaks
+	@PersonalData
+	@SensitiveData
+	@Min(value = LocationDto.MIN_WARD_NO_VALUE, message = Validations.numberTooSmall)
+	@Max(value = LocationDto.MAX_WARD_NO_VALUE, message = Validations.numberTooBig)
+	private Integer wardNo;
 	@PersonalData(mandatoryField = true)
 	@SensitiveData(mandatoryField = true)
 	private FacilityType facilityType;
@@ -348,7 +382,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Diseases({
 		Disease.AFP,
 		Disease.GUINEA_WORM,
-		Disease.MEASLES,
+		Disease.MEASLES,Disease.CHICKENPOX,Disease.FEVER_WITH_RASH,
 		Disease.POLIO,
 		Disease.YELLOW_FEVER,
 		Disease.CSM,
@@ -423,6 +457,7 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Valid
 	private PortHealthInfoDto portHealthInfo;
 	private CaseOrigin caseOrigin;
+	private String registrationNo;
 	@PersonalData(mandatoryField = true)
 	@SensitiveData(mandatoryField = true)
 	private PointOfEntryReferenceDto pointOfEntry;
@@ -442,9 +477,11 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	private String externalID;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_EXTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String externalToken;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_INTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String internalToken;
 	private boolean sharedToCountry;
 	@HideForCountriesExcept
@@ -590,6 +627,19 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String otherDeletionReason;
+
+	private TypeOfInformationSource typeOfSource;
+
+	private VaccinationRoutineDoseTaken routineDoseTaken;
+	private Integer doseThroughRi;
+	private Integer doseThroughRia;
+	private Date lastVaccinationDate;
+	@Diseases({Disease.LEPROSY})
+	private CaseOutcome caseOutcome;
+	@Diseases({LEPROSY})
+	private TypeOfLeprosy typeOfLeprosy;
+	@Diseases({LEPROSY})
+	private RegisteredAs registeredAs;
 
 	public static CaseDataDto build(PersonReferenceDto person, Disease disease) {
 		return build(person, disease, HealthConditionsDto.build());
@@ -996,6 +1046,15 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 		this.responsibleCommunity = responsibleCommunity;
 	}
 
+	public Integer getResponsibleWardNo() {
+		return responsibleWardNo;
+	}
+
+	public void setResponsibleWardNo(Integer responsibleWardNo) {
+		this.responsibleWardNo = responsibleWardNo;
+	}
+
+
 	public RegionReferenceDto getRegion() {
 		return region;
 	}
@@ -1018,6 +1077,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setCommunity(CommunityReferenceDto community) {
 		this.community = community;
+	}
+
+	public Integer getWardNo() {
+		return wardNo;
+	}
+
+	public void setWardNo(Integer wardNo) {
+		this.wardNo = wardNo;
 	}
 
 	public InvestigationStatus getInvestigationStatus() {
@@ -1180,6 +1247,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 		this.sequelaeDetails = sequelaeDetails;
 	}
 
+	public String getCaseOutcomeOtherDetails() {
+		return caseOutcomeOtherDetails;
+	}
+
+	public void setCaseOutcomeOtherDetails(String caseOutcomeOtherDetails) {
+		this.caseOutcomeOtherDetails = caseOutcomeOtherDetails;
+	}
+
 	public HospitalWardType getNotifyingClinic() {
 		return notifyingClinic;
 	}
@@ -1211,6 +1286,14 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setCaseOrigin(CaseOrigin caseOrigin) {
 		this.caseOrigin = caseOrigin;
+	}
+
+	public String getRegistrationNo() {
+		return registrationNo;
+	}
+
+	public void setRegistrationNo(String registrationNo) {
+		this.registrationNo = registrationNo;
 	}
 
 	public PointOfEntryReferenceDto getPointOfEntry() {
@@ -1747,5 +1830,69 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	@Override
 	public String toString() {
 		return super.toString() + (StringUtils.isNotBlank(this.getExternalID()) ? " - " + this.getExternalID() : StringUtils.EMPTY);
+	}
+
+	public TypeOfInformationSource getTypeOfSource() {
+		return typeOfSource;
+	}
+
+	public void setTypeOfSource(TypeOfInformationSource typeOfSource) {
+		this.typeOfSource = typeOfSource;
+	}
+
+	public VaccinationRoutineDoseTaken getRoutineDoseTaken() {
+		return routineDoseTaken;
+	}
+
+	public void setRoutineDoseTaken(VaccinationRoutineDoseTaken routineDoseTaken) {
+		this.routineDoseTaken = routineDoseTaken;
+	}
+
+	public Integer getDoseThroughRi() {
+		return doseThroughRi;
+	}
+
+	public void setDoseThroughRi(Integer doseThroughRi) {
+		this.doseThroughRi = doseThroughRi;
+	}
+
+	public Integer getDoseThroughRia() {
+		return doseThroughRia;
+	}
+
+	public void setDoseThroughRia(Integer doseThroughRia) {
+		this.doseThroughRia = doseThroughRia;
+	}
+
+	public Date getLastVaccinationDate() {
+		return lastVaccinationDate;
+	}
+
+	public void setLastVaccinationDate(Date lastVaccinationDate) {
+		this.lastVaccinationDate = lastVaccinationDate;
+	}
+
+	public CaseOutcome getCaseOutcome() {
+		return caseOutcome;
+	}
+
+	public void setCaseOutcome(CaseOutcome caseOutcome) {
+		this.caseOutcome = caseOutcome;
+	}
+
+	public TypeOfLeprosy getTypeOfLeprosy() {
+		return typeOfLeprosy;
+	}
+
+	public void setTypeOfLeprosy(TypeOfLeprosy typeOfLeprosy) {
+		this.typeOfLeprosy = typeOfLeprosy;
+	}
+
+	public RegisteredAs getRegisteredAs() {
+		return registeredAs;
+	}
+
+	public void setRegisteredAs(RegisteredAs registeredAs) {
+		this.registeredAs = registeredAs;
 	}
 }

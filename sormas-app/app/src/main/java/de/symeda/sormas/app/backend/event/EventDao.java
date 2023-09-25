@@ -24,6 +24,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import de.symeda.sormas.api.Disease;
@@ -186,13 +187,19 @@ public class EventDao extends AbstractAdoDao<Event> {
 				QueryBuilder.JoinType.LEFT,
 				QueryBuilder.JoinWhereOperation.AND);
 			queryBuilder.leftJoin(eventParticipantQueryBuilder);
-
-			whereStatements.add(
-				where.or(
-					where.and(
-						where.eq(Event.DISEASE, criteria.getDisease()),
-						where.raw(Case.TABLE_NAME + "." + Case.UUID + "!= '" + criteria.getCaze().getUuid() + "'")),
-					where.and(where.raw(Case.TABLE_NAME + "." + Case.UUID + " IS NULL"), where.eq(Event.DISEASE, criteria.getDisease()))));
+			if (criteria.getCaze() != null) {
+				whereStatements.add(
+						where.or(
+								where.and(
+										where.eq(Event.DISEASE, criteria.getDisease()),
+										where.raw(Case.TABLE_NAME + "." + Case.UUID + "!= '" + criteria.getCaze().getUuid() + "'")),
+								where.and(where.raw(Case.TABLE_NAME + "." + Case.UUID + " IS NULL"), where.eq(Event.DISEASE, criteria.getDisease()))));
+			} else  {
+				whereStatements.add(where.eq(Event.DISEASE, criteria.getDisease()));
+				if (criteria.getEventStatus() != null) {
+					whereStatements.add(where.eq(Event.EVENT_STATUS, criteria.getEventStatus()));
+				}
+			}
 
 		} else {
 			if (criteria.getCaze() != null) {
@@ -211,6 +218,11 @@ public class EventDao extends AbstractAdoDao<Event> {
 					whereStatements.add(where.eq(Event.EVENT_STATUS, criteria.getEventStatus()));
 				}
 			}
+		}
+
+		if (!TextUtils.isEmpty(criteria.getTextFilter())) {
+			String filterText = "%" + criteria.getTextFilter().toLowerCase() + "%";
+			whereStatements.add(where.raw(Event.TABLE_NAME+"."+Event.EVENT_TITLE+" LIKE '" + filterText.replaceAll("'", "''") + "'"));
 		}
 
 		if (!whereStatements.isEmpty()) {

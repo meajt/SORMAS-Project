@@ -14,6 +14,14 @@
  */
 package de.symeda.sormas.api.sample;
 
+import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.sample.ncd.LipidProfileSampleDto;
+import de.symeda.sormas.api.sample.ncd.RftSampleDto;
+import de.symeda.sormas.api.utils.*;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -78,6 +86,12 @@ public class SampleDto extends SormasToSormasShareableDto {
 	public static final String SAMPLING_REASON_DETAILS = "samplingReasonDetails";
 	public static final String DELETION_REASON = "deletionReason";
 	public static final String OTHER_DELETION_REASON = "otherDeletionReason";
+	public static final String HAS_PREMIUM_HEALTH_PACKAGE = "hasPremiumHealthPackage";
+	public static final String HAS_RFT = "hasRFT";
+	public static final String HAS_LIPID_PROFILE = "hasLipidProfile";
+	public static final String HAS_LFT = "hasLFT";
+	public static final String HAS_URINE_RE = "hasUrineRE";
+	public static final String HAS_COMPLETE_BLOOD_COUNT = "hasCompleteBloodCount";
 
 	private CaseReferenceDto associatedCase;
 	private ContactReferenceDto associatedContact;
@@ -556,4 +570,5 @@ public class SampleDto extends SormasToSormasShareableDto {
 	public void setOtherDeletionReason(String otherDeletionReason) {
 		this.otherDeletionReason = otherDeletionReason;
 	}
+
 }

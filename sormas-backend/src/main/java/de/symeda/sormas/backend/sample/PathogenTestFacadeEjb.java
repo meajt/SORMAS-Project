@@ -37,6 +37,8 @@ import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,6 +234,8 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 	}
 
 	public PathogenTestDto savePathogenTest(@Valid PathogenTestDto dto, boolean checkChangeDate, boolean syncShares) {
+		CustomLoggerFactory.getLogger(LoggerType.WEB)
+				.logObj("@savePathogenTest", dto);
 		PathogenTest existingSampleTest = pathogenTestService.getByUuid(dto.getUuid());
 		FacadeHelper.checkCreateAndEditRights(existingSampleTest, userService, UserRight.PATHOGEN_TEST_CREATE, UserRight.PATHOGEN_TEST_EDIT);
 
@@ -585,6 +589,18 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 				logger.error("EmailDeliveryFailedException when trying to notify supervisors " + "about the arrival of a lab result.");
 			}
 		}
+	}
+
+	public PathogenTestDto copyPathogenTest(PathogenTestDto source) {
+		CustomLoggerFactory.getLogger(LoggerType.WEB)
+				.logObj("@copyPathogenTest", source);
+		PathogenTestDto newPathogenTest = PathogenTestDto.build(source.getSample(), source.getLabUser());
+		newPathogenTest.setLab(source.getLab());
+		newPathogenTest.setSample(source.getSample());
+		newPathogenTest.setTestType(source.getTestType());
+		newPathogenTest.setTestDateTime(source.getTestDateTime());
+		newPathogenTest.setTestResultVerified(source.getTestResultVerified());
+		return newPathogenTest;
 	}
 
 	@LocalBean

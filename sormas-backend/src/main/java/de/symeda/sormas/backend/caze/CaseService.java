@@ -56,6 +56,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.CollectionUtils;
+import de.symeda.sormas.api.user.UserRight;
 import org.apache.commons.lang3.StringUtils;
 
 import de.symeda.sormas.api.Disease;
@@ -947,29 +948,37 @@ public class CaseService extends AbstractCoreAdoService<Case, CaseJoins> {
 				from,
 				ExternalShareInfo.CAZE,
 				(latestShareDate) -> createChangeDateFilter(cq, cb, joins, latestShareDate, true, true)));
-
+		filter = getAccessOtherUserDataFilter(cb, reportingUser, filter);
 		return filter;
 	}
 
-	private Predicate createRelevanceStatusFilter(CaseCriteria caseCriteria, CaseQueryContext caseQueryContext) {
+    private Predicate createRelevanceStatusFilter(CaseCriteria caseCriteria, CaseQueryContext caseQueryContext) {
 
-		final From<?, Case> from = caseQueryContext.getRoot();
-		final CriteriaBuilder cb = caseQueryContext.getCriteriaBuilder();
+        final From<?, Case> from = caseQueryContext.getRoot();
+        final CriteriaBuilder cb = caseQueryContext.getCriteriaBuilder();
 
-		Predicate filter = null;
+        Predicate filter = null;
 
-		if (caseCriteria.getRelevanceStatus() != null) {
-			if (caseCriteria.getRelevanceStatus() == EntityRelevanceStatus.ACTIVE) {
-				filter = CriteriaBuilderHelper.and(cb, filter, cb.or(cb.equal(from.get(Case.ARCHIVED), false), cb.isNull(from.get(Case.ARCHIVED))));
-			} else if (caseCriteria.getRelevanceStatus() == EntityRelevanceStatus.ARCHIVED) {
-				filter = CriteriaBuilderHelper.and(cb, filter, cb.equal(from.get(Case.ARCHIVED), true));
-			} else if (caseCriteria.getRelevanceStatus() == EntityRelevanceStatus.DELETED) {
-				filter = CriteriaBuilderHelper.and(cb, filter, cb.equal(from.get(Case.DELETED), true));
-			}
-		}
-		if (caseCriteria.getRelevanceStatus() != EntityRelevanceStatus.DELETED) {
-			filter = CriteriaBuilderHelper.and(cb, filter, createDefaultFilter(cb, from));
-		}
+        if (caseCriteria.getRelevanceStatus() != null) {
+            if (caseCriteria.getRelevanceStatus() == EntityRelevanceStatus.ACTIVE) {
+                filter = CriteriaBuilderHelper.and(cb, filter, cb.or(cb.equal(from.get(Case.ARCHIVED), false), cb.isNull(from.get(Case.ARCHIVED))));
+            } else if (caseCriteria.getRelevanceStatus() == EntityRelevanceStatus.ARCHIVED) {
+                filter = CriteriaBuilderHelper.and(cb, filter, cb.equal(from.get(Case.ARCHIVED), true));
+            } else if (caseCriteria.getRelevanceStatus() == EntityRelevanceStatus.DELETED) {
+                filter = CriteriaBuilderHelper.and(cb, filter, cb.equal(from.get(Case.DELETED), true));
+            }
+        }
+        if (caseCriteria.getRelevanceStatus() != EntityRelevanceStatus.DELETED) {
+            filter = CriteriaBuilderHelper.and(cb, filter, createDefaultFilter(cb, from));
+        }
+        return filter;
+    }
+
+	private  Predicate getAccessOtherUserDataFilter(CriteriaBuilder cb, Join<Case, User> reportingUser, Predicate filter) {
+		User currentUser =  getCurrentUser();
+		if(currentUser.hasUserRight(UserRight.OTHER_USER_DATA))
+			return filter;
+		filter = CriteriaBuilderHelper.and(cb, filter, cb.equal(reportingUser.get(AbstractDomainObject.ID), currentUser.getId()));
 		return filter;
 	}
 
@@ -1937,7 +1946,7 @@ public class CaseService extends AbstractCoreAdoService<Case, CaseJoins> {
 
 	/**
 	 * Performance: May be slow when there are 10000s of cases with similar report date in the same region.
-	 * 
+	 *
 	 * @param limit
 	 *            null: no limit
 	 */

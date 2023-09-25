@@ -20,7 +20,9 @@ import static android.view.View.VISIBLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,7 @@ import androidx.annotation.Nullable;
 
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.formfilter.NepalFormFilterConstance;
 import de.symeda.sormas.api.infrastructure.facility.FacilityDto;
 import de.symeda.sormas.api.sample.AdditionalTestType;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
@@ -57,6 +60,7 @@ import de.symeda.sormas.app.backend.sample.PathogenTest;
 import de.symeda.sormas.app.backend.sample.Sample;
 import de.symeda.sormas.app.barcode.BarcodeActivity;
 import de.symeda.sormas.app.component.Item;
+import de.symeda.sormas.app.component.controls.ControlCheckBoxGroupField;
 import de.symeda.sormas.app.databinding.FragmentSampleEditLayoutBinding;
 import de.symeda.sormas.app.sample.read.SampleReadActivity;
 import de.symeda.sormas.app.util.DataUtils;
@@ -324,6 +328,7 @@ public class SampleEditFragment extends BaseEditFragment<FragmentSampleEditLayou
 		} else {
 			contentBinding.sampleRequestedPathogenTestsTags.setVisibility(GONE);
 			contentBinding.sampleRequestedPathogenTests.removeItem(PathogenTestType.OTHER);
+			filterPathogenTestForNepal(contentBinding.sampleRequestedPathogenTests);
 			contentBinding.sampleRequestedAdditionalTestsTags.setVisibility(GONE);
 		}
 
@@ -331,6 +336,16 @@ public class SampleEditFragment extends BaseEditFragment<FragmentSampleEditLayou
 			&& !DatabaseHelper.getFeatureConfigurationDao().isFeatureDisabled(FeatureType.ADDITIONAL_TESTS)) {
 			contentBinding.additionalTestingLayout.setVisibility(GONE);
 		}
+	}
+
+	private void filterPathogenTestForNepal(ControlCheckBoxGroupField checkBoxGroupField)
+	{
+		Set<PathogenTestType> pathogenTestTypes = new HashSet<>(Arrays.asList(NepalFormFilterConstance.pathogenTestTypeToShowArray));
+		List<PathogenTestType> valueToFilter = Arrays.stream(PathogenTestType.values())
+				.filter(it -> !pathogenTestTypes.contains(it))
+				.collect(Collectors.toList());
+		for (PathogenTestType i : valueToFilter)
+			checkBoxGroupField.removeItem(i);
 	}
 
 	@Override

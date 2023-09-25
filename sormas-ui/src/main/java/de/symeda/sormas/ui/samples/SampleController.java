@@ -369,7 +369,7 @@ public class SampleController {
 
 		editView.addCommitListener(() -> {
 			if (!form.getFieldGroup().isModified()) {
-				SampleDto changedDto = form.getValue();
+				SampleDto changedDto = form.getValue();;
 				SampleDto originalDto = FacadeProvider.getSampleFacade().getSampleByUuid(changedDto.getUuid());
 				FacadeProvider.getSampleFacade().saveSample(changedDto);
 				SormasUI.refreshView();

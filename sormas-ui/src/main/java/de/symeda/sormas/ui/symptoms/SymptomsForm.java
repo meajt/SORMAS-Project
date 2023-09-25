@@ -20,14 +20,7 @@ import static de.symeda.sormas.ui.utils.CssStyles.H3;
 import static de.symeda.sormas.ui.utils.CssStyles.H4;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_NONE;
-import static de.symeda.sormas.ui.utils.LayoutUtil.fluidColumn;
-import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRow;
-import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowCss;
-import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocs;
-import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocsCss;
-import static de.symeda.sormas.ui.utils.LayoutUtil.loc;
-import static de.symeda.sormas.ui.utils.LayoutUtil.locCss;
-import static de.symeda.sormas.ui.utils.LayoutUtil.locsCss;
+import static de.symeda.sormas.ui.utils.LayoutUtil.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,11 +66,7 @@ import de.symeda.sormas.api.i18n.Strings;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PersonDto;
-import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
-import de.symeda.sormas.api.symptoms.SymptomState;
-import de.symeda.sormas.api.symptoms.SymptomsContext;
-import de.symeda.sormas.api.symptoms.SymptomsDto;
-import de.symeda.sormas.api.symptoms.SymptomsHelper;
+import de.symeda.sormas.api.symptoms.*;
 import de.symeda.sormas.api.utils.DateComparator;
 import de.symeda.sormas.api.utils.SymptomGroup;
 import de.symeda.sormas.api.utils.SymptomGrouping;
@@ -105,6 +94,9 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	private static final String URINARY_SIGNS_AND_SYMPTOMS_HEADING_LOC = "urinarySignsAndSymptomsHeadingLoc";
 	private static final String NERVOUS_SYSTEM_SIGNS_AND_SYMPTOMS_HEADING_LOC = "nervousSystemSignsAndSymptomsHeadingLoc";
 	private static final String SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC = "skinSignsAndSymptomsHeadingLoc";
+	private static final String MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "muscularSignsAndSymptomsHeadingLoc";
+	private static final String EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC = "eyeSignsAndSymptomsHeadingLoc";
+	private static final String EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC = "earSignsAndSymptomsHeadingLoc";
 	private static final String OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC = "otherSignsAndSymptomsHeadingLoc";
 	private static final String BUTTONS_LOC = "buttonsLoc";
 	private static final String LESIONS_LOCATIONS_LOC = "lesionsLocationsLoc";
@@ -114,6 +106,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	private static final String MONKEYPOX_LESIONS_IMG4 = "monkeypoxLesionsImg4";
 	private static final String SYMPTOMS_HINT_LOC = "symptomsHintLoc";
 	private static final String COMPLICATIONS_HEADING = "complicationsHeading";
+	private static final String DISABLITY_GRADING_HEADING = "disablityGradingHeading";
 
 	private static Map<String, List<String>> symptomGroupMap = new HashMap();
 
@@ -127,6 +120,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 					fluidRowCss(VSPACE_3,
 							//XXX #1620 fluidColumnLoc?
 							fluidColumn(8, 0, loc(SYMPTOMS_HINT_LOC))) +
+					fluidRow(oneOfTwoCol(CASE_CONDITION)) +
 					fluidRow(fluidColumn(8,4, locCss(CssStyles.ALIGN_RIGHT,BUTTONS_LOC)))+
 					createSymptomGroupLayout(SymptomGroup.GENERAL, GENERAL_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.RESPIRATORY, RESPIRATORY_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
@@ -135,6 +129,9 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 					createSymptomGroupLayout(SymptomGroup.URINARY, URINARY_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.NERVOUS_SYSTEM, NERVOUS_SYSTEM_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.SKIN, SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
+					createSymptomGroupLayout(SymptomGroup.MUSCULAR, MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
+					createSymptomGroupLayout(SymptomGroup.EYE, EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
+					createSymptomGroupLayout(SymptomGroup.EAR, EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					createSymptomGroupLayout(SymptomGroup.OTHER, OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC) +
 					locsCss(VSPACE_3, PATIENT_ILL_LOCATION, SYMPTOMS_COMMENTS) +
 					fluidRowLocsCss(VSPACE_3, ONSET_SYMPTOM, ONSET_DATE) +
@@ -143,7 +140,14 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 							fluidColumn(6, 0,
 									locsCss(VSPACE_3,
 											ALTERED_CONSCIOUSNESS, CONFUSED_DISORIENTED, HEMORRHAGIC_SYNDROME,
-											HYPERGLYCEMIA, HYPOGLYCEMIA, OTHER_COMPLICATIONS,
+											RETINAL_DETACHMENT, RETINAL_NECROSIS, HYOPTONY,
+											HYPERGLYCEMIA, HYPOGLYCEMIA,
+											PUNCTATE_KERATITIS,
+											BACTERIAL_SUPERINFECTION,
+											CONJUNCTIVAL_SCARRING,
+											CORNEAL_ULCERATION,
+											CHRONIC_INFECTION,
+											CATARACT, PTHTHISIS_BULBI, OTHER_COMPLICATIONS,
 											OTHER_COMPLICATIONS_TEXT)),
 							fluidColumn(6, 0,
 									locsCss(VSPACE_3,
@@ -248,6 +252,9 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		final Label nervousSystemSymptomsHeadingLabel =
 			createLabel(SymptomGroup.NERVOUS_SYSTEM.toString(), H4, NERVOUS_SYSTEM_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label skinSymptomsHeadingLabel = createLabel(SymptomGroup.SKIN.toString(), H4, SKIN_SIGNS_AND_SYMPTOMS_HEADING_LOC);
+		final Label muscularSymptomsHeadingLabel = createLabel(SymptomGroup.MUSCULAR.toString(), H4, MUSCULAR_SIGNS_AND_SYMPTOMS_HEADING_LOC);
+		final Label eyeSymptomsHeadingLabel = createLabel(SymptomGroup.EYE.toString(), H4, EYE_SIGNS_AND_SYMPTOMS_HEADING_LOC);
+		final Label earSymptomsHeadingLabel = createLabel(SymptomGroup.EYE.toString(), H4, EAR_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 		final Label otherSymptomsHeadingLabel = createLabel(SymptomGroup.OTHER.toString(), H4, OTHER_SIGNS_AND_SYMPTOMS_HEADING_LOC);
 
 		DateField onsetDateField = addField(ONSET_DATE, DateField.class);
@@ -311,7 +318,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		}
 		ComboBox glasgowComaScale = addField(GLASGOW_COMA_SCALE, ComboBox.class);
 		glasgowComaScale.addItems(SymptomsHelper.getGlasgowComaScaleValues());
-
+		addField(CASE_CONDITION, ComboBox.class);
 		addFields(
 			VOMITING,
 			DIARRHEA,
@@ -462,7 +469,42 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			DIZZINESS_STANDING_UP,
 			HIGH_OR_LOW_BLOOD_PRESSURE,
 			URINARY_RETENTION,
-			FEVER);
+			FEVER,
+			BODY_ACHE,
+			NUMBESS,
+			MUSCLE_TWITCHING,
+			PUNCTURE_MARK_AT_WOUND,
+			BLEEDING_AROUND_BITE,
+			DISTURBED_VISION,
+			DISCOLORED_SKIN,
+			GROWTH_NODULES_ON_SKIN,
+			PAINLESS_ULCER,
+			EYE_LASHES,
+			ENLARGES_NERVES,
+			MUSCLE_WEAKNESS,
+			EAR_PAIN,
+			RED_EYE_WITHOUT_DISCHARGE,
+			LEUKOCORIA,
+			UNILATERAL_INVOLVEMENT,
+			DECREASE_VISION,
+			CIRCUMCILIARY_CONGESTION,
+			FIBRINOID_ANT_CHAMBER_RXN,
+			HYPOPYON,
+			SHALLO_ANT_CHAMBER,
+			DECREASE_INTRAOCU_PRESSURE,
+			PHOTOPHOBIA,
+			SUDDENANTOFRXN,
+			REDANT_WHITERXN,
+			LOSSANT_CORNEAL_RXN,
+			REDUCE_VIALEQUI_EQUITY,
+			REDUC_EYE_O_P,
+			PORRED_GLOW,
+			OTHER_SYMPTOMS,
+			EYE_SWELLING,
+			INCREASED_TEAR_PRODUCTION,
+			EYE_ITCHING_IRRITATION_BURNING,
+			EYE_DISCHARGE,
+			CRUSTING_EYE_LID_LASHES);
 
 		addField(SYMPTOMS_COMMENTS, TextField.class).setDescription(
 			I18nProperties.getPrefixDescription(I18N_PREFIX, SYMPTOMS_COMMENTS, "") + "\n" + I18nProperties.getDescription(Descriptions.descGdpr));
@@ -481,7 +523,12 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			MENINGEAL_SIGNS,
 			SEIZURES,
 			SEPSIS,
-			SHOCK };
+			SHOCK,
+			PUNCTATE_KERATITIS,
+			BACTERIAL_SUPERINFECTION,
+			CONJUNCTIVAL_SCARRING,
+			CORNEAL_ULCERATION,
+			CHRONIC_INFECTION};
 
 		addFields(complicationsFieldIds);
 
@@ -662,6 +709,36 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			DIZZINESS_STANDING_UP,
 			HIGH_OR_LOW_BLOOD_PRESSURE,
 			URINARY_RETENTION,
+			BODY_ACHE,
+			NUMBESS,
+			MUSCLE_TWITCHING,
+			PUNCTURE_MARK_AT_WOUND,
+			BLEEDING_AROUND_BITE,
+			DISTURBED_VISION,
+			DISCOLORED_SKIN,
+			GROWTH_NODULES_ON_SKIN,
+			PAINLESS_ULCER,
+			EYE_LASHES,
+			ENLARGES_NERVES,
+			MUSCLE_WEAKNESS,
+			EAR_PAIN,
+			RED_EYE_WITHOUT_DISCHARGE,
+			LEUKOCORIA,
+			UNILATERAL_INVOLVEMENT,
+			DECREASE_VISION,
+			CIRCUMCILIARY_CONGESTION,
+			FIBRINOID_ANT_CHAMBER_RXN,
+			HYPOPYON,
+			SHALLO_ANT_CHAMBER,
+			DECREASE_INTRAOCU_PRESSURE,
+			PHOTOPHOBIA,
+			SUDDENANTOFRXN,
+			REDANT_WHITERXN,
+			LOSSANT_CORNEAL_RXN,
+			REDUCE_VIALEQUI_EQUITY,
+			REDUC_EYE_O_P,
+			PORRED_GLOW,
+			OTHER_SYMPTOMS,
 			// complications
 			ALTERED_CONSCIOUSNESS,
 			CONFUSED_DISORIENTED,
@@ -671,9 +748,12 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			MENINGEAL_SIGNS,
 			SEIZURES,
 			SEPSIS,
-			SHOCK);
-
-		// Set visibilities
+			SHOCK,
+			PUNCTATE_KERATITIS,
+			BACTERIAL_SUPERINFECTION,
+			CONJUNCTIVAL_SCARRING,
+			CORNEAL_ULCERATION,
+			CHRONIC_INFECTION);
 
 		NullableOptionGroup feverField = (NullableOptionGroup) getFieldGroup().getField(FEVER);
 		feverField.setImmediate(true);
@@ -743,7 +823,6 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		if (symptomsContext != SymptomsContext.CASE) {
 			getFieldGroup().getField(PATIENT_ILL_LOCATION).setVisible(false);
 		}
-
 		symptomGroupMap.forEach((location, strings) -> {
 			final Component groupLabel = getContent().getComponent(location);
 			final Optional<String> groupHasVisibleSymptom =
@@ -834,6 +913,13 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 				isComplicationsHeadingVisible = true;
 			}
 		}
+		if (disease == Disease.LEPROSY) {
+			signsAndSymptomsHeadingLabel.setVisible(false);
+			clinicalMeasurementsHeadingLabel.setVisible(false);
+			symptomsHint.setVisible(false);
+			buttonsLayout.setVisible(false);
+		}
+
 		complicationsHeading.setVisible(isComplicationsHeadingVisible);
 	}
 
@@ -848,6 +934,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		} else {
 			feverField.setComponentError(null);
 		}
+
 	}
 
 	private void setFeverComponentError(NullableOptionGroup feverField, boolean feverSuggested) {

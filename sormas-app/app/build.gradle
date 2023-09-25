@@ -49,6 +49,7 @@ android {
     }
     buildTypes {
         debug {
+            signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -62,7 +63,33 @@ android {
             }
         }
     }
+    packagingOptions {
+        exclude 'META-INF/maven/de.symeda.sormas/sormas-api/pom.properties'
+        exclude 'META-INF/maven/de.symeda.sormas/sormas-api/pom.xml'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/spring.*'
+    }
+    def localProperty = new Properties()
+    localProperty.load(project.file("../local.properties").newDataInputStream())
     productFlavors {
+        dev {
+            applicationIdSuffix "dev"
+            buildConfigField 'String', 'BASE_URL', localProperty.get("local.url")
+            resValue 'string', 'app_name', '"S Dev"'
+            buildConfigField 'Boolean', 'IS_VALID_PIN', 'false'
+        }
+        prd {
+            buildConfigField 'String', 'BASE_URL', '"https://sormasnepal.org/sormas-rest"'
+            resValue 'string', 'app_name', '"SORMAS"'
+            buildConfigField 'Boolean', 'IS_VALID_PIN', 'true'
+        }
+        stg {
+            applicationIdSuffix "stg"
+            buildConfigField 'String', 'BASE_URL', localProperty.get("staging.url")
+            resValue 'string', 'app_name', '"S Traning"'
+            buildConfigField 'Boolean', 'IS_VALID_PIN', localProperty.get("check.pin")
+        }
     }
 
     defaultConfig {
@@ -74,6 +101,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
     // needed for pre androidx testing. This will not make it's way into the apk
@@ -84,6 +112,7 @@ android {
     lint {
         abortOnError false
     }
+    flavorDimensions 'dev'
 }
 
 repositories {
@@ -94,6 +123,12 @@ repositories {
 }
 
 dependencies {
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
+    def lifecycle_version = "2.2.0"
+    def paging_version = "3.0.1"
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation platform('com.google.firebase:firebase-bom:32.2.0')
     implementation 'androidx.appcompat:appcompat:1.6.1'

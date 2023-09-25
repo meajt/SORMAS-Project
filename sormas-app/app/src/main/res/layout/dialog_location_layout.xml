@@ -87,6 +87,11 @@
                 style="@style/ControlSingleColumnStyle"
                 app:value="@={data.community}" />
 
+            <de.symeda.sormas.app.component.controls.ControlTextEditField
+                android:id="@+id/location_wardNo"
+                style="@style/ControlSingleColumnStyle"
+                app:value="@={data.wardNo}" />
+
             <de.symeda.sormas.app.component.controls.ControlSpinnerField
                 android:id="@+id/facilityTypeGroup"
                 style="@style/ControlSingleColumnStyle"
@@ -101,6 +106,12 @@
                 android:id="@+id/location_facility"
                 style="@style/ControlSingleColumnStyle"
                 app:value="@={data.facility}" />
+
+            <de.symeda.sormas.app.component.controls.ControlTextEditField
+                android:id="@+id/location_otherFacilityType"
+                style="@style/ControlSingleColumnStyle"
+                android:visibility="gone"
+                app:value="@={data.otherFacilityType}" />
 
             <de.symeda.sormas.app.component.controls.ControlTextEditField
                 android:id="@+id/location_facilityDetails"

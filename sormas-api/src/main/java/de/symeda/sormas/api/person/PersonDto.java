@@ -128,6 +128,12 @@ public class PersonDto extends PseudonymizableDto {
 	public static final String BIRTH_COUNTRY = "birthCountry";
 	public static final String CITIZENSHIP = "citizenship";
 	public static final String ADDITIONAL_DETAILS = "additionalDetails";
+	public static final String MOBILE_NO = "mobileNo";
+	public static final String ETHNICITY = "ethnicity";
+	public static final String RELIGION = "religion";
+	public static final String WEIGHT = "weight";
+	public static final String PLACE_OF_WORK = "placeOfWork";
+	public static final String MARITAL_STATUS = "maritalStatus";
 	private static final long serialVersionUID = -8558187171374254398L;
 
 	// Fields are declared in the order they should appear in the import template
@@ -159,7 +165,9 @@ public class PersonDto extends PseudonymizableDto {
 	@PersonalData
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
-	@HideForCountries
+	@HideForCountries(countries = {
+			CountryHelper.COUNTRY_CODE_NEPAL,
+			CountryHelper.COUNTRY_CODE_GERMANY})
 	private String nickname;
 	@PersonalData
 	@SensitiveData
@@ -173,7 +181,8 @@ public class PersonDto extends PseudonymizableDto {
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_SMALL, message = Validations.textTooLong)
 	@HideForCountries(countries = {
 		CountryHelper.COUNTRY_CODE_GERMANY,
-		CountryHelper.COUNTRY_CODE_FRANCE })
+		CountryHelper.COUNTRY_CODE_FRANCE,
+		CountryHelper.COUNTRY_CODE_NEPAL})
 	private String mothersMaidenName;
 	@PersonalData
 	@SensitiveData
@@ -333,11 +342,12 @@ public class PersonDto extends PseudonymizableDto {
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_SMALL, message = Validations.textTooLong)
 	@HideForCountries(countries = {
 		CountryHelper.COUNTRY_CODE_GERMANY,
-		CountryHelper.COUNTRY_CODE_FRANCE })
+		CountryHelper.COUNTRY_CODE_FRANCE,
+	CountryHelper.COUNTRY_CODE_NEPAL})
 	private String passportNumber;
 	@SensitiveData
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_SMALL, message = Validations.textTooLong)
-	@HideForCountries
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String nationalHealthId;
 	@Valid
 	private List<LocationDto> addresses = new ArrayList<>();
@@ -363,6 +373,7 @@ public class PersonDto extends PseudonymizableDto {
 	private String externalToken;
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_INTERNAL_TOKEN)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private String internalToken;
 
 	@HideForCountriesExcept(countries = {})
@@ -375,6 +386,31 @@ public class PersonDto extends PseudonymizableDto {
 	@S2SIgnoreProperty(configProperty = SormasToSormasConfig.SORMAS2SORMAS_IGNORE_ADDITIONAL_DETAILS)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String additionalDetails;
+
+	@PersonalData
+	@SensitiveData
+	@Size(max = 10)
+	private String mobileNo;
+
+	@PersonalData
+	@SensitiveData
+	private Ethnicity ethnicity;
+
+	@PersonalData
+	@SensitiveData
+	private Religion religion;
+
+	@PersonalData
+	@SensitiveData
+	private Float weight;
+
+	@PersonalData
+	@SensitiveData
+	private String placeOfWork;
+
+	@PersonalData
+	@SensitiveData
+	private MaritalStatus maritalStatus;
 
 	@SuppressWarnings("serial")
 	public static class SeveralNonPrimaryContactDetailsException extends RuntimeException {
@@ -1062,5 +1098,53 @@ public class PersonDto extends PseudonymizableDto {
 		clone.setPersonContactDetails(contactDetailsClone);
 
 		return clone;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public Ethnicity getEthnicity() {
+		return ethnicity;
+	}
+
+	public void setEthnicity(Ethnicity ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	public Religion getReligion() {
+		return religion;
+	}
+
+	public void setReligion(Religion religion) {
+		this.religion = religion;
+	}
+
+	public Float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Float weight) {
+		this.weight = weight;
+	}
+
+	public String getPlaceOfWork() {
+		return placeOfWork;
+	}
+
+	public void setPlaceOfWork(String placeOfWork) {
+		this.placeOfWork = placeOfWork;
+	}
+
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
 }

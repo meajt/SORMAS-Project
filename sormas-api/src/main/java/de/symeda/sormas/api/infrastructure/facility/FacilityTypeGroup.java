@@ -30,7 +30,8 @@ public enum FacilityTypeGroup {
 	MEDICAL_FACILITY,
 	WORKING_PLACE,
 	RESIDENCE,
-	COMMERCE;
+	COMMERCE,
+	OTHERS;
 
 	private static List<FacilityTypeGroup> accomodationGroups = null;
 
@@ -44,6 +45,11 @@ public enum FacilityTypeGroup {
 			}
 		}
 		return accomodationGroups;
+	}
+
+	public static FacilityTypeGroup[] getValuesForNepal() {
+
+		return new FacilityTypeGroup[]{EDUCATIONAL_FACILITY, MEDICAL_FACILITY, WORKING_PLACE, RESIDENCE, OTHERS};
 	}
 
 	@Override

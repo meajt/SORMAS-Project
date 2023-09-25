@@ -42,6 +42,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.utils.Diseases;
+import de.symeda.sormas.backend.sample.ncd.CompleteBloodCountSample;
+import de.symeda.sormas.backend.sample.ncd.LftSample;
+import de.symeda.sormas.backend.sample.ncd.LipidProfileSample;
+import de.symeda.sormas.backend.sample.ncd.RftSample;
 import org.apache.commons.lang3.StringUtils;
 
 import de.symeda.sormas.api.sample.AdditionalTestType;
@@ -159,12 +166,12 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 
 	private List<SampleReport> sampleReports = new ArrayList<>(0);
 
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	public Case getAssociatedCase() {
 		return associatedCase;
 	}
-
 	public void setAssociatedCase(Case associatedCase) {
 		this.associatedCase = associatedCase;
 	}
@@ -233,7 +240,7 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 		return reportingUser;
 	}
 
-	public void setReportingUser(User reportingUser) {
+		public void setReportingUser(User reportingUser) {
 		this.reportingUser = reportingUser;
 	}
 
@@ -611,4 +618,5 @@ public class Sample extends DeletableAdo implements SormasToSormasShareable {
 	public void setSampleReports(List<SampleReport> externalMessages) {
 		this.sampleReports = externalMessages;
 	}
+
 }

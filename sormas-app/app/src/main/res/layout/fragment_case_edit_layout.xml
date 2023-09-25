@@ -401,12 +401,23 @@
                         style="@style/ControlSecondOfTwoColumnsStyle" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <de.symeda.sormas.app.component.controls.InfrastructureSpinnerField
+                        android:id="@+id/caseData_responsibleCommunity"
+                        app:value="@={data.responsibleCommunity}"
+                        app:userEditRight="@{UserRight.CASE_TRANSFER}"
+                        style="@style/ControlFirstOfTwoColumnsStyle" />
+                    <de.symeda.sormas.app.component.controls.ControlTextEditField
+                        android:id="@+id/caseData_responsibleWardNo"
+                        app:value="@={data.responsibleWardNo}"
+                        app:inputType="number"
+                        style="@style/ControlSecondOfTwoColumnsStyle"/>
 
-                <de.symeda.sormas.app.component.controls.InfrastructureSpinnerField
-                    android:id="@+id/caseData_responsibleCommunity"
-                    app:value="@={data.responsibleCommunity}"
-                    app:userEditRight="@{UserRight.CASE_TRANSFER}"
-                    style="@style/ControlSingleColumnStyle" />
+                </LinearLayout>
+
 
                 <de.symeda.sormas.app.component.controls.ControlCheckBoxField
                     android:id="@+id/caseData_differentPlaceOfStayJurisdiction"
@@ -451,14 +462,29 @@
 
                 </LinearLayout>
 
-                <de.symeda.sormas.app.component.controls.InfrastructureSpinnerField
-                    android:id="@+id/caseData_community"
-                    app:value="@={data.community}"
-                    app:softRequired="true"
-                    app:userEditRight="@{UserRight.CASE_TRANSFER}"
-                    app:dependencyParentField="@{caseDataDifferentPlaceOfStayJurisdiction}"
-                    app:dependencyParentValue="@{true}"
-                    style="@style/ControlSingleColumnStyle" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <de.symeda.sormas.app.component.controls.InfrastructureSpinnerField
+                        android:id="@+id/caseData_community"
+                        app:value="@={data.community}"
+                        app:softRequired="true"
+                        app:userEditRight="@{UserRight.CASE_TRANSFER}"
+                        app:dependencyParentField="@{caseDataDifferentPlaceOfStayJurisdiction}"
+                        app:dependencyParentValue="@{true}"
+                        style="@style/ControlFirstOfTwoColumnsStyle" />
+                    <de.symeda.sormas.app.component.controls.ControlTextEditField
+                        android:id="@+id/caseData_wardNo"
+                        app:value="@={data.wardNo}"
+                        app:softRequired="true"
+                        app:inputType="number"
+                        app:dependencyParentField="@{caseDataDifferentPlaceOfStayJurisdiction}"
+                        app:dependencyParentValue="@{true}"
+                        style="@style/ControlSecondOfTwoColumnsStyle" />
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/facility_type_fields_layout"

@@ -235,8 +235,20 @@ public class SymptomsDtoHelper extends AdoDtoHelper<Symptoms, SymptomsDto> {
 		target.setHighOrLowBloodPressure(source.getHighOrLowBloodPressure());
 		target.setUrinaryRetention(source.getUrinaryRetention());
 		target.setShivering(source.getShivering());
-
 		target.setPseudonymized(source.isPseudonymized());
+
+		target.setBodyAche(source.getBodyAche());
+		target.setNumbness(source.getNumbness());
+		target.setMuscleTwitching(source.getMuscleTwitching());
+		target.setPunctureMarkAtWound(source.getPunctureMarkAtWound());
+		target.setBleedingAroundBite(source.getBleedingAroundBite());
+		target.setDisturbedVision(source.getDisturbedVision());
+		target.setDiscoloredSkin(source.getDiscoloredSkin());
+		target.setGrowthNodulesOnSkin(source.getGrowthNodulesOnSkin());
+		target.setPainlessUlcer(source.getPainlessUlcer());
+		target.setEyelashes(source.getEyelashes());
+		target.setEnlargesNerves(source.getEnlargesNerves());
+		target.setMuscleWeakness(source.getMuscleWeakness());
 	}
 
 	@Override
@@ -421,8 +433,20 @@ public class SymptomsDtoHelper extends AdoDtoHelper<Symptoms, SymptomsDto> {
 		target.setHighOrLowBloodPressure(source.getHighOrLowBloodPressure());
 		target.setUrinaryRetention(source.getUrinaryRetention());
 		target.setShivering(source.getShivering());
-
 		target.setPseudonymized(source.isPseudonymized());
+
+		target.setBodyAche(source.getBodyAche());
+		target.setNumbness(source.getNumbness());
+		target.setMuscleTwitching(source.getMuscleTwitching());
+		target.setPunctureMarkAtWound(source.getPunctureMarkAtWound());
+		target.setBleedingAroundBite(source.getBleedingAroundBite());
+		target.setDisturbedVision(source.getDisturbedVision());
+		target.setDiscoloredSkin(source.getDiscoloredSkin());
+		target.setGrowthNodulesOnSkin(source.getGrowthNodulesOnSkin());
+		target.setPainlessUlcer(source.getPainlessUlcer());
+		target.setEyelashes(source.getEyelashes());
+		target.setEnlargesNerves(source.getEnlargesNerves());
+		target.setMuscleWeakness(source.getMuscleWeakness());
 	}
 
     @Override

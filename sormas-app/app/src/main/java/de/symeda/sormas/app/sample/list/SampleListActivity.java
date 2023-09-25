@@ -40,12 +40,15 @@ import de.symeda.sormas.app.R;
 import de.symeda.sormas.app.backend.common.DatabaseHelper;
 import de.symeda.sormas.app.backend.sample.Sample;
 import de.symeda.sormas.app.barcode.BarcodeActivity;
+import de.symeda.sormas.app.component.Item;
 import de.symeda.sormas.app.component.menu.PageMenuItem;
 import de.symeda.sormas.app.core.notification.NotificationHelper;
 import de.symeda.sormas.app.databinding.FilterSampleListLayoutBinding;
 import de.symeda.sormas.app.sample.ShipmentStatus;
 import de.symeda.sormas.app.sample.read.SampleReadActivity;
 import de.symeda.sormas.app.util.Callback;
+import de.symeda.sormas.app.util.DataUtils;
+import de.symeda.sormas.app.util.DiseaseConfigurationCache;
 
 public class SampleListActivity extends PagedBaseListActivity {
 
@@ -91,6 +94,7 @@ public class SampleListActivity extends PagedBaseListActivity {
 		});
 		model = new ViewModelProvider(this).get(SampleListViewModel.class);
 		model.initializeViewModel();
+		filterBinding.setCriteria(model.getSampleCriteria());
 		model.getSamples().observe(this, samples -> {
 			adapter.submitList(samples);
 			hidePreloader();
@@ -156,12 +160,28 @@ public class SampleListActivity extends PagedBaseListActivity {
 	public void addFiltersToPageMenu() {
 		View sampleListFilterView = getLayoutInflater().inflate(R.layout.filter_sample_list_layout, null);
 		filterBinding = DataBindingUtil.bind(sampleListFilterView);
-
+		List<Item> diseases = DataUtils.toItems(DiseaseConfigurationCache.getInstance().getAllDiseases(true, true, true));
+		filterBinding.diseaseFilter.initializeSpinner(diseases);
 		pageMenu.addFilter(sampleListFilterView);
 
 		filterBinding.scanFieldSampleId.setOnClickListener(e -> {
 			Intent intent = new Intent(this, BarcodeActivity.class);
 			startActivityForResult(intent, BarcodeActivity.RC_BARCODE_CAPTURE);
+		});
+		filterBinding.applyFilters.setOnClickListener(e -> {
+			showPreloader();
+			pageMenu.hideAll();
+			model.notifyCriteriaUpdated();
+		});
+
+		filterBinding.resetFilters.setOnClickListener(e -> {
+			showPreloader();
+			pageMenu.hideAll();
+			model.getSampleCriteria().setTextFilter(null);
+			model.getSampleCriteria().setDisease(null);
+			filterBinding.invalidateAll();
+			filterBinding.executePendingBindings();
+			model.notifyCriteriaUpdated();
 		});
 	}
 

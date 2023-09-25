@@ -1,7 +1,10 @@
 package de.symeda.sormas.api.sample;
 
+import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
-import de.symeda.sormas.api.utils.DependingOnFeatureType;
+import de.symeda.sormas.api.sample.ncd.*;
+import de.symeda.sormas.api.utils.*;
+
 import java.util.Date;
 
 import javax.validation.constraints.Size;
@@ -9,9 +12,6 @@ import javax.validation.constraints.Size;
 import de.symeda.sormas.api.EntityDto;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Validations;
-import de.symeda.sormas.api.utils.DataHelper;
-import de.symeda.sormas.api.utils.FieldConstraints;
-import de.symeda.sormas.api.utils.Order;
 
 @DependingOnFeatureType(featureType = FeatureType.ADDITIONAL_TESTS)
 public class AdditionalTestDto extends EntityDto {
@@ -46,6 +46,15 @@ public class AdditionalTestDto extends EntityDto {
 	public static final String PROTHROMBIN_TIME = "prothrombinTime";
 	public static final String OTHER_TEST_RESULTS = "otherTestResults";
 
+	public static final String HAS_HEALTH_SCREENING_TEST = "hasHealthScreeningTest";
+	public static final String HAS_RFT = "hasRFT";
+	public static final String HAS_LIPID_PROFILE = "hasLipidProfile";
+	public static final String HAS_LFT = "hasLFT";
+	public static final String HAS_URINE_RE = "hasUrineRE";
+	public static final String HAS_COMPLETE_BLOOD_COUNT = "hasCompleteBloodCount";
+	public static final String HAS_URINE_ROUTINE_EXAMINATION = "hasUrineRoutineExamination";
+
+
 	private SampleReferenceDto sample;
 	private Date testDateTime;
 	private SimpleTestResultType haemoglobinuria;
@@ -69,6 +78,31 @@ public class AdditionalTestDto extends EntityDto {
 	private Float prothrombinTime;
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_BIG, message = Validations.textTooLong)
 	private String otherTestResults;
+	@Diseases({Disease.NCD})
+	private boolean hasPremiumHealthPackage;
+	@Diseases({Disease.NCD})
+	private boolean hasRFT;
+	@Diseases({Disease.NCD})
+	private boolean hasLipidProfile;
+	@Diseases({Disease.NCD})
+	private boolean hasLFT;
+	@Diseases({Disease.NCD})
+	private boolean hasUrineRE;
+	@Diseases({Disease.NCD})
+	private boolean hasCompleteBloodCount;
+
+	@Diseases({Disease.NCD})
+	private boolean hasUrineRoutineExamination;
+
+	@Diseases({Disease.NCD})
+	private boolean hasHealthScreeningTest;
+
+	private RftSampleDto rftSampleDto;
+	private LftSampleDto lftSampleDto;
+	private LipidProfileSampleDto lipidProfileSampleDto;
+	private CompleteBloodCountSampleDto completeBloodCountSampleDto;
+
+	private UrineRoutineExaminationSampleDto urineRoutineExaminationSampleDto;
 
 	public static AdditionalTestDto build(SampleReferenceDto sample) {
 		AdditionalTestDto additionalTest = new AdditionalTestDto();
@@ -297,5 +331,109 @@ public class AdditionalTestDto extends EntityDto {
 
 	public void setOtherTestResults(String otherTestResults) {
 		this.otherTestResults = otherTestResults;
+	}
+
+	public boolean isHasPremiumHealthPackage() {
+		return hasPremiumHealthPackage;
+	}
+
+	public void setHasPremiumHealthPackage(boolean hasPremiumHealthPackage) {
+		this.hasPremiumHealthPackage = hasPremiumHealthPackage;
+	}
+
+	public boolean isHasRFT() {
+		return hasRFT;
+	}
+
+	public void setHasRFT(boolean hasRFT) {
+		this.hasRFT = hasRFT;
+	}
+
+	public boolean isHasLipidProfile() {
+		return hasLipidProfile;
+	}
+
+	public void setHasLipidProfile(boolean hasLipidProfile) {
+		this.hasLipidProfile = hasLipidProfile;
+	}
+
+	public boolean isHasLFT() {
+		return hasLFT;
+	}
+
+	public void setHasLFT(boolean hasLFT) {
+		this.hasLFT = hasLFT;
+	}
+
+	public boolean isHasUrineRE() {
+		return hasUrineRE;
+	}
+
+	public void setHasUrineRE(boolean hasUrineRE) {
+		this.hasUrineRE = hasUrineRE;
+	}
+
+	public boolean isHasCompleteBloodCount() {
+		return hasCompleteBloodCount;
+	}
+
+	public void setHasCompleteBloodCount(boolean hasCompleteBloodCount) {
+		this.hasCompleteBloodCount = hasCompleteBloodCount;
+	}
+
+	public RftSampleDto getRftSampleDto() {
+		return rftSampleDto;
+	}
+
+	public void setRftSampleDto(RftSampleDto rftSampleDto) {
+		this.rftSampleDto = rftSampleDto;
+	}
+
+	public LftSampleDto getLftSampleDto() {
+		return lftSampleDto;
+	}
+
+	public void setLftSampleDto(LftSampleDto lftSampleDto) {
+		this.lftSampleDto = lftSampleDto;
+	}
+
+	public LipidProfileSampleDto getLipidProfileSampleDto() {
+		return lipidProfileSampleDto;
+	}
+
+	public void setLipidProfileSampleDto(LipidProfileSampleDto lipidProfileSampleDto) {
+		this.lipidProfileSampleDto = lipidProfileSampleDto;
+	}
+
+	public CompleteBloodCountSampleDto getCompleteBloodCountSampleDto() {
+		return completeBloodCountSampleDto;
+	}
+
+	public void setCompleteBloodCountSampleDto(CompleteBloodCountSampleDto completeBloodCountSampleDto) {
+		this.completeBloodCountSampleDto = completeBloodCountSampleDto;
+	}
+
+	public boolean isHasHealthScreeningTest() {
+		return hasHealthScreeningTest;
+	}
+
+	public void setHasHealthScreeningTest(boolean hasHealthScreeningTest) {
+		this.hasHealthScreeningTest = hasHealthScreeningTest;
+	}
+
+	public boolean isHasUrineRoutineExamination() {
+		return hasUrineRoutineExamination;
+	}
+
+	public void setHasUrineRoutineExamination(boolean hasUrineRoutineExamination) {
+		this.hasUrineRoutineExamination = hasUrineRoutineExamination;
+	}
+
+	public UrineRoutineExaminationSampleDto getUrineRoutineExaminationSampleDto() {
+		return urineRoutineExaminationSampleDto;
+	}
+
+	public void setUrineRoutineExaminationSampleDto(UrineRoutineExaminationSampleDto urineRoutineExaminationSampleDto) {
+		this.urineRoutineExaminationSampleDto = urineRoutineExaminationSampleDto;
 	}
 }

@@ -37,6 +37,11 @@ import javax.persistence.criteria.Selection;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.sample.ncd.LipidProfileSampleDto;
+import de.symeda.sormas.api.sample.ncd.RftSampleDto;
+import de.symeda.sormas.backend.sample.ncd.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -172,6 +177,9 @@ public class SampleFacadeEjb implements SampleFacade {
 	private PathogenTestFacadeEjbLocal pathogenTestFacade;
 	@EJB
 	private SormasToSormasOriginInfoService originInfoService;
+
+	@EJB
+	private RftSampleFacade rftSampleFacade;
 
 	@Override
 	public List<String> getAllActiveUuids() {
@@ -388,15 +396,13 @@ public class SampleFacadeEjb implements SampleFacade {
 		restorePseudonymizedDto(dto, existingSample, existingSampleDto);
 
 		Sample sample = fillOrBuildEntity(dto, existingSample, checkChangeDate);
-
-		// Set defaults for testing requests
 		if (sample.getPathogenTestingRequested() == null) {
 			sample.setPathogenTestingRequested(false);
 		}
 		if (sample.getAdditionalTestingRequested() == null) {
 			sample.setAdditionalTestingRequested(false);
 		}
-
+		
 		sampleService.ensurePersisted(sample);
 
 		if (handleChanges) {
@@ -858,11 +864,11 @@ public class SampleFacadeEjb implements SampleFacade {
 		if (source.getSormasToSormasOriginInfo() != null) {
 			target.setSormasToSormasOriginInfo(originInfoService.getByUuid(source.getSormasToSormasOriginInfo().getUuid()));
 		}
-
 		target.setDeleted(source.isDeleted());
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
 
+	
 		return target;
 	}
 
@@ -1014,9 +1020,10 @@ public class SampleFacadeEjb implements SampleFacade {
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
 
+		
 		return target;
 	}
-
+	
 	public static SampleReferenceDto toReferenceDto(Sample entity) {
 
 		if (entity == null) {

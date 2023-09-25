@@ -19,16 +19,19 @@ package de.symeda.sormas.ui.epidata;
 
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_TOP_3;
-import static de.symeda.sormas.ui.utils.LayoutUtil.divsCss;
-import static de.symeda.sormas.ui.utils.LayoutUtil.h3;
-import static de.symeda.sormas.ui.utils.LayoutUtil.loc;
-import static de.symeda.sormas.ui.utils.LayoutUtil.locCss;
+import static de.symeda.sormas.ui.utils.LayoutUtil.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.vaadin.v7.data.util.converter.Converter;
+import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.v7.ui.TextArea;
+import de.symeda.sormas.api.epidata.*;
+import de.symeda.sormas.api.epidata.CaseDetectionMethod;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.shared.ui.ContentMode;
@@ -40,7 +43,6 @@ import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.caze.CaseDataDto;
 import de.symeda.sormas.api.contact.ContactDto;
 import de.symeda.sormas.api.contact.ContactReferenceDto;
-import de.symeda.sormas.api.epidata.EpiDataDto;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -56,161 +58,248 @@ import de.symeda.sormas.ui.utils.components.MultilineLabel;
 
 public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String LOC_EXPOSURE_INVESTIGATION_HEADING = "locExposureInvestigationHeading";
-	private static final String LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING = "locActivityAsCaseInvestigationHeading";
-	private static final String LOC_SOURCE_CASE_CONTACTS_HEADING = "locSourceCaseContactsHeading";
-	private static final String LOC_EPI_DATA_FIELDS_HINT = "locEpiDataFieldsHint";
+    private static final String LOC_EXPOSURE_INVESTIGATION_HEADING = "locExposureInvestigationHeading";
+    private static final String LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING = "locActivityAsCaseInvestigationHeading";
+    private static final String LOC_SOURCE_CASE_CONTACTS_HEADING = "locSourceCaseContactsHeading";
+    private static final String LOC_EPI_DATA_FIELDS_HINT = "locEpiDataFieldsHint";
+    private static final String MALARIA_EPI_FROM = "malariaEpiFrom";
 
-	//@formatter:off
-	private static final String MAIN_HTML_LAYOUT = 
-			loc(LOC_EXPOSURE_INVESTIGATION_HEADING) + 
-			loc(EpiDataDto.EXPOSURE_DETAILS_KNOWN) +
-			loc(EpiDataDto.EXPOSURES) +
-			loc(LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING) + 
-			loc(EpiDataDto.ACTIVITY_AS_CASE_DETAILS_KNOWN)+
-			loc(EpiDataDto.ACTIVITIES_AS_CASE) + 
-			locCss(VSPACE_TOP_3, LOC_EPI_DATA_FIELDS_HINT) +
-			loc(EpiDataDto.HIGH_TRANSMISSION_RISK_AREA) +
-			loc(EpiDataDto.LARGE_OUTBREAKS_AREA) + 
-			loc(EpiDataDto.AREA_INFECTED_ANIMALS);
-	
-	private static final String SOURCE_CONTACTS_HTML_LAYOUT =
-			locCss(VSPACE_TOP_3, LOC_SOURCE_CASE_CONTACTS_HEADING) +
-			loc(EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN);
-	//@formatter:on
+    //@formatter:off
+    private static final String MAIN_HTML_LAYOUT =
+                    fluidRowLocs(EpiDataDto.CASE_DETECTION_METHOD_GROUP,EpiDataDto.CASE_DETECTION_METHOD) +
+                    fluidRowLocs(EpiDataDto.FAMILY_HISTORY_OF_LEPROSY, EpiDataDto.CONTACT_EXAMINATION_DONE) +
+                    fluidRowLocs(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT) +
+                    fluidRowLocs(EpiDataDto.NO_OF_SOCIAL_CONTACT) +
+                    fluidRowLocs(EpiDataDto.SKIN_TEST_POSITIVE, EpiDataDto.SKIN_TEST_LEPROSY_RESULT) +
+                    fluidRowLocs(MALARIA_EPI_FROM) +
+                    fluidRowLocs(EpiDataDto.EXPOSURE_TO_MOTH_OR_OTHERS)+
+                    fluidRowLocs(EpiDataDto.SHAPU_EXPOSURE_TYPE, EpiDataDto.OTHER_EXPOSURE_TYPE)+
+                    fluidRowLocs(EpiDataDto.DIRECT_INDIRECT_EXPOSURE, EpiDataDto.EXPOSURE_DATE)+
+                    fluidRowLocs(EpiDataDto.CONTACT_AREA, EpiDataDto.OTHER_CONTACT_AREA)+
+                    fluidRowLocs(EpiDataDto.CONTACT_ITEM, EpiDataDto.OTHER_CONTACT_ITEM)+
+                    fluidRowLocs(EpiDataDto.REMARK)+
+                    loc(LOC_EXPOSURE_INVESTIGATION_HEADING) +
+                    loc(EpiDataDto.EXPOSURE_DETAILS_KNOWN) +
+                    loc(EpiDataDto.EXPOSURES) +
+                    loc(LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING) +
+                    loc(EpiDataDto.ACTIVITY_AS_CASE_DETAILS_KNOWN) +
+                    loc(EpiDataDto.ACTIVITIES_AS_CASE) +
+                    locCss(VSPACE_TOP_3, LOC_EPI_DATA_FIELDS_HINT) +
+                    loc(EpiDataDto.HIGH_TRANSMISSION_RISK_AREA) +
+                    loc(EpiDataDto.LARGE_OUTBREAKS_AREA) +
+                    loc(EpiDataDto.AREA_INFECTED_ANIMALS);
 
-	private final Disease disease;
-	private final Class<? extends EntityDto> parentClass;
-	private final Consumer<Boolean> sourceContactsToggleCallback;
-	private final boolean isPseudonymized;
+    private static final String SOURCE_CONTACTS_HTML_LAYOUT =
+            locCss(VSPACE_TOP_3, LOC_SOURCE_CASE_CONTACTS_HEADING) +
+                    loc(EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN);
+    //@formatter:on
 
-	public EpiDataForm(
-		Disease disease,
-		Class<? extends EntityDto> parentClass,
-		boolean isPseudonymized,
-		boolean inJurisdiction,
-		Consumer<Boolean> sourceContactsToggleCallback,
-		boolean isEditAllowed) {
-		super(
-			EpiDataDto.class,
-			EpiDataDto.I18N_PREFIX,
-			false,
-			FieldVisibilityCheckers.withDisease(disease).andWithCountry(FacadeProvider.getConfigFacade().getCountryLocale()),
-			UiFieldAccessCheckers.forDataAccessLevel(UserProvider.getCurrent().getPseudonymizableDataAccessLevel(inJurisdiction), isPseudonymized),
-			isEditAllowed);
-		this.disease = disease;
-		this.parentClass = parentClass;
-		this.sourceContactsToggleCallback = sourceContactsToggleCallback;
-		this.isPseudonymized = isPseudonymized;
-		addFields();
-	}
+    private final Disease disease;
+    private final Class<? extends EntityDto> parentClass;
+    private final Consumer<Boolean> sourceContactsToggleCallback;
+    private final boolean isPseudonymized;
+    private MalariaEpiDataForm malariaEpiDataForm;
 
-	@Override
-	protected void addFields() {
-		if (disease == null) {
-			return;
-		}
+    public EpiDataForm(
+            Disease disease,
+            Class<? extends EntityDto> parentClass,
+            boolean isPseudonymized,
+            boolean inJurisdiction,
+            Consumer<Boolean> sourceContactsToggleCallback,
+            boolean isEditAllowed) {
+        super(
+                EpiDataDto.class,
+                EpiDataDto.I18N_PREFIX,
+                false,
+                FieldVisibilityCheckers.withDisease(disease).andWithCountry(FacadeProvider.getConfigFacade().getCountryLocale()),
+                UiFieldAccessCheckers.forDataAccessLevel(UserProvider.getCurrent().getPseudonymizableDataAccessLevel(inJurisdiction), isPseudonymized),
+                isEditAllowed);
+        this.disease = disease;
+        this.parentClass = parentClass;
+        this.sourceContactsToggleCallback = sourceContactsToggleCallback;
+        this.isPseudonymized = isPseudonymized;
+        addFields();
+    }
 
-		addHeadingsAndInfoTexts();
+    @Override
+    protected void addFields() {
+        if (disease == null) {
+            return;
+        }
+        ComboBox caseDetectionGroup = addField(EpiDataDto.CASE_DETECTION_METHOD_GROUP, ComboBox.class);
+        ComboBox caseDetectionMethod = addField(EpiDataDto.CASE_DETECTION_METHOD);
+        NullableOptionGroup ogExposureDetailsKnown = addField(EpiDataDto.EXPOSURE_DETAILS_KNOWN, NullableOptionGroup.class);
+        ExposuresField exposuresField = addField(EpiDataDto.EXPOSURES, ExposuresField.class);
+        exposuresField.setEpiDataParentClass(parentClass);
+        exposuresField.setWidthFull();
+        exposuresField.setPseudonymized(isPseudonymized);
+        addField(EpiDataDto.HIGH_TRANSMISSION_RISK_AREA, NullableOptionGroup.class);
+        addField(EpiDataDto.LARGE_OUTBREAKS_AREA, NullableOptionGroup.class);
+        addField(EpiDataDto.AREA_INFECTED_ANIMALS, NullableOptionGroup.class);
+        NullableOptionGroup ogContactWithSourceCaseKnown = addField(EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN, NullableOptionGroup.class);
+        addField(EpiDataDto.FAMILY_HISTORY_OF_LEPROSY, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_EXAMINATION_DONE, NullableOptionGroup.class);
+        addFields(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT, EpiDataDto.NO_OF_SOCIAL_CONTACT);
+        addField(EpiDataDto.SKIN_TEST_POSITIVE, NullableOptionGroup.class);
+        addField(EpiDataDto.SKIN_TEST_LEPROSY_RESULT, NullableOptionGroup.class);
+        addField(EpiDataDto.EXPOSURE_TO_MOTH_OR_OTHERS, NullableOptionGroup.class);
+        addField(EpiDataDto.SHAPU_EXPOSURE_TYPE, NullableOptionGroup.class);
+        addField(EpiDataDto.DIRECT_INDIRECT_EXPOSURE, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_AREA, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_ITEM, NullableOptionGroup.class);
+        addField(EpiDataDto.EXPOSURE_DATE);
+        addFields(EpiDataDto.OTHER_EXPOSURE_TYPE, EpiDataDto.OTHER_CONTACT_AREA, EpiDataDto.OTHER_CONTACT_ITEM);
+        addField(EpiDataDto.REMARK, TextArea.class);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT, EpiDataDto.NO_OF_SOCIAL_CONTACT),
+                EpiDataDto.CONTACT_EXAMINATION_DONE,
+                Arrays.asList(true),
+               true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.SKIN_TEST_LEPROSY_RESULT),
+                EpiDataDto.SKIN_TEST_POSITIVE,
+                Arrays.asList(true),
+                true);
+        if (sourceContactsToggleCallback != null) {
+            ogContactWithSourceCaseKnown.addValueChangeListener(e -> {
+                YesNoUnknown sourceContactsKnown = (YesNoUnknown) FieldHelper.getNullableSourceFieldValue((Field) e.getProperty());
+                sourceContactsToggleCallback.accept(YesNoUnknown.YES == sourceContactsKnown);
+            });
+        }
 
-		NullableOptionGroup ogExposureDetailsKnown = addField(EpiDataDto.EXPOSURE_DETAILS_KNOWN, NullableOptionGroup.class);
-		ExposuresField exposuresField = addField(EpiDataDto.EXPOSURES, ExposuresField.class);
-		exposuresField.setEpiDataParentClass(parentClass);
-		exposuresField.setWidthFull();
-		exposuresField.setPseudonymized(isPseudonymized);
+        initializeVisibilitiesAndAllowedVisibilities();
+        initializeAccessAndAllowedAccesses();
+        setVisible(false, EpiDataDto.SHAPU_EXPOSURE_TYPE);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.SHAPU_EXPOSURE_TYPE, EpiDataDto.EXPOSURE_DATE, EpiDataDto.REMARK),
+                EpiDataDto.EXPOSURE_TO_MOTH_OR_OTHERS,
+                Arrays.asList(YesNoUnknown.YES),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.OTHER_EXPOSURE_TYPE),
+                EpiDataDto.SHAPU_EXPOSURE_TYPE,
+                Arrays.asList(ShapuExposureType.OTHER),
+                true);
+        FieldHelper.setVisibleWhenSourceNotNull(getFieldGroup(),
+                Arrays.asList(EpiDataDto.DIRECT_INDIRECT_EXPOSURE, EpiDataDto.DIRECT_INDIRECT_EXPOSURE),
+                EpiDataDto.SHAPU_EXPOSURE_TYPE,
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.CONTACT_AREA),
+                EpiDataDto.DIRECT_INDIRECT_EXPOSURE,
+                Arrays.asList(DirectIndirectExposure.DIRECT),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.CONTACT_ITEM),
+                EpiDataDto.DIRECT_INDIRECT_EXPOSURE,
+                Arrays.asList(DirectIndirectExposure.INDIRECT),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.OTHER_CONTACT_AREA),
+                EpiDataDto.CONTACT_AREA,
+                Arrays.asList(ContactArea.OTHER),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.OTHER_CONTACT_ITEM),
+                EpiDataDto.CONTACT_ITEM,
+                Arrays.asList(ContactItem.OTHER),
+                true);
+        setVisible(false, EpiDataDto.CASE_DETECTION_METHOD);
+        FieldHelper.setVisibleWhenSourceNotNull(getFieldGroup(), Arrays.asList(EpiDataDto.CASE_DETECTION_METHOD), EpiDataDto.CASE_DETECTION_METHOD_GROUP, true);
+        caseDetectionGroup.addValueChangeListener(
+                e -> FieldHelper.updateEnumData(caseDetectionMethod,
+                        CaseDetectionMethod.getCaseDetectionMethod((CaseDetectionMethodGroup) caseDetectionGroup.getValue(), disease)));
 
-		if (parentClass == CaseDataDto.class) {
-			addActivityAsCaseFields();
-		}
+        exposuresField.addValueChangeListener(e -> {
+            ogExposureDetailsKnown.setEnabled(CollectionUtils.isEmpty(exposuresField.getValue()));
+        });
 
-		addField(EpiDataDto.HIGH_TRANSMISSION_RISK_AREA, NullableOptionGroup.class);
-		addField(EpiDataDto.LARGE_OUTBREAKS_AREA, NullableOptionGroup.class);
-		addField(EpiDataDto.AREA_INFECTED_ANIMALS, NullableOptionGroup.class);
-		NullableOptionGroup ogContactWithSourceCaseKnown = addField(EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN, NullableOptionGroup.class);
+        if (disease == Disease.MALARIA) {
+            malariaEpiDataForm = new MalariaEpiDataForm();
+            malariaEpiDataForm.setWidth(90, Unit.PERCENTAGE);
+            getContent().addComponent(malariaEpiDataForm, MALARIA_EPI_FROM);
+        }
 
-		if (sourceContactsToggleCallback != null) {
-			ogContactWithSourceCaseKnown.addValueChangeListener(e -> {
-				YesNoUnknown sourceContactsKnown = (YesNoUnknown) FieldHelper.getNullableSourceFieldValue((Field) e.getProperty());
-				sourceContactsToggleCallback.accept(YesNoUnknown.YES == sourceContactsKnown);
-			});
-		}
 
-		FieldHelper.setVisibleWhen(
-			getFieldGroup(),
-			EpiDataDto.EXPOSURES,
-			EpiDataDto.EXPOSURE_DETAILS_KNOWN,
-			Collections.singletonList(YesNoUnknown.YES),
-			true);
+    }
 
-		initializeVisibilitiesAndAllowedVisibilities();
-		initializeAccessAndAllowedAccesses();
+    public MalariaEpiDataForm getMalariaEpiDataForm() {
+        return malariaEpiDataForm;
+    }
 
-		exposuresField.addValueChangeListener(e -> {
-			ogExposureDetailsKnown.setEnabled(CollectionUtils.isEmpty(exposuresField.getValue()));
-		});
-	}
+    private void addActivityAsCaseFields() {
 
-	private void addActivityAsCaseFields() {
+        getContent().addComponent(
+                new MultilineLabel(
+                        h3(I18nProperties.getString(Strings.headingActivityAsCase))
+                                + divsCss(VSPACE_3, I18nProperties.getString(Strings.infoActivityAsCaseInvestigation)),
+                        ContentMode.HTML),
+                LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING);
 
-		getContent().addComponent(
-			new MultilineLabel(
-				h3(I18nProperties.getString(Strings.headingActivityAsCase))
-					+ divsCss(VSPACE_3, I18nProperties.getString(Strings.infoActivityAsCaseInvestigation)),
-				ContentMode.HTML),
-			LOC_ACTIVITY_AS_CASE_INVESTIGATION_HEADING);
+        NullableOptionGroup ogActivityAsCaseDetailsKnown = addField(EpiDataDto.ACTIVITY_AS_CASE_DETAILS_KNOWN, NullableOptionGroup.class);
+        ActivityAsCaseField activityAsCaseField = addField(EpiDataDto.ACTIVITIES_AS_CASE, ActivityAsCaseField.class);
+        activityAsCaseField.setWidthFull();
+        activityAsCaseField.setPseudonymized(isPseudonymized);
 
-		NullableOptionGroup ogActivityAsCaseDetailsKnown = addField(EpiDataDto.ACTIVITY_AS_CASE_DETAILS_KNOWN, NullableOptionGroup.class);
-		ActivityAsCaseField activityAsCaseField = addField(EpiDataDto.ACTIVITIES_AS_CASE, ActivityAsCaseField.class);
-		activityAsCaseField.setWidthFull();
-		activityAsCaseField.setPseudonymized(isPseudonymized);
+        FieldHelper.setVisibleWhen(
+                getFieldGroup(),
+                EpiDataDto.ACTIVITIES_AS_CASE,
+                EpiDataDto.ACTIVITY_AS_CASE_DETAILS_KNOWN,
+                Collections.singletonList(YesNoUnknown.YES),
+                true);
 
-		FieldHelper.setVisibleWhen(
-			getFieldGroup(),
-			EpiDataDto.ACTIVITIES_AS_CASE,
-			EpiDataDto.ACTIVITY_AS_CASE_DETAILS_KNOWN,
-			Collections.singletonList(YesNoUnknown.YES),
-			true);
+        activityAsCaseField.addValueChangeListener(e -> {
+            ogActivityAsCaseDetailsKnown.setEnabled(CollectionUtils.isEmpty(activityAsCaseField.getValue()));
+        });
+    }
 
-		activityAsCaseField.addValueChangeListener(e -> {
-			ogActivityAsCaseDetailsKnown.setEnabled(CollectionUtils.isEmpty(activityAsCaseField.getValue()));
-		});
-	}
+    private void addHeadingsAndInfoTexts() {
+        getContent().addComponent(
+                new MultilineLabel(
+                        h3(I18nProperties.getString(Strings.headingExposureInvestigation))
+                                + divsCss(
+                                VSPACE_3,
+                                I18nProperties.getString(
+                                        parentClass == ContactDto.class ? Strings.infoExposureInvestigationContacts : Strings.infoExposureInvestigation)),
+                        ContentMode.HTML),
+                LOC_EXPOSURE_INVESTIGATION_HEADING);
 
-	private void addHeadingsAndInfoTexts() {
-		getContent().addComponent(
-			new MultilineLabel(
-				h3(I18nProperties.getString(Strings.headingExposureInvestigation))
-					+ divsCss(
-						VSPACE_3,
-						I18nProperties.getString(
-							parentClass == ContactDto.class ? Strings.infoExposureInvestigationContacts : Strings.infoExposureInvestigation)),
-				ContentMode.HTML),
-			LOC_EXPOSURE_INVESTIGATION_HEADING);
+        getContent().addComponent(
+                new MultilineLabel(divsCss(VSPACE_3, I18nProperties.getString(Strings.infoEpiDataFieldsHint)), ContentMode.HTML),
+                LOC_EPI_DATA_FIELDS_HINT);
 
-		getContent().addComponent(
-			new MultilineLabel(divsCss(VSPACE_3, I18nProperties.getString(Strings.infoEpiDataFieldsHint)), ContentMode.HTML),
-			LOC_EPI_DATA_FIELDS_HINT);
+        getContent().addComponent(
+                new MultilineLabel(
+                        h3(I18nProperties.getString(Strings.headingEpiDataSourceCaseContacts))
+                                + divsCss(VSPACE_3, I18nProperties.getString(Strings.infoEpiDataSourceCaseContacts)),
+                        ContentMode.HTML),
+                LOC_SOURCE_CASE_CONTACTS_HEADING);
+    }
 
-		getContent().addComponent(
-			new MultilineLabel(
-				h3(I18nProperties.getString(Strings.headingEpiDataSourceCaseContacts))
-					+ divsCss(VSPACE_3, I18nProperties.getString(Strings.infoEpiDataSourceCaseContacts)),
-				ContentMode.HTML),
-			LOC_SOURCE_CASE_CONTACTS_HEADING);
-	}
+    public void disableContactWithSourceCaseKnownField() {
+        setEnabled(false, EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN);
+    }
 
-	public void disableContactWithSourceCaseKnownField() {
-		setEnabled(false, EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN);
-	}
+    public void setGetSourceContactsCallback(Supplier<List<ContactReferenceDto>> callback) {
+        ((ExposuresField) getField(EpiDataDto.EXPOSURES)).setGetSourceContactsCallback(callback);
+    }
 
-	public void setGetSourceContactsCallback(Supplier<List<ContactReferenceDto>> callback) {
-		((ExposuresField) getField(EpiDataDto.EXPOSURES)).setGetSourceContactsCallback(callback);
-	}
+    @Override
+    protected String createHtmlLayout() {
+        return parentClass == CaseDataDto.class ? MAIN_HTML_LAYOUT + SOURCE_CONTACTS_HTML_LAYOUT : MAIN_HTML_LAYOUT;
+    }
 
-	@Override
-	protected String createHtmlLayout() {
-		return parentClass == CaseDataDto.class ? MAIN_HTML_LAYOUT + SOURCE_CONTACTS_HTML_LAYOUT : MAIN_HTML_LAYOUT;
-	}
+    @Override
+    public void setValue(EpiDataDto newFieldValue) throws ReadOnlyException, Converter.ConversionException {
+        super.setValue(newFieldValue);
+        if (malariaEpiDataForm != null) {
+            if (newFieldValue.getMalariaEpiData() != null) {
+                malariaEpiDataForm.setValue(newFieldValue.getMalariaEpiData());
+            } else {
+                malariaEpiDataForm.setValue(new MalariaEpiDataDto());
+            }
+        }
+    }
 }

@@ -17,6 +17,7 @@ package de.symeda.sormas.app.backend.sample;
 
 import java.io.Serializable;
 
+import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.app.backend.caze.Case;
 import de.symeda.sormas.app.sample.ShipmentStatus;
 
@@ -24,6 +25,8 @@ public class SampleCriteria implements Serializable {
 
 	private ShipmentStatus shipmentStatus;
 	private Case caze;
+	private Disease disease;
+	private String textFilter;
 
 	public SampleCriteria shipmentStatus(ShipmentStatus shipmentStatus) {
 		this.shipmentStatus = shipmentStatus;
@@ -41,5 +44,21 @@ public class SampleCriteria implements Serializable {
 
 	public Case getCaze() {
 		return caze;
+	}
+
+	public Disease getDisease() {
+		return disease;
+	}
+
+	public void setDisease(Disease disease) {
+		this.disease = disease;
+	}
+
+	public String getTextFilter() {
+		return textFilter;
+	}
+
+	public void setTextFilter(String textFilter) {
+		this.textFilter = textFilter;
 	}
 }

@@ -303,6 +303,13 @@ public class FacilityFacadeEjb
 			.map(FacilityFacadeEjb::toReferenceDto)
 			.collect(Collectors.toList());
 	}
+	@Override
+	public List<FacilityReferenceDto> getByType(FacilityType type, boolean includeArchivedEntities) {
+		return service.getByType(type, includeArchivedEntities)
+				.stream()
+				.map(FacilityFacadeEjb::toReferenceDto)
+				.collect(Collectors.toList());
+	}
 
 	@Override
 	public Page<FacilityIndexDto> getIndexPage(FacilityCriteria criteria, Integer offset, Integer size, List<SortProperty> sortProperties) {

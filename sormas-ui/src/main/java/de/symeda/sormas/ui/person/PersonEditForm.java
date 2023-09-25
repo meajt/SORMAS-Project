@@ -136,13 +136,15 @@ public class PersonEditForm extends AbstractEditForm<PersonDto> {
                     fluidRowLocs(PersonDto.PASSPORT_NUMBER, PersonDto.NATIONAL_HEALTH_ID) +
 					fluidRowLocs(PersonDto.EXTERNAL_ID, PersonDto.EXTERNAL_TOKEN) +
 					fluidRowLocs(PersonDto.INTERNAL_TOKEN, EXTERNAL_TOKEN_WARNING_LOC) +
-
+					fluidRowLocs(PersonDto.MOBILE_NO, PersonDto.WEIGHT) +
+					fluidRow(fluidRowLocs(PersonDto.ETHNICITY, PersonDto.RELIGION)) +
+					fluidRow(fluidRowLocs(PersonDto.MARITAL_STATUS)) +
 					fluidRowLocs(PersonDto.HAS_COVID_APP, PersonDto.COVID_CODE_DELIVERED) +
 
                     loc(OCCUPATION_HEADER) +
                     divsCss(VSPACE_3,
                             fluidRowLocs(PersonDto.OCCUPATION_TYPE, PersonDto.OCCUPATION_DETAILS) +
-                            fluidRow(oneOfTwoCol(PersonDto.ARMED_FORCES_RELATION_TYPE)),
+                            fluidRowLocs(PersonDto.ARMED_FORCES_RELATION_TYPE, PersonDto.PLACE_OF_WORK),
                             fluidRowLocs(PersonDto.EDUCATION_TYPE, PersonDto.EDUCATION_DETAILS)
                     ) +
 
@@ -376,7 +378,12 @@ public class PersonEditForm extends AbstractEditForm<PersonDto> {
 		externalTokenWarningLabel.addStyleNames(VSPACE_3, LABEL_WHITE_SPACE_NORMAL);
 		getContent().addComponent(externalTokenWarningLabel, EXTERNAL_TOKEN_WARNING_LOC);
 		addField(PersonDto.INTERNAL_TOKEN);
-
+		addField(PersonDto.WEIGHT, TextField.class);
+		addField(PersonDto.PLACE_OF_WORK, TextField.class);
+		addField(PersonDto.MOBILE_NO, TextField.class);
+		addField(PersonDto.ETHNICITY, ComboBox.class);
+		addField(PersonDto.RELIGION, ComboBox.class);
+		addField(PersonDto.MARITAL_STATUS, ComboBox.class);
 		addField(PersonDto.HAS_COVID_APP).addStyleName(CssStyles.FORCE_CAPTION_CHECKBOX);
 		addField(PersonDto.COVID_CODE_DELIVERED).addStyleName(CssStyles.FORCE_CAPTION_CHECKBOX);
 

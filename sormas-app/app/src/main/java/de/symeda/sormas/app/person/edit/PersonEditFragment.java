@@ -43,8 +43,10 @@ import de.symeda.sormas.api.person.BurialConductor;
 import de.symeda.sormas.api.person.CauseOfDeath;
 import de.symeda.sormas.api.person.DeathPlaceType;
 import de.symeda.sormas.api.person.EducationType;
+import de.symeda.sormas.api.person.Ethnicity;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.person.PresentCondition;
+import de.symeda.sormas.api.person.Religion;
 import de.symeda.sormas.api.person.Salutation;
 import de.symeda.sormas.api.person.Sex;
 import de.symeda.sormas.api.utils.DataHelper;
@@ -160,6 +162,8 @@ public class PersonEditFragment extends BaseEditFragment<FragmentPersonEditLayou
 			DataUtils.toItems(DatabaseHelper.getCustomizableEnumValueDao().getEnumValues(CustomizableEnumType.OCCUPATION_TYPE, null));
 		List<Item> placeOfBirthFacilityTypeList = DataUtils.toItems(FacilityType.getPlaceOfBirthTypes(), true);
 		List<Item> countryList = InfrastructureDaoHelper.loadCountries();
+		List<Item> ethnicityList = DataUtils.getEnumItems(Ethnicity.class, true);
+		List<Item> religionList = DataUtils.getEnumItems(Religion.class, true);
 
 		InfrastructureDaoHelper.initializeHealthFacilityDetailsFieldVisibility(
 			contentBinding.personPlaceOfBirthFacility,
@@ -257,6 +261,8 @@ public class PersonEditFragment extends BaseEditFragment<FragmentPersonEditLayou
 		// Initialize ControlDateFields
 		contentBinding.personDeathDate.initializeDateField(fragment.getFragmentManager());
 		contentBinding.personBurialDate.initializeDateField(fragment.getFragmentManager());
+		contentBinding.personEthnicity.setSpinnerData(ethnicityList);
+		contentBinding.personReligion.setSpinnerData(religionList);
 	}
 
 	public static void setUpControlListeners(

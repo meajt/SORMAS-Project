@@ -113,6 +113,14 @@ public class EventController {
 		return eventDto;
 	}
 
+	public EventDto create(Consumer<EventDto> updateEventDtoConsumer) {
+		CommitDiscardWrapperComponent<EventDataForm> eventCreateComponent = getEventCreateComponent((CaseReferenceDto) null);
+		EventDto eventDto = eventCreateComponent.getWrappedComponent().getValue();
+		updateEventDtoConsumer.accept(eventDto);
+		VaadinUiUtil.showModalPopupWindow(eventCreateComponent, I18nProperties.getString(Strings.headingCreateNewEvent));
+		return eventDto;
+	}
+
 	public EventDto createFromCaseList(List<CaseReferenceDto> caseRefs) {
 		CommitDiscardWrapperComponent<EventDataForm> eventCreateComponent = getEventCreateComponentForCaseList(caseRefs);
 		EventDto eventDto = eventCreateComponent.getWrappedComponent().getValue();

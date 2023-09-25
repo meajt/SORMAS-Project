@@ -23,8 +23,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.caze.*;
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
+import de.symeda.sormas.ui.caze.components.linelisting.CaseLineListSave;
+import de.symeda.sormas.ui.caze.components.linelisting.HospitalLineListLayout;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.navigator.Navigator;
@@ -145,6 +152,7 @@ import de.symeda.sormas.ui.utils.components.automaticdeletion.DeletionLabel;
 import de.symeda.sormas.ui.utils.components.linelisting.model.LineDto;
 import de.symeda.sormas.ui.utils.components.page.title.TitleLayout;
 import de.symeda.sormas.ui.utils.components.page.title.TitleLayoutHelper;
+import org.apache.commons.lang3.StringUtils;
 
 public class CaseController {
 
@@ -182,6 +190,7 @@ public class CaseController {
 			navigator.addView(CaseVisitsView.VIEW_NAME, CaseVisitsView.class);
 		}
 
+		navigator.addView(CaseConclusionDataView.VIEW_NAME, CaseConclusionDataView.class);
 		navigator.addView(CaseExternalDataView.VIEW_NAME, CaseExternalDataView.class);
 	}
 
@@ -565,7 +574,10 @@ public class CaseController {
 			cazeDto.setReinfectionDetails(Collections.emptyMap());
 			cazeDto.setReinfectionStatus(null);
 		}
-
+		if (StringUtils.isNotEmpty(cazeDto.getRegistrationNo()) && cazeDto.getHospitalization() != null) {
+			cazeDto.getHospitalization().setRegistrationNo(cazeDto.getRegistrationNo());
+			cazeDto.setRegistrationNo(null);
+		}
 		// Compare old and new case
 		CaseDataDto existingDto = FacadeProvider.getCaseFacade().getCaseDataByUuid(cazeDto.getUuid());
 		CaseDataDto resultDto = FacadeProvider.getCaseFacade().save(cazeDto);
@@ -721,7 +733,10 @@ public class CaseController {
 		editView.addCommitListener(() -> {
 			if (!createForm.getFieldGroup().isModified()) {
 				final CaseDataDto dto = createForm.getValue();
-
+				CustomLoggerFactory.getLogger(LoggerType.WEB)
+								.logObj("home address is ", dto.getPerson());
+				CustomLoggerFactory.getLogger(LoggerType.WEB)
+						.logObj("case dto is ", dto);
 				if (dto.getHealthFacility() == null || FacilityDto.NONE_FACILITY_UUID.equals(dto.getHealthFacility().getUuid())) {
 					dto.setFacilityType(null);
 				}
@@ -741,6 +756,8 @@ public class CaseController {
 					dto.setWasInQuarantineBeforeIsolation(YesNoUnknown.YES);
 
 					transferDataToPerson(createForm, person);
+					CustomLoggerFactory.getLogger(LoggerType.WEB)
+									.logObj("PersonDto", person);
 					FacadeProvider.getPersonFacade().save(person);
 
 					saveCase(dto);
@@ -870,6 +887,8 @@ public class CaseController {
 
 	private void transferDataToPerson(CaseCreateForm createForm, PersonDto person) {
 		createForm.getPersonCreateForm().transferDataToPerson(person);
+		CustomLoggerFactory.getLogger(LoggerType.WEB)
+				.logObj("@transferDataToPerson", person);
 	}
 
 	private void updateHomeAddress(CaseCreateForm createForm, PersonDto person) {
@@ -1350,6 +1369,12 @@ public class CaseController {
 
 		editView.addCommitListener(() -> {
 			CaseDataDto cazeDto = FacadeProvider.getCaseFacade().getCaseDataByUuid(caseUuid);
+			if(epiDataForm.getMalariaEpiDataForm() != null) {
+				epiDataForm.getMalariaEpiDataForm().commit();
+				epiDataForm.getValue().setMalariaEpiData(epiDataForm.getMalariaEpiDataForm().getValue());
+			} else {
+				epiDataForm.getValue().setMalariaEpiData(null);
+			}
 			cazeDto.setEpiData(epiDataForm.getValue());
 			saveCase(cazeDto);
 		});
@@ -1361,6 +1386,13 @@ public class CaseController {
 			}
 		}
 
+		return editView;
+	}
+
+	public CommitDiscardWrapperComponent<CaseConclusionForm> getCaseConclusionComponent(){
+		CaseConclusionForm caseConclusionForm = new CaseConclusionForm();
+		caseConclusionForm.setValue(new CaseConclusionDto());
+		final CommitDiscardWrapperComponent<CaseConclusionForm> editView = new CommitDiscardWrapperComponent<>(caseConclusionForm, caseConclusionForm.getFieldGroup());
 		return editView;
 	}
 
@@ -1591,10 +1623,13 @@ public class CaseController {
 	}
 
 	public void openLineListingWindow() {
+		openLineListingWindow(LineListingLayout::new);
+	}
+
+	public void openLineListingWindow(Function<Window, CaseLineListSave> lineListSaveFunction) {
 
 		Window window = new Window(I18nProperties.getString(Strings.headingLineListing));
-
-		LineListingLayout lineListingForm = new LineListingLayout(window);
+		CaseLineListSave lineListingForm = lineListSaveFunction.apply(window);
 		lineListingForm.setSaveCallback(cases -> saveCasesFromLineListing(lineListingForm, cases));
 
 		if (UserProvider.getCurrent().hasUserRight(UserRight.CASE_CHANGE_EPID_NUMBER)) {
@@ -1611,7 +1646,11 @@ public class CaseController {
 		UI.getCurrent().addWindow(window);
 	}
 
-	private void saveCasesFromLineListing(LineListingLayout lineListingForm, LinkedList<LineDto<CaseDataDto>> cases) {
+	public void openHospitalLineListingWindow() {
+		openLineListingWindow(HospitalLineListLayout::new);
+	}
+
+	private void saveCasesFromLineListing(CaseLineListSave lineListingForm, LinkedList<LineDto<CaseDataDto>> cases) {
 		try {
 			lineListingForm.validate();
 		} catch (ValidationRuntimeException e) {

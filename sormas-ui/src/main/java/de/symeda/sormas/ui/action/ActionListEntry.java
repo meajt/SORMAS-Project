@@ -88,6 +88,7 @@ public class ActionListEntry extends HorizontalLayout {
 		descReplyLayout.setWidth(100, Unit.PERCENTAGE);
 		descReplyLayout.addStyleName(CssStyles.RICH_TEXT_CONTENT_CONTAINER);
 		withContentLayout.addComponents(descReplyLayout);
+		withContentLayout.addComponent(new ActionListEntryReply(action.toReference()));
 
 		Label description = new Label(cleanHtml(action.getDescription(), HtmlHelper.EVENTACTION_WHITELIST), ContentMode.HTML);
 		description.setWidth(100, Unit.PERCENTAGE);

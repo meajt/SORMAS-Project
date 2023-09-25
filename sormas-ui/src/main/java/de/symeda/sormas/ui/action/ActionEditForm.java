@@ -23,6 +23,7 @@ import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocs;
 import static de.symeda.sormas.ui.utils.LayoutUtil.loc;
 import static de.symeda.sormas.ui.utils.LayoutUtil.locs;
 
+import com.vaadin.v7.data.util.converter.Converter;
 import com.vaadin.v7.ui.ComboBox;
 import com.vaadin.v7.ui.Label;
 import com.vaadin.v7.ui.OptionGroup;
@@ -49,6 +50,7 @@ public class ActionEditForm extends AbstractEditForm<ActionDto> {
 	private static final String CREATING_LABEL_LOC = "creatingLabelLoc";
 	private static final String LAST_MODIFIED_BY_LABEL_LOC = "lastModifiedByLabelLoc";
 	private static final String STATUS_CHANGE_LABEL_LOC = "statusChangeLabelLoc";
+	public static final String REPLY_LIST = "replyList";
 
 	//@formatter:off
 	private static final String HTML_LAYOUT =
@@ -61,13 +63,15 @@ public class ActionEditForm extends AbstractEditForm<ActionDto> {
 			fluidRowLocs(ActionDto.TITLE) +
 			fluidRowLocs(ActionDto.DESCRIPTION) +
 			loc(LAST_MODIFIED_BY_LABEL_LOC) +
+			fluidRowLocs(REPLY_LIST) +
 			fluidRowLocs(ActionDto.REPLY) +
 			fluidRowLocs(5, ActionDto.ACTION_STATUS, 7, STATUS_CHANGE_LABEL_LOC);
 	//@formatter:on
 
-	public ActionEditForm(boolean create) {
+	private final Boolean isCreate ;
 
-		super(ActionDto.class, ActionDto.I18N_PREFIX);
+	public ActionEditForm(boolean create) {
+		super(ActionDto.class, ActionDto.I18N_PREFIX, false);
 		addValueChangeListener(e -> {
 			updateByActionContext();
 			updateByCreating();
@@ -80,6 +84,8 @@ public class ActionEditForm extends AbstractEditForm<ActionDto> {
 		if (create) {
 			hideValidationUntilNextCommit();
 		}
+		this.isCreate = create;
+		addFields();
 	}
 
 	@Override
@@ -184,5 +190,13 @@ public class ActionEditForm extends AbstractEditForm<ActionDto> {
 	@Override
 	protected String createHtmlLayout() {
 		return HTML_LAYOUT;
+	}
+
+	@Override
+	public void setValue(ActionDto newFieldValue) throws ReadOnlyException, Converter.ConversionException {
+		super.setValue(newFieldValue);
+		if (!isCreate && getValue() != null) {
+			getContent().addComponent(new ActionListEntryReply(getValue().toReference()), REPLY_LIST);
+		}
 	}
 }

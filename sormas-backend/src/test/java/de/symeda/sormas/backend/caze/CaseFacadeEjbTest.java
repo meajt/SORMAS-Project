@@ -55,6 +55,8 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
+import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -3149,6 +3151,38 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		assertThat(caze.getDisease(), is(Disease.ANTHRAX));
 		assertThat(caze.getDiseaseVariant(), is(nullValue()));
 		assertThat(caze.getDiseaseVariantDetails(), is(nullValue()));
+	}
+
+	@Test
+	public void saveMalariaEpiDataTest() {
+		RDCF rdcf = creator.createRDCF();
+		PersonReferenceDto personDto = creator.createPerson().toReference();
+		CaseDataDto savedCaze1 = createCaseOfFacilityType(rdcf, personDto, FacilityType.HOSPITAL);
+		MalariaEpiDataDto malariaEpiDataDto = new MalariaEpiDataDto();
+		savedCaze1.getEpiData().setMalariaEpiData(malariaEpiDataDto);
+		getCaseFacade().save(savedCaze1);
+		savedCaze1 = getCaseFacade().getCaseDataByUuid(savedCaze1.getUuid());
+		assertNotNull(savedCaze1.getEpiData().getMalariaEpiData());
+		savedCaze1.getEpiData().setMalariaEpiData(null);
+		savedCaze1 = getCaseFacade().save(savedCaze1);
+		savedCaze1 = getCaseFacade().getCaseDataByUuid(savedCaze1.getUuid());
+		assertNull(savedCaze1.getEpiData().getMalariaEpiData());
+	}
+
+	@Test
+	public void saveLeprosyCaseDataTest() {
+		RDCF rdcf = creator.createRDCF();
+		UserDto user = creator.createUser(rdcf, creator.getUserRoleReference(DefaultUserRole.NATIONAL_USER));
+		PersonReferenceDto personDto = creator.createPerson().toReference();
+		CaseDataDto leprosyCase = creator.createCase(user.toReference(), rdcf, (c) -> {
+			c.setPerson(personDto);
+			c.setDisease(Disease.LEPROSY);
+		});
+		leprosyCase = getCaseFacade().save(leprosyCase);
+		SymptomsDto symptomsDto = leprosyCase.getSymptoms();
+		leprosyCase.setSymptoms(symptomsDto);
+		leprosyCase = getCaseFacade().save(leprosyCase);
+		symptomsDto = leprosyCase.getSymptoms();
 	}
 
 	private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";

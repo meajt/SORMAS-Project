@@ -476,6 +476,10 @@ public class CasesView extends AbstractView {
 				new ExpandableButton(Captions.lineListing).expand(e -> ControllerProvider.getCaseController().openLineListingWindow());
 			addHeaderComponent(lineListingButton);
 
+			final ExpandableButton hospitalLineListingButton =
+					new ExpandableButton(Captions.hospitalLineListing).expand(e -> ControllerProvider.getCaseController().openHospitalLineListingWindow());
+			addHeaderComponent(hospitalLineListingButton);
+
 			final ExpandableButton createButton =
 				new ExpandableButton(Captions.caseNewCase).expand(e -> ControllerProvider.getCaseController().create());
 			addHeaderComponent(createButton);

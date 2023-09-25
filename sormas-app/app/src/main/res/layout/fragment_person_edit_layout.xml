@@ -213,11 +213,24 @@
                     style="@style/ControlSecondOfTwoColumnsStyle" />
 
             </LinearLayout>
-
+            <de.symeda.sormas.app.component.controls.ControlTextEditField
+                android:id="@+id/person_mobileNo"
+                app:value="@={data.mobileNo}"
+                app:inputType="number"
+                style="@style/ControlSingleColumnStyle" />
             <de.symeda.sormas.app.component.controls.ControlSpinnerField
                 android:id="@+id/person_sex"
-                app:required="true"
                 app:value="@={data.sex}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSpinnerField
+                android:id="@+id/person_ethnicity"
+                app:value="@={data.ethnicity}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSpinnerField
+                android:id="@+id/person_religion"
+                app:value="@={data.religion}"
                 style="@style/ControlSingleColumnStyle" />
 
             <ImageView style="@style/FullHorizontalDividerStyle"/>

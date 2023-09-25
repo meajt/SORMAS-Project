@@ -45,6 +45,7 @@ import de.symeda.sormas.api.event.TypeOfPlace;
 import de.symeda.sormas.api.exposure.WorkEnvironment;
 import de.symeda.sormas.api.i18n.Captions;
 import de.symeda.sormas.api.i18n.I18nProperties;
+import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.infrastructure.facility.FacilityTypeGroup;
 import de.symeda.sormas.api.utils.ValidationException;
@@ -230,6 +231,17 @@ public class EventEditFragment extends BaseEditFragment<FragmentEventEditLayoutB
 		ValidationHelper.initPhoneNumberValidator(contentBinding.eventSrcTelNo);
 		ValidationHelper.initDateIntervalValidator(contentBinding.eventStartDate, contentBinding.eventEndDate);
 		ValidationHelper.initDateIntervalValidator(contentBinding.eventStartDate, contentBinding.eventReportDateTime);
+		contentBinding.eventEventLocation.setValidationCallback(() -> {
+			Object value = contentBinding.eventEventLocation.getValue();
+			if (value instanceof Location) {
+				Location location = (Location) value;
+				 if(location.getRegion() != null && location.getDistrict() != null) {
+					 return false;
+				 }
+			}
+			contentBinding.eventEventLocation.enableErrorState(I18nProperties.getValidationError(Validations.validLocation));
+			return true;
+		});
 	}
 
 	@Override

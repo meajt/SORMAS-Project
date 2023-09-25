@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "760056161360",
-    "firebase_url": "https://fir-sormas.firebaseio.com",
-    "project_id": "firebase-sormas",
-    "storage_bucket": "firebase-sormas.appspot.com"
+    "project_number": "701045705207",
+    "firebase_url": "https://sormasnepal-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "sormasnepal",
+    "storage_bucket": "sormasnepal.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:760056161360:android:6fafcdbe8a96d8fd",
+        "mobilesdk_app_id": "1:701045705207:android:3afcfeb5189911cc9206f2",
         "android_client_info": {
           "package_name": "de.symeda.sormas.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "760056161360-35bvjna1alheasb8m6e1dkb2al2nqbea.apps.googleusercontent.com",
+          "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANSALdHZnRqG9iLez51K9wzvQ-DvmpXDo"
+          "current_key": "AIzaSyAXoCQ1i8YMgIWqQjhTgk_AfDdZHXpPRLY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "760056161360-35bvjna1alheasb8m6e1dkb2al2nqbea.apps.googleusercontent.com",
+              "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -37,27 +37,85 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:760056161360:android:9a973478a96fa8e7",
+        "mobilesdk_app_id": "1:701045705207:android:858cd6c7efeb38739206f2",
         "android_client_info": {
           "package_name": "de.symeda.sormas.app.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "760056161360-35bvjna1alheasb8m6e1dkb2al2nqbea.apps.googleusercontent.com",
+          "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANSALdHZnRqG9iLez51K9wzvQ-DvmpXDo"
+          "current_key": "AIzaSyAXoCQ1i8YMgIWqQjhTgk_AfDdZHXpPRLY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "760056161360-35bvjna1alheasb8m6e1dkb2al2nqbea.apps.googleusercontent.com",
+              "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701045705207:android:38bffe16f113f2729206f2",
+        "android_client_info": {
+          "package_name": "de.symeda.sormas.app.dev.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXoCQ1i8YMgIWqQjhTgk_AfDdZHXpPRLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701045705207:android:05891edaa46af6b59206f2",
+        "android_client_info": {
+          "package_name": "de.symeda.sormas.app.stg.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXoCQ1i8YMgIWqQjhTgk_AfDdZHXpPRLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701045705207-to281t5omnnq7cfe38hk4c3bleusrqlm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

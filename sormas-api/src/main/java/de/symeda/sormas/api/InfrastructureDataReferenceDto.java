@@ -44,4 +44,10 @@ public abstract class InfrastructureDataReferenceDto extends ReferenceDto implem
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public String toString()
+	{
+		return getCaption() != null? getCaption(): super.toString();
+	}
 }

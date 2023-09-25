@@ -171,8 +171,10 @@ public class TestDataCreator {
 
 	private void createUserRoles() {
 		Arrays.stream(DefaultUserRole.values()).forEach(defaultUserRole -> {
+			Set<UserRight> defaultUserRights = defaultUserRole.getDefaultUserRights();
+			defaultUserRights.add(UserRight.OTHER_USER_DATA);
 			UserRoleDto userRoleDto =
-				UserRoleDto.build(defaultUserRole.getDefaultUserRights().toArray(new UserRight[defaultUserRole.getDefaultUserRights().size()]));
+				UserRoleDto.build(defaultUserRights.toArray(new UserRight[defaultUserRights.size()]));
 			userRoleDto.setCaption(defaultUserRole.toString());
 			userRoleDto.setEnabled(true);
 			userRoleDto.setPortHealthUser(defaultUserRole.isPortHealthUser());
@@ -319,6 +321,15 @@ public class TestDataCreator {
 		UserRight... userRights) {
 		UserRoleReferenceDto userRole = createUserRole(caption, jurisdictionLevel, userRights);
 		return createUser(regionUuid, districtUuid, facilityUuid, firstName, lastName, userRole);
+	}
+
+	public UserRoleReferenceDto createUserRole(String caption, JurisdictionLevel jurisdictionLevel, UserRight... userRights) {
+		UserRoleDto userRole = new UserRoleDto();
+		userRole.setCaption(caption);
+		userRole.setJurisdictionLevel(jurisdictionLevel);
+		userRole.setUserRights(Arrays.stream(userRights).collect(Collectors.toSet()));
+		userRole.getUserRights().add(UserRight.OTHER_USER_DATA);
+		return beanTest.getUserRoleFacade().saveUserRole(userRole).toReference();
 	}
 
 	private UserDto createUser(

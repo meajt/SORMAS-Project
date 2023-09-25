@@ -83,7 +83,7 @@ public class LocationFacadeEjb implements LocationFacade {
 		target.setRegion(regionService.getByReferenceDto(source.getRegion()));
 		target.setDistrict(districtService.getByReferenceDto(source.getDistrict()));
 		target.setCommunity(communityService.getByReferenceDto(source.getCommunity()));
-
+		target.setWardNo(source.getWardNo());
 		target.setLatitude(source.getLatitude());
 		target.setLongitude(source.getLongitude());
 		target.setLatLonAccuracy(source.getLatLonAccuracy());
@@ -101,6 +101,7 @@ public class LocationFacadeEjb implements LocationFacade {
 		target.setContactPersonLastName(source.getContactPersonLastName());
 		target.setContactPersonPhone(source.getContactPersonPhone());
 		target.setContactPersonEmail(source.getContactPersonEmail());
+		target.setOtherFacilityType(source.getOtherFacilityType());
 
 		return target;
 	}
@@ -124,6 +125,7 @@ public class LocationFacadeEjb implements LocationFacade {
 		target.setRegion(RegionFacadeEjb.toReferenceDto(source.getRegion()));
 		target.setDistrict(DistrictFacadeEjb.toReferenceDto(source.getDistrict()));
 		target.setCommunity(CommunityFacadeEjb.toReferenceDto(source.getCommunity()));
+		target.setWardNo(source.getWardNo());
 
 		target.setLatitude(source.getLatitude());
 		target.setLongitude(source.getLongitude());
@@ -143,7 +145,7 @@ public class LocationFacadeEjb implements LocationFacade {
 		target.setContactPersonLastName(source.getContactPersonLastName());
 		target.setContactPersonPhone(source.getContactPersonPhone());
 		target.setContactPersonEmail(source.getContactPersonEmail());
-
+		target.setOtherFacilityType(source.getOtherFacilityType());
 		return target;
 	}
 

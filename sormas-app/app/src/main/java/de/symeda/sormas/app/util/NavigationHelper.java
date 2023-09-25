@@ -31,6 +31,7 @@ import de.symeda.sormas.app.dashboard.DashboardActivity;
 import de.symeda.sormas.app.environment.list.EnvironmentListActivity;
 import de.symeda.sormas.app.event.list.EventListActivity;
 import de.symeda.sormas.app.immunization.list.ImmunizationListActivity;
+import de.symeda.sormas.app.news.NewsListActivity;
 import de.symeda.sormas.app.report.ReportActivity;
 import de.symeda.sormas.app.report.aggregate.AggregateReportsActivity;
 import de.symeda.sormas.app.sample.list.SampleListActivity;
@@ -102,5 +103,10 @@ public class NavigationHelper {
 
 	public static void goToNewCase(Context context) {
 		CaseNewActivity.startActivity(context);
+	}
+
+	public static void goToNews(Context context) {
+		Intent intent = new Intent(context, NewsListActivity.class);
+		context.startActivity(intent);
 	}
 }

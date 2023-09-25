@@ -302,7 +302,7 @@
                 <de.symeda.sormas.app.component.controls.ControlSpinnerField
                     android:id="@+id/event_typeOfPlace"
                     style="@style/ControlFirstOfTwoColumnsStyle"
-                    app:softRequired="true"
+                    app:required="true"
                     app:value="@={data.typeOfPlace}" />
 
                 <de.symeda.sormas.app.component.controls.ControlTextEditField
@@ -323,6 +323,7 @@
             <de.symeda.sormas.app.component.controls.ControlTextPopupField
                 android:id="@+id/event_eventLocation"
                 style="@style/ControlSingleColumnStyle"
+                app:required="true"
                 app:hint="@string/hint_enter_location"
                 app:iconStart="@drawable/ic_edit_location_black_24dp"
                 app:locationValue="@={data.eventLocation}" />

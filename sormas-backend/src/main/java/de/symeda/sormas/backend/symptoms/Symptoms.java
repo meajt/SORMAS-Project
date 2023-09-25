@@ -17,6 +17,8 @@
  *******************************************************************************/
 package de.symeda.sormas.backend.symptoms;
 
+import static de.symeda.sormas.api.Disease.*;
+import static de.symeda.sormas.api.Disease.MALARIA;
 import static de.symeda.sormas.api.utils.FieldConstraints.CHARACTER_LIMIT_DEFAULT;
 
 import java.util.Date;
@@ -31,6 +33,9 @@ import javax.persistence.TemporalType;
 import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
 import de.symeda.sormas.api.symptoms.SymptomState;
 import de.symeda.sormas.api.symptoms.TemperatureSource;
+import de.symeda.sormas.api.utils.Diseases;
+import de.symeda.sormas.api.utils.SymptomGroup;
+import de.symeda.sormas.api.utils.SymptomGrouping;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 
@@ -236,6 +241,65 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState otherComplications;
 	private String otherComplicationsText;
 
+	private SymptomState bodyAche;
+
+	private SymptomState numbness;
+
+	private SymptomState muscleTwitching;
+
+	private SymptomState punctureMarkAtWound;
+
+	private SymptomState bleedingAroundBite;
+
+	private SymptomState disturbedVision;
+
+	private SymptomState discoloredSkin;
+
+	private SymptomState growthNodulesOnSkin;
+
+	private SymptomState painlessUlcer;
+
+	private SymptomState eyelashes;
+
+	private SymptomState enlargesNerves;
+
+	private SymptomState muscleWeakness;
+
+	private CaseCondition caseCondition;
+	private SymptomState earPain;
+
+	private SymptomState redEyeWithoutDischarge;
+	private SymptomState leukocoria;
+	private SymptomState unilateralInvolvement;
+	private SymptomState decreaseVision;
+	private SymptomState circumciliaryCongestion;
+	private SymptomState fibrinoidAntChamberRxn;
+	private SymptomState hypopyon;
+	private SymptomState shalloAntChamber;
+	private SymptomState decreaseIntraocuPressure;
+	private SymptomState photophobia;
+	private SymptomState suddenantofrxn;
+	private SymptomState redantWhiterxn;
+	private SymptomState lossantCornealRxn;
+	private SymptomState reduceVialequiEquity;
+	private SymptomState reducEyeOP;
+	private SymptomState porredGlow;
+	private SymptomState retinalDetachment;
+	private SymptomState retinalNecrosis;
+	private SymptomState hyoptony;
+	private SymptomState cataract;
+	private SymptomState pththisisBulbi;
+	private String otherSymptoms;
+	private SymptomState eyeSwelling;
+	private SymptomState increasedTearProduction;
+	private SymptomState eyeItchingIrritationBurning;
+	private SymptomState eyeDischarge;
+	private SymptomState crustingEyeLidLashes;
+	private SymptomState punctateKeratitis;
+	private SymptomState bacterialSuperinfection;
+	private SymptomState conjunctivalScarring;
+	private SymptomState cornealUlceration;
+	private SymptomState chronicInfection;
 	// when adding new fields make sure to extend toHumanString
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -1838,5 +1902,403 @@ public class Symptoms extends AbstractDomainObject {
 
 	public void setOtherComplicationsText(String otherComplicationsText) {
 		this.otherComplicationsText = otherComplicationsText;
+	}
+
+	public SymptomState getBodyAche() {
+		return bodyAche;
+	}
+
+	public void setBodyAche(SymptomState bodyAche) {
+		this.bodyAche = bodyAche;
+	}
+
+	public SymptomState getNumbness() {
+		return numbness;
+	}
+
+	public void setNumbness(SymptomState numbness) {
+		this.numbness = numbness;
+	}
+
+	public SymptomState getMuscleTwitching() {
+		return muscleTwitching;
+	}
+
+	public void setMuscleTwitching(SymptomState muscleTwitching) {
+		this.muscleTwitching = muscleTwitching;
+	}
+
+	public SymptomState getPunctureMarkAtWound() {
+		return punctureMarkAtWound;
+	}
+
+	public void setPunctureMarkAtWound(SymptomState punctureMarkAtWound) {
+		this.punctureMarkAtWound = punctureMarkAtWound;
+	}
+
+	public SymptomState getBleedingAroundBite() {
+		return bleedingAroundBite;
+	}
+
+	public void setBleedingAroundBite(SymptomState bleedingAroundBite) {
+		this.bleedingAroundBite = bleedingAroundBite;
+	}
+
+	public SymptomState getDisturbedVision() {
+		return disturbedVision;
+	}
+
+	public void setDisturbedVision(SymptomState disturbedVision) {
+		this.disturbedVision = disturbedVision;
+	}
+
+	public SymptomState getDiscoloredSkin() {
+		return discoloredSkin;
+	}
+
+	public void setDiscoloredSkin(SymptomState discoloredSkin) {
+		this.discoloredSkin = discoloredSkin;
+	}
+
+	public SymptomState getGrowthNodulesOnSkin() {
+		return growthNodulesOnSkin;
+	}
+
+	public void setGrowthNodulesOnSkin(SymptomState growthNodulesOnSkin) {
+		this.growthNodulesOnSkin = growthNodulesOnSkin;
+	}
+
+	public SymptomState getPainlessUlcer() {
+		return painlessUlcer;
+	}
+
+	public void setPainlessUlcer(SymptomState painlessUlcer) {
+		this.painlessUlcer = painlessUlcer;
+	}
+
+	public SymptomState getEyelashes() {
+		return eyelashes;
+	}
+
+	public void setEyelashes(SymptomState eyelashes) {
+		this.eyelashes = eyelashes;
+	}
+
+	public SymptomState getEnlargesNerves() {
+		return enlargesNerves;
+	}
+
+	public void setEnlargesNerves(SymptomState enlargesNerves) {
+		this.enlargesNerves = enlargesNerves;
+	}
+
+	public SymptomState getMuscleWeakness() {
+		return muscleWeakness;
+	}
+
+	public void setMuscleWeakness(SymptomState muscleWeakness) {
+		this.muscleWeakness = muscleWeakness;
+	}
+
+	public CaseCondition getCaseCondition() {
+		return caseCondition;
+	}
+
+	public void setCaseCondition(CaseCondition caseCondition) {
+		this.caseCondition = caseCondition;
+	}
+
+	public SymptomState getEarPain() {
+		return earPain;
+	}
+
+	public void setEarPain(SymptomState earPain) {
+		this.earPain = earPain;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getRedEyeWithoutDischarge() {
+		return redEyeWithoutDischarge;
+	}
+
+	public void setRedEyeWithoutDischarge(SymptomState redEyeWithoutDischarge) {
+		this.redEyeWithoutDischarge = redEyeWithoutDischarge;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getLeukocoria() {
+		return leukocoria;
+	}
+
+	public void setLeukocoria(SymptomState leukocoria) {
+		this.leukocoria = leukocoria;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getUnilateralInvolvement() {
+		return unilateralInvolvement;
+	}
+
+	public void setUnilateralInvolvement(SymptomState unilateralInvolvement) {
+		this.unilateralInvolvement = unilateralInvolvement;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getDecreaseVision() {
+		return decreaseVision;
+	}
+
+	public void setDecreaseVision(SymptomState decreaseVision) {
+		this.decreaseVision = decreaseVision;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getCircumciliaryCongestion() {
+		return circumciliaryCongestion;
+	}
+
+	public void setCircumciliaryCongestion(SymptomState circumciliaryCongestion) {
+		this.circumciliaryCongestion = circumciliaryCongestion;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getFibrinoidAntChamberRxn() {
+		return fibrinoidAntChamberRxn;
+	}
+
+	public void setFibrinoidAntChamberRxn(SymptomState fibrinoidAntChamberRxn) {
+		this.fibrinoidAntChamberRxn = fibrinoidAntChamberRxn;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getHypopyon() {
+		return hypopyon;
+	}
+
+	public void setHypopyon(SymptomState hypopyon) {
+		this.hypopyon = hypopyon;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getShalloAntChamber() {
+		return shalloAntChamber;
+	}
+
+	public void setShalloAntChamber(SymptomState shalloAntChamber) {
+		this.shalloAntChamber = shalloAntChamber;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getDecreaseIntraocuPressure() {
+		return decreaseIntraocuPressure;
+	}
+
+	public void setDecreaseIntraocuPressure(SymptomState decreaseIntraocuPressure) {
+		this.decreaseIntraocuPressure = decreaseIntraocuPressure;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getPhotophobia() {
+		return photophobia;
+	}
+
+	public void setPhotophobia(SymptomState photophobia) {
+		this.photophobia = photophobia;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getSuddenantofrxn() {
+		return suddenantofrxn;
+	}
+
+	public void setSuddenantofrxn(SymptomState suddenantofrxn) {
+		this.suddenantofrxn = suddenantofrxn;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getRedantWhiterxn() {
+		return redantWhiterxn;
+	}
+
+	public void setRedantWhiterxn(SymptomState redantWhiterxn) {
+		this.redantWhiterxn = redantWhiterxn;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getLossantCornealRxn() {
+		return lossantCornealRxn;
+	}
+
+	public void setLossantCornealRxn(SymptomState lossantCornealRxn) {
+		this.lossantCornealRxn = lossantCornealRxn;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getReduceVialequiEquity() {
+		return reduceVialequiEquity;
+	}
+
+	public void setReduceVialequiEquity(SymptomState reduceVialequiEquity) {
+		this.reduceVialequiEquity = reduceVialequiEquity;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getReducEyeOP() {
+		return reducEyeOP;
+	}
+
+	public void setReducEyeOP(SymptomState reducEyeOP) {
+		this.reducEyeOP = reducEyeOP;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getPorredGlow() {
+		return porredGlow;
+	}
+
+	public void setPorredGlow(SymptomState porredGlow) {
+		this.porredGlow = porredGlow;
+	}
+	@Enumerated(EnumType.STRING)
+	public SymptomState getRetinalDetachment() {
+		return retinalDetachment;
+	}
+
+	public void setRetinalDetachment(SymptomState retinalDetachment) {
+		this.retinalDetachment = retinalDetachment;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getRetinalNecrosis() {
+		return retinalNecrosis;
+	}
+
+	public void setRetinalNecrosis(SymptomState retinalNecrosis) {
+		this.retinalNecrosis = retinalNecrosis;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getHyoptony() {
+		return hyoptony;
+	}
+
+	public void setHyoptony(SymptomState hyoptony) {
+		this.hyoptony = hyoptony;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getCataract() {
+		return cataract;
+	}
+
+	public void setCataract(SymptomState cataract) {
+		this.cataract = cataract;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getPththisisBulbi() {
+		return pththisisBulbi;
+	}
+
+	public void setPththisisBulbi(SymptomState pththisisBulbi) {
+		this.pththisisBulbi = pththisisBulbi;
+	}
+
+	public String getOtherSymptoms() {
+		return otherSymptoms;
+	}
+
+	public void setOtherSymptoms(String otherSymptoms) {
+		this.otherSymptoms = otherSymptoms;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getEyeSwelling() {
+		return eyeSwelling;
+	}
+
+	public void setEyeSwelling(SymptomState eyeSwelling) {
+		this.eyeSwelling = eyeSwelling;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getIncreasedTearProduction() {
+		return increasedTearProduction;
+	}
+
+	public void setIncreasedTearProduction(SymptomState increasedTearProduction) {
+		this.increasedTearProduction = increasedTearProduction;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getEyeItchingIrritationBurning() {
+		return eyeItchingIrritationBurning;
+	}
+
+	public void setEyeItchingIrritationBurning(SymptomState eyeItchingIrritationBurning) {
+		this.eyeItchingIrritationBurning = eyeItchingIrritationBurning;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getEyeDischarge() {
+		return eyeDischarge;
+	}
+
+	public void setEyeDischarge(SymptomState eyeDischarge) {
+		this.eyeDischarge = eyeDischarge;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getCrustingEyeLidLashes() {
+		return crustingEyeLidLashes;
+	}
+
+	public void setCrustingEyeLidLashes(SymptomState crustingEyeLidLashes) {
+		this.crustingEyeLidLashes = crustingEyeLidLashes;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getPunctateKeratitis() {
+		return punctateKeratitis;
+	}
+
+	public void setPunctateKeratitis(SymptomState punctateKeratitis) {
+		this.punctateKeratitis = punctateKeratitis;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getBacterialSuperinfection() {
+		return bacterialSuperinfection;
+	}
+
+	public void setBacterialSuperinfection(SymptomState bacterialSuperinfection) {
+		this.bacterialSuperinfection = bacterialSuperinfection;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getConjunctivalScarring() {
+		return conjunctivalScarring;
+	}
+
+	public void setConjunctivalScarring(SymptomState conjunctivalScarring) {
+		this.conjunctivalScarring = conjunctivalScarring;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getCornealUlceration() {
+		return cornealUlceration;
+	}
+
+	public void setCornealUlceration(SymptomState cornealUlceration) {
+		this.cornealUlceration = cornealUlceration;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SymptomState getChronicInfection() {
+		return chronicInfection;
+	}
+
+	public void setChronicInfection(SymptomState chronicInfection) {
+		this.chronicInfection = chronicInfection;
 	}
 }

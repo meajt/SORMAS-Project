@@ -1054,6 +1054,79 @@
                 app:softRequired="true"
                 style="@style/ControlSingleColumnStyle" />
 
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_bodyAche"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.bodyAche}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_numbness"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.numbness}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_muscleTwitching"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.muscleTwitching}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_punctureMarkAtWound"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.punctureMarkAtWound}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_bleedingAroundBite"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.bleedingAroundBite}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_disturbedVision"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.disturbedVision}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_discoloredSkin"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.discoloredSkin}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_growthNodulesOnSkin"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.growthNodulesOnSkin}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_painlessUlcer"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.painlessUlcer}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_eyelashes"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.eyelashes}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_enlargesNerves"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.enlargesNerves}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_muscleWeakness"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.muscleWeakness}"
+                style="@style/ControlSingleColumnStyle" />
+
             <de.symeda.sormas.app.component.controls.ControlTextEditField
                 android:id="@+id/symptoms_otherHemorrhagicSymptomsText"
                 app:value="@={data.otherHemorrhagicSymptomsText}"
@@ -1262,6 +1335,125 @@
                 app:value="@={data.convulsion}"
                 style="@style/ControlSingleColumnStyle" />
 
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_earPain"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.earPain}"
+                style="@style/ControlSingleColumnStyle" />
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_redEyeWithoutDischarge"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.redEyeWithoutDischarge}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_leukocoria"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.leukocoria}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_unilateralInvolvement"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.unilateralInvolvement}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_decreaseVision"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.decreaseVision}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_circumciliaryCongestion"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.circumciliaryCongestion}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_fibrinoidAntChamberRxn"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.fibrinoidAntChamberRxn}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_hypopyon"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.hypopyon}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_shalloAntChamber"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.shalloAntChamber}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_decreaseIntraocuPressure"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.decreaseIntraocuPressure}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_photophobia"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.photophobia}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_suddenantofrxn"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.suddenantofrxn}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_redantWhiterxn"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.redantWhiterxn}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_lossantCornealRxn"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.lossantCornealRxn}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_reduceVialequiEquity"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.reduceVialequiEquity}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_reducEyeOP"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.reducEyeOP}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_porredGlow"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.porredGlow}"
+                style="@style/ControlSingleColumnStyle" />
+
+
             <!-- ============= SYMPTOMS Other non-hemorrhagis clinical symptoms ============= -->
 
             <de.symeda.sormas.app.component.controls.ControlSwitchField
@@ -1275,6 +1467,11 @@
                 android:id="@+id/symptoms_otherNonHemorrhagicSymptomsText"
                 app:value="@={data.otherNonHemorrhagicSymptomsText}"
                 app:softRequired="true"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlTextEditField
+                android:id="@+id/symptoms_otherSymptoms"
+                app:value="@={data.otherSymptoms}"
                 style="@style/ControlSingleColumnStyle" />
 
             <!-- COMPLICATIONS -->
@@ -1357,11 +1554,48 @@
                 app:value="@={data.otherComplications}"
                 style="@style/ControlSingleColumnStyle" />
 
+
             <de.symeda.sormas.app.component.controls.ControlTextEditField
                 android:id="@+id/symptoms_otherComplicationsText"
                 app:value="@={data.otherComplicationsText}"
                 app:softRequired="true"
                 style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_retinalDetachment"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.retinalDetachment}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_retinalNecrosis"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.retinalNecrosis}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_hyoptony"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.hyoptony}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_cataract"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.cataract}"
+                style="@style/ControlSingleColumnStyle" />
+
+            <de.symeda.sormas.app.component.controls.ControlSwitchField
+                android:id="@+id/symptoms_pththisisBulbi"
+                app:enumClass="@{symptomStateClass}"
+                app:slim="true"
+                app:value="@={data.pththisisBulbi}"
+                style="@style/ControlSingleColumnStyle" />
+
 
             <!-- comments, etc. -->
 

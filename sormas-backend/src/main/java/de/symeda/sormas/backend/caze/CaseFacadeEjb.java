@@ -1909,8 +1909,6 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 			throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noCommunityInDistrict));
 		}
 		if (caze.getHealthFacility() != null) {
-			FacilityDto healthFacility = facilityFacade.getByUuid(caze.getHealthFacility().getUuid());
-
 			if (caze.getFacilityType() == null) {
 				if (!FacilityDto.NONE_FACILITY_UUID.equals(caze.getHealthFacility().getUuid())) {
 					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityType));
@@ -1920,33 +1918,6 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 					I18nProperties.getValidationError(Validations.notAccomodationFacilityType, caze.getFacilityType()));
 			}
 
-			if (caze.getRegion() == null) {
-				if (caze.getResponsibleCommunity() == null
-					&& healthFacility.getDistrict() != null
-					&& !healthFacility.getDistrict().equals(caze.getResponsibleDistrict())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInResponsibleDistrict));
-				}
-				if (caze.getResponsibleCommunity() != null
-					&& healthFacility.getCommunity() != null
-					&& !caze.getResponsibleCommunity().equals(healthFacility.getCommunity())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInResponsibleCommunity));
-				}
-				if (healthFacility.getRegion() != null && !caze.getResponsibleRegion().equals(healthFacility.getRegion())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInResponsibleRegion));
-				}
-			} else {
-				if (caze.getCommunity() == null && healthFacility.getDistrict() != null && !healthFacility.getDistrict().equals(caze.getDistrict())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInDistrict));
-				}
-				if (caze.getCommunity() != null
-					&& healthFacility.getCommunity() != null
-					&& !caze.getCommunity().equals(healthFacility.getCommunity())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInCommunity));
-				}
-				if (healthFacility.getRegion() != null && !caze.getRegion().equals(healthFacility.getRegion())) {
-					throw new ValidationRuntimeException(I18nProperties.getValidationError(Validations.noFacilityInRegion));
-				}
-			}
 		}
 	}
 
@@ -3010,10 +2981,12 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setResponsibleRegion(RegionFacadeEjb.toReferenceDto(source.getResponsibleRegion()));
 		target.setResponsibleDistrict(DistrictFacadeEjb.toReferenceDto(source.getResponsibleDistrict()));
 		target.setResponsibleCommunity(CommunityFacadeEjb.toReferenceDto(source.getResponsibleCommunity()));
+		target.setResponsibleWardNo(source.getResponsibleWardNo());
 
 		target.setRegion(RegionFacadeEjb.toReferenceDto(source.getRegion()));
 		target.setDistrict(DistrictFacadeEjb.toReferenceDto(source.getDistrict()));
 		target.setCommunity(CommunityFacadeEjb.toReferenceDto(source.getCommunity()));
+		target.setWardNo(source.getWardNo());
 		target.setHealthFacility(FacilityFacadeEjb.toReferenceDto(source.getHealthFacility()));
 		target.setHealthFacilityDetails(source.getHealthFacilityDetails());
 
@@ -3132,7 +3105,13 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setDeleted(source.isDeleted());
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
-
+		target.setLastVaccinationDate(source.getLastVaccinationDate());
+		target.setTypeOfSource(source.getTypeOfSource());
+		target.setRoutineDoseTaken(source.getRoutineDoseTaken());
+		target.setDoseThroughRi(source.getDoseThroughRi());
+		target.setDoseThroughRia(source.getDoseThroughRia());
+		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
+		target.setRegisteredAs(source.getRegisteredAs());
 		return target;
 	}
 
@@ -3212,10 +3191,12 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setResponsibleRegion(regionService.getByReferenceDto(source.getResponsibleRegion()));
 		target.setResponsibleDistrict(districtService.getByReferenceDto(source.getResponsibleDistrict()));
 		target.setResponsibleCommunity(communityService.getByReferenceDto(source.getResponsibleCommunity()));
+		target.setResponsibleWardNo(source.getResponsibleWardNo());
 
 		target.setRegion(regionService.getByReferenceDto(source.getRegion()));
 		target.setDistrict(districtService.getByReferenceDto(source.getDistrict()));
 		target.setCommunity(communityService.getByReferenceDto(source.getCommunity()));
+		target.setWardNo(source.getWardNo());
 		target.setHealthFacility(facilityService.getByReferenceDto(source.getHealthFacility()));
 		target.setHealthFacilityDetails(source.getHealthFacilityDetails());
 
@@ -3332,7 +3313,13 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setDeleted(source.isDeleted());
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
-
+		target.setLastVaccinationDate(source.getLastVaccinationDate());
+		target.setTypeOfSource(source.getTypeOfSource());
+		target.setRoutineDoseTaken(source.getRoutineDoseTaken());
+		target.setDoseThroughRi(source.getDoseThroughRi());
+		target.setDoseThroughRia(source.getDoseThroughRia());
+		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
+		target.setRegisteredAs(source.getRegisteredAs());
 		return target;
 	}
 

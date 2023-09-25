@@ -36,6 +36,7 @@ import de.symeda.sormas.api.Language;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.utils.InfoProvider;
 import de.symeda.sormas.app.BaseLandingFragment;
+import de.symeda.sormas.app.BuildConfig;
 import de.symeda.sormas.app.LocaleManager;
 import de.symeda.sormas.app.R;
 import de.symeda.sormas.app.backend.caze.Case;
@@ -69,7 +70,7 @@ import de.symeda.sormas.app.util.SoftKeyboardHelper;
  */
 public class SettingsFragment extends BaseLandingFragment {
 
-	private final int SHOW_DEV_OPTIONS_CLICK_LIMIT = 5;
+	private final int SHOW_DEV_OPTIONS_CLICK_LIMIT = 2;
 
 	private FragmentSettingsLayoutBinding binding;
 	private int versionClickedCount;
@@ -87,7 +88,7 @@ public class SettingsFragment extends BaseLandingFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		binding = (FragmentSettingsLayoutBinding) rootBinding;
 
-		binding.settingsServerUrl.setValue(ConfigProvider.getServerRestUrl());
+		binding.settingsServerUrl.setValue(BuildConfig.BASE_URL);
 		binding.changePin.setOnClickListener(v -> changePIN());
 		binding.resynchronizeData.setOnClickListener(v -> repullData());
 		binding.showSyncLog.setOnClickListener(v -> openSyncLog());

@@ -129,4 +129,15 @@ public class SampleReadActivity extends BaseReadActivity<Sample> {
 		SampleSection section = SampleSection.fromOrdinal(getActivePage().getPosition());
 		SampleEditActivity.startActivity(getContext(), getRootUuid(), section);
 	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_print) {
+			SamplePrintActivity.startActivity(this, getRootUuid());
+			return true;
+		} else {
+			return  super.onOptionsItemSelected(item);
+		}
+	}
 }

@@ -116,7 +116,7 @@ public class LocationDialog extends FormDialog {
 		List<Item> initialDistricts = InfrastructureDaoHelper.loadDistricts(data.getRegion());
 		List<Item> initialCommunities = InfrastructureDaoHelper.loadCommunities(data.getDistrict());
 		List<Item> initialFacilities = InfrastructureDaoHelper.loadFacilities(data.getDistrict(), data.getCommunity(), data.getFacilityType());
-		List<Item> facilityTypeGroupList = DataUtils.toItems(Arrays.asList(FacilityTypeGroup.values()), true);
+		List<Item> facilityTypeGroupList = DataUtils.toItems(Arrays.asList(FacilityTypeGroup.getValuesForNepal()), true);
 		List<Item> facilityTypeList =
 			data.getFacilityType() != null ? DataUtils.toItems(FacilityType.getTypes(data.getFacilityType().getFacilityTypeGroup())) : null;
 

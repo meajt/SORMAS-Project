@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/fragment_padding">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/main_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/t1"
+                style="@style/PrintLayoutMainHeaderAddressStyle"
+                android:text="Government of Nepal"/>
+            <TextView
+                android:id="@+id/t2"
+                style="@style/PrintLayoutMainHeaderAddressStyle"
+                android:text="Ministry of Health and Population"/>
+            <TextView
+                android:id="@+id/t3"
+                style="@style/PrintLayoutMainHeaderAddressStyle"
+                android:text="Department of Health Service"/>
+            <TextView
+                android:id="@+id/main_title"
+                style="@style/PrintLayoutMainHeaderAddressStyle"
+                android:textSize="20sp"
+                android:text="National Public Health Laboratory"/>
+            <TextView
+                android:id="@+id/a1"
+                style="@style/PrintLayoutMainHeaderAddressStyle"
+                android:text="Teku, Kathmandu"/>
+            <TextView
+                android:id="@+id/a2"
+                style="@style/PrintLayoutMainHeaderAddressStyle"
+                android:text="ISO 15189:2012 Accredited Laboratory"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/blue"/>
+        <GridLayout
+            android:id="@+id/person_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="1">
+            <TextView
+                android:id="@+id/person_name"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/person_id"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"
+                 />
+            <TextView
+                android:id="@+id/person_age"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"
+                />
+            <TextView
+                android:id="@+id/person_address"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"
+                 />
+            <TextView
+                android:id="@+id/person_phone_no"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tested_date"
+                style="@style/PrintLayoutSubHeaderPersonDetailStyle"
+                />
+        </GridLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/blue"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="1dp"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sample_test_item_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

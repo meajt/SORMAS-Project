@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import de.symeda.sormas.api.caze.*;
+import de.symeda.sormas.api.person.Sex;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -75,21 +77,6 @@ import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.EntityDto;
 import de.symeda.sormas.api.FacadeProvider;
-import de.symeda.sormas.api.caze.CaseClassification;
-import de.symeda.sormas.api.caze.CaseConfirmationBasis;
-import de.symeda.sormas.api.caze.CaseDataDto;
-import de.symeda.sormas.api.caze.CaseIdentificationSource;
-import de.symeda.sormas.api.caze.CaseLogic;
-import de.symeda.sormas.api.caze.CaseOrigin;
-import de.symeda.sormas.api.caze.CaseOutcome;
-import de.symeda.sormas.api.caze.CaseReferenceDto;
-import de.symeda.sormas.api.caze.EndOfIsolationReason;
-import de.symeda.sormas.api.caze.HospitalWardType;
-import de.symeda.sormas.api.caze.InvestigationStatus;
-import de.symeda.sormas.api.caze.PreviousCaseDto;
-import de.symeda.sormas.api.caze.QuarantineReason;
-import de.symeda.sormas.api.caze.ReinfectionDetail;
-import de.symeda.sormas.api.caze.ReinfectionDetailGroup;
 import de.symeda.sormas.api.caze.classification.DiseaseClassificationCriteriaDto;
 import de.symeda.sormas.api.contact.ContactDto;
 import de.symeda.sormas.api.contact.FollowUpStatus;
@@ -147,6 +134,8 @@ import de.symeda.sormas.ui.utils.StringToAngularLocationConverter;
 import de.symeda.sormas.ui.utils.VaadinUiUtil;
 import de.symeda.sormas.ui.utils.ValidationUtils;
 import de.symeda.sormas.ui.utils.ViewMode;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 
@@ -206,8 +195,10 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 									CaseDataDto.DISEASE_DETAILS,
 									CaseDataDto.PLAGUE_TYPE,
 									CaseDataDto.DENGUE_FEVER_TYPE,
-									CaseDataDto.RABIES_TYPE))) +
+									CaseDataDto.RABIES_TYPE,
+									CaseDataDto.TYPE_OF_LEPROSY))) +
 					fluidRowLocs(CaseDataDto.DISEASE_VARIANT, CaseDataDto.DISEASE_VARIANT_DETAILS) +
+					fluidRowLocs(CaseDataDto.REGISTER_AS) +
 					fluidRow(
 							fluidColumnLoc(4, 0, CaseDataDto.RE_INFECTION),
 							fluidColumnLoc(1, 0, REINFECTION_INFO_LOC),
@@ -220,16 +211,19 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					) +
 					fluidRowLocs(9, CaseDataDto.OUTCOME, 3, CaseDataDto.OUTCOME_DATE) +
 					fluidRowLocs(3, CaseDataDto.SEQUELAE, 9, CaseDataDto.SEQUELAE_DETAILS) +
+					fluidRowLocs(9, CaseDataDto.CASE_OUTCOME_OTHER_DETAILS) +
 					fluidRowLocs(CaseDataDto.CASE_IDENTIFICATION_SOURCE, CaseDataDto.SCREENING_TYPE) +
 					fluidRowLocs(CaseDataDto.CASE_ORIGIN, "") +
 					fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC) +
 					fluidRowLocs(CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY) +
+					fluidRowLocs(CaseDataDto.RESPONSIBLE_WARD_NO, "") +
 					fluidRowLocs(CaseDataDto.DONT_SHARE_WITH_REPORTING_TOOL) +
 					fluidRowLocs(DONT_SHARE_WARNING_LOC) +
 					fluidRowLocs(DIFFERENT_PLACE_OF_STAY_JURISDICTION) +
 					fluidRowLocs(PLACE_OF_STAY_HEADING_LOC) +
 					fluidRowLocs(FACILITY_OR_HOME_LOC) +
 					fluidRowLocs(CaseDataDto.REGION, CaseDataDto.DISTRICT, CaseDataDto.COMMUNITY) +
+					fluidRowLocs(CaseDataDto.WARD_NO, "", "") +
 					fluidRowLocs(TYPE_GROUP_LOC, CaseDataDto.FACILITY_TYPE) +
 					fluidRowLocs(CaseDataDto.HEALTH_FACILITY, CaseDataDto.HEALTH_FACILITY_DETAILS) +
 					inlineLocs(CaseDataDto.POINT_OF_ENTRY, CaseDataDto.POINT_OF_ENTRY_DETAILS, CASE_REFER_POINT_OF_ENTRY_BTN_LOC) +
@@ -255,7 +249,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					loc(MEDICAL_INFORMATION_LOC) +
 					fluidRowLocs(CaseDataDto.BLOOD_ORGAN_OR_TISSUE_DONATED) +
 					fluidRowLocs(CaseDataDto.PREGNANT, CaseDataDto.POSTPARTUM) + fluidRowLocs(CaseDataDto.TRIMESTER, "") +
-					fluidRowLocs(CaseDataDto.VACCINATION_STATUS, "") +
+					fluidRowLocs(CaseDataDto.VACCINATION_STATUS, CaseDataDto.LAST_VACCINATION_DATE) +
 					fluidRowLocs(CaseDataDto.SMALLPOX_VACCINATION_RECEIVED, CaseDataDto.SMALLPOX_VACCINATION_SCAR) +
 					fluidRowLocs(CaseDataDto.SMALLPOX_LAST_VACCINATION_DATE, "") +
 					fluidRowLocs(SMALLPOX_VACCINATION_SCAR_IMG) +
@@ -274,6 +268,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 	
 	private static final String PAPER_FORM_DATES_AND_HEALTH_CONDITIONS_HTML_LAYOUT =
 			fluidRowLocs(6, CaseDataDto.SURVEILLANCE_OFFICER) +
+					fluidRow( fluidRowLocs(CaseDataDto.TYPE_OF_SOURCE), fluidRowLocs(CaseDataDto.ROUTINE_DOSE_TAKEN) ) +
+					fluidRow( fluidRowLocs(CaseDataDto.DOSE_THROUGH_RI), fluidRowLocs(CaseDataDto.DOSE_THROUGH_RIA) ) +
 					loc(PAPER_FORM_DATES_LOC) +
 					fluidRowLocs(CaseDataDto.DISTRICT_LEVEL_DATE, CaseDataDto.REGION_LEVEL_DATE, CaseDataDto.NATIONAL_LEVEL_DATE) +
 					loc(GENERAL_COMMENT_LOC) + fluidRowLocs(CaseDataDto.ADDITIONAL_DETAILS) +
@@ -401,7 +397,6 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 			CaseDataDto.CLINICIAN_NAME,
 			CaseDataDto.CLINICIAN_PHONE,
 			CaseDataDto.CLINICIAN_EMAIL);
-
 		TextField epidField = addField(CaseDataDto.EPID_NUMBER, TextField.class);
 		epidField.setInvalidCommitted(true);
 		epidField.setMaxLength(24);
@@ -442,7 +437,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.BLOOD_ORGAN_OR_TISSUE_DONATED, NullableOptionGroup.class);
 		addField(CaseDataDto.SEQUELAE, NullableOptionGroup.class);
 
-		addFields(CaseDataDto.INVESTIGATED_DATE, CaseDataDto.OUTCOME_DATE, CaseDataDto.SEQUELAE_DETAILS);
+		addFields(CaseDataDto.INVESTIGATED_DATE, CaseDataDto.OUTCOME_DATE, CaseDataDto.SEQUELAE_DETAILS, CaseDataDto.CASE_OUTCOME_OTHER_DETAILS);
 
 		addField(CaseDataDto.CASE_IDENTIFICATION_SOURCE);
 		addField(CaseDataDto.SCREENING_TYPE);
@@ -716,7 +711,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.QUARANTINE_HOME_POSSIBLE_COMMENT, TextField.class);
 		addField(CaseDataDto.QUARANTINE_HOME_SUPPLY_ENSURED, NullableOptionGroup.class);
 		addField(CaseDataDto.QUARANTINE_HOME_SUPPLY_ENSURED_COMMENT, TextField.class);
-
+		addField(CaseDataDto.TYPE_OF_LEPROSY, NullableOptionGroup.class);
+		addField(CaseDataDto.REGISTER_AS, NullableOptionGroup.class);
 		FieldHelper.setVisibleWhen(
 			getFieldGroup(),
 			Arrays.asList(CaseDataDto.QUARANTINE_FROM, CaseDataDto.QUARANTINE_TO, CaseDataDto.QUARANTINE_HELP_NEEDED),
@@ -772,6 +768,10 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 
 		ComboBox surveillanceOfficerField = addField(CaseDataDto.SURVEILLANCE_OFFICER, ComboBox.class);
 		surveillanceOfficerField.setNullSelectionAllowed(true);
+		addField(CaseDataDto.TYPE_OF_SOURCE, NullableOptionGroup.class);
+		addField(CaseDataDto.ROUTINE_DOSE_TAKEN, NullableOptionGroup.class);
+		addField(CaseDataDto.DOSE_THROUGH_RI, TextField.class);
+		addField(CaseDataDto.DOSE_THROUGH_RIA, TextField.class);
 
 		differentPlaceOfStayJurisdiction = addCustomField(DIFFERENT_PLACE_OF_STAY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPlaceOfStayJurisdiction.addStyleName(VSPACE_3);
@@ -781,10 +781,12 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		communityCombo = addInfrastructureField(CaseDataDto.COMMUNITY);
 		communityCombo.setNullSelectionAllowed(true);
 		communityCombo.addStyleName(SOFT_REQUIRED);
+		TextField wardNoField = addField(CaseDataDto.WARD_NO, TextField.class);
+		wardNoField.setNullSettingAllowed(true);
 
 		FieldHelper.setVisibleWhen(
 			differentPlaceOfStayJurisdiction,
-			Arrays.asList(regionCombo, districtCombo, communityCombo),
+			Arrays.asList(regionCombo, districtCombo, communityCombo, wardNoField),
 			Collections.singletonList(Boolean.TRUE),
 			true);
 
@@ -976,8 +978,11 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.PREGNANT, NullableOptionGroup.class);
 		addField(CaseDataDto.POSTPARTUM, NullableOptionGroup.class);
 		addField(CaseDataDto.TRIMESTER, NullableOptionGroup.class);
-
-		addField(CaseDataDto.VACCINATION_STATUS);
+		if(person.getSex() == Sex.MALE) {
+			setVisible(false, CaseDataDto.PREGNANT, CaseDataDto.POSTPARTUM);
+		}
+		ComboBox vaccinationStatusComboBox = addField(CaseDataDto.VACCINATION_STATUS, ComboBox.class);
+		addField(CaseDataDto.LAST_VACCINATION_DATE, DateField.class);
 		addFields(CaseDataDto.SMALLPOX_VACCINATION_SCAR, CaseDataDto.SMALLPOX_VACCINATION_RECEIVED);
 		addDateField(CaseDataDto.SMALLPOX_LAST_VACCINATION_DATE, DateField.class, 0);
 
@@ -1022,6 +1027,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		responsibleCommunity = addInfrastructureField(CaseDataDto.RESPONSIBLE_COMMUNITY);
 		responsibleCommunity.setNullSelectionAllowed(true);
 		responsibleCommunity.addStyleName(SOFT_REQUIRED);
+
+		addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
 
 		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegion, responsibleDistrict, responsibleCommunity);
 		InfrastructureFieldsHelper.initPointOfEntry(responsibleDistrict, pointOfEntry);
@@ -1175,7 +1182,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 				getFieldGroup(),
 				CaseDataDto.OUTCOME_DATE,
 				CaseDataDto.OUTCOME,
-				Arrays.asList(CaseOutcome.DECEASED, CaseOutcome.RECOVERED, CaseOutcome.UNKNOWN),
+				Arrays.asList(CaseOutcome.DECEASED, CaseOutcome.RECOVERED, CaseOutcome.UNKNOWN,
+						CaseOutcome.TRANSFER_OUT, CaseOutcome.LOSS_T0_FOLLOW_UP),
 				true);
 		}
 		if (isVisibleAllowed(CaseDataDto.SEQUELAE)) {
@@ -1188,6 +1196,12 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		}
 		if (isVisibleAllowed(CaseDataDto.SEQUELAE_DETAILS)) {
 			FieldHelper.setVisibleWhen(getFieldGroup(), CaseDataDto.SEQUELAE_DETAILS, CaseDataDto.SEQUELAE, Arrays.asList(YesNoUnknown.YES), true);
+		}
+		if (isVisibleAllowed(CaseDataDto.CASE_OUTCOME_OTHER_DETAILS)) {
+			FieldHelper.setVisibleWhen(getFieldGroup(),
+				CaseDataDto.CASE_OUTCOME_OTHER_DETAILS,
+				CaseDataDto.OUTCOME, Arrays.asList(CaseOutcome.OTHERS),
+				true);
 		}
 		if (isVisibleAllowed(CaseDataDto.NOTIFYING_CLINIC_DETAILS)) {
 			FieldHelper.setVisibleWhen(
@@ -1271,7 +1285,18 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		addField(CaseDataDto.DELETION_REASON);
 		addField(CaseDataDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, CaseDataDto.DELETION_REASON, CaseDataDto.OTHER_DELETION_REASON);
-
+		setVisible(false,
+				CaseDataDto.LAST_VACCINATION_DATE,
+				CaseDataDto.ROUTINE_DOSE_TAKEN,
+				CaseDataDto.DOSE_THROUGH_RI,
+				CaseDataDto.DOSE_THROUGH_RIA,
+				CaseDataDto.TYPE_OF_SOURCE);
+		vaccinationStatusComboBox.addValueChangeListener( e -> setVisible(vaccinationStatusComboBox.getValue() == VaccinationStatus.AT_LEAST_ONCE,
+				CaseDataDto.LAST_VACCINATION_DATE,
+				CaseDataDto.ROUTINE_DOSE_TAKEN,
+				CaseDataDto.DOSE_THROUGH_RI,
+				CaseDataDto.DOSE_THROUGH_RIA,
+				CaseDataDto.TYPE_OF_SOURCE));
 		addValueChangeListener(e -> {
 			diseaseField.addValueChangeListener(new DiseaseChangeListener(diseaseField, getValue().getDisease()));
 
@@ -1399,6 +1424,10 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					CaseDataDto.QUARANTINE_ORDERED_VERBALLY_DATE,
 					CaseDataDto.QUARANTINE_OFFICIAL_ORDER_SENT,
 					CaseDataDto.QUARANTINE_OFFICIAL_ORDER_SENT_DATE);
+			}
+
+			if(disease == Disease.LEPROSY) {
+				setVisible(false, CaseDataDto.HEALTH_CONDITIONS);
 			}
 
 			// Make external ID field read-only when SORMAS is connected to a SurvNet instance

@@ -35,6 +35,7 @@ import javax.persistence.TemporalType;
 import de.symeda.sormas.api.hospitalization.HospitalizationReasonType;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
+import de.symeda.sormas.api.hospitalization.RegistrationType;
 
 @Entity
 public class Hospitalization extends AbstractDomainObject {
@@ -72,6 +73,8 @@ public class Hospitalization extends AbstractDomainObject {
 	private HospitalizationReasonType hospitalizationReason;
 	private String otherHospitalizationReason;
 	private String description;
+	private String registrationNo;
+	private RegistrationType registrationType;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getAdmissionDate() {
@@ -138,7 +141,7 @@ public class Hospitalization extends AbstractDomainObject {
 
 	/**
 	 * This change date has to be set whenever one of the embedded lists is modified: !oldList.equals(newList)
-	 * 
+	 *
 	 * @return
 	 */
 	public Date getChangeDateOfEmbeddedLists() {
@@ -209,5 +212,22 @@ public class Hospitalization extends AbstractDomainObject {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getRegistrationNo() {
+		return registrationNo;
+	}
+
+	public void setRegistrationNo(String registrationNo) {
+		this.registrationNo = registrationNo;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public RegistrationType getRegistrationType() {
+		return registrationType;
+	}
+
+	public void setRegistrationType(RegistrationType registrationType) {
+		this.registrationType = registrationType;
 	}
 }

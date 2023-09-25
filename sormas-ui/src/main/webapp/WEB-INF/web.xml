@@ -785,4 +785,8 @@
 		<role-name>DEV_MODE</role-name>
 	</security-role>
 
+	<security-role>
+		<role-name>OTHER_USER_DATA</role-name>
+	</security-role>
+
 </web-app>

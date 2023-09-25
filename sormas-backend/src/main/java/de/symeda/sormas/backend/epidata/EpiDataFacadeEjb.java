@@ -17,6 +17,7 @@
  *******************************************************************************/
 package de.symeda.sormas.backend.epidata;
 
+import static de.symeda.sormas.backend.epidata.MalariaEpiDataFacadeEjb.*;
 import static java.util.Objects.isNull;
 
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 	private ContactService contactService;
 	@EJB
 	private UserService userService;
+	@EJB
+	private MalariaEpiDataFacadeEjbLocal malariaEpiDataFacadeEjbLocal;
 
 	public EpiData fillOrBuildEntity(EpiDataDto source, EpiData target, boolean checkChangeDate) {
 		if (source == null) {
@@ -100,7 +103,26 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		}
 		target.getActivitiesAsCase().clear();
 		target.getActivitiesAsCase().addAll(activitiesAsCase);
-
+		target.setMalariaEpiData(malariaEpiDataFacadeEjbLocal.fillOrBuildEntity(source.getMalariaEpiData(), target.getMalariaEpiData(), checkChangeDate));
+		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
+		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
+		target.setFamilyHistoryOfLeprosy(source.getFamilyHistoryOfLeprosy());
+		target.setContactExaminationDone(source.getContactExaminationDone());
+		target.setNoOfFamilyContact(source.getNoOfFamilyContact());
+		target.setNoOfNeighbourContact(source.getNoOfNeighbourContact());
+		target.setNoOfSocialContact(source.getNoOfSocialContact());
+		target.setSkinSmearTestPositive(source.getSkinSmearTestPositive());
+		target.setLeprosyResult(source.getLeprosyResult());
+		target.setExposureToMothOrOthers(source.getExposureToMothOrOthers());
+		target.setShapuExposureType(source.getShapuExposureType());
+		target.setDirectIndirectExposure(source.getDirectIndirectExposure());
+		target.setContactArea(source.getContactArea());
+		target.setContactItem(source.getContactItem());
+		target.setOtherExposureType(source.getOtherExposureType());
+		target.setExposureDate(source.getExposureDate());
+		target.setRemark(source.getRemark());
+		target.setOtherContactArea(source.getOtherContactArea());
+		target.setOtherContactItem(source.getOtherContactItem());
 		return target;
 	}
 
@@ -241,7 +263,26 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 			activityAsCaseDtos.add(activityAsCaseDto);
 		}
 		target.setActivitiesAsCase(activityAsCaseDtos);
-
+		target.setMalariaEpiData(MalariaEpiDataFacadeEjb.toDto(source.getMalariaEpiData()));
+		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
+		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
+		target.setFamilyHistoryOfLeprosy(source.getFamilyHistoryOfLeprosy());
+		target.setContactExaminationDone(source.getContactExaminationDone());
+		target.setNoOfFamilyContact(source.getNoOfFamilyContact());
+		target.setNoOfNeighbourContact(source.getNoOfNeighbourContact());
+		target.setNoOfSocialContact(source.getNoOfSocialContact());
+		target.setSkinSmearTestPositive(source.getSkinSmearTestPositive());
+		target.setLeprosyResult(source.getLeprosyResult());
+		target.setExposureToMothOrOthers(source.getExposureToMothOrOthers());
+		target.setShapuExposureType(source.getShapuExposureType());
+		target.setDirectIndirectExposure(source.getDirectIndirectExposure());
+		target.setContactArea(source.getContactArea());
+		target.setContactItem(source.getContactItem());
+		target.setOtherExposureType(source.getOtherExposureType());
+		target.setExposureDate(source.getExposureDate());
+		target.setRemark(source.getRemark());
+		target.setOtherContactArea(source.getOtherContactArea());
+		target.setOtherContactItem(source.getOtherContactItem());
 		return target;
 	}
 

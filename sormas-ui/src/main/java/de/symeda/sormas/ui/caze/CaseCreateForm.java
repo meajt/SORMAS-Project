@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+
 import org.apache.commons.collections.CollectionUtils;
 
 import com.google.common.collect.Sets;
@@ -103,6 +104,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private CheckBox differentPointOfEntryJurisdiction;
 	private ComboBox districtCombo;
 	private ComboBox communityCombo;
+	private TextField wardNoField;
 	private ComboBox facilityCombo;
 	private ComboBox pointOfEntryDistrictCombo;
 
@@ -117,23 +119,25 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private final TravelEntryDto convertedTravelEntry;
 
 	//@formatter:off
-    private static final String HTML_LAYOUT = fluidRowLocs(CaseDataDto.CASE_ORIGIN, "")
+    private static final String HTML_LAYOUT = fluidRowLocs(CaseDataDto.CASE_ORIGIN, CaseDataDto.REGISTRATION_NO)
         + fluidRowLocs(CaseDataDto.REPORT_DATE, CaseDataDto.EPID_NUMBER, CaseDataDto.EXTERNAL_ID)
         + fluidRow(
         fluidColumnLoc(6, 0, CaseDataDto.DISEASE),
         fluidColumn(6, 0,
             locs(CaseDataDto.DISEASE_DETAILS, CaseDataDto.PLAGUE_TYPE, CaseDataDto.DENGUE_FEVER_TYPE,
-                CaseDataDto.RABIES_TYPE)))
+                CaseDataDto.RABIES_TYPE, CaseDataDto.TYPE_OF_LEPROSY)))
         + fluidRowLocs(CaseDataDto.DISEASE_VARIANT, CaseDataDto.DISEASE_VARIANT_DETAILS)
 		+ fluidRowLocs(CaseDataDto.RE_INFECTION)
         + fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC)
         + fluidRowLocs(CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY)
+		+fluidRowLocs(CaseDataDto.RESPONSIBLE_WARD_NO, "")
         + fluidRowLocs(CaseDataDto.DONT_SHARE_WITH_REPORTING_TOOL)
         + fluidRowLocs(DONT_SHARE_WARNING_LOC)
         + fluidRowLocs(DIFFERENT_PLACE_OF_STAY_JURISDICTION)
         + fluidRowLocs(PLACE_OF_STAY_HEADING_LOC)
         + fluidRowLocs(FACILITY_OR_HOME_LOC)
         + fluidRowLocs(CaseDataDto.REGION, CaseDataDto.DISTRICT, CaseDataDto.COMMUNITY)
+		+ fluidRowLocs(CaseDataDto.WARD_NO, "")
         + fluidRowLocs(FACILITY_TYPE_GROUP_LOC, CaseDataDto.FACILITY_TYPE)
         + fluidRowLocs(CaseDataDto.HEALTH_FACILITY, CaseDataDto.HEALTH_FACILITY_DETAILS)
         + fluidRowLocs(DIFFERENT_POINT_OF_ENTRY_JURISDICTION)
@@ -170,7 +174,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		NullableOptionGroup ogCaseOrigin = addField(CaseDataDto.CASE_ORIGIN, NullableOptionGroup.class);
 		ogCaseOrigin.setRequired(true);
-
+		addField(CaseDataDto.REGISTRATION_NO);
 		TextField epidField = addField(CaseDataDto.EPID_NUMBER, TextField.class);
 		epidField.setInvalidCommitted(true);
 		style(epidField, ERROR_COLOR_PRIMARY);
@@ -194,6 +198,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		NullableOptionGroup plagueType = addField(CaseDataDto.PLAGUE_TYPE, NullableOptionGroup.class);
 		addField(CaseDataDto.DENGUE_FEVER_TYPE, NullableOptionGroup.class);
 		addField(CaseDataDto.RABIES_TYPE, NullableOptionGroup.class);
+		addField(CaseDataDto.TYPE_OF_LEPROSY, NullableOptionGroup.class);
 
 		addField(CaseDataDto.RE_INFECTION, NullableOptionGroup.class);
 
@@ -212,7 +217,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		districtCombo = addInfrastructureField(CaseDataDto.DISTRICT);
 		communityCombo = addInfrastructureField(CaseDataDto.COMMUNITY);
 		communityCombo.setNullSelectionAllowed(true);
-
+		wardNoField = addField(CaseDataDto.WARD_NO);
+		wardNoField.setNullSettingAllowed(true);
 		// jurisdictionfields
 		Label jurisdictionHeadingLabel = new Label(I18nProperties.getString(Strings.headingCaseResponsibleJurisidction));
 		jurisdictionHeadingLabel.addStyleName(H3);
@@ -225,9 +231,9 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		responsibleCommunityCombo = addInfrastructureField(CaseDataDto.RESPONSIBLE_COMMUNITY);
 		responsibleCommunityCombo.setNullSelectionAllowed(true);
 		responsibleCommunityCombo.addStyleName(SOFT_REQUIRED);
-
+		TextField responsibleWardNoField = addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
+		style(responsibleWardNoField, ERROR_COLOR_PRIMARY);
 		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegion, responsibleDistrictCombo, responsibleCommunityCombo);
-
 		differentPointOfEntryJurisdiction = addCustomField(DIFFERENT_POINT_OF_ENTRY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPointOfEntryJurisdiction.addStyleName(VSPACE_3);
 
@@ -239,7 +245,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		FieldHelper.setVisibleWhen(
 			differentPlaceOfStayJurisdiction,
-			Arrays.asList(region, districtCombo, communityCombo),
+			Arrays.asList(region, districtCombo, communityCombo, wardNoField),
 			Collections.singletonList(Boolean.TRUE),
 			true);
 
@@ -476,6 +482,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		FieldHelper
 			.setVisibleWhen(getFieldGroup(), Arrays.asList(CaseDataDto.DENGUE_FEVER_TYPE), CaseDataDto.DISEASE, Arrays.asList(Disease.DENGUE), true);
 		FieldHelper.setVisibleWhen(getFieldGroup(), Arrays.asList(CaseDataDto.RABIES_TYPE), CaseDataDto.DISEASE, Arrays.asList(Disease.RABIES), true);
+		FieldHelper.setVisibleWhen(getFieldGroup(), Arrays.asList(CaseDataDto.TYPE_OF_LEPROSY), CaseDataDto.DISEASE, Arrays.asList(Disease.LEPROSY), true);
 		FieldHelper.setVisibleWhen(
 			facilityOrHome,
 			Arrays.asList(facilityTypeGroup, facilityType, facilityCombo),

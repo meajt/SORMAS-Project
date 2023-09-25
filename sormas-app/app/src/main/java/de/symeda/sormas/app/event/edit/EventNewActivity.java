@@ -25,6 +25,8 @@ import android.view.Menu;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
+
 import de.symeda.sormas.api.caze.CaseReferenceDto;
 import de.symeda.sormas.api.event.EventStatus;
 import de.symeda.sormas.api.utils.ValidationException;
@@ -58,6 +60,10 @@ public class EventNewActivity extends BaseEditActivity<Event> {
 		BaseEditActivity.startActivity(fromActivity, EventNewActivity.class, buildBundle(null));
 	}
 
+	public static void startActivity(Context fromActivity, Bundler bundler) {
+		BaseEditActivity.startActivity(fromActivity, EventNewActivity.class, bundler);
+	}
+
 	public static void startActivityFromCase(Context fromActivity, String caseUuid) {
 		BaseEditActivity.startActivity(fromActivity, EventNewActivity.class, buildBundleWithCase(caseUuid));
 	}
@@ -73,8 +79,14 @@ public class EventNewActivity extends BaseEditActivity<Event> {
 
 	@Override
 	protected Event buildRootEntity() {
-		Event event = DatabaseHelper.getEventDao().build();
-		return event;
+		Bundle bundle = getIntent().getExtras();
+		if (bundle == null || bundle.getSerializable(Event.I18N_PREFIX) == null) {
+			Event event = DatabaseHelper.getEventDao().build();
+			return event;
+		} else {
+			Serializable eventSerializable = bundle.getSerializable(Event.I18N_PREFIX);
+			return (Event) eventSerializable;
+		}
 	}
 
 	@Override

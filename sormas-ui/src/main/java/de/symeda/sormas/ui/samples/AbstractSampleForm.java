@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.v7.data.Property;
@@ -32,6 +33,7 @@ import de.symeda.sormas.api.caze.CaseDataDto;
 import de.symeda.sormas.api.caze.CaseReferenceDto;
 import de.symeda.sormas.api.contact.ContactReferenceDto;
 import de.symeda.sormas.api.feature.FeatureType;
+import de.symeda.sormas.api.formfilter.NepalFormFilterConstance;
 import de.symeda.sormas.api.i18n.Descriptions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
@@ -46,11 +48,19 @@ import de.symeda.sormas.api.sample.SampleMaterial;
 import de.symeda.sormas.api.sample.SamplePurpose;
 import de.symeda.sormas.api.sample.SamplingReason;
 import de.symeda.sormas.api.sample.SpecimenCondition;
+import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
+import de.symeda.sormas.api.sample.ncd.LftSampleDto;
+import de.symeda.sormas.api.sample.ncd.LipidProfileSampleDto;
+import de.symeda.sormas.api.sample.ncd.RftSampleDto;
 import de.symeda.sormas.api.user.UserReferenceDto;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.fieldaccess.UiFieldAccessCheckers;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
 import de.symeda.sormas.ui.UserProvider;
+import de.symeda.sormas.ui.samples.ncd.CompleteBloodCountSampleCreateForm;
+import de.symeda.sormas.ui.samples.ncd.LftSampleCreateForm;
+import de.symeda.sormas.ui.samples.ncd.LipidProfileSampleCreateForm;
+import de.symeda.sormas.ui.samples.ncd.RftSampleCreateForm;
 import de.symeda.sormas.ui.utils.AbstractEditForm;
 import de.symeda.sormas.ui.utils.CssStyles;
 import de.symeda.sormas.ui.utils.DateComparisonValidator;
@@ -71,6 +81,15 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 	protected static final String REQUESTED_ADDITIONAL_TESTS_READ_LOC = "requestedAdditionalTestsReadLoc";
 	protected static final String REPORT_INFO_LABEL_LOC = "reportInfoLabelLoc";
 	protected static final String REFERRED_FROM_BUTTON_LOC = "referredFromButtonLoc";
+
+	private LipidProfileSampleCreateForm lipidProfileSampleCreateForm;
+	private RftSampleCreateForm rftSampleCreateForm;
+	private LftSampleCreateForm lftSampleCreateForm;
+	private CompleteBloodCountSampleCreateForm completeBloodCountSampleCreateForm;
+	private CheckBox hadRftCheckBox;
+	private CheckBox hadLftCheckBox;
+	private CheckBox hadLipidProfileCheckBox;
+	private CheckBox hadCDCCheckBox;
 
 	//@formatter:off
     protected static final String SAMPLE_COMMON_HTML_LAYOUT =
@@ -96,13 +115,10 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
                     loc(SampleDto.REQUESTED_ADDITIONAL_TESTS) +
                     loc(SampleDto.REQUESTED_OTHER_ADDITIONAL_TESTS) +
                     loc(REQUESTED_ADDITIONAL_TESTS_READ_LOC) +
-
-                    locCss(VSPACE_TOP_3, SampleDto.SHIPPED) +
-                    fluidRowLocs(SampleDto.SHIPMENT_DATE, SampleDto.SHIPMENT_DETAILS) +
-
-                    locCss(VSPACE_TOP_3, SampleDto.RECEIVED) +
+					locCss(VSPACE_TOP_3, SampleDto.SHIPPED) +
+					fluidRowLocs(SampleDto.SHIPMENT_DATE, SampleDto.SHIPMENT_DETAILS) +
+					locCss(VSPACE_TOP_3, SampleDto.RECEIVED) +
                     fluidRowLocs(SampleDto.RECEIVED_DATE, SampleDto.LAB_SAMPLE_ID) +
-
                     fluidRowLocs(SampleDto.SPECIMEN_CONDITION, SampleDto.NO_TEST_POSSIBLE_REASON) +
                     fluidRowLocs(SampleDto.COMMENT) +
                     fluidRowLocs(SampleDto.PATHOGEN_TEST_RESULT) +
@@ -115,7 +131,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 			type,
 			propertyI18nPrefix,
 			true,
-			FieldVisibilityCheckers.withDisease(disease).andWithCountry(FacadeProvider.getConfigFacade().getCountryLocale()),
+			FieldVisibilityCheckers.withDisease(disease).andWithCountry(FacadeProvider.getConfigFacade().getCountryLocale()) ,
 			fieldAccessCheckers);
 	}
 
@@ -151,6 +167,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		addField(SampleDto.SHIPPED, CheckBox.class);
 		addField(SampleDto.RECEIVED, CheckBox.class);
 
+
 		ComboBox testResultField = addField(SampleDto.PATHOGEN_TEST_RESULT, ComboBox.class);
 		testResultField.removeItem(PathogenTestResultType.NOT_DONE);
 
@@ -165,7 +182,6 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		addField(SampleDto.DELETION_REASON);
 		addField(SampleDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, SampleDto.DELETION_REASON, SampleDto.OTHER_DELETION_REASON);
-
 	}
 
 	protected void defaultValueChangeListener() {
@@ -367,7 +383,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		CssStyles.style(requestedPathogenTestsField, CssStyles.OPTIONGROUP_CHECKBOXES_HORIZONTAL);
 		requestedPathogenTestsField.setMultiSelect(true);
 		requestedPathogenTestsField.addItems(
-				Arrays.stream(PathogenTestType.values())
+				Arrays.stream(NepalFormFilterConstance.pathogenTestTypeToShowArray)
 						.filter( c -> fieldVisibilityCheckers.isVisible(PathogenTestType.class, c.name()))
 						.collect(Collectors.toList()));
 		requestedPathogenTestsField.removeItem(PathogenTestType.OTHER);
@@ -457,4 +473,5 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 			getContent().removeComponent(REQUESTED_ADDITIONAL_TESTS_READ_LOC);
 		}
 	}
+
 }

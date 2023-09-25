@@ -427,7 +427,15 @@ public class ClinicalVisitFacadeEjb implements ClinicalVisitFacade {
 		target.setVisitDateTime(source.getVisitDateTime());
 		target.setVisitRemarks(source.getVisitRemarks());
 		target.setVisitingPerson(source.getVisitingPerson());
-
+		target.setTypeOfClinicalMeasurement(source.getTypeOfClinicalMeasurement());
+		target.setEhfScore(source.getEhfScore());
+		target.setDisabilityGrading(source.getDisabilityGrading());
+		target.setUlcer(source.getUlcer());
+		target.setLeprosyStage(source.getLeprosyStage());
+		target.setLeprosyReaction(source.getLeprosyReaction());
+		target.setDateOfDiagnosis(source.getDateOfDiagnosis());
+		target.setTreatmentGiven(source.getTreatmentGiven());
+		target.setEhfScore(source.getEhfScore());
 		return target;
 	}
 
@@ -446,7 +454,15 @@ public class ClinicalVisitFacadeEjb implements ClinicalVisitFacade {
 		target.setVisitDateTime(source.getVisitDateTime());
 		target.setVisitRemarks(source.getVisitRemarks());
 		target.setVisitingPerson(source.getVisitingPerson());
-
+		target.setTypeOfClinicalMeasurement(source.getTypeOfClinicalMeasurement());
+		target.setEhfScore(source.getEhfScore());
+		target.setDisabilityGrading(source.getDisabilityGrading());
+		target.setUlcer(source.getUlcer());
+		target.setLeprosyStage(source.getLeprosyStage());
+		target.setLeprosyReaction(source.getLeprosyReaction());
+		target.setDateOfDiagnosis(source.getDateOfDiagnosis());
+		target.setTreatmentGiven(source.getTreatmentGiven());
+		target.setEhfScore(source.getEhfScore());
 		return target;
 	}
 

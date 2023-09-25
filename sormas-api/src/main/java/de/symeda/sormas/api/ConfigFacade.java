@@ -19,6 +19,7 @@ import javax.ejb.Remote;
 import de.symeda.sormas.api.externaljournal.PatientDiaryConfig;
 import de.symeda.sormas.api.externaljournal.SymptomJournalConfig;
 import de.symeda.sormas.api.geo.GeoLatLon;
+import de.symeda.sormas.api.nepalsfeature.news.NewsConfig;
 import de.symeda.sormas.api.sormastosormas.SormasToSormasConfig;
 
 @Remote
@@ -64,6 +65,7 @@ public interface ConfigFacade {
 
 	char getCsvSeparator();
 
+	String getAppVersion();
 	String getAppLegacyUrl();
 
 	void validateAppUrls();
@@ -155,4 +157,6 @@ public interface ConfigFacade {
 	void resetRequestContext();
 
 	String[] getAllowedFileExtensions();
+
+	NewsConfig getNewsConfig();
 }

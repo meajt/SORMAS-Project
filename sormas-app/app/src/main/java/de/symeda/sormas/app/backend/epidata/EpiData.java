@@ -24,6 +24,8 @@ import javax.persistence.Enumerated;
 
 import com.j256.ormlite.table.DatabaseTable;
 
+import de.symeda.sormas.api.epidata.CaseDetectionMethod;
+import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.utils.YesNoUnknown;
 import de.symeda.sormas.app.backend.activityascase.ActivityAsCase;
 import de.symeda.sormas.app.backend.common.EmbeddedAdo;
@@ -56,6 +58,11 @@ public class EpiData extends PseudonymizableAdo {
 	private List<Exposure> exposures = new ArrayList<>();
 
 	private List<ActivityAsCase> activitiesAsCase = new ArrayList<>();
+
+	@Enumerated(EnumType.STRING)
+	private CaseDetectionMethodGroup caseDetectionMethodGroup;
+	@Enumerated(EnumType.STRING)
+	private CaseDetectionMethod caseDetectionMethod;
 
 	public YesNoUnknown getExposureDetailsKnown() {
 		return exposureDetailsKnown;
@@ -119,6 +126,22 @@ public class EpiData extends PseudonymizableAdo {
 
 	public void setActivitiesAsCase(List<ActivityAsCase> activitiesAsCase) {
 		this.activitiesAsCase = activitiesAsCase;
+	}
+
+	public CaseDetectionMethodGroup getCaseDetectionMethodGroup() {
+		return caseDetectionMethodGroup;
+	}
+
+	public void setCaseDetectionMethodGroup(CaseDetectionMethodGroup caseDetectionMethodGroup) {
+		this.caseDetectionMethodGroup = caseDetectionMethodGroup;
+	}
+
+	public CaseDetectionMethod getCaseDetectionMethod() {
+		return caseDetectionMethod;
+	}
+
+	public void setCaseDetectionMethod(CaseDetectionMethod caseDetectionMethod) {
+		this.caseDetectionMethod = caseDetectionMethod;
 	}
 
 	@Override

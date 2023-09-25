@@ -23,7 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.i18n.I18nProperties;
+import de.symeda.sormas.api.utils.HideForCountries;
 
 public enum FacilityType {
 
@@ -44,7 +46,7 @@ public enum FacilityType {
 	HOSPITAL(FacilityTypeGroup.MEDICAL_FACILITY, true, true),
 	HOSTEL(FacilityTypeGroup.ACCOMMODATION, true, false),
 	HOTEL(FacilityTypeGroup.ACCOMMODATION, true, false),
-	KINDERGARTEN(FacilityTypeGroup.EDUCATIONAL_FACILITY, false, false),
+	KINDERGARTEN(FacilityTypeGroup.OTHERS, false, false),
 	LABORATORY(FacilityTypeGroup.MEDICAL_FACILITY, false, false),
 	MASS_ACCOMMODATION(FacilityTypeGroup.ACCOMMODATION, true, false),
 	MILITARY_BARRACKS(FacilityTypeGroup.RESIDENCE, true, false),
@@ -57,6 +59,7 @@ public enum FacilityType {
 	OTHER_LEISURE_FACILITY(FacilityTypeGroup.LEISURE_FACILITY, false, false),
 	OTHER_MEDICAL_FACILITY(FacilityTypeGroup.MEDICAL_FACILITY, true, true),
 	OTHER_RESIDENCE(FacilityTypeGroup.RESIDENCE, true, false),
+	OWN_RESIDENCE(FacilityTypeGroup.RESIDENCE, true, false),
 	OTHER_WORKING_PLACE(FacilityTypeGroup.WORKING_PLACE, false, false),
 	OTHER_COMMERCE(FacilityTypeGroup.COMMERCE, false, false),
 	OUTPATIENT_TREATMENT_FACILITY(FacilityTypeGroup.MEDICAL_FACILITY, false, true),
@@ -86,7 +89,7 @@ public enum FacilityType {
 	DISABLED_PERSON_HABITATION(FacilityTypeGroup.CARE_FACILITY, true, false),
 	CARE_RECIPIENT_HABITATION(FacilityTypeGroup.CARE_FACILITY, true, false),
 	VISITING_AMBULATORY_AID(FacilityTypeGroup.CARE_FACILITY, false, false),
-	AFTER_SCHOOL(FacilityTypeGroup.EDUCATIONAL_FACILITY, false, false);
+	AFTER_SCHOOL(FacilityTypeGroup.OTHERS, false, false);
 
 	private static final Map<FacilityTypeGroup, List<FacilityType>> typesByGroup = new HashMap<FacilityTypeGroup, List<FacilityType>>();
 	private static final Map<FacilityTypeGroup, List<FacilityType>> accomodationTypesByGroup = new HashMap<FacilityTypeGroup, List<FacilityType>>();
