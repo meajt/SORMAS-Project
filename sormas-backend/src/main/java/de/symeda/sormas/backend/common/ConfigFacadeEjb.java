@@ -191,7 +191,7 @@ public class ConfigFacadeEjb implements ConfigFacade {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	//@Resource(lookup = "sormas/Properties")
+	@Resource(lookup = "sormas/Properties")
 	private Properties props ;
 
 	protected String getProperty(String name, String defaultValue) {
