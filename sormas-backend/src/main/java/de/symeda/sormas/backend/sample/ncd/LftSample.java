@@ -1,12 +1,10 @@
 package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 
 import javax.persistence.Entity;
 
 @Entity(name = "lft_sample")
-@Audited
 public class LftSample extends AbstractDomainObject {
     public static final String LFT_SAMPLE = "LftSampleDto";
     public static final String I18N_PREFIX = "LftSample";

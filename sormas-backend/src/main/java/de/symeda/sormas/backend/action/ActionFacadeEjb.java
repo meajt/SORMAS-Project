@@ -31,13 +31,13 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 import com.google.common.base.Strings;
+import de.symeda.sormas.api.EditPermissionType;
 import de.symeda.sormas.api.action.*;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.event.EventActionExportDto;
 import de.symeda.sormas.api.event.EventActionIndexDto;
 import de.symeda.sormas.api.event.EventCriteria;
 import de.symeda.sormas.api.i18n.I18nProperties;
-import de.symeda.sormas.api.i18n.Strings;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.AccessDeniedException;
 import de.symeda.sormas.api.utils.SortProperty;
@@ -162,7 +162,7 @@ public class ActionFacadeEjb implements ActionFacade {
 		Action action = actionService.getByUuid(actionDto.getUuid());
 
 		if (!actionService.inJurisdictionOrOwned(action)) {
-			throw new AccessDeniedException(I18nProperties.getString(Strings.messageActionOutsideJurisdictionDeletionDenied));
+			throw new AccessDeniedException(I18nProperties.getString("Strings.messageActionOutsideJurisdictionDeletionDenied"));
 		}
 
 		actionService.deletePermanent(action);

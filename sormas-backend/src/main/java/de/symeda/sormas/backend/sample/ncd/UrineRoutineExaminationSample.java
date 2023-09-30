@@ -1,6 +1,5 @@
 package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.sample.ncd.*;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 
@@ -8,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity(name = UrineRoutineExaminationSample.TABLE_NAME)
-@Audited
 public class UrineRoutineExaminationSample extends AbstractDomainObject {
     public static final String TABLE_NAME = "urine_re_sample";
     private UrineColor color;

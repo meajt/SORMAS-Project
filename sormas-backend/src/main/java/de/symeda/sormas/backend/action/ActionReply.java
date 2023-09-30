@@ -1,6 +1,5 @@
 package de.symeda.sormas.backend.action;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.user.UserReferenceDto;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.user.User;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Audited
 public class ActionReply extends AbstractDomainObject {
     public static final String ACTION = "action";
     private User createdBy;

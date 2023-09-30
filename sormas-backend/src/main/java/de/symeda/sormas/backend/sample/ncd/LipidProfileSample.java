@@ -1,12 +1,10 @@
 package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 
 import javax.persistence.Entity;
 
 @Entity(name = "lipid_profile_sample")
-@Audited
 public class LipidProfileSample extends AbstractDomainObject {
     public static final String I18N_PREFIX = "LipidProfileSample";
     public static final String LIPID_PROFILE_SAMPLE = "lipidProfileSample";

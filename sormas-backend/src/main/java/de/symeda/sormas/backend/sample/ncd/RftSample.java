@@ -1,12 +1,10 @@
 package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 
 import javax.persistence.Entity;
 
 @Entity(name = "rft_sample")
-@Audited
 public class RftSample extends AbstractDomainObject {
     public static final String TABLE_NAME = "rft_sample";
 

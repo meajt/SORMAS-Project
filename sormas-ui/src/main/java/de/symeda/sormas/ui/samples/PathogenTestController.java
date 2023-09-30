@@ -74,9 +74,6 @@ public class PathogenTestController {
 	public void create(SampleReferenceDto sampleRef, int caseSampleCount) {
 		SampleDto sampleDto = FacadeProvider.getSampleFacade().getSampleByUuid(sampleRef.getUuid());
 		final CommitDiscardWrapperComponent<PathogenTestForm> editView = getPathogenTestCreateComponent(sampleDto, caseSampleCount, null, false);
-
-		final CommitDiscardWrapperComponent<PathogenTestForm> editView =
-		getPathogenTestCreateComponent(sampleDto, caseSampleCount, onSavedPathogenTest, false);
 		addPathogenTestFromAboveButton(editView, sampleDto);
 		VaadinUiUtil.showModalPopupWindow(editView, I18nProperties.getString(Strings.headingCreatePathogenTestResult));
 	}
@@ -106,7 +103,7 @@ public class PathogenTestController {
 		pathogenTestForm.setValue(pathogenTestDto);
 		CommitDiscardWrapperComponent.CommitListener savePathogenTest = () -> {
 			pathogenTestForm.commit();
-			ControllerProvider.getPathogenTestController().savePathogenTest(pathogenTestForm.getValue(), null, true, true);
+			//ControllerProvider.getPathogenTestController().savePathogenTest(pathogenTestForm.getValue(), null, true, true);
 		};
 		editForm.addCommitListener(savePathogenTest);
 		CollapsiblePathogenTestForm collapsibleForm =

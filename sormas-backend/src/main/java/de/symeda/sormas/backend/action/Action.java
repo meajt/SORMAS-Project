@@ -24,7 +24,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.action.*;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
 import de.symeda.sormas.backend.event.Event;

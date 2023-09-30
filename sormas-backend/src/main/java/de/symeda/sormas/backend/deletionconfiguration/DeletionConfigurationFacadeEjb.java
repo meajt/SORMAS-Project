@@ -20,7 +20,7 @@ public class DeletionConfigurationFacadeEjb implements DeletionConfigurationFaca
 	@Asynchronous
 	@RightsAllowed(UserRight._DEV_MODE)
 	public void startAutomaticDeletion() {
-		cronService.deleteExpiredEntities();
+		//cronService.deleteExpiredEntities();
 	}
 
 	@LocalBean

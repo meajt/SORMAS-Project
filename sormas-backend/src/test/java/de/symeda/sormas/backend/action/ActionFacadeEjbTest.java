@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.symeda.sormas.api.action.ActionReplyDto;
+import de.symeda.sormas.api.user.DefaultUserRole;
 import org.junit.jupiter.api.Test;
 
 import de.symeda.sormas.api.Disease;

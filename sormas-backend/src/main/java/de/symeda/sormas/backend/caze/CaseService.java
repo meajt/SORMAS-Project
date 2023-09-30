@@ -672,6 +672,11 @@ public class CaseService extends AbstractCoreAdoService<Case, CaseJoins> {
 		final CriteriaQuery<?> cq = caseQueryContext.getQuery();
 		final CaseJoins joins = caseQueryContext.getJoins();
 
+		Join<Case, Person> person = joins.getPerson();
+		Join<Case, User> reportingUser = joins.getReportingUser();
+		Join<Case, Facility> facility = joins.getFacility();
+		Join<Person, Location> location = joins.getPersonAddress();
+
 		PersonQueryContext personQueryContext = new PersonQueryContext(cb, cq, joins.getPersonJoins());
 
 		Predicate filter = null;

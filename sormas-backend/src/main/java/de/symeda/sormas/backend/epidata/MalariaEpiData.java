@@ -1,6 +1,5 @@
 package de.symeda.sormas.backend.epidata;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.epidata.CaseDetectionMethod;
 import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
 import de.symeda.sormas.api.epidata.PreventiveMeasures;
@@ -19,7 +18,6 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-@Audited
 public class MalariaEpiData extends AbstractDomainObject {
     private CaseDetectionMethodGroup caseDetectionMethodGroup;
     private CaseDetectionMethod caseDetectionMethod;

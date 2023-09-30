@@ -362,14 +362,6 @@ public class TestDataCreator {
 			user -> user.setPointOfEntry(rdp.pointOfEntry));
 	}
 
-	public UserRoleReferenceDto createUserRole(String caption, JurisdictionLevel jurisdictionLevel, UserRight... userRights) {
-		UserRoleDto userRole = new UserRoleDto();
-		userRole.setCaption(caption);
-		userRole.setJurisdictionLevel(jurisdictionLevel);
-		userRole.setUserRights(Arrays.stream(userRights).collect(Collectors.toSet()));
-		return beanTest.getUserRoleFacade().saveUserRole(userRole).toReference();
-	}
-
 	public UserRoleReferenceDto createUserRoleWithRequiredRights(String caption, JurisdictionLevel jurisdictionLevel, UserRight... userRights) {
 		UserRoleDto userRole = new UserRoleDto();
 		userRole.setCaption(caption);

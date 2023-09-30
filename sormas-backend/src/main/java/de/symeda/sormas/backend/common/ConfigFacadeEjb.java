@@ -14,6 +14,8 @@
  */
 package de.symeda.sormas.backend.common;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
@@ -189,8 +191,8 @@ public class ConfigFacadeEjb implements ConfigFacade {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Resource(lookup = "sormas/Properties")
-	private Properties props;
+	//@Resource(lookup = "sormas/Properties")
+	private Properties props ;
 
 	protected String getProperty(String name, String defaultValue) {
 

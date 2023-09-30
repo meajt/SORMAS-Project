@@ -73,7 +73,7 @@ public class AdditionalTestController {
 			I18nProperties.getString(isEditAllowed ? Strings.headingEditAdditionalTest : Strings.headingViewAdditionalTest));
 		window.setWidth(form.getWidth() + 90, Unit.PIXELS);
 		window.setHeight(80, Unit.PERCENTAGE);
-
+		boolean isEditOrDeleteAllowed = isEditAllowed || isDeleteAllowed;
 		if (isEditOrDeleteAllowed) {
 			component.addCommitListener(new CommitListener() {
 

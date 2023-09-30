@@ -133,6 +133,7 @@ public class LocationEditForm extends AbstractEditForm<LocationDto> {
 	private TextField contactPersonLastName;
 	private TextField contactPersonPhone;
 	private TextField contactPersonEmail;
+	private TextField otherFacilityType;
 
 	private boolean districtRequiredOnDefaultCountry;
 	private boolean skipCountryValueChange;

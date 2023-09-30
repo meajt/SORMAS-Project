@@ -153,6 +153,8 @@
                 <configuration>
                     <container>
                         <containerId>payara</containerId>
+                        <type>installed</type>
+                        <home>D:\\server\\payara-5.2022.5\\payara5</home>
                         <dependencies>
                             <dependency>
                                 <groupId>de.symeda.sormas</groupId>
@@ -168,9 +170,9 @@
                                 <artifactId>logback-classic</artifactId>
                             </dependency>
                         </dependencies>
-                        <zipUrlInstaller>
-                            <url>https://repo.maven.apache.org/maven2/fish/payara/distributions/payara/${payara.version}/payara-${payara.version}.zip</url>
-                        </zipUrlInstaller>
+<!--                        <zipUrlInstaller>-->
+<!--                            <url>https://repo.maven.apache.org/maven2/fish/payara/distributions/payara/${payara.version}/payara-${payara.version}.zip</url>-->
+<!--                        </zipUrlInstaller>-->
                     </container>
                     <configuration>
                         <properties>

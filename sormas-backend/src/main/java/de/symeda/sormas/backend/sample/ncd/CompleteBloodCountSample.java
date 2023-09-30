@@ -1,6 +1,5 @@
 package de.symeda.sormas.backend.sample.ncd;
 
-import de.symeda.auditlog.api.Audited;
 import de.symeda.sormas.api.EntityDto;
 import de.symeda.sormas.api.utils.PersonalData;
 import de.symeda.sormas.backend.common.AbstractDomainObject;
@@ -8,7 +7,6 @@ import de.symeda.sormas.backend.common.AbstractDomainObject;
 import javax.persistence.Entity;
 
 @Entity(name = "complete_blood_count_sample")
-@Audited
 public class CompleteBloodCountSample extends AbstractDomainObject {
     public static final String COMPLETE_BLOOD_COUNT_SAMPLE = "CompleteBloodCountSample";
     public static final String I18N_PREFIX = "CompleteBloodCountSample";

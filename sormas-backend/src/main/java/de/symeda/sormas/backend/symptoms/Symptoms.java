@@ -30,6 +30,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.symeda.sormas.api.symptoms.CaseCondition;
 import de.symeda.sormas.api.symptoms.CongenitalHeartDiseaseType;
 import de.symeda.sormas.api.symptoms.SymptomState;
 import de.symeda.sormas.api.symptoms.TemperatureSource;
@@ -266,6 +267,7 @@ public class Symptoms extends AbstractDomainObject {
 	private SymptomState muscleWeakness;
 
 	private CaseCondition caseCondition;
+
 	private SymptomState earPain;
 
 	private SymptomState redEyeWithoutDischarge;
