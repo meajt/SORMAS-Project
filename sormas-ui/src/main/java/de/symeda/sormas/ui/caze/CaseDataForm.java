@@ -1120,6 +1120,11 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 			setEnabled(false, CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT);
 		}
 
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+			setEnabled(true, CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY);
+			setReadOnly(false, CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY);
+		}
+
 		FieldHelper.setVisibleWhen(getFieldGroup(), CaseDataDto.TRIMESTER, CaseDataDto.PREGNANT, Arrays.asList(YesNoUnknown.YES), true);
 
 		diseaseField.addValueChangeListener((ValueChangeListener) valueChangeEvent -> {
@@ -1752,6 +1757,9 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 	}
 
 	private void updateFacility() {
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+			return;
+		}
 		final DistrictReferenceDto district;
 		final CommunityReferenceDto community;
 

@@ -390,11 +390,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		JurisdictionLevel userJurisdictionLevel = UserProvider.getCurrent().getJurisdictionLevel();
 		if (userJurisdictionLevel == JurisdictionLevel.HEALTH_FACILITY) {
 			region.setReadOnly(true);
-			responsibleRegion.setReadOnly(true);
 			districtCombo.setReadOnly(true);
-			responsibleDistrictCombo.setReadOnly(true);
 			communityCombo.setReadOnly(true);
-			responsibleCommunityCombo.setReadOnly(true);
 			differentPlaceOfStayJurisdiction.setVisible(false);
 			differentPlaceOfStayJurisdiction.setEnabled(false);
 
