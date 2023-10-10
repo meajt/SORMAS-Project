@@ -98,10 +98,12 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private NullableOptionGroup facilityOrHome;
 	private ComboBox facilityTypeGroup;
 	private ComboBox facilityType;
+	private ComboBox responsibleRegionCombo;
 	private ComboBox responsibleDistrictCombo;
 	private ComboBox responsibleCommunityCombo;
 	private CheckBox differentPlaceOfStayJurisdiction;
 	private CheckBox differentPointOfEntryJurisdiction;
+	ComboBox regionCombo;
 	private ComboBox districtCombo;
 	private ComboBox communityCombo;
 	private TextField wardNoField;
@@ -109,6 +111,9 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private ComboBox pointOfEntryDistrictCombo;
 
 	private PersonCreateForm personCreateForm;
+	private RegionReferenceDto defaultResponsibleRegion;
+	private DistrictReferenceDto defaultResponsibleDistrict;
+	private CommunityReferenceDto defaultResponsibleCommunity;
 
 	private final boolean showHomeAddressForm;
 	private final boolean showPersonSearchButton;
@@ -210,7 +215,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		placeOfStayHeadingLabel.addStyleName(H3);
 		getContent().addComponent(placeOfStayHeadingLabel, PLACE_OF_STAY_HEADING_LOC);
 
-		ComboBox region = addInfrastructureField(CaseDataDto.REGION);
+		regionCombo = addInfrastructureField(CaseDataDto.REGION);
 		districtCombo = addInfrastructureField(CaseDataDto.DISTRICT);
 		communityCombo = addInfrastructureField(CaseDataDto.COMMUNITY);
 		communityCombo.setNullSelectionAllowed(true);
@@ -221,8 +226,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		jurisdictionHeadingLabel.addStyleName(H3);
 		getContent().addComponent(jurisdictionHeadingLabel, RESPONSIBLE_JURISDICTION_HEADING_LOC);
 
-		ComboBox responsibleRegion = addInfrastructureField(CaseDataDto.RESPONSIBLE_REGION);
-		responsibleRegion.setRequired(true);
+		responsibleRegionCombo = addInfrastructureField(CaseDataDto.RESPONSIBLE_REGION);
+		responsibleRegionCombo.setRequired(true);
 		responsibleDistrictCombo = addInfrastructureField(CaseDataDto.RESPONSIBLE_DISTRICT);
 		responsibleDistrictCombo.setRequired(true);
 		responsibleCommunityCombo = addInfrastructureField(CaseDataDto.RESPONSIBLE_COMMUNITY);
@@ -230,7 +235,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		responsibleCommunityCombo.addStyleName(SOFT_REQUIRED);
 		TextField responsibleWardNoField = addField(CaseDataDto.RESPONSIBLE_WARD_NO, TextField.class);
 		style(responsibleWardNoField, ERROR_COLOR_PRIMARY);
-		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegion, responsibleDistrictCombo, responsibleCommunityCombo);
+		InfrastructureFieldsHelper.initInfrastructureFields(responsibleRegionCombo, responsibleDistrictCombo, responsibleCommunityCombo);
 		differentPointOfEntryJurisdiction = addCustomField(DIFFERENT_POINT_OF_ENTRY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPointOfEntryJurisdiction.addStyleName(VSPACE_3);
 
@@ -242,7 +247,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		FieldHelper.setVisibleWhen(
 			differentPlaceOfStayJurisdiction,
-			Arrays.asList(region, districtCombo, communityCombo, wardNoField),
+			Arrays.asList(regionCombo, districtCombo, communityCombo, wardNoField),
 			Collections.singletonList(Boolean.TRUE),
 			true);
 
@@ -254,7 +259,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		FieldHelper.setRequiredWhen(
 			differentPlaceOfStayJurisdiction,
-			Arrays.asList(region, districtCombo),
+			Arrays.asList(regionCombo, districtCombo),
 			Collections.singletonList(Boolean.TRUE),
 			false,
 			null);
@@ -317,7 +322,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 			ogCaseOrigin.setReadOnly(true);
 		}
 
-		region.addValueChangeListener(e -> {
+		regionCombo.addValueChangeListener(e -> {
 			RegionReferenceDto regionDto = (RegionReferenceDto) e.getProperty().getValue();
 			FieldHelper
 				.updateItems(districtCombo, regionDto != null ? FacadeProvider.getDistrictFacade().getAllActiveByRegion(regionDto.getUuid()) : null);
@@ -385,18 +390,13 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 			FieldHelper.updateEnumData(facilityType, FacilityType.getAccommodationTypes((FacilityTypeGroup) facilityTypeGroup.getValue()));
 		});
 		facilityType.addValueChangeListener(e -> updateFacility());
-		region.addItems(FacadeProvider.getRegionFacade().getAllActiveByServerCountry());
+		regionCombo.addItems(FacadeProvider.getRegionFacade().getAllActiveByServerCountry());
 
 		JurisdictionLevel userJurisdictionLevel = UserProvider.getCurrent().getJurisdictionLevel();
 		if (userJurisdictionLevel == JurisdictionLevel.HEALTH_FACILITY) {
-			region.setReadOnly(true);
-			responsibleRegion.setReadOnly(true);
-			districtCombo.setReadOnly(true);
-			responsibleDistrictCombo.setReadOnly(true);
-			communityCombo.setReadOnly(true);
-			responsibleCommunityCombo.setReadOnly(true);
-			differentPlaceOfStayJurisdiction.setVisible(false);
-			differentPlaceOfStayJurisdiction.setEnabled(false);
+			responsibleRegionCombo.setEnabled(false);
+			responsibleDistrictCombo.setEnabled(false);
+			responsibleCommunityCombo.setEnabled(false);
 
 			facilityOrHome.setImmediate(true);
 			facilityOrHome.setValue(Sets.newHashSet(TypeOfPlace.FACILITY)); // [FACILITY]
@@ -453,6 +453,9 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 			updateFacility();
 			if (!Boolean.TRUE.equals(differentPointOfEntryJurisdiction.getValue())) {
 				updatePOEs();
+			}
+			if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+				updateResponsibleRegionDistrictCommunityAccordingToPlaceOfStay(differentPlaceOfStayJurisdiction.getValue());
 			}
 		});
 
@@ -521,6 +524,33 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 			Disease disease = (Disease) diseaseField.getValue();
 			updateDiseaseVariant(disease);
 			personCreateForm.updatePresentConditionEnum(disease);
+		}
+	}
+
+	private void updateResponsibleRegionDistrictCommunityAccordingToPlaceOfStay(boolean isDifferentJuridiction) {
+		if (isDifferentJuridiction) {
+			responsibleRegionCombo.setEnabled(true);
+			responsibleDistrictCombo.setEnabled(true);
+			responsibleCommunityCombo.setEnabled(true);
+
+			regionCombo.setEnabled(false);
+			districtCombo.setEnabled(false);
+			communityCombo.setEnabled(false);
+			regionCombo.setValue(defaultResponsibleRegion);
+			districtCombo.setValue(defaultResponsibleDistrict);
+			communityCombo.setValue(defaultResponsibleCommunity);
+		} else {
+			responsibleRegionCombo.setValue(defaultResponsibleRegion);
+			responsibleDistrictCombo.setValue(defaultResponsibleDistrict);
+			responsibleCommunityCombo.setValue(defaultResponsibleCommunity);
+
+			responsibleRegionCombo.setEnabled(false);
+			responsibleDistrictCombo.setEnabled(false);
+			responsibleCommunityCombo.setEnabled(false);
+
+			regionCombo.setValue(null);
+			districtCombo.setValue(null);
+			communityCombo.setValue(null);
 		}
 	}
 
@@ -685,6 +715,10 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		if (convertedTravelEntry != null) {
 			diseaseVariantDetailsField.setValue(convertedTravelEntry.getDiseaseVariantDetails());
 		}
+
+		defaultResponsibleRegion = caseDataDto.getResponsibleRegion();
+		defaultResponsibleDistrict = caseDataDto.getResponsibleDistrict();
+		defaultResponsibleCommunity = caseDataDto.getResponsibleCommunity();
 
 		PersonReferenceDto casePersonReference = caseDataDto.getPerson();
 		String personUuid = casePersonReference == null ? null : casePersonReference.getUuid();
