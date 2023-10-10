@@ -724,6 +724,9 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		String personUuid = casePersonReference == null ? null : casePersonReference.getUuid();
 		PersonDto personByUuid = personUuid == null ? null : FacadeProvider.getPersonFacade().getByUuid(personUuid);
 		personCreateForm.setPerson(personByUuid);
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+			differentPlaceOfStayJurisdiction.setValue(true);
+		}
 	}
 
 	public void setSearchedPerson(PersonDto searchedPerson) {
