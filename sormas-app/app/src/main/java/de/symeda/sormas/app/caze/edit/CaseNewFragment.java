@@ -362,11 +362,11 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
             contentBinding.caseDataPointOfEntry.setRequired(false);
         }
 
-        if (user.hasJurisdictionLevel(JurisdictionLevel.COMMUNITY)) {
+   /*     if (user.hasJurisdictionLevel(JurisdictionLevel.COMMUNITY)) {
             // Community Informants are not allowed to create cases in another community
             contentBinding.caseDataCommunity.setEnabled(false);
             contentBinding.caseDataCommunity.setRequired(false);
-        }
+        }*/
 
         // Disable personal details and disease fields when case is created from contact
         // or event person
