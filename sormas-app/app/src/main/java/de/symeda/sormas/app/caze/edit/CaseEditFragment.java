@@ -52,6 +52,7 @@ import de.symeda.sormas.api.customizableenum.CustomizableEnumType;
 import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.event.TypeOfPlace;
 import de.symeda.sormas.api.infrastructure.facility.FacilityDto;
+import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.infrastructure.facility.FacilityTypeGroup;
 import de.symeda.sormas.api.person.Sex;
 import de.symeda.sormas.api.user.JurisdictionLevel;
@@ -116,6 +117,7 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 	private List<Item> contactTracingContactTypeList;
 	private List<Item> infectionSettingList;
 	private List<Item> caseConfirmationBasisList;
+	private Facility initialHealthFacility;
 
 	private boolean differentPlaceOfStayJurisdiction;
 
@@ -205,9 +207,12 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 
 		User user = ConfigProvider.getUser();
 		if (user.hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY) || getPrimaryData().getHealthFacility() == null) {
-			// Hospital Informants are not allowed to change place of stay
-			contentBinding.caseDataDifferentPlaceOfStayJurisdiction.setEnabled(false);
-			contentBinding.caseDataDifferentPlaceOfStayJurisdiction.setVisibility(GONE);
+			contentBinding.facilityOrHome.setVisibility(GONE);
+			contentBinding.caseDataRegion.setVisibility(GONE);
+			contentBinding.caseDataDistrict.setVisibility(GONE);
+			contentBinding.caseDataCommunity.setVisibility(GONE);
+			contentBinding.caseDataWardNo.setVisibility(GONE);
+			contentBinding.facilityTypeFieldsLayout.setVisibility(GONE);
 		}
 
 		contentBinding.caseDataDiseaseVariant.setVisibility(DataUtils.emptyOrWithOneNullItem(diseaseVariantList) ? GONE : VISIBLE);
@@ -289,7 +294,7 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 				contentBinding.caseDataEpidemiologicalConfirmation.setVisibility(GONE);
 				contentBinding.caseDataLaboratoryDiagnosticConfirmation.setVisibility(GONE);
 				contentBinding.caseDataCaseConfirmationBasis
-					.setVisibility(record.getCaseClassification() == CaseClassification.CONFIRMED ? VISIBLE : GONE);
+						.setVisibility(record.getCaseClassification() == CaseClassification.CONFIRMED ? VISIBLE : GONE);
 			}
 		} else {
 			contentBinding.caseDataClinicalConfirmation.setVisibility(GONE);
@@ -381,6 +386,8 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 		infectionSettingList = DataUtils.getEnumItems(InfectionSetting.class, true);
 
 		caseConfirmationBasisList = DataUtils.getEnumItems(CaseConfirmationBasis.class, true);
+		initialHealthFacility = ConfigProvider.getUser().getHealthFacility();
+
 	}
 
 	@Override
@@ -485,34 +492,35 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 			() -> Boolean.TRUE.equals(contentBinding.caseDataDifferentPlaceOfStayJurisdiction.getValue()));
 
 		InfrastructureDaoHelper
-			.initializeHealthFacilityDetailsFieldVisibility(contentBinding.caseDataHealthFacility, contentBinding.caseDataHealthFacilityDetails);
-
-		InfrastructureFieldsDependencyHandler.instance.initializeFacilityFields(
-			record,
-			contentBinding.caseDataRegion,
-			initialRegions,
-			record.getRegion(),
-			contentBinding.caseDataDistrict,
-			initialDistricts,
-			record.getDistrict(),
-			contentBinding.caseDataCommunity,
-			initialCommunities,
-			record.getCommunity(),
-			contentBinding.facilityOrHome,
-			facilityOrHomeList,
-			contentBinding.facilityTypeGroup,
-			facilityTypeGroupList,
-			contentBinding.caseDataFacilityType,
-			null,
-			contentBinding.caseDataHealthFacility,
-			initialFacilities,
-			initialHealthFacility,
-			contentBinding.caseDataHealthFacilityDetails,
-			null,
-			null,
-			null,
-			false,
-			() -> Boolean.FALSE.equals(contentBinding.caseDataDifferentPlaceOfStayJurisdiction.getValue()));
+				.initializeHealthFacilityDetailsFieldVisibility(contentBinding.caseDataHealthFacility, contentBinding.caseDataHealthFacilityDetails);
+		if (!ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+			InfrastructureFieldsDependencyHandler.instance.initializeFacilityFields(
+					record,
+					contentBinding.caseDataRegion,
+					initialRegions,
+					record.getRegion(),
+					contentBinding.caseDataDistrict,
+					initialDistricts,
+					record.getDistrict(),
+					contentBinding.caseDataCommunity,
+					initialCommunities,
+					record.getCommunity(),
+					contentBinding.facilityOrHome,
+					facilityOrHomeList,
+					contentBinding.facilityTypeGroup,
+					facilityTypeGroupList,
+					contentBinding.caseDataFacilityType,
+					null,
+					contentBinding.caseDataHealthFacility,
+					initialFacilities,
+					initialHealthFacility,
+					contentBinding.caseDataHealthFacilityDetails,
+					null,
+					null,
+					null,
+					false,
+					() -> Boolean.FALSE.equals(contentBinding.caseDataDifferentPlaceOfStayJurisdiction.getValue()));
+		}
 
 		// trigger responsible jurisdiction change handlers removing place of stay region/district/community
 		contentBinding.caseDataDifferentPlaceOfStayJurisdiction.addValueChangedListener(f -> {
@@ -603,11 +611,11 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 
 			private void reduceQuarantine() {
 				final ConfirmationDialog confirmationDialog = new ConfirmationDialog(
-					getActivity(),
-					R.string.heading_reduce_quarantine,
-					R.string.confirmation_reduce_quarantine,
-					R.string.yes,
-					R.string.no);
+						getActivity(),
+						R.string.heading_reduce_quarantine,
+						R.string.confirmation_reduce_quarantine,
+						R.string.yes,
+						R.string.no);
 
 				confirmationDialog.setPositiveCallback(() -> {
 					contentBinding.caseDataQuarantineExtended.setValue(false);
@@ -619,11 +627,35 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 		});
 
 		contentBinding.caseDataQuarantineExtended
-			.addValueChangedListener(e -> contentBinding.caseDataQuarantineExtended.setVisibility(record.isQuarantineExtended() ? VISIBLE : GONE));
+				.addValueChangedListener(e -> contentBinding.caseDataQuarantineExtended.setVisibility(record.isQuarantineExtended() ? VISIBLE : GONE));
 		contentBinding.caseDataQuarantineReduced
-			.addValueChangedListener(e -> contentBinding.caseDataQuarantineReduced.setVisibility(record.isQuarantineReduced() ? VISIBLE : GONE));
+				.addValueChangedListener(e -> contentBinding.caseDataQuarantineReduced.setVisibility(record.isQuarantineReduced() ? VISIBLE : GONE));
 
 		CaseValidator.initializeProhibitionToWorkIntervalValidator(contentBinding);
+		setVisibilityToResponsibleRegionFieldAccordingToJurisdiction(contentBinding, Boolean.FALSE.equals(contentBinding.caseDataDifferentPlaceOfStayJurisdiction.getValue()));
+
+	}
+
+	private  void setVisibilityToResponsibleRegionFieldAccordingToJurisdiction(FragmentCaseEditLayoutBinding contentBinding, boolean isDifferentJurisdiction) {
+		if (isDifferentJurisdiction) {
+			contentBinding.caseDataResponsibleJuridicationCaption.setVisibility(GONE);
+			contentBinding.caseDataResponsibleRegion.setVisibility(GONE);
+			contentBinding.caseDataResponsibleDistrict.setVisibility(GONE);
+			contentBinding.caseDataResponsibleCommunity.setVisibility(GONE);
+			contentBinding.caseDataResponsibleWardNo.setVisibility(GONE);
+		} else {
+			contentBinding.caseDataResponsibleJuridicationCaption.setVisibility(VISIBLE);
+
+			contentBinding.caseDataResponsibleRegion.setEnabled(true);
+			contentBinding.caseDataResponsibleDistrict.setEnabled(true);
+			contentBinding.caseDataResponsibleCommunity.setEnabled(true);
+			contentBinding.caseDataResponsibleWardNo.setEnabled(true);
+
+			contentBinding.caseDataResponsibleRegion.setVisibility(VISIBLE);
+			contentBinding.caseDataResponsibleDistrict.setVisibility(VISIBLE);
+			contentBinding.caseDataResponsibleCommunity.setVisibility(VISIBLE);
+			contentBinding.caseDataResponsibleWardNo.setVisibility(VISIBLE);
+		}
 	}
 
 	private void fillConfirmedCaseClassificationCombo() {
@@ -693,7 +725,7 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 		contentBinding.caseDataEndOfIsolationReason.initializeSpinner(endOfIsolationReasonList);
 
 		if (isVisibleAllowed(CaseDataDto.class, contentBinding.caseDataContactTracingFirstContactType)
-			|| isVisibleAllowed(CaseDataDto.class, contentBinding.caseDataContactTracingFirstContactDate)) {
+				|| isVisibleAllowed(CaseDataDto.class, contentBinding.caseDataContactTracingFirstContactDate)) {
 			contentBinding.caseDataContactTracingDivider.setVisibility(VISIBLE);
 			contentBinding.caseDataContactTracingFirstContactHeading.setVisibility(VISIBLE);
 
@@ -708,6 +740,10 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 
 		// reinfection
 		contentBinding.caseDataPreviousInfectionDate.initializeDateField(getChildFragmentManager());
+		if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+			setVisibilityToResponsibleRegionFieldAccordingToJurisdiction(contentBinding, Boolean.FALSE.equals(contentBinding.caseDataDifferentPlaceOfStayJurisdiction.getValue()));
+			updateForHealthFacility(getActivityRootData());
+		}
 	}
 
 	private void updateDiseaseVariantsField(FragmentCaseEditLayoutBinding contentBinding) {
@@ -741,5 +777,24 @@ public class CaseEditFragment extends BaseEditFragment<FragmentCaseEditLayoutBin
 
 	public void setCaseConfirmationBasis(CaseConfirmationBasis caseConfirmationBasis) {
 		this.caseConfirmationBasis = caseConfirmationBasis;
+	}
+
+	public void updateForHealthFacility(Case record) {
+		if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+			record.setFacilityType(FacilityType.HOSPITAL);
+			record.setHealthFacility(initialHealthFacility);
+			if (Boolean.TRUE.equals(getContentBinding().caseDataDifferentPlaceOfStayJurisdiction.getValue())) {
+				record.setRegion(initialHealthFacility.getRegion());
+				record.setDistrict(initialHealthFacility.getDistrict());
+				record.setCommunity(initialHealthFacility.getCommunity());
+			} else {
+				record.setResponsibleRegion(initialHealthFacility.getRegion());
+				record.setResponsibleDistrict(initialHealthFacility.getDistrict());
+				record.setResponsibleCommunity(initialHealthFacility.getCommunity());
+				record.setRegion(null);
+				record.setDistrict(null);
+				record.setCommunity(null);
+			}
+		}
 	}
 }
