@@ -14,6 +14,7 @@
  */
 package de.symeda.sormas.api.sample;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
@@ -140,6 +141,7 @@ public class SampleDto extends SormasToSormasShareableDto {
 	private SampleReferenceDto referredTo;
 	private boolean shipped;
 	private boolean received;
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	private PathogenTestResultType pathogenTestResult;
 
 	private Boolean pathogenTestingRequested;
