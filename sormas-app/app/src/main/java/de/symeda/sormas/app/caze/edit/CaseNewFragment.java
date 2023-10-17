@@ -41,6 +41,7 @@ import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PresentCondition;
 import de.symeda.sormas.api.person.Sex;
 import de.symeda.sormas.api.user.JurisdictionLevel;
+import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.DateHelper;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
 import de.symeda.sormas.app.BaseEditFragment;
@@ -85,7 +86,7 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
     private List<Item> initialPointsOfEntry;
     private List<Item> facilityOrHomeList;
     private List<Item> facilityTypeGroupList;
-    Facility initialHealthFacility;
+    private Facility initialHealthFacility;
 
     public static CaseNewFragment newInstance(Case activityRootData) {
         return newInstance(CaseNewFragment.class, CaseNewActivity.buildBundle().get(), activityRootData);
@@ -181,7 +182,8 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
                 null,
                 null,
                 () -> Boolean.TRUE.equals(contentBinding.caseDataDifferentPlaceOfStayJurisdiction.getValue()));
-        if (!ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+        if (!(ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)
+                && ConfigProvider.hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE))) {
             InfrastructureFieldsDependencyHandler.instance.initializeFacilityFields(
                     record,
                     contentBinding.caseDataRegion,
@@ -220,7 +222,8 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
                         contentBinding.caseDataFacilityType,
                         initialHealthFacility);
             }
-            if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+            if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)
+                    && ConfigProvider.hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
                 if (Boolean.FALSE.equals(f.getValue())) {
                     contentBinding.caseDataResponsibleJuridicationCaption.setVisibility(GONE);
                     contentBinding.caseDataResponsibleRegion.setVisibility(GONE);
@@ -302,7 +305,8 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
         contentBinding.personMobileNo.addValueChangedListener(e ->{
             record.getPerson().setMobileNo(e.getValue()+"");
         });
-        if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+        if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)
+                && ConfigProvider.hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
             contentBinding.setDifferentPlaceOfStayJurisdiction(true);
         }
     }
@@ -364,12 +368,28 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
         }
 
         if (user.hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
-            contentBinding.facilityOrHome.setVisibility(GONE);
-            contentBinding.caseDataRegion.setVisibility(GONE);
-            contentBinding.caseDataDistrict.setVisibility(GONE);
-            contentBinding.caseDataCommunity.setVisibility(GONE);
-            contentBinding.caseDataWardNo.setVisibility(GONE);
-            contentBinding.facilityTypeFieldsLayout.setVisibility(GONE);
+            if (ConfigProvider.hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
+                contentBinding.facilityOrHome.setVisibility(GONE);
+                contentBinding.caseDataRegion.setVisibility(GONE);
+                contentBinding.caseDataDistrict.setVisibility(GONE);
+                contentBinding.caseDataCommunity.setVisibility(GONE);
+                contentBinding.caseDataWardNo.setVisibility(GONE);
+                contentBinding.facilityTypeFieldsLayout.setVisibility(GONE);
+            } else {
+                // Hospital Informants are not allowed to create cases in another health facility
+                contentBinding.caseDataResponsibleRegion.setEnabled(false);
+                contentBinding.caseDataResponsibleDistrict.setEnabled(false);
+                contentBinding.caseDataResponsibleCommunity.setEnabled(false);
+                contentBinding.caseDataCommunity.setEnabled(false);
+                contentBinding.caseDataCommunity.setRequired(false);
+                contentBinding.caseDataHealthFacility.setEnabled(false);
+                contentBinding.caseDataHealthFacility.setRequired(false);
+                contentBinding.facilityOrHome.setEnabled(false);
+                contentBinding.facilityTypeGroup.setEnabled(false);
+                contentBinding.caseDataFacilityType.setEnabled(false);
+                contentBinding.caseDataDifferentPlaceOfStayJurisdiction.setEnabled(false);
+                contentBinding.caseDataDifferentPlaceOfStayJurisdiction.setVisibility(GONE);
+            }
         }
 
         if (user.getPointOfEntry() != null) {
@@ -505,7 +525,8 @@ public class CaseNewFragment extends BaseEditFragment<FragmentCaseNewLayoutBindi
     }
 
     public void updateForHealthFacility(Case record) {
-        if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)) {
+        if (ConfigProvider.getUser().hasJurisdictionLevel(JurisdictionLevel.HEALTH_FACILITY)
+                && ConfigProvider.hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
             record.setFacilityType(FacilityType.HOSPITAL);
             record.setHealthFacility(initialHealthFacility);
             if (Boolean.TRUE.equals(getContentBinding().caseDataDifferentPlaceOfStayJurisdiction.getValue())) {
