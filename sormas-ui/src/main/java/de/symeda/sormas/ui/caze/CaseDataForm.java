@@ -780,6 +780,13 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		differentPlaceOfStayJurisdiction = addCustomField(DIFFERENT_PLACE_OF_STAY_JURISDICTION, Boolean.class, CheckBox.class);
 		differentPlaceOfStayJurisdiction.addStyleName(VSPACE_3);
 
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+			if (!UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
+				differentPlaceOfStayJurisdiction.setEnabled(false);
+				differentPlaceOfStayJurisdiction.setVisible(false);
+			}
+		}
+
 		regionCombo = addInfrastructureField(CaseDataDto.REGION);
 		districtCombo = addInfrastructureField(CaseDataDto.DISTRICT);
 		communityCombo = addInfrastructureField(CaseDataDto.COMMUNITY);
@@ -1054,7 +1061,8 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 			if (!ignoreDifferentPlaceOfStayJurisdiction) {
 				updateFacility();
 			}
-			if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+			if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY
+				&& UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
 				updateResponsibleRegionDistrictCommunityAccordingToPlaceOfStay(differentPlaceOfStayJurisdiction.getValue());
 			}
 		});
@@ -1114,17 +1122,18 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 			CaseDataDto.FACILITY_TYPE,
 			CaseDataDto.HEALTH_FACILITY,
 			CaseDataDto.HEALTH_FACILITY_DETAILS);
-		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY
+			&& UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
 			setReadOnly(
-					false,
-					CaseDataDto.RESPONSIBLE_REGION,
-					CaseDataDto.RESPONSIBLE_DISTRICT,
-					CaseDataDto.RESPONSIBLE_COMMUNITY,
-					DIFFERENT_PLACE_OF_STAY_JURISDICTION,
-					CaseDataDto.REGION,
-					CaseDataDto.DISTRICT,
-					CaseDataDto.COMMUNITY,
-					FACILITY_OR_HOME_LOC);
+				false,
+				CaseDataDto.RESPONSIBLE_REGION,
+				CaseDataDto.RESPONSIBLE_DISTRICT,
+				CaseDataDto.RESPONSIBLE_COMMUNITY,
+				DIFFERENT_PLACE_OF_STAY_JURISDICTION,
+				CaseDataDto.REGION,
+				CaseDataDto.DISTRICT,
+				CaseDataDto.COMMUNITY,
+				FACILITY_OR_HOME_LOC);
 			differentPlaceOfStayJurisdiction.setReadOnly(false);
 			differentPlaceOfStayJurisdiction.setEnabled(true);
 		}
@@ -1760,17 +1769,21 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 					expectedFollowUpPeriodDto.getFollowUpStartDateType(),
 					DateHelper.formatLocalDate(expectedFollowUpPeriodDto.getFollowUpStartDate(), I18nProperties.getUserLanguage())));
 		}
-
-		updateVisibilityDifferentPlaceOfStayJurisdiction(newFieldValue);
-		if (newFieldValue.isInJurisdiction()) {
-			defaultResponsibleRegion = newFieldValue.getRegion();
-			defaultResponsibleDistrict = newFieldValue.getDistrict();
-			defaultResponsibleCommunity = newFieldValue.getCommunity();
-		} else {
-			defaultResponsibleRegion = newFieldValue.getResponsibleRegion();
-			defaultResponsibleDistrict = newFieldValue.getResponsibleDistrict();
-			defaultResponsibleCommunity = newFieldValue.getResponsibleCommunity();
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY
+			&& UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
+			boolean differentPlaceOfStayJurisdiction = isDifferentPlaceOfStayJurisdiction(newFieldValue);
+			if (differentPlaceOfStayJurisdiction) {
+				defaultResponsibleRegion = newFieldValue.getRegion();
+				defaultResponsibleDistrict = newFieldValue.getDistrict();
+				defaultResponsibleCommunity = newFieldValue.getCommunity();
+			} else {
+				defaultResponsibleRegion = newFieldValue.getResponsibleRegion();
+				defaultResponsibleDistrict = newFieldValue.getResponsibleDistrict();
+				defaultResponsibleCommunity = newFieldValue.getResponsibleCommunity();
+			}
+			updateResponsibleRegionDistrictCommunityAccordingToPlaceOfStay(differentPlaceOfStayJurisdiction);
 		}
+		updateVisibilityDifferentPlaceOfStayJurisdiction(newFieldValue);
 		// HACK: Binding to the fields will call field listeners that may clear/modify the values of other fields.
 		// this hopefully resets everything to its correct value
 		discard();
@@ -1794,15 +1807,22 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 	}
 
 	private void updateVisibilityDifferentPlaceOfStayJurisdiction(CaseDataDto newFieldValue) {
-		boolean isDifferentPlaceOfStayJurisdiction =
-			newFieldValue.getRegion() != null || newFieldValue.getDistrict() != null || newFieldValue.getCommunity() != null;
+		boolean isDifferentPlaceOfStayJurisdiction = isDifferentPlaceOfStayJurisdiction(newFieldValue);
 		boolean readOnly = differentPlaceOfStayJurisdiction.isReadOnly();
 		differentPlaceOfStayJurisdiction.setReadOnly(false);
 		differentPlaceOfStayJurisdiction.setValue(isDifferentPlaceOfStayJurisdiction);
 		differentPlaceOfStayJurisdiction.setReadOnly(readOnly);
 	}
 
+	private boolean isDifferentPlaceOfStayJurisdiction(CaseDataDto caseDataDto) {
+		return caseDataDto.getRegion() != null || caseDataDto.getDistrict() != null || caseDataDto.getCommunity() != null;
+	}
+
 	private void updateFacility() {
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY
+		&& UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
+			return;
+		}
 		final DistrictReferenceDto district;
 		final CommunityReferenceDto community;
 

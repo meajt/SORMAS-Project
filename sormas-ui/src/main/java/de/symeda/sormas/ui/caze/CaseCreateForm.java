@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-
 import org.apache.commons.collections.CollectionUtils;
 
 import com.google.common.collect.Sets;
@@ -67,6 +66,7 @@ import de.symeda.sormas.api.person.PersonReferenceDto;
 import de.symeda.sormas.api.symptoms.SymptomsDto;
 import de.symeda.sormas.api.travelentry.TravelEntryDto;
 import de.symeda.sormas.api.user.JurisdictionLevel;
+import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.fieldaccess.UiFieldAccessCheckers;
 import de.symeda.sormas.api.utils.fieldvisibility.FieldVisibilityCheckers;
 import de.symeda.sormas.ui.UserProvider;
@@ -124,31 +124,31 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 	private final TravelEntryDto convertedTravelEntry;
 
 	//@formatter:off
-    private static final String HTML_LAYOUT = fluidRowLocs(CaseDataDto.CASE_ORIGIN, CaseDataDto.REGISTRATION_NO)
-        + fluidRowLocs(CaseDataDto.REPORT_DATE, CaseDataDto.EPID_NUMBER, CaseDataDto.EXTERNAL_ID)
-        + fluidRow(
-        fluidColumnLoc(6, 0, CaseDataDto.DISEASE),
-        fluidColumn(6, 0,
-            locs(CaseDataDto.DISEASE_DETAILS, CaseDataDto.PLAGUE_TYPE, CaseDataDto.DENGUE_FEVER_TYPE,
-                CaseDataDto.RABIES_TYPE, CaseDataDto.TYPE_OF_LEPROSY)))
-        + fluidRowLocs(CaseDataDto.DISEASE_VARIANT, CaseDataDto.DISEASE_VARIANT_DETAILS)
-        + fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC)
-        + fluidRowLocs(CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY)
-		+fluidRowLocs(CaseDataDto.RESPONSIBLE_WARD_NO, "")
-        + fluidRowLocs(CaseDataDto.DONT_SHARE_WITH_REPORTING_TOOL)
-        + fluidRowLocs(DONT_SHARE_WARNING_LOC)
-        + fluidRowLocs(DIFFERENT_PLACE_OF_STAY_JURISDICTION)
-        + fluidRowLocs(PLACE_OF_STAY_HEADING_LOC)
-        + fluidRowLocs(FACILITY_OR_HOME_LOC)
-        + fluidRowLocs(CaseDataDto.REGION, CaseDataDto.DISTRICT, CaseDataDto.COMMUNITY)
-		+ fluidRowLocs(CaseDataDto.WARD_NO, "")
-        + fluidRowLocs(FACILITY_TYPE_GROUP_LOC, CaseDataDto.FACILITY_TYPE)
-        + fluidRowLocs(CaseDataDto.HEALTH_FACILITY, CaseDataDto.HEALTH_FACILITY_DETAILS)
-        + fluidRowLocs(DIFFERENT_POINT_OF_ENTRY_JURISDICTION)
-        + fluidRowLocs(POINT_OF_ENTRY_REGION, POINT_OF_ENTRY_DISTRICT)
-        + fluidRowLocs(CaseDataDto.POINT_OF_ENTRY, CaseDataDto.POINT_OF_ENTRY_DETAILS)
-		+ fluidRowLocs(CaseDataDto.PERSON);
-    //@formatter:on
+	private static final String HTML_LAYOUT = fluidRowLocs(CaseDataDto.CASE_ORIGIN, CaseDataDto.REGISTRATION_NO)
+			+ fluidRowLocs(CaseDataDto.REPORT_DATE, CaseDataDto.EPID_NUMBER, CaseDataDto.EXTERNAL_ID)
+			+ fluidRow(
+			fluidColumnLoc(6, 0, CaseDataDto.DISEASE),
+			fluidColumn(6, 0,
+					locs(CaseDataDto.DISEASE_DETAILS, CaseDataDto.PLAGUE_TYPE, CaseDataDto.DENGUE_FEVER_TYPE,
+							CaseDataDto.RABIES_TYPE, CaseDataDto.TYPE_OF_LEPROSY)))
+			+ fluidRowLocs(CaseDataDto.DISEASE_VARIANT, CaseDataDto.DISEASE_VARIANT_DETAILS)
+			+ fluidRowLocs(RESPONSIBLE_JURISDICTION_HEADING_LOC)
+			+ fluidRowLocs(CaseDataDto.RESPONSIBLE_REGION, CaseDataDto.RESPONSIBLE_DISTRICT, CaseDataDto.RESPONSIBLE_COMMUNITY)
+			+fluidRowLocs(CaseDataDto.RESPONSIBLE_WARD_NO, "")
+			+ fluidRowLocs(CaseDataDto.DONT_SHARE_WITH_REPORTING_TOOL)
+			+ fluidRowLocs(DONT_SHARE_WARNING_LOC)
+			+ fluidRowLocs(DIFFERENT_PLACE_OF_STAY_JURISDICTION)
+			+ fluidRowLocs(PLACE_OF_STAY_HEADING_LOC)
+			+ fluidRowLocs(FACILITY_OR_HOME_LOC)
+			+ fluidRowLocs(CaseDataDto.REGION, CaseDataDto.DISTRICT, CaseDataDto.COMMUNITY)
+			+ fluidRowLocs(CaseDataDto.WARD_NO, "")
+			+ fluidRowLocs(FACILITY_TYPE_GROUP_LOC, CaseDataDto.FACILITY_TYPE)
+			+ fluidRowLocs(CaseDataDto.HEALTH_FACILITY, CaseDataDto.HEALTH_FACILITY_DETAILS)
+			+ fluidRowLocs(DIFFERENT_POINT_OF_ENTRY_JURISDICTION)
+			+ fluidRowLocs(POINT_OF_ENTRY_REGION, POINT_OF_ENTRY_DISTRICT)
+			+ fluidRowLocs(CaseDataDto.POINT_OF_ENTRY, CaseDataDto.POINT_OF_ENTRY_DETAILS)
+			+ fluidRowLocs(CaseDataDto.PERSON);
+	//@formatter:on
 
 	public CaseCreateForm() {
 		this(true, true, null);
@@ -394,10 +394,20 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 
 		JurisdictionLevel userJurisdictionLevel = UserProvider.getCurrent().getJurisdictionLevel();
 		if (userJurisdictionLevel == JurisdictionLevel.HEALTH_FACILITY) {
-			responsibleRegionCombo.setEnabled(false);
-			responsibleDistrictCombo.setEnabled(false);
-			responsibleCommunityCombo.setEnabled(false);
-
+			if (UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
+				responsibleRegionCombo.setEnabled(false);
+				responsibleDistrictCombo.setEnabled(false);
+				responsibleCommunityCombo.setEnabled(false);
+			} else {
+				regionCombo.setReadOnly(true);
+				responsibleRegionCombo.setReadOnly(true);
+				districtCombo.setReadOnly(true);
+				responsibleDistrictCombo.setReadOnly(true);
+				communityCombo.setReadOnly(true);
+				responsibleCommunityCombo.setReadOnly(true);
+				differentPlaceOfStayJurisdiction.setVisible(false);
+				differentPlaceOfStayJurisdiction.setEnabled(false);
+			}
 			facilityOrHome.setImmediate(true);
 			facilityOrHome.setValue(Sets.newHashSet(TypeOfPlace.FACILITY)); // [FACILITY]
 			facilityOrHome.setReadOnly(true);
@@ -454,7 +464,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 			if (!Boolean.TRUE.equals(differentPointOfEntryJurisdiction.getValue())) {
 				updatePOEs();
 			}
-			if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+			if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY
+				&& UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
 				updateResponsibleRegionDistrictCommunityAccordingToPlaceOfStay(differentPlaceOfStayJurisdiction.getValue());
 			}
 		});
@@ -724,7 +735,8 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		String personUuid = casePersonReference == null ? null : casePersonReference.getUuid();
 		PersonDto personByUuid = personUuid == null ? null : FacadeProvider.getPersonFacade().getByUuid(personUuid);
 		personCreateForm.setPerson(personByUuid);
-		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+		if (UserProvider.getCurrent().getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY
+			&& UserProvider.getCurrent().hasUserRight(UserRight.CHANGE_CASE_RESPONSIBLE)) {
 			differentPlaceOfStayJurisdiction.setValue(true);
 		}
 	}
