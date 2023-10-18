@@ -36,10 +36,6 @@ public class InfoResource {
 	@GET
 	@Path("/version")
 	public String getVersion() {
-		String appVersionFromSormasPropertyFile = FacadeProvider.getConfigFacade().getAppVersion();
-		if(appVersionFromSormasPropertyFile != null) {
-			return appVersionFromSormasPropertyFile;
-		}
 		return InfoProvider.get().getVersion();
 	}
 
@@ -73,10 +69,6 @@ public class InfoResource {
 	@GET
 	@Path("/checkcompatibility")
 	public CompatibilityCheckResponse isCompatibleToApi(@QueryParam("appVersion") String appVersion) {
-		String appVersionFromSormasPropertyFile = FacadeProvider.getConfigFacade().getAppVersion();
-		if (StringUtils.isNotEmpty(appVersionFromSormasPropertyFile)) {
-			return InfoProvider.get().isCompatibleToApi(appVersion, appVersionFromSormasPropertyFile);
-		}
 		return InfoProvider.get().isCompatibleToApi(appVersion);
 	}
 
