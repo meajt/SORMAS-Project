@@ -12279,5 +12279,355 @@ UPDATE featureconfiguration SET properties = properties::jsonb || json_build_obj
 
 INSERT INTO schema_version (version_number, comment) VALUES (506, 'Add max change date period property to limited synchronization feature #7305');
 
+--2023-10-19 NEPAL UPDATE FIELD TILL NOW. THIS BULK UPDATE.
+ALTER TABLE cases add column if not exists responsiblewardno int;
+ALTER TABLE cases add column if not exists wardno int;
+ALTER TABLE location add column if not exists wardno int;
+ALTER TABLE person add column if not exists mobileno text;
+
+ALTER TABLE symptoms add column if not exists bodyAche  varchar(255);
+ALTER TABLE symptoms add column if not exists numbness varchar(255);
+ALTER TABLE symptoms add column if not exists muscleTwitching varchar(255);
+ALTER TABLE symptoms add column if not exists punctureMarkAtWound varchar(255);
+ALTER TABLE symptoms add column if not exists bleedingAroundBite varchar(255);
+ALTER TABLE symptoms add column if not exists disturbedVision varchar(255);
+ALTER TABLE symptoms add column if not exists discoloredSkin varchar(255);
+ALTER TABLE symptoms add column if not exists growthNodulesOnSkin varchar(255);
+ALTER TABLE symptoms add column if not exists painlessUlcer varchar(255);
+ALTER TABLE symptoms add column if not exists eyelashes varchar(255);
+ALTER TABLE symptoms add column if not exists enlargesNerves varchar(255);
+ALTER TABLE symptoms add column if not exists muscleWeakness varchar(255);
+
+CREATE TABLE rft_sample
+(
+    id         bigint not null,
+    urea       numeric,
+    creatinine numeric,
+    sodium     numeric,
+    potassium  numeric,
+    changedate timestamp without time zone NOT NULL,
+    creationdate timestamp without time zone NOT NULL,
+    uuid character varying(36) NOT NULL,
+    primary key (id)
+);
+ALTER TABLE rft_sample
+    OWNER TO sormas_user;
+ALTER TABLE rft_sample ADD COLUMN change_user_id BIGINT,
+                       ADD CONSTRAINT fk_change_user_id
+                           FOREIGN KEY (change_user_id)
+                               REFERENCES users (id);
+
+CREATE TABLE lipid_profile_sample
+(
+    id                 bigint                      not null,
+    cholestrolMethod   numeric,
+    hdlMethod          numeric,
+    ldlMethod          numeric,
+    triglycerideMethod numeric,
+    uricAcidMethod     numeric,
+    totalProteinMethod numeric,
+    albuminMethod      numeric,
+    calciumMethod      numeric,
+    sample_id          bigint                      not null,
+
+    changedate         timestamp without time zone NOT NULL,
+    creationdate       timestamp without time zone NOT NULL,
+    uuid               character varying(36)       NOT NULL,
+    primary key (id)
+);
+ALTER TABLE lipid_profile_sample
+    OWNER TO sormas_user;
+ALTER TABLE lipid_profile_sample
+    ADD CONSTRAINT fk_lipid_profile_sample_sample_id FOREIGN KEY (sample_id) REFERENCES samples (id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE lipid_profile_sample
+    ADD COLUMN change_user_id BIGINT,
+    ADD CONSTRAINT fk_change_user_id
+        FOREIGN KEY (change_user_id)
+            REFERENCES users (id);
+CREATE TABLE lft_sample
+(
+    id                 bigint                      not null,
+    bilirubinT         numeric,
+    bilirubinD         numeric,
+    alkalinePhospatase numeric,
+    kinetic            numeric,
+    sgpt               numeric,
+    sgot               numeric,
+    vldl               numeric,
+
+    changedate         timestamp without time zone NOT NULL,
+    creationdate       timestamp without time zone NOT NULL,
+    uuid               character varying(36)       NOT NULL,
+    primary key (id)
+);
+ALTER TABLE lft_sample
+    OWNER TO sormas_user;
+
+ALTER TABLE lft_sample
+    ADD COLUMN change_user_id BIGINT,
+    ADD CONSTRAINT fk_change_user_id
+        FOREIGN KEY (change_user_id)
+            REFERENCES users (id);
+CREATE TABLE complete_blood_count
+(
+    id            bigint                      not null,
+    tlc           numeric,
+    neutrophils   numeric,
+    lymphocytes   numeric,
+    monocytes     numeric,
+    eosinophils   numeric,
+    basophils     numeric,
+    platetetCount numeric,
+    rbc           numeric,
+    hb            numeric,
+    pcv           numeric,
+    mcv           numeric,
+    hch           numeric,
+    mchc          numeric,
+    rdwCv         numeric,
+    hbA1c         numeric,
+
+    changedate    timestamp without time zone NOT NULL,
+    creationdate  timestamp without time zone NOT NULL,
+    uuid          character varying(36)       NOT NULL,
+    primary key (id)
+);
+ALTER TABLE complete_blood_count
+    OWNER TO sormas_user;
+
+ALTER TABLE complete_blood_count
+    ADD COLUMN change_user_id BIGINT,
+    ADD CONSTRAINT fk_change_user_id
+        FOREIGN KEY (change_user_id)
+            REFERENCES users (id);
+
+ALTER TABLE rft_sample
+    drop column if exists sample_id;
+ALTER TABLE samples
+    ADD COLUMN rftsample_sample_id BIGINT,
+    ADD CONSTRAINT fk_rftsample_sample_id FOREIGN KEY (rftsample_sample_id) REFERENCES rft_sample (id);
+
+CREATE TABLE complete_blood_count_sample
+(
+    id            bigint                      not null,
+    tlc           numeric,
+    neutrophils   numeric,
+    lymphocytes   numeric,
+    monocytes     numeric,
+    eosinophils   numeric,
+    basophils     numeric,
+    platetetCount numeric,
+    rbc           numeric,
+    hb            numeric,
+    pcv           numeric,
+    mcv           numeric,
+    hch           numeric,
+    mchc          numeric,
+    rdwCv         numeric,
+    hbA1c         numeric,
+    changedate    timestamp without time zone NOT NULL,
+    creationdate  timestamp without time zone NOT NULL,
+    uuid          character varying(36)       NOT NULL,
+    primary key (id)
+);
+ALTER TABLE complete_blood_count_sample
+    OWNER TO sormas_user;
+ALTER TABLE complete_blood_count_sample
+    ADD COLUMN change_user_id BIGINT,
+    ADD CONSTRAINT fk_change_user_id
+        FOREIGN KEY (change_user_id)
+            REFERENCES users (id);
+
+CREATE TABLE urine_re_sample
+(
+    id             bigint                      not null,
+    color          varchar(255),
+    transparency   varchar(255),
+    ph             varchar(255),
+    albumin        varchar(255),
+    sugar          varchar(255),
+    pusCells       varchar(255),
+    rbc            varchar(255),
+    epithelialCell varchar(255),
+    crystals       varchar(255),
+    casts          varchar(255),
+    urineothertest          varchar(255),
+
+    changedate     timestamp without time zone NOT NULL,
+    creationdate   timestamp without time zone NOT NULL,
+    uuid           character varying(36)       NOT NULL,
+    primary key (id)
+);
+ALTER TABLE urine_re_sample
+    OWNER TO sormas_user;
+ALTER TABLE urine_re_sample
+    ADD COLUMN change_user_id BIGINT,
+    ADD CONSTRAINT fk_change_user_id
+        FOREIGN KEY (change_user_id)
+            REFERENCES users (id);
+
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS rftsample_id BIGINT;
+ALTER TABLE additionaltest ADD  COLUMN IF NOT EXISTS lftsample_id BIGINT;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS completebloodcountsample_id BIGINT;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS lipidprofilesample_id BIGINT;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS urineroutineexaminationsample_id BIGINT;
+
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasPremiumHealthPackage boolean default false;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasRFT boolean default false;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasLipidProfile boolean default false;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasLFT boolean default false;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasUrineRE boolean default false;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasCompleteBloodCount boolean default false;
+ALTER TABLE additionaltest ADD COLUMN IF NOT EXISTS hasurineroutineexamination boolean default false;
+
+create table malariaepidata
+(
+    id                            bigint       not null
+        primary key,
+    changedate                    timestamp(3) not null,
+    creationdate                  timestamp(3) not null,
+    uuid                          varchar(36)  not null,
+    activecasedetection           varchar(255),
+    bloodtransfusion              boolean,
+    casedetectionmethod           varchar(255),
+    contactwithmalariacasesdetail varchar(255),
+    doseenddate                   timestamp,
+    dosename                      varchar(255),
+    dosestartdate                 timestamp,
+    drugname                      varchar(255),
+    haspreviousmalaria            boolean,
+    hastreatednmtp                integer,
+    historyofconfirmed            boolean,
+    lengthofresidencemm           integer,
+    lengthofresidenceyy           integer,
+    pastdate                      timestamp,
+    pastwardno                    integer,
+    plasmodiumspecies             integer,
+    residentwardno                integer,
+    traveladdressoutsidecounty    varchar(255),
+    traveladdresswithincounty     varchar(255),
+    traveldateoutsidecounty       timestamp,
+    traveldatewithincounty        timestamp,
+    typeofpreventingmeasures      integer,
+    change_user_id                bigint,
+    facility_id                   bigint,
+    pastcommunity_id              bigint,
+    pastdistrict_id               bigint,
+    pastregion_id                 bigint,
+    residentcommunity_id          bigint,
+    residentdistrict_id           bigint,
+    residentregion_id             bigint
+);
+
+alter table malariaepidata
+    owner to sormas_user;
+
+ALTER TABLE epidata ADD COLUMN malariaepidata_id bigint;
+ALTER TABLE epidata ADD CONSTRAINT fk_malariaepidata_id FOREIGN KEY (malariaepidata_id) REFERENCES malariaepidata (id);
+
+ALTER TABLE person add column if not exists religion  varchar(255);
+ALTER TABLE person add column if not exists ethnicity  varchar(255);
+
+ALTER TABLE cases add column if not exists lastVaccinationDate  timestamp;
+ALTER TABLE cases add column if not exists typeOfSource  varchar(255);
+ALTER TABLE cases add column if not exists routineDoseTaken  varchar(255);
+ALTER TABLE cases add column if not exists doseThroughRi  integer;
+ALTER TABLE cases add column if not exists doseThroughRia  integer;
+
+ALTER TABLE person ADD column weight real;
+ALTER TABLE symptoms add column if not exists casecondition varchar(255);
+
+ALTER TABLE location ADD column otherFacilityType varchar(255);
+
+ALTER TABLE person ADD COLUMN maritalStatus varchar(255);
+
+ALTER TABLE symptoms ADD COLUMN typeOfLeprosy varchar(255);
+ALTER TABLE symptoms ADD COLUMN leprosyReaction boolean;
+ALTER TABLE symptoms ADD COLUMN leprosyStage varchar(255);
+ALTER TABLE symptoms ADD COLUMN dateOfDiagnosis timestamp;
+ALTER TABLE symptoms ADD COLUMN ehfScore integer;
+ALTER TABLE symptoms ADD COLUMN treatmentGiven varchar(255);
+ALTER TABLE symptoms ADD COLUMN timeOfDiagnosis varchar(255);
+ALTER TABLE symptoms ADD COLUMN timeOfRFT varchar(255);
+
+ALTER TABLE epidata ADD COLUMN casedetectionmethodgroup varchar(255);
+ALTER TABLE epidata ADD COLUMN casedetectionmethod varchar(255);
+
+ALTER TABLE symptoms ADD COLUMN redEyeWithoutDischarge varchar(255);
+ALTER TABLE symptoms ADD COLUMN leukocoria varchar(255);
+ALTER TABLE symptoms ADD COLUMN unilateralInvolvement varchar(255);
+ALTER TABLE symptoms ADD COLUMN decreaseVision varchar(255);
+ALTER TABLE symptoms ADD COLUMN circumciliaryCongestion varchar(255);
+ALTER TABLE symptoms ADD COLUMN fibrinoidAntChamberRxn varchar(255);
+ALTER TABLE symptoms ADD COLUMN hypopyon varchar(255);
+ALTER TABLE symptoms ADD COLUMN shalloAntChamber varchar(255);
+ALTER TABLE symptoms ADD COLUMN decreaseIntraocuPressure varchar(255);
+ALTER TABLE symptoms ADD COLUMN photophobia varchar(255);
+ALTER TABLE symptoms ADD COLUMN suddenantofrxn varchar(255);
+ALTER TABLE symptoms ADD COLUMN redantWhiterxn varchar(255);
+ALTER TABLE symptoms ADD COLUMN lossantCornealRxn varchar(255);
+ALTER TABLE symptoms ADD COLUMN reduceVialequiEquity varchar(255);
+ALTER TABLE symptoms ADD COLUMN reducEyeOP varchar(255);
+ALTER TABLE symptoms ADD COLUMN porredGlow varchar(255);
+ALTER TABLE symptoms ADD COLUMN retinalDetachment varchar(255);
+ALTER TABLE symptoms ADD COLUMN retinalNecrosis varchar(255);
+ALTER TABLE symptoms ADD COLUMN hyoptony varchar(255);
+ALTER TABLE symptoms ADD COLUMN cataract varchar(255);
+ALTER TABLE symptoms ADD COLUMN pththisisBulbi varchar(255);
+ALTER TABLE symptoms ADD COLUMN otherSymptoms text;
+
+UPDATE diseaseconfiguration SET disease = 'CONJUNCTIVITIES' WHERE disease = 'CONJUCTIVES';
+UPDATE cases SET disease = 'CONJUNCTIVITIES' WHERE disease = 'CONJUCTIVES';
+
+ALTER TABLE symptoms ADD COLUMN eyeSwelling varchar(255);
+ALTER TABLE symptoms ADD COLUMN increasedTearProduction varchar(255);
+ALTER TABLE symptoms ADD COLUMN eyeItchingIrritationBurning varchar(255);
+ALTER TABLE symptoms ADD COLUMN eyeDischarge varchar(255);
+ALTER TABLE symptoms ADD COLUMN crustingEyeLidLashes varchar(255);
+ALTER TABLE symptoms ADD COLUMN punctateKeratitis varchar(255);
+ALTER TABLE symptoms ADD COLUMN bacterialSuperinfection varchar(255);
+ALTER TABLE symptoms ADD COLUMN conjunctivalScarring varchar(255);
+ALTER TABLE symptoms ADD COLUMN cornealUlceration varchar(255);
+ALTER TABLE symptoms ADD COLUMN chronicInfection varchar(255);
+ALTER TABLE symptoms ADD COLUMN earpain varchar(255);
+
+ALTER TABLE clinicalvisit ADD COLUMN typeOfClinicalMeasurement varchar(255);
+ALTER TABLE clinicalvisit ADD COLUMN ehfScore integer;
+ALTER TABLE clinicalvisit ADD COLUMN disabilityGrading varchar(255);
+ALTER TABLE clinicalvisit ADD COLUMN ulcer boolean;
+
+ALTER TABLE hospitalization ADD COLUMN registrationno varchar(255);
+ALTER TABLE hospitalization ADD COLUMN registrationtype varchar(255);
+
+
+ALTER TABLE epidata ADD COLUMN familyHistoryOfLeprosy boolean;
+ALTER TABLE epidata ADD COLUMN contactExaminationDone boolean;
+ALTER TABLE epidata ADD COLUMN noOfFamilyContact integer;
+ALTER TABLE epidata ADD COLUMN noOfNeighbourContact integer;
+ALTER TABLE epidata ADD COLUMN noOfSocialContact integer;
+ALTER TABLE epidata ADD COLUMN skinSmearTestPositive boolean;
+ALTER TABLE epidata ADD COLUMN leprosyResult varchar(255);
+ALTER TABLE epidata ADD COLUMN contactarea varchar(255);
+ALTER TABLE epidata ADD COLUMN contactitem varchar(255);
+ALTER TABLE epidata ADD COLUMN exposuretomothorothers varchar(255);
+ALTER TABLE epidata ADD COLUMN shapuexposuretype varchar(255);
+ALTER TABLE epidata ADD COLUMN directindirectexposure varchar(255);
+ALTER TABLE epidata ADD COLUMN otherexposuretype varchar(255);
+ALTER TABLE epidata ADD COLUMN remark varchar(255);
+ALTER TABLE epidata ADD COLUMN othercontactarea varchar(255);
+ALTER TABLE epidata ADD COLUMN othercontactitem varchar(255);
+ALTER TABLE epidata ADD COLUMN exposuredate timestamp;
+
+ALTER TABLE cases ADD COLUMN typeOfLeprosy varchar(255);
+ALTER TABLE cases ADD COLUMN registeredAs varchar(255);
+
+
+ALTER TABLE clinicalvisit ADD COLUMN leprosyReaction boolean;
+ALTER TABLE clinicalvisit ADD COLUMN leprosyStage varchar(255);
+ALTER TABLE clinicalvisit ADD COLUMN dateOfDiagnosis timestamp;
+ALTER TABLE clinicalvisit ADD COLUMN treatmentGiven varchar(255);
+
+INSERT INTO schema_version (version_number, comment) VALUES (507, 'NEPAL UPDATE FIELD');
+
 
 -- *** Insert new sql commands BEFORE this line. Remember to always consider _history tables. ***
