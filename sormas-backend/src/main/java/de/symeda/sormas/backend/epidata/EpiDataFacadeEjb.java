@@ -106,6 +106,23 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		target.setMalariaEpiData(malariaEpiDataFacadeEjbLocal.fillOrBuildEntity(source.getMalariaEpiData(), target.getMalariaEpiData(), checkChangeDate));
 		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
 		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
+		target.setFamilyHistoryOfLeprosy(source.getFamilyHistoryOfLeprosy());
+		target.setContactExaminationDone(source.getContactExaminationDone());
+		target.setNoOfFamilyContact(source.getNoOfFamilyContact());
+		target.setNoOfNeighbourContact(source.getNoOfNeighbourContact());
+		target.setNoOfSocialContact(source.getNoOfSocialContact());
+		target.setSkinSmearTestPositive(source.getSkinSmearTestPositive());
+		target.setLeprosyResult(source.getLeprosyResult());
+		target.setExposureToMothOrOthers(source.getExposureToMothOrOthers());
+		target.setShapuExposureType(source.getShapuExposureType());
+		target.setDirectIndirectExposure(source.getDirectIndirectExposure());
+		target.setContactArea(source.getContactArea());
+		target.setContactItem(source.getContactItem());
+		target.setOtherExposureType(source.getOtherExposureType());
+		target.setExposureDate(source.getExposureDate());
+		target.setRemark(source.getRemark());
+		target.setOtherContactArea(source.getOtherContactArea());
+		target.setOtherContactItem(source.getOtherContactItem());
 		return target;
 	}
 
@@ -249,6 +266,23 @@ public class EpiDataFacadeEjb implements EpiDataFacade {
 		target.setMalariaEpiData(MalariaEpiDataFacadeEjb.toDto(source.getMalariaEpiData()));
 		target.setCaseDetectionMethodGroup(source.getCaseDetectionMethodGroup());
 		target.setCaseDetectionMethod(source.getCaseDetectionMethod());
+		target.setFamilyHistoryOfLeprosy(source.getFamilyHistoryOfLeprosy());
+		target.setContactExaminationDone(source.getContactExaminationDone());
+		target.setNoOfFamilyContact(source.getNoOfFamilyContact());
+		target.setNoOfNeighbourContact(source.getNoOfNeighbourContact());
+		target.setNoOfSocialContact(source.getNoOfSocialContact());
+		target.setSkinSmearTestPositive(source.getSkinSmearTestPositive());
+		target.setLeprosyResult(source.getLeprosyResult());
+		target.setExposureToMothOrOthers(source.getExposureToMothOrOthers());
+		target.setShapuExposureType(source.getShapuExposureType());
+		target.setDirectIndirectExposure(source.getDirectIndirectExposure());
+		target.setContactArea(source.getContactArea());
+		target.setContactItem(source.getContactItem());
+		target.setOtherExposureType(source.getOtherExposureType());
+		target.setExposureDate(source.getExposureDate());
+		target.setRemark(source.getRemark());
+		target.setOtherContactArea(source.getOtherContactArea());
+		target.setOtherContactItem(source.getOtherContactItem());
 		return target;
 	}
 

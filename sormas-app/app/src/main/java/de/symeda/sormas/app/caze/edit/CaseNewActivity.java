@@ -227,6 +227,7 @@ public class CaseNewActivity extends BaseEditActivity<Case> {
 	}
 
 	private void pickOrCreateCaseAndSave(Case caze, CaseNewFragment fragment) {
+		fragment.updateForHealthFacility(caze);
 		CasePickOrCreateDialog.pickOrCreateCase(caze, pickedCase -> {
 			if (pickedCase.getUuid().equals(caze.getUuid())) {
 				saveDataInner(caze);

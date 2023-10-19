@@ -182,6 +182,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		addField(SampleDto.DELETION_REASON);
 		addField(SampleDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, SampleDto.DELETION_REASON, SampleDto.OTHER_DELETION_REASON);
+		initializeVisibilitiesAndAllowedVisibilities();
 	}
 
 	protected void defaultValueChangeListener() {

@@ -21,6 +21,7 @@ import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_3;
 import static de.symeda.sormas.ui.utils.CssStyles.VSPACE_TOP_3;
 import static de.symeda.sormas.ui.utils.LayoutUtil.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -28,9 +29,9 @@ import java.util.function.Supplier;
 
 import com.vaadin.v7.data.util.converter.Converter;
 import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.v7.ui.TextArea;
+import de.symeda.sormas.api.epidata.*;
 import de.symeda.sormas.api.epidata.CaseDetectionMethod;
-import de.symeda.sormas.api.epidata.CaseDetectionMethodGroup;
-import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.shared.ui.ContentMode;
@@ -42,7 +43,6 @@ import de.symeda.sormas.api.FacadeProvider;
 import de.symeda.sormas.api.caze.CaseDataDto;
 import de.symeda.sormas.api.contact.ContactDto;
 import de.symeda.sormas.api.contact.ContactReferenceDto;
-import de.symeda.sormas.api.epidata.EpiDataDto;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -69,7 +69,17 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
     //@formatter:off
     private static final String MAIN_HTML_LAYOUT =
                     fluidRowLocs(EpiDataDto.CASE_DETECTION_METHOD_GROUP,EpiDataDto.CASE_DETECTION_METHOD) +
+                    fluidRowLocs(EpiDataDto.FAMILY_HISTORY_OF_LEPROSY, EpiDataDto.CONTACT_EXAMINATION_DONE) +
+                    fluidRowLocs(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT) +
+                    fluidRowLocs(EpiDataDto.NO_OF_SOCIAL_CONTACT) +
+                    fluidRowLocs(EpiDataDto.SKIN_TEST_POSITIVE, EpiDataDto.SKIN_TEST_LEPROSY_RESULT) +
                     fluidRowLocs(MALARIA_EPI_FROM) +
+                    fluidRowLocs(EpiDataDto.EXPOSURE_TO_MOTH_OR_OTHERS)+
+                    fluidRowLocs(EpiDataDto.SHAPU_EXPOSURE_TYPE, EpiDataDto.OTHER_EXPOSURE_TYPE)+
+                    fluidRowLocs(EpiDataDto.DIRECT_INDIRECT_EXPOSURE, EpiDataDto.EXPOSURE_DATE)+
+                    fluidRowLocs(EpiDataDto.CONTACT_AREA, EpiDataDto.OTHER_CONTACT_AREA)+
+                    fluidRowLocs(EpiDataDto.CONTACT_ITEM, EpiDataDto.OTHER_CONTACT_ITEM)+
+                    fluidRowLocs(EpiDataDto.REMARK)+
                     loc(LOC_EXPOSURE_INVESTIGATION_HEADING) +
                     loc(EpiDataDto.EXPOSURE_DETAILS_KNOWN) +
                     loc(EpiDataDto.EXPOSURES) +
@@ -120,9 +130,6 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
         }
         ComboBox caseDetectionGroup = addField(EpiDataDto.CASE_DETECTION_METHOD_GROUP, ComboBox.class);
         ComboBox caseDetectionMethod = addField(EpiDataDto.CASE_DETECTION_METHOD);
-        caseDetectionGroup.addValueChangeListener(
-                e -> FieldHelper.updateEnumData(caseDetectionMethod,
-                        CaseDetectionMethod.getCaseDetectionMethod((CaseDetectionMethodGroup) caseDetectionGroup.getValue(), disease)));
         NullableOptionGroup ogExposureDetailsKnown = addField(EpiDataDto.EXPOSURE_DETAILS_KNOWN, NullableOptionGroup.class);
         ExposuresField exposuresField = addField(EpiDataDto.EXPOSURES, ExposuresField.class);
         exposuresField.setEpiDataParentClass(parentClass);
@@ -132,7 +139,29 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
         addField(EpiDataDto.LARGE_OUTBREAKS_AREA, NullableOptionGroup.class);
         addField(EpiDataDto.AREA_INFECTED_ANIMALS, NullableOptionGroup.class);
         NullableOptionGroup ogContactWithSourceCaseKnown = addField(EpiDataDto.CONTACT_WITH_SOURCE_CASE_KNOWN, NullableOptionGroup.class);
-
+        addField(EpiDataDto.FAMILY_HISTORY_OF_LEPROSY, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_EXAMINATION_DONE, NullableOptionGroup.class);
+        addFields(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT, EpiDataDto.NO_OF_SOCIAL_CONTACT);
+        addField(EpiDataDto.SKIN_TEST_POSITIVE, NullableOptionGroup.class);
+        addField(EpiDataDto.SKIN_TEST_LEPROSY_RESULT, NullableOptionGroup.class);
+        addField(EpiDataDto.EXPOSURE_TO_MOTH_OR_OTHERS, NullableOptionGroup.class);
+        addField(EpiDataDto.SHAPU_EXPOSURE_TYPE, NullableOptionGroup.class);
+        addField(EpiDataDto.DIRECT_INDIRECT_EXPOSURE, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_AREA, NullableOptionGroup.class);
+        addField(EpiDataDto.CONTACT_ITEM, NullableOptionGroup.class);
+        addField(EpiDataDto.EXPOSURE_DATE);
+        addFields(EpiDataDto.OTHER_EXPOSURE_TYPE, EpiDataDto.OTHER_CONTACT_AREA, EpiDataDto.OTHER_CONTACT_ITEM);
+        addField(EpiDataDto.REMARK, TextArea.class);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.NO_OF_FAMILY_CONTACT, EpiDataDto.NO_OF_NEIGHBOUR_CONTACT, EpiDataDto.NO_OF_SOCIAL_CONTACT),
+                EpiDataDto.CONTACT_EXAMINATION_DONE,
+                Arrays.asList(true),
+               true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.SKIN_TEST_LEPROSY_RESULT),
+                EpiDataDto.SKIN_TEST_POSITIVE,
+                Arrays.asList(true),
+                true);
         if (sourceContactsToggleCallback != null) {
             ogContactWithSourceCaseKnown.addValueChangeListener(e -> {
                 YesNoUnknown sourceContactsKnown = (YesNoUnknown) FieldHelper.getNullableSourceFieldValue((Field) e.getProperty());
@@ -140,9 +169,48 @@ public class EpiDataForm extends AbstractEditForm<EpiDataDto> {
             });
         }
 
-
         initializeVisibilitiesAndAllowedVisibilities();
         initializeAccessAndAllowedAccesses();
+        setVisible(false, EpiDataDto.SHAPU_EXPOSURE_TYPE);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.SHAPU_EXPOSURE_TYPE, EpiDataDto.EXPOSURE_DATE, EpiDataDto.REMARK),
+                EpiDataDto.EXPOSURE_TO_MOTH_OR_OTHERS,
+                Arrays.asList(YesNoUnknown.YES),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.OTHER_EXPOSURE_TYPE),
+                EpiDataDto.SHAPU_EXPOSURE_TYPE,
+                Arrays.asList(ShapuExposureType.OTHER),
+                true);
+        FieldHelper.setVisibleWhenSourceNotNull(getFieldGroup(),
+                Arrays.asList(EpiDataDto.DIRECT_INDIRECT_EXPOSURE, EpiDataDto.DIRECT_INDIRECT_EXPOSURE),
+                EpiDataDto.SHAPU_EXPOSURE_TYPE,
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.CONTACT_AREA),
+                EpiDataDto.DIRECT_INDIRECT_EXPOSURE,
+                Arrays.asList(DirectIndirectExposure.DIRECT),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.CONTACT_ITEM),
+                EpiDataDto.DIRECT_INDIRECT_EXPOSURE,
+                Arrays.asList(DirectIndirectExposure.INDIRECT),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.OTHER_CONTACT_AREA),
+                EpiDataDto.CONTACT_AREA,
+                Arrays.asList(ContactArea.OTHER),
+                true);
+        FieldHelper.setVisibleWhen(getFieldGroup(),
+                Arrays.asList(EpiDataDto.OTHER_CONTACT_ITEM),
+                EpiDataDto.CONTACT_ITEM,
+                Arrays.asList(ContactItem.OTHER),
+                true);
+        setVisible(false, EpiDataDto.CASE_DETECTION_METHOD);
+        FieldHelper.setVisibleWhenSourceNotNull(getFieldGroup(), Arrays.asList(EpiDataDto.CASE_DETECTION_METHOD), EpiDataDto.CASE_DETECTION_METHOD_GROUP, true);
+        caseDetectionGroup.addValueChangeListener(
+                e -> FieldHelper.updateEnumData(caseDetectionMethod,
+                        CaseDetectionMethod.getCaseDetectionMethod((CaseDetectionMethodGroup) caseDetectionGroup.getValue(), disease)));
 
         exposuresField.addValueChangeListener(e -> {
             ogExposureDetailsKnown.setEnabled(CollectionUtils.isEmpty(exposuresField.getValue()));

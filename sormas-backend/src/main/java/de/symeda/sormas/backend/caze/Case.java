@@ -43,6 +43,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import de.symeda.sormas.api.caze.*;
+import de.symeda.sormas.api.epidata.RegisteredAs;
+import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.hibernate.annotations.Type;
 
 import de.symeda.auditlog.api.Audited;
@@ -410,6 +412,9 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	private Integer doseThroughRi;
 	private Integer doseThroughRia;
 	private Date lastVaccinationDate;
+	private TypeOfLeprosy typeOfLeprosy;
+	private RegisteredAs registeredAs;
+
 
 	@Column(name = "person_id", updatable = false, insertable = false)
 	public Long getPersonId() {
@@ -1795,5 +1800,22 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 
 	public void setLastVaccinationDate(Date lastVaccinationDate) {
 		this.lastVaccinationDate = lastVaccinationDate;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public TypeOfLeprosy getTypeOfLeprosy() {
+		return typeOfLeprosy;
+	}
+
+	public void setTypeOfLeprosy(TypeOfLeprosy typeOfLeprosy) {
+		this.typeOfLeprosy = typeOfLeprosy;
+	}
+
+	public RegisteredAs getRegisteredAs() {
+		return registeredAs;
+	}
+
+	public void setRegisteredAs(RegisteredAs registeredAs) {
+		this.registeredAs = registeredAs;
 	}
 }

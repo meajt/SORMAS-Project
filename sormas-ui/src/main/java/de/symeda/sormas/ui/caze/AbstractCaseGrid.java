@@ -148,7 +148,17 @@ public abstract class AbstractCaseGrid<IndexDto extends CaseIndexDto> extends Fi
 		if (FacadeProvider.getConfigFacade().isConfiguredCountry(CountryHelper.COUNTRY_CODE_GERMANY)
 			|| FacadeProvider.getConfigFacade().isConfiguredCountry(CountryHelper.COUNTRY_CODE_SWITZERLAND)) {
 			getColumn(CaseIndexDto.EPID_NUMBER).setHidden(true);
-		} else {
+		} else if (FacadeProvider.getConfigFacade().isConfiguredCountry(CountryHelper.COUNTRY_CODE_NEPAL)) {
+			getColumn(CaseIndexDto.EXTERNAL_ID).setHidden(true);
+			getColumn(CaseIndexDto.INTERNAL_TOKEN).setHidden(true);
+			getColumn(CaseIndexDto.EXTERNAL_TOKEN).setHidden(true);
+			getColumn(CaseIndexDto.DISEASE_VARIANT).setHidden(true);
+			getColumn(CaseIndexDto.POINT_OF_ENTRY_NAME).setHidden(true);
+			getColumn(CaseIndexDto.QUARANTINE_TO).setHidden(true);
+			getColumn(CaseIndexDto.VACCINATION_STATUS).setHidden(true);
+			getColumn(DELETE_REASON_COLUMN).setHidden(true);
+		}
+		else {
 			getColumn(CaseIndexDto.EXTERNAL_ID).setHidden(true);
 			getColumn(CaseIndexDto.EXTERNAL_TOKEN).setHidden(true);
 		}

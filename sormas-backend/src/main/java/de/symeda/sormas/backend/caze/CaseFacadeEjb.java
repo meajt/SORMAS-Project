@@ -2980,6 +2980,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setRoutineDoseTaken(source.getRoutineDoseTaken());
 		target.setDoseThroughRi(source.getDoseThroughRi());
 		target.setDoseThroughRia(source.getDoseThroughRia());
+		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
+		target.setRegisteredAs(source.getRegisteredAs());
 		return target;
 	}
 
@@ -3183,6 +3185,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setRoutineDoseTaken(source.getRoutineDoseTaken());
 		target.setDoseThroughRi(source.getDoseThroughRi());
 		target.setDoseThroughRia(source.getDoseThroughRia());
+		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
+		target.setRegisteredAs(source.getRegisteredAs());
 		return target;
 	}
 

@@ -3180,11 +3180,9 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		});
 		leprosyCase = getCaseFacade().save(leprosyCase);
 		SymptomsDto symptomsDto = leprosyCase.getSymptoms();
-		symptomsDto.setTypeOfLeprosy(TypeOfLeprosy.MB);
 		leprosyCase.setSymptoms(symptomsDto);
 		leprosyCase = getCaseFacade().save(leprosyCase);
 		symptomsDto = leprosyCase.getSymptoms();
-		assertEquals(symptomsDto.getTypeOfLeprosy(), TypeOfLeprosy.MB);
 	}
 
 	private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";

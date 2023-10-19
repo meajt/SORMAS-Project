@@ -167,7 +167,8 @@ public abstract class AbstractCaseView extends AbstractEditAllowedDetailView<Cas
 			}
 			if (FacadeProvider.getFeatureConfigurationFacade().isFeatureEnabled(FeatureType.VIEW_TAB_CASES_HOSPITALIZATION)
 				&& !caze.checkIsUnreferredPortHealthCase()
-				&& !UserProvider.getCurrent().isPortHealthUser()) {
+				&& !UserProvider.getCurrent().isPortHealthUser()
+				&& caze.getDisease() != Disease.LEPROSY) {
 				menu.addView(
 					HospitalizationView.VIEW_NAME,
 					I18nProperties.getPrefixCaption(CaseDataDto.I18N_PREFIX, CaseDataDto.HOSPITALIZATION),
@@ -181,7 +182,7 @@ public abstract class AbstractCaseView extends AbstractEditAllowedDetailView<Cas
 					I18nProperties.getPrefixCaption(CaseDataDto.I18N_PREFIX, CaseDataDto.PORT_HEALTH_INFO),
 					params);
 			}
-			if (FacadeProvider.getFeatureConfigurationFacade().isFeatureEnabled(FeatureType.VIEW_TAB_CASES_SYMPTOMS)) {
+			if (FacadeProvider.getFeatureConfigurationFacade().isFeatureEnabled(FeatureType.VIEW_TAB_CASES_SYMPTOMS) && caze.getDisease() != Disease.LEPROSY) {
 				menu.addView(CaseSymptomsView.VIEW_NAME, I18nProperties.getPrefixCaption(CaseDataDto.I18N_PREFIX, CaseDataDto.SYMPTOMS), params);
 			}
 			if (FacadeProvider.getFeatureConfigurationFacade().isFeatureEnabled(FeatureType.VIEW_TAB_CASES_EPIDEMIOLOGICAL_DATA)

@@ -254,14 +254,6 @@ public class SymptomsDto extends PseudonymizableDto {
     public static final String ENLARGES_NERVES = "enlargesNerves";
     public static final String MUSCLE_WEAKNESS = "muscleWeakness";
     public static final String CASE_CONDITION = "caseCondition";
-    public static final String TYPE_OF_LEPROSY = "typeOfLeprosy";
-    public static final String IS_LEPROSY_REACTION = "leprosyReaction";
-    public static final String LEPROSY_STAGE = "leprosyStage";
-    public static final String DATE_OF_DIAGNOSIS = "dateOfDiagnosis";
-    public static final String TREATMENT_GIVE = "treatmentGiven";
-    public static final String EHF_SCORE = "ehfScore";
-    public static final String TIME_OF_DIAGNOSIS = "timeOfDiagnosis";
-    public static final String TIME_OF_RFT = "timeOfRFT";
     public static final String RED_EYE_WITHOUT_DISCHARGE = "redEyeWithoutDischarge";
     public static final String LEUKOCORIA = "leukocoria";
     public static final String UNILATERAL_INVOLVEMENT = "unilateralInvolvement";
@@ -546,7 +538,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNSPECIFIED_VHF,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -649,7 +641,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RABIES,
             ANTHRAX,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -681,7 +673,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MONKEYPOX,
             POLIO,
             UNSPECIFIED_VHF,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -724,7 +716,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MALARIA,
             DIARRHEA_DEHYDRATION,
             ACUTE_VIRAL_HEPATITIS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -758,7 +750,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DIARRHEA_BLOOD,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             ACUTE_VIRAL_HEPATITIS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -901,7 +893,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             ACUTE_VIRAL_HEPATITIS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             SCRUB_TYPHUS,
             OTHER})
@@ -1210,7 +1202,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
             SCRUB_TYPHUS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1295,10 +1287,12 @@ public class SymptomsDto extends PseudonymizableDto {
     @SymptomGrouping(SymptomGroup.CARDIOVASCULAR)
     private SymptomState oedemaLowerExtremity;
 
+    @Diseases(value = {LEPROSY}, hide = true)
     @Outbreaks
     private Date onsetDate;
 
     @Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
+    @Diseases(value = {LEPROSY}, hide = true)
     private String onsetSymptom;
 
     @Diseases({
@@ -1540,7 +1534,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1607,7 +1601,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @SymptomGrouping(SymptomGroup.RESPIRATORY)
@@ -1695,7 +1689,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             RABIES,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -1724,7 +1718,7 @@ public class SymptomsDto extends PseudonymizableDto {
             CONGENITAL_RUBELLA,
             POLIO,
             CORONAVIRUS, MUMPS,
-             SAPHU, CONJUNCTIVITIES,
+            SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -2080,7 +2074,6 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({
             CORONAVIRUS, MUMPS,
             KALAZAR, SCRUB_TYPHUS,
-            LEPROSY,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -2484,8 +2477,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState bodyAche;
 
     @Diseases({
-            SNAKE_BITE,
-            LEPROSY
+            SNAKE_BITE
     })
     @SymptomGrouping(SymptomGroup.MUSCULAR)
     private SymptomState numbness;
@@ -2510,7 +2502,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
         SNAKE_BITE,
-         SAPHU, CONJUNCTIVITIES
+            SHAPU, CONJUNCTIVITIES
     })
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState disturbedVision;
@@ -2550,70 +2542,53 @@ public class SymptomsDto extends PseudonymizableDto {
     })
     @SymptomGrouping(SymptomGroup.MUSCULAR)
     private SymptomState muscleWeakness;
-    
-    @Diseases({LEPROSY})
-    private TypeOfLeprosy typeOfLeprosy;
-    @Diseases({LEPROSY})
-    private Boolean leprosyReaction;
-    @Diseases({LEPROSY})
-    private LeprosyStage leprosyStage;
-    @Diseases({LEPROSY})
-    private Date dateOfDiagnosis;
-    @Diseases({LEPROSY})
-    private String treatmentGiven;
-    @Diseases({LEPROSY})
-    private Integer ehfScore;
-    @Diseases({LEPROSY})
-    private DisabilityGrading timeOfDiagnosis;
-    @Diseases({LEPROSY})
-    private DisabilityGrading timeOfRFT;
 
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState redEyeWithoutDischarge;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState leukocoria;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState unilateralInvolvement;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState decreaseVision;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState circumciliaryCongestion;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState fibrinoidAntChamberRxn;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState hypopyon;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState shalloAntChamber;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState decreaseIntraocuPressure;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState photophobia;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState suddenantofrxn;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState redantWhiterxn;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState lossantCornealRxn;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState reduceVialequiEquity;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState reducEyeOP;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState porredGlow;
     ////@Diseases({ SAPHU, CONJUNCTIVITIES})
@@ -2632,39 +2607,41 @@ public class SymptomsDto extends PseudonymizableDto {
     @Complication
     private SymptomState pththisisBulbi;
 
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.OTHER)
     private String otherSymptoms;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState eyeSwelling;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState increasedTearProduction;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState eyeItchingIrritationBurning;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState eyeDischarge;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @SymptomGrouping(SymptomGroup.EYE)
     private SymptomState crustingEyeLidLashes;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @Complication
     private SymptomState punctateKeratitis;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @Complication
     private SymptomState bacterialSuperinfection;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @Complication
     private SymptomState conjunctivalScarring;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @Complication
     private SymptomState cornealUlceration;
-    @Diseases({ SAPHU, CONJUNCTIVITIES})
+    @Diseases({SHAPU, CONJUNCTIVITIES})
     @Complication
     private SymptomState chronicInfection;
+
+
     
     @Order(0)
     public Float getTemperature() {
@@ -4389,70 +4366,6 @@ public class SymptomsDto extends PseudonymizableDto {
         this.earPain = earPain;
     }
 
-    public TypeOfLeprosy getTypeOfLeprosy() {
-        return typeOfLeprosy;
-    }
-
-    public void setTypeOfLeprosy(TypeOfLeprosy typeOfLeprosy) {
-        this.typeOfLeprosy = typeOfLeprosy;
-    }
-
-    public Boolean getLeprosyReaction() {
-        return leprosyReaction;
-    }
-
-    public void setLeprosyReaction(Boolean leprosyReaction) {
-        this.leprosyReaction = leprosyReaction;
-    }
-
-    public LeprosyStage getLeprosyStage() {
-        return leprosyStage;
-    }
-
-    public void setLeprosyStage(LeprosyStage leprosyStage) {
-        this.leprosyStage = leprosyStage;
-    }
-
-    public Date getDateOfDiagnosis() {
-        return dateOfDiagnosis;
-    }
-
-    public void setDateOfDiagnosis(Date dateOfDiagnosis) {
-        this.dateOfDiagnosis = dateOfDiagnosis;
-    }
-
-    public String getTreatmentGiven() {
-        return treatmentGiven;
-    }
-
-    public void setTreatmentGiven(String treatmentGiven) {
-        this.treatmentGiven = treatmentGiven;
-    }
-
-    public Integer getEhfScore() {
-        return ehfScore;
-    }
-
-    public void setEhfScore(Integer ehfScore) {
-        this.ehfScore = ehfScore;
-    }
-
-    public DisabilityGrading getTimeOfDiagnosis() {
-        return timeOfDiagnosis;
-    }
-
-    public void setTimeOfDiagnosis(DisabilityGrading timeOfDiagnosis) {
-        this.timeOfDiagnosis = timeOfDiagnosis;
-    }
-
-    public DisabilityGrading getTimeOfRFT() {
-        return timeOfRFT;
-    }
-
-    public void setTimeOfRFT(DisabilityGrading timeOfRFT) {
-        this.timeOfRFT = timeOfRFT;
-    }
-
     public SymptomState getRedEyeWithoutDischarge() {
         return redEyeWithoutDischarge;
     }
@@ -4708,4 +4621,5 @@ public class SymptomsDto extends PseudonymizableDto {
     public void setChronicInfection(SymptomState chronicInfection) {
         this.chronicInfection = chronicInfection;
     }
+
 }

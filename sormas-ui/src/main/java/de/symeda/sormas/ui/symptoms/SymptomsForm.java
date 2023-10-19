@@ -113,11 +113,6 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 	//@formatter:off
 	private static final String HTML_LAYOUT =
 			loc(CLINICAL_MEASUREMENTS_HEADING_LOC) +
-					fluidRowLocs(TYPE_OF_LEPROSY, IS_LEPROSY_REACTION) +
-					fluidRowLocs(LEPROSY_STAGE, DATE_OF_DIAGNOSIS) +
-					fluidRowLocs(TREATMENT_GIVE, EHF_SCORE) +
-					loc(DISABLITY_GRADING_HEADING) +
-					fluidRowLocs(TIME_OF_DIAGNOSIS, TIME_OF_RFT) +
 					fluidRowLocs(TEMPERATURE, TEMPERATURE_SOURCE) +
 					fluidRowLocs(BLOOD_PRESSURE_SYSTOLIC, BLOOD_PRESSURE_DIASTOLIC, HEART_RATE, RESPIRATORY_RATE) +
 					fluidRowLocs(GLASGOW_COMA_SCALE, WEIGHT, HEIGHT, MID_UPPER_ARM_CIRCUMFERENCE) +
@@ -759,21 +754,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 			CONJUNCTIVAL_SCARRING,
 			CORNEAL_ULCERATION,
 			CHRONIC_INFECTION);
-		addField(TYPE_OF_LEPROSY, NullableOptionGroup.class);
-		addField(LEPROSY_STAGE, NullableOptionGroup.class);
-		addField(IS_LEPROSY_REACTION, NullableOptionGroup.class);
-		addFields(DATE_OF_DIAGNOSIS, TREATMENT_GIVE, EHF_SCORE);
-		addField(TIME_OF_DIAGNOSIS, NullableOptionGroup.class);
-		addField(TIME_OF_RFT, NullableOptionGroup.class);
-		initializeVisibilitiesAndAllowedVisibilities();
-		List<String> fieldDependOnLeprosyType = Arrays.asList(LEPROSY_STAGE, IS_LEPROSY_REACTION, DATE_OF_DIAGNOSIS, TIME_OF_DIAGNOSIS, TIME_OF_RFT, TREATMENT_GIVE, EHF_SCORE);
-		// Set visibilities
-		setVisible(false, LEPROSY_STAGE, IS_LEPROSY_REACTION, DATE_OF_DIAGNOSIS, TIME_OF_DIAGNOSIS, TIME_OF_RFT);
-		FieldHelper.setVisibleWhen(getFieldGroup(),
-				fieldDependOnLeprosyType,
-				TYPE_OF_LEPROSY,
-				Arrays.asList(TypeOfLeprosy.MB, TypeOfLeprosy.PB),
-				true);
+
 		NullableOptionGroup feverField = (NullableOptionGroup) getFieldGroup().getField(FEVER);
 		feverField.setImmediate(true);
 
@@ -842,7 +823,6 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		if (symptomsContext != SymptomsContext.CASE) {
 			getFieldGroup().getField(PATIENT_ILL_LOCATION).setVisible(false);
 		}
-
 		symptomGroupMap.forEach((location, strings) -> {
 			final Component groupLabel = getContent().getComponent(location);
 			final Optional<String> groupHasVisibleSymptom =
@@ -933,6 +913,13 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 				isComplicationsHeadingVisible = true;
 			}
 		}
+		if (disease == Disease.LEPROSY) {
+			signsAndSymptomsHeadingLabel.setVisible(false);
+			clinicalMeasurementsHeadingLabel.setVisible(false);
+			symptomsHint.setVisible(false);
+			buttonsLayout.setVisible(false);
+		}
+
 		complicationsHeading.setVisible(isComplicationsHeadingVisible);
 	}
 
@@ -947,6 +934,7 @@ public class SymptomsForm extends AbstractEditForm<SymptomsDto> {
 		} else {
 			feverField.setComponentError(null);
 		}
+
 	}
 
 	private void setFeverComponentError(NullableOptionGroup feverField, boolean feverSuggested) {
