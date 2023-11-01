@@ -25,6 +25,8 @@ import de.symeda.sormas.api.infrastructure.facility.FacilityTypeGroup;
 import de.symeda.sormas.api.infrastructure.region.RegionReferenceDto;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.symptoms.SymptomsDto;
+import de.symeda.sormas.api.user.JurisdictionLevel;
+import de.symeda.sormas.api.user.UserDto;
 import de.symeda.sormas.api.utils.UtilDate;
 import de.symeda.sormas.api.utils.ValidationRuntimeException;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -210,7 +212,8 @@ public class HospitalLineListLayout extends CaseLineListSave {
     }
 
     private void setUserHealthFacility() {
-        FacilityReferenceDto healthFacility = UserProvider.getCurrent().getUser().getHealthFacility();
+        UserDto user = UserProvider.getCurrent().getUser();
+        FacilityReferenceDto healthFacility = user.getHealthFacility();
         if (healthFacility != null) {
             String facilityId = healthFacility.getUuid();
             FacilityDto facilityDto = FacadeProvider.getFacilityFacade().getByUuid(facilityId);
@@ -219,6 +222,11 @@ public class HospitalLineListLayout extends CaseLineListSave {
             typeGroup.setValue(facilityUserTypeGroup);
             type.setValue(facilityUserType);
             facility.setValue(healthFacility);
+        }
+        if (user.getJurisdictionLevel() == JurisdictionLevel.HEALTH_FACILITY) {
+            typeGroup.setEnabled(false);
+            type.setEnabled(false);
+            facility.setEnabled(false);
         }
     }
 
