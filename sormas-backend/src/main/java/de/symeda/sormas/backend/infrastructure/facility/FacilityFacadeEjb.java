@@ -297,6 +297,7 @@ public class FacilityFacadeEjb
 			.collect(Collectors.toList());
 	}
 	@Override
+	@PermitAll
 	public List<FacilityReferenceDto> getByType(FacilityType type, boolean includeArchivedEntities) {
 		return service.getByType(type, includeArchivedEntities)
 				.stream()
