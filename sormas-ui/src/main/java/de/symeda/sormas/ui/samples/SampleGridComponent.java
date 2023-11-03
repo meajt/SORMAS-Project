@@ -185,6 +185,9 @@ public class SampleGridComponent extends VerticalLayout {
 
 				bulkOperationsDropdown = MenuBarHelper.createDropDown(
 					Captions.bulkActions,
+                        new MenuBarHelper.MenuBarItem(I18nProperties.getCaption(Captions.bulkEdit), VaadinIcons.ELLIPSIS_H, mi -> {
+                            grid.bulkActionHandler(items -> ControllerProvider.getSampleController().showBulkSampleDataEditComponent(items));
+                        }),
 					new MenuBarHelper.MenuBarItem(I18nProperties.getCaption(Captions.bulkDelete), VaadinIcons.TRASH, selectedItem -> {
 						ControllerProvider.getSampleController().deleteAllSelectedItems(grid.asMultiSelect().getSelectedItems(), new Runnable() {
 

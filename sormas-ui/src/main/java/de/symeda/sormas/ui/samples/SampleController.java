@@ -66,6 +66,7 @@ import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
 import de.symeda.sormas.api.sample.PathogenTestDto;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
+import de.symeda.sormas.api.sample.SampleBulkEditData;
 import de.symeda.sormas.api.sample.SampleCriteria;
 import de.symeda.sormas.api.sample.SampleDto;
 import de.symeda.sormas.api.sample.SampleIndexDto;
@@ -672,5 +673,44 @@ public class SampleController {
 			}
 		}
 		return null;
+	}
+
+	public void showBulkSampleDataEditComponent(Collection<? extends SampleIndexDto> selectedSample) {
+		if (selectedSample.isEmpty()) {
+			new Notification(
+					I18nProperties.getString(Strings.headingNoSamplesSelected),
+					I18nProperties.getString(Strings.headingNoSamplesSelected),
+					Type.WARNING_MESSAGE, false
+			).show(Page.getCurrent());
+			return;
+		}
+		SampleBulkEditData bulkEditData = new SampleBulkEditData();
+		BulkSampleDataForm form = new BulkSampleDataForm();
+		form.setValue(bulkEditData);
+		final CommitDiscardWrapperComponent<BulkSampleDataForm> editView = new CommitDiscardWrapperComponent<>(form, form.getFieldGroup());
+		Window popupWindow = VaadinUiUtil.showModalPopupWindow(editView, I18nProperties.getString(Strings.headingEditSample));
+		editView.addCommitListener(() -> {
+			SampleBulkEditData updatedBulkEditData = form.getValue();
+			boolean shippedChanged = form.shippedCheckBox.getValue();
+			boolean receivedChange = form.recievedCheckBox.getValue();
+			int changedSample = bulkEdit(selectedSample, updatedBulkEditData, shippedChanged, receivedChange);
+			popupWindow.close();
+			Notification.show(I18nProperties.getString(Strings.messageSampleEdited), Type.HUMANIZED_MESSAGE);
+			navigateToIndex();
+		});
+		editView.addCommitListener(popupWindow::close);
+	}
+
+	public void navigateToIndex() {
+		String navigationState = SamplesView.VIEW_NAME;
+		SormasUI.get().getNavigator().navigateTo(navigationState);
+	}
+
+	private int bulkEdit(Collection<? extends SampleIndexDto> selectedSample, SampleBulkEditData updatedBulkEditData, boolean shippChanged, boolean receivedChanged) {
+		return FacadeProvider.getSampleFacade()
+				.saveBulkSample(selectedSample.stream().map(SampleIndexDto::getUuid).collect(Collectors.toList()),
+						updatedBulkEditData,
+						shippChanged,
+						receivedChanged);
 	}
 }

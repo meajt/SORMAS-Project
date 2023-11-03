@@ -37,11 +37,6 @@ import javax.persistence.criteria.Selection;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import de.symeda.sormas.api.sample.ncd.CompleteBloodCountSampleDto;
-import de.symeda.sormas.api.sample.ncd.LftSampleDto;
-import de.symeda.sormas.api.sample.ncd.LipidProfileSampleDto;
-import de.symeda.sormas.api.sample.ncd.RftSampleDto;
-import de.symeda.sormas.backend.sample.ncd.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +58,7 @@ import de.symeda.sormas.api.infrastructure.facility.FacilityHelper;
 import de.symeda.sormas.api.sample.AdditionalTestDto;
 import de.symeda.sormas.api.sample.PathogenTestDto;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
+import de.symeda.sormas.api.sample.SampleBulkEditData;
 import de.symeda.sormas.api.sample.SampleCriteria;
 import de.symeda.sormas.api.sample.SampleDto;
 import de.symeda.sormas.api.sample.SampleExportDto;
@@ -114,6 +110,7 @@ import de.symeda.sormas.backend.location.Location;
 import de.symeda.sormas.backend.person.Person;
 import de.symeda.sormas.backend.sample.AdditionalTestFacadeEjb.AdditionalTestFacadeEjbLocal;
 import de.symeda.sormas.backend.sample.PathogenTestFacadeEjb.PathogenTestFacadeEjbLocal;
+import de.symeda.sormas.backend.sample.ncd.RftSampleFacade;
 import de.symeda.sormas.backend.sormastosormas.origin.SormasToSormasOriginInfoFacadeEjb;
 import de.symeda.sormas.backend.sormastosormas.origin.SormasToSormasOriginInfoService;
 import de.symeda.sormas.backend.sormastosormas.share.outgoing.ShareInfoHelper;
@@ -1133,6 +1130,43 @@ public class SampleFacadeEjb implements SampleFacade {
 			additionalTestFacade.saveAdditionalTest(newAdditionalTest);
 		}
 	}
+
+	@RightsAllowed({UserRight._SAMPLE_EDIT})
+	public Integer saveBulkSample(List<String> sampleUuids,
+								  @Valid SampleBulkEditData updateSampleBulkEditData,
+								  boolean sippedChange,
+								  boolean receivedChanged) {
+		int changedSamples = 0;
+		for (String sampleUuid : sampleUuids) {
+			Sample sample = sampleService.getByUuid(sampleUuid);
+			if (sampleService.isEditAllowed(sample)) {
+				SampleDto sampleDto = toDto(sample);
+				updateSampleWithBulkData(updateSampleBulkEditData, sampleDto, sippedChange, receivedChanged);
+				saveSample(sampleDto);
+			}
+			changedSamples++;
+		}
+		return changedSamples;
+	}
+
+	private void updateSampleWithBulkData(SampleBulkEditData updateSampleBulkEditData,
+										  SampleDto existingSample,
+										  boolean sippedChanged,
+										  boolean receivedChanged) {
+		if (sippedChanged) {
+			existingSample.setShipped(updateSampleBulkEditData.isShipped());
+			existingSample.setShipmentDate(updateSampleBulkEditData.getShipmentDate());
+			existingSample.setShipmentDetails(updateSampleBulkEditData.getShipmentDetails());
+		}
+		if (receivedChanged) {
+			existingSample.setReceived(updateSampleBulkEditData.isReceived());
+			existingSample.setReceivedDate(updateSampleBulkEditData.getReceivedDate());
+			existingSample.setLabSampleID(updateSampleBulkEditData.getLabSampleID());
+			existingSample.setSpecimenCondition(updateSampleBulkEditData.getSpecimenCondition());
+			existingSample.setNoTestPossibleReason(updateSampleBulkEditData.getNoTestPossibleReason());
+		}
+	}
+
 
 	@LocalBean
 	@Stateless

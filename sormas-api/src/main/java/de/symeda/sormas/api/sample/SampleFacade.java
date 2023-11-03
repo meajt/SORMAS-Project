@@ -97,4 +97,6 @@ public interface SampleFacade {
 	Date getEarliestPositiveSampleDate(String contactUuid);
 
 	List<DiseaseVariant> getAssociatedDiseaseVariants(String sampleUuid);
+
+	Integer saveBulkSample(List<String> sampleUuids, @Valid SampleBulkEditData updateSampleBulkEditData, boolean sippedChange, boolean receivedChanged);
 }

@@ -19,6 +19,8 @@ public interface Strings {
 	String average = "average";
 	String between = "between";
 	String bpm = "bpm";
+    String bulkEditSampleReceived = "bulkEditSampleReceived";
+    String bulkEditSampleShipped = "bulkEditSampleShipped";
 	String by = "by";
 	String checkboxSetTickAnAnswerForAll = "checkboxSetTickAnAnswerForAll";
 	String classificationAllOf = "classificationAllOf";
@@ -1208,6 +1210,7 @@ public interface Strings {
 	String messageRegionsDearchived = "messageRegionsDearchived";
 	String messageRelatedSampleAndLabMessagesFound = "messageRelatedSampleAndLabMessagesFound";
 	String messageRelatedSampleFound = "messageRelatedSampleFound";
+    String messageSampleEdited = "messageSampleEdited";
 	String messageSampleErrors = "messageSampleErrors";
 	String messageSampleOpened = "messageSampleOpened";
 	String messageSampleSaved = "messageSampleSaved";

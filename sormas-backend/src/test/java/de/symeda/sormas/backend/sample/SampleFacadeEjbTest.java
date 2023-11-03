@@ -68,6 +68,7 @@ import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.infrastructure.district.DistrictReferenceDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
+import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.infrastructure.region.RegionReferenceDto;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.sample.AdditionalTestDto;
@@ -76,12 +77,14 @@ import de.symeda.sormas.api.sample.PathogenTestDto;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
 import de.symeda.sormas.api.sample.PathogenTestType;
 import de.symeda.sormas.api.sample.SampleAssociationType;
+import de.symeda.sormas.api.sample.SampleBulkEditData;
 import de.symeda.sormas.api.sample.SampleCriteria;
 import de.symeda.sormas.api.sample.SampleDto;
 import de.symeda.sormas.api.sample.SampleIndexDto;
 import de.symeda.sormas.api.sample.SampleMaterial;
 import de.symeda.sormas.api.sample.SamplePurpose;
 import de.symeda.sormas.api.sample.SampleSimilarityCriteria;
+import de.symeda.sormas.api.sample.SpecimenCondition;
 import de.symeda.sormas.api.user.DefaultUserRole;
 import de.symeda.sormas.api.user.UserDto;
 import de.symeda.sormas.api.utils.DataHelper;
@@ -1095,6 +1098,41 @@ public class SampleFacadeEjbTest extends AbstractBeanTest {
 
 		Boolean editable = getSampleFacade().isEditAllowed(sample.getUuid());
 		assertTrue(editable);
+	}
+
+	@Test
+	public void testSaveBulkSample() {
+		RDCF rdcf = creator.createRDCF("Region", "District", "Community", "Facility");
+		UserDto user = creator.createUser(rdcf, creator.getUserRoleReference(DefaultUserRole.LAB_USER));
+		PersonDto person = creator.createPerson("New", "Person");
+		CaseDataDto caze = creator.createCase(user.toReference(), person.toReference(), rdcf);
+		FacilityDto facilityDto = creator.createFacility("Lab Facility", rdcf.region, rdcf.district, rdcf.community, FacilityType.LABORATORY);
+		SampleDto sampleDto1 = creator.createSample(caze.toReference(), user.toReference(), facilityDto.toReference());
+		sampleDto1.setShipped(false);
+		SampleDto sampleDto2 = creator.createSample(caze.toReference(), user.toReference(), facilityDto.toReference());
+		sampleDto2.setShipped(false);
+		SampleBulkEditData sampleBulkEditData = new SampleBulkEditData();
+		sampleBulkEditData.setShipped(true);
+		sampleBulkEditData.setShipmentDate(new Date());
+		sampleBulkEditData.setShipmentDetails("Test");
+		sampleBulkEditData.setReceived(true);
+		sampleBulkEditData.setReceivedDate(new Date());
+		sampleBulkEditData.setSpecimenCondition(SpecimenCondition.NOT_ADEQUATE);
+		sampleBulkEditData.setNoTestPossibleReason("Not possible");
+		Integer changed = getSampleFacade().saveBulkSample(List.of(sampleDto1.getUuid(), sampleDto2.getUuid()), sampleBulkEditData, true, true);
+		assertThat(changed, is(2));
+
+		SampleDto updateSampeDto1 = getSampleFacade().getSampleByUuid(sampleDto1.getUuid());
+		assertEquals(updateSampeDto1.isShipped(), sampleBulkEditData.isShipped());
+		assertEquals(sampleBulkEditData.getShipmentDetails(), updateSampeDto1.getShipmentDetails());
+		assertEquals(sampleBulkEditData.getShipmentDate(), updateSampeDto1.getShipmentDate());
+		assertEquals(sampleBulkEditData.isReceived(), updateSampeDto1.isReceived());
+		assertEquals(sampleBulkEditData.getReceivedDate(), updateSampeDto1.getReceivedDate());
+		assertEquals(sampleBulkEditData.getSpecimenCondition(), updateSampeDto1.getSpecimenCondition());
+		assertEquals(sampleBulkEditData.getNoTestPossibleReason(), updateSampeDto1.getNoTestPossibleReason());
+
+		SampleDto updateSampeDto2 = getSampleFacade().getSampleByUuid(sampleDto2.getUuid());
+		assertEquals(sampleBulkEditData.isShipped(), updateSampeDto2.isShipped());
 	}
 
 }
