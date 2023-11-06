@@ -14,7 +14,7 @@ public interface NepalFormFilterConstance {
              PathogenTestType.RAPID_TEST,
              PathogenTestType.ANTIBODY_DETECTION,
              PathogenTestType.IGM_SERUM_ANTIBODY,
-             PathogenTestType.IGG_SERUM_ANTIBODY,
+             PathogenTestType.IGM_SERUM_ANTIBODY,
              PathogenTestType.MICROSCOPY,
              PathogenTestType.RDT};
      Set<PathogenTestType> pathogenTestTypeToShow = new HashSet<>(Arrays.asList(pathogenTestTypeToShowArray));

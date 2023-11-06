@@ -17,45 +17,61 @@
  *******************************************************************************/
 package de.symeda.sormas.api.sample;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.api.utils.Diseases;
+import de.symeda.sormas.api.utils.HideForCountries;
 
 public enum PathogenTestType {
 	PCR_RT_PCR,
 	RAPID_TEST,
 	ANTIBODY_DETECTION,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	ANTIGEN_DETECTION,
 	CULTURE,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	HISTOPATHOLOGY,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	ISOLATION,
 	IGM_SERUM_ANTIBODY,
 	IGG_SERUM_ANTIBODY,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	IGA_SERUM_ANTIBODY,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	INCUBATION_TIME,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	INDIRECT_FLUORESCENT_ANTIBODY,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	DIRECT_FLUORESCENT_ANTIBODY,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
 	MICROSCOPY,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	NEUTRALIZING_ANTIBODIES,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	GRAM_STAIN,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	LATEX_AGGLUTINATION,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	CQ_VALUE_DETECTION,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	SEQUENCING,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	DNA_MICROARRAY,
 	RDT,
+	@HideForCountries(countries = {CountryHelper.COUNTRY_CODE_NEPAL})
 	WIDAL,
 	MULTIPLEX_RT_PCR,
 	OTHER;
