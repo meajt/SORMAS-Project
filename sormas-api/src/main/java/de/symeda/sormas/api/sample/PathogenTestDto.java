@@ -28,6 +28,7 @@ import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
+import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 import de.symeda.sormas.api.sormastosormas.S2SIgnoreProperty;
 import de.symeda.sormas.api.sormastosormas.SormasToSormasConfig;
 import de.symeda.sormas.api.user.UserDto;
@@ -36,6 +37,7 @@ import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.api.utils.DateFormatHelper;
 import de.symeda.sormas.api.utils.DependingOnFeatureType;
 import de.symeda.sormas.api.utils.FieldConstraints;
+import de.symeda.sormas.api.utils.HideForCountries;
 import de.symeda.sormas.api.utils.HideForCountriesExcept;
 import de.symeda.sormas.api.utils.Required;
 import de.symeda.sormas.api.utils.SensitiveData;
@@ -128,12 +130,14 @@ public class PathogenTestDto extends PseudonymizableDto {
 	@HideForCountriesExcept(countries = CountryHelper.COUNTRY_CODE_GERMANY)
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_DEFAULT, message = Validations.textTooLong)
 	private String externalOrderId;
+	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	private Boolean preliminary;
 
 	private boolean deleted;
 	private DeletionReason deletionReason;
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String otherDeletionReason;
+	private MultiplexPathogenTestDiseaseDto multiplexPathogenTestDiseaseDto;
 
 	public static PathogenTestDto build(SampleDto sample, UserDto currentUser) {
 
@@ -395,5 +399,13 @@ public class PathogenTestDto extends PseudonymizableDto {
 	@Override
 	public PathogenTestDto clone() throws CloneNotSupportedException {
 		return (PathogenTestDto) super.clone();
+	}
+
+	public MultiplexPathogenTestDiseaseDto getMultiplexPathogenTestDiseaseDto() {
+		return multiplexPathogenTestDiseaseDto;
+	}
+
+	public void setMultiplexPathogenTestDiseaseDto(MultiplexPathogenTestDiseaseDto multiplexPathogenTestDiseaseDto) {
+		this.multiplexPathogenTestDiseaseDto = multiplexPathogenTestDiseaseDto;
 	}
 }

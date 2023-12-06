@@ -62,6 +62,7 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 	private static final long serialVersionUID = -1218707278398543154L;
 
 	private static final String PATHOGEN_TEST_HEADING_LOC = "pathogenTestHeadingLoc";
+	private static final String MULTIPLEX_DISEASE_FROM = "multiplexDiseaseFrom";
 
 	//@formatter:off
 	private static final String HTML_LAYOUT =
@@ -76,6 +77,7 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			fluidRowLocs(PathogenTestDto.TEST_DATE_TIME, PathogenTestDto.LAB) +
 			fluidRowLocs("", PathogenTestDto.LAB_DETAILS) +
 			fluidRowLocs(PathogenTestDto.TEST_RESULT, PathogenTestDto.TEST_RESULT_VERIFIED) +
+			loc(MULTIPLEX_DISEASE_FROM) +
 			fluidRowLocs(PathogenTestDto.PRELIMINARY, "") +
 			fluidRowLocs(PathogenTestDto.FOUR_FOLD_INCREASE_ANTIBODY_TITER, "") +
 			fluidRowLocs(PathogenTestDto.SEROTYPE, "") + 
@@ -184,13 +186,14 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 
 		addField(PathogenTestDto.DELETION_REASON);
 		addField(PathogenTestDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
+		var multipleVeticalLayout = new VerticalLayout();
+		getContent().addComponent(multipleVeticalLayout, MULTIPLEX_DISEASE_FROM);
 		setVisible(false, PathogenTestDto.DELETION_REASON, PathogenTestDto.OTHER_DELETION_REASON);
 
 		initializeAccessAndAllowedAccesses();
 		initializeVisibilitiesAndAllowedVisibilities();
-
+		multipleVeticalLayout.setVisible(false);
 		pcrTestSpecification.setVisible(false);
-
 		Map<Object, List<Object>> pcrTestSpecificationVisibilityDependencies = new HashMap<Object, List<Object>>() {
 
 			{
@@ -286,7 +289,16 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 
 		testTypeField.addValueChangeListener(e -> {
 			PathogenTestType testType = (PathogenTestType) e.getProperty().getValue();
-			if ((testType == PathogenTestType.PCR_RT_PCR && testResultField.getValue() == PathogenTestResultType.POSITIVE)
+			if(testType == PathogenTestType.MULTIPLEX_RT_PCR) {
+				multipleVeticalLayout.setVisible(true);
+				setVisible(false, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
+				addMultiplexRow(multipleVeticalLayout);
+			} else {
+				multipleVeticalLayout.setVisible(false);
+				setVisible(true, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
+			}
+
+			 if ((testType == PathogenTestType.PCR_RT_PCR && testResultField.getValue() == PathogenTestResultType.POSITIVE)
 				|| testType == PathogenTestType.CQ_VALUE_DETECTION) {
 				cqValueField.setVisible(true);
 			} else {
@@ -310,6 +322,19 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			setRequired(true, PathogenTestDto.LAB);
 		}
 		setRequired(true, PathogenTestDto.TEST_TYPE, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
+	}
+
+	private void addMultiplexRow(final VerticalLayout layout) {
+		layout.removeAllComponents();
+
+		var infAForm = new MultiplexPathogenTestDiseaseForm(Disease.INFLUENZA_A);
+		layout.addComponent(infAForm);
+
+		var infBForm = new MultiplexPathogenTestDiseaseForm(Disease.INFLUENZA_B);
+		layout.addComponent(infBForm);
+
+		var sarCovForm = new MultiplexPathogenTestDiseaseForm(Disease.SARS_COV2);
+		layout.addComponent(sarCovForm);
 	}
 
 	@Override
