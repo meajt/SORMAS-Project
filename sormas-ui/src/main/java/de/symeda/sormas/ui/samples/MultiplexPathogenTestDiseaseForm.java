@@ -18,10 +18,9 @@ public class MultiplexPathogenTestDiseaseForm extends AbstractEditForm<Multiplex
 
 	//@formatter:off
     private static final String  HTML_LAYOUT = fluidRowLocs(MultiplexPathogenTestDiseaseDto.TESTED_DISEASE, MultiplexPathogenTestDiseaseDto.TEST_RESULT)
-                         + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_A_CT_VALUE)
-						 + fluidRowLocs( MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT)
-                         + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT)
-						 + fluidRowLocs( MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT);
+                         + fluidRowLocs( MultiplexPathogenTestDiseaseDto.CQ_VALUE)
+						 + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT)
+						 + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT);
     //@formatter:on
 	private Disease disease;
 
@@ -45,31 +44,37 @@ public class MultiplexPathogenTestDiseaseForm extends AbstractEditForm<Multiplex
 		addFields(
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT,
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT,
-			MultiplexPathogenTestDiseaseDto.INFLUENZA_A_CT_VALUE,
-			MultiplexPathogenTestDiseaseDto.INFLUENZA_B_CT_VALUE);
-		diseaseCombox.setValue(disease);
+			MultiplexPathogenTestDiseaseDto.CQ_VALUE);
 		diseaseCombox.setEnabled(false);
 		setVisible(
 			false,
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT,
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT,
-			MultiplexPathogenTestDiseaseDto.INFLUENZA_A_CT_VALUE,
-			MultiplexPathogenTestDiseaseDto.INFLUENZA_B_CT_VALUE);
-		if (disease == Disease.INFLUENZA_A) {
+			MultiplexPathogenTestDiseaseDto.CQ_VALUE);
+		setRequired(true, MultiplexPathogenTestDiseaseDto.TESTED_DISEASE, MultiplexPathogenTestDiseaseDto.TEST_RESULT);
+		if (List.of(Disease.INFLUENZA_A, Disease.INFLUENZA_B, Disease.CORONAVIRUS).contains(disease)) {
 			FieldHelper.setVisibleWhen(
 				getFieldGroup(),
-				List.of(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_A_CT_VALUE),
+				List.of(MultiplexPathogenTestDiseaseDto.CQ_VALUE),
 				MultiplexPathogenTestDiseaseDto.TEST_RESULT,
 				PathogenTestResultType.POSITIVE,
 				true);
 		}
+		if (disease == Disease.INFLUENZA_A) {
+			FieldHelper.setVisibleWhen(
+					getFieldGroup(),
+					List.of(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT),
+					MultiplexPathogenTestDiseaseDto.TEST_RESULT,
+					PathogenTestResultType.POSITIVE,
+					true);
+		}
 		if (disease == Disease.INFLUENZA_B) {
 			FieldHelper.setVisibleWhen(
-				getFieldGroup(),
-				List.of(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_B_CT_VALUE),
-				MultiplexPathogenTestDiseaseDto.TEST_RESULT,
-				PathogenTestResultType.POSITIVE,
-				true);
+					getFieldGroup(),
+					List.of(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT),
+					MultiplexPathogenTestDiseaseDto.TEST_RESULT,
+					PathogenTestResultType.POSITIVE,
+					true);
 		}
 		FieldHelper.setVisibleWhen(
 			getFieldGroup(),

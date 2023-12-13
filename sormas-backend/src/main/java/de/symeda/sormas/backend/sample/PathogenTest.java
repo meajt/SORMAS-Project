@@ -40,6 +40,9 @@ import de.symeda.sormas.api.sample.PCRTestSpecification;
 import de.symeda.sormas.api.sample.PathogenTestReferenceDto;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
 import de.symeda.sormas.api.sample.PathogenTestType;
+import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaAPathogenTestResult;
+import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaBPathogenTestResult;
+import de.symeda.sormas.api.utils.FieldConstraints;
 import de.symeda.sormas.backend.common.DeletableAdo;
 import de.symeda.sormas.backend.disease.DiseaseVariantConverter;
 import de.symeda.sormas.backend.infrastructure.facility.Facility;
@@ -98,6 +101,11 @@ public class PathogenTest extends DeletableAdo {
 	private String externalId;
 	private String externalOrderId;
 	private Boolean preliminary;
+
+	private InfluenzaAPathogenTestResult influenzaATestResult;
+	private String influenzaAOtherTestResult;
+	private InfluenzaBPathogenTestResult influenzaBTestResult;
+	private String influenzaBOtherTestResult;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
@@ -320,6 +328,42 @@ public class PathogenTest extends DeletableAdo {
 
 	public void setPreliminary(Boolean preliminary) {
 		this.preliminary = preliminary;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public InfluenzaAPathogenTestResult getInfluenzaATestResult() {
+		return influenzaATestResult;
+	}
+
+	public void setInfluenzaATestResult(InfluenzaAPathogenTestResult influenzaATestResult) {
+		this.influenzaATestResult = influenzaATestResult;
+	}
+
+	@Column(length = FieldConstraints.CHARACTER_LIMIT_SMALL)
+	public String getInfluenzaAOtherTestResult() {
+		return influenzaAOtherTestResult;
+	}
+
+	public void setInfluenzaAOtherTestResult(String influenzaAOtherTestResult) {
+		this.influenzaAOtherTestResult = influenzaAOtherTestResult;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public InfluenzaBPathogenTestResult getInfluenzaBTestResult() {
+		return influenzaBTestResult;
+	}
+
+	public void setInfluenzaBTestResult(InfluenzaBPathogenTestResult influenzaBTestResult) {
+		this.influenzaBTestResult = influenzaBTestResult;
+	}
+
+	@Column(length = FieldConstraints.CHARACTER_LIMIT_SMALL)
+	public String getInfluenzaBOtherTestResult() {
+		return influenzaBOtherTestResult;
+	}
+
+	public void setInfluenzaBOtherTestResult(String influenzaBOtherTestResult) {
+		this.influenzaBOtherTestResult = influenzaBOtherTestResult;
 	}
 
 	public PathogenTestReferenceDto toReference() {

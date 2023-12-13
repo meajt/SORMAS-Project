@@ -400,6 +400,10 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
 
+		target.setInfluenzaATestResult(source.getInfluenzaATestResult());
+		target.setInfluenzaAOtherTestResult(source.getInfluenzaAOtherTestResult());
+		target.setInfluenzaBTestResult(source.getInfluenzaBTestResult());
+		target.setInfluenzaBOtherTestResult(source.getInfluenzaBOtherTestResult());
 		return target;
 	}
 
@@ -469,6 +473,10 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 		target.setDeletionReason(source.getDeletionReason());
 		target.setOtherDeletionReason(source.getOtherDeletionReason());
 
+		target.setInfluenzaATestResult(source.getInfluenzaATestResult());
+		target.setInfluenzaAOtherTestResult(source.getInfluenzaAOtherTestResult());
+		target.setInfluenzaBTestResult(source.getInfluenzaBTestResult());
+		target.setInfluenzaBOtherTestResult(source.getInfluenzaBOtherTestResult());
 		return target;
 	}
 

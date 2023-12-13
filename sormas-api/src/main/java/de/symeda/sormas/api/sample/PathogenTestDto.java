@@ -15,7 +15,9 @@
 package de.symeda.sormas.api.sample;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +30,8 @@ import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.feature.FeatureType;
 import de.symeda.sormas.api.i18n.Validations;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
+import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaAPathogenTestResult;
+import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaBPathogenTestResult;
 import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 import de.symeda.sormas.api.sormastosormas.S2SIgnoreProperty;
 import de.symeda.sormas.api.sormastosormas.SormasToSormasConfig;
@@ -78,6 +82,11 @@ public class PathogenTestDto extends PseudonymizableDto {
 	public static final String PRELIMINARY = "preliminary";
 	public static final String DELETION_REASON = "deletionReason";
 	public static final String OTHER_DELETION_REASON = "otherDeletionReason";
+	public static final String INFLUENZA_A_TEST_RESULT = "influenzaATestResult";
+	public static final String INFLUENZA_A_OTHER_TEST_RESULT = "influenzaAOtherTestResult";
+
+	public static final String INFLUENZA_B_TEST_RESULT = "influenzaBTestResult";
+	public static final String INFLUENZA_B_OTHER_TEST_RESULT = "influenzaBOtherTestResult";
 
 	@Required
 	private SampleReferenceDto sample;
@@ -137,7 +146,11 @@ public class PathogenTestDto extends PseudonymizableDto {
 	private DeletionReason deletionReason;
 	@Size(max = FieldConstraints.CHARACTER_LIMIT_TEXT, message = Validations.textTooLong)
 	private String otherDeletionReason;
-	private MultiplexPathogenTestDiseaseDto multiplexPathogenTestDiseaseDto;
+	private InfluenzaAPathogenTestResult influenzaATestResult;
+	private String influenzaAOtherTestResult;
+	private InfluenzaBPathogenTestResult influenzaBTestResult;
+	private String influenzaBOtherTestResult;
+	private List<MultiplexPathogenTestDiseaseDto> multiplexPathogenTestDiseaseDtos;
 
 	public static PathogenTestDto build(SampleDto sample, UserDto currentUser) {
 
@@ -401,11 +414,43 @@ public class PathogenTestDto extends PseudonymizableDto {
 		return (PathogenTestDto) super.clone();
 	}
 
-	public MultiplexPathogenTestDiseaseDto getMultiplexPathogenTestDiseaseDto() {
-		return multiplexPathogenTestDiseaseDto;
+	public List<MultiplexPathogenTestDiseaseDto> getMultiplexPathogenTestDiseaseDtos() {
+		return multiplexPathogenTestDiseaseDtos;
 	}
 
-	public void setMultiplexPathogenTestDiseaseDto(MultiplexPathogenTestDiseaseDto multiplexPathogenTestDiseaseDto) {
-		this.multiplexPathogenTestDiseaseDto = multiplexPathogenTestDiseaseDto;
+	public void setMultiplexPathogenTestDiseaseDtos(List<MultiplexPathogenTestDiseaseDto> multiplexPathogenTestDiseaseDtos) {
+		this.multiplexPathogenTestDiseaseDtos = multiplexPathogenTestDiseaseDtos;
+	}
+
+	public InfluenzaAPathogenTestResult getInfluenzaATestResult() {
+		return influenzaATestResult;
+	}
+
+	public void setInfluenzaATestResult(InfluenzaAPathogenTestResult influenzaATestResult) {
+		this.influenzaATestResult = influenzaATestResult;
+	}
+
+	public String getInfluenzaAOtherTestResult() {
+		return influenzaAOtherTestResult;
+	}
+
+	public void setInfluenzaAOtherTestResult(String influenzaAOtherTestResult) {
+		this.influenzaAOtherTestResult = influenzaAOtherTestResult;
+	}
+
+	public InfluenzaBPathogenTestResult getInfluenzaBTestResult() {
+		return influenzaBTestResult;
+	}
+
+	public void setInfluenzaBTestResult(InfluenzaBPathogenTestResult influenzaBTestResult) {
+		this.influenzaBTestResult = influenzaBTestResult;
+	}
+
+	public String getInfluenzaBOtherTestResult() {
+		return influenzaBOtherTestResult;
+	}
+
+	public void setInfluenzaBOtherTestResult(String influenzaBOtherTestResult) {
+		this.influenzaBOtherTestResult = influenzaBOtherTestResult;
 	}
 }
