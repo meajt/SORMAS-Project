@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.v7.data.Property;
@@ -33,7 +32,6 @@ import de.symeda.sormas.api.caze.CaseDataDto;
 import de.symeda.sormas.api.caze.CaseReferenceDto;
 import de.symeda.sormas.api.contact.ContactReferenceDto;
 import de.symeda.sormas.api.feature.FeatureType;
-import de.symeda.sormas.api.formfilter.NepalFormFilterConstance;
 import de.symeda.sormas.api.i18n.Descriptions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
@@ -170,7 +168,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 
 		ComboBox testResultField = addField(SampleDto.PATHOGEN_TEST_RESULT, ComboBox.class);
 		testResultField.removeItem(PathogenTestResultType.NOT_DONE);
-
+		testResultField.setVisible(fieldVisibilityCheckers.isVisible(SampleDto.class, SampleDto.PATHOGEN_TEST_RESULT));
 		addFields(SampleDto.SAMPLING_REASON, SampleDto.SAMPLING_REASON_DETAILS);
 		FieldHelper.setVisibleWhen(
 			getFieldGroup(),
@@ -182,7 +180,6 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		addField(SampleDto.DELETION_REASON);
 		addField(SampleDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
 		setVisible(false, SampleDto.DELETION_REASON, SampleDto.OTHER_DELETION_REASON);
-		initializeVisibilitiesAndAllowedVisibilities();
 	}
 
 	protected void defaultValueChangeListener() {
@@ -384,7 +381,7 @@ public abstract class AbstractSampleForm extends AbstractEditForm<SampleDto> {
 		CssStyles.style(requestedPathogenTestsField, CssStyles.OPTIONGROUP_CHECKBOXES_HORIZONTAL);
 		requestedPathogenTestsField.setMultiSelect(true);
 		requestedPathogenTestsField.addItems(
-				Arrays.stream(NepalFormFilterConstance.pathogenTestTypeToShowArray)
+				Arrays.stream(PathogenTestType.values())
 						.filter( c -> fieldVisibilityCheckers.isVisible(PathogenTestType.class, c.name()))
 						.collect(Collectors.toList()));
 		requestedPathogenTestsField.removeItem(PathogenTestType.OTHER);

@@ -20,6 +20,7 @@ package de.symeda.sormas.ui.samples;
 import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
 import static java.util.Objects.isNull;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,7 +48,10 @@ import de.symeda.sormas.api.event.EventParticipantReferenceDto;
 import de.symeda.sormas.api.i18n.Captions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
 import de.symeda.sormas.api.sample.*;
+import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.ui.ControllerProvider;
@@ -75,7 +79,7 @@ public class PathogenTestController {
 	}
 
 	public void addPathogenTestFromAboveButton(CommitDiscardWrapperComponent<PathogenTestForm> editForm, SampleDto sampleDto) {
-		Button addMoreButton = new Button("Copy From Main");
+		Button addMoreButton = new Button(I18nProperties.getCaption(Captions.copyFromMain));
 		editForm.getButtonsPanel().addComponent(addMoreButton, 0);
 		PathogenTestDto mainPathogenTestDto = editForm.getWrappedComponent().getValue();
 		addMoreButton.addClickListener(e -> {
@@ -99,7 +103,9 @@ public class PathogenTestController {
 		pathogenTestForm.setValue(pathogenTestDto);
 		CommitDiscardWrapperComponent.CommitListener savePathogenTest = () -> {
 			pathogenTestForm.commit();
-			ControllerProvider.getPathogenTestController().savePathogenTest(pathogenTestForm.getValue(), null, true, true);
+			PathogenTestDto value = pathogenTestForm.getValue();
+			value.setMultiplexPathogenTestDiseaseDtos(pathogenTestForm.multiplexValues());
+			savePathogenTest(value, null, true, true);
 		};
 		editForm.addCommitListener(savePathogenTest);
 		CollapsiblePathogenTestForm collapsibleForm =
@@ -123,7 +129,9 @@ public class PathogenTestController {
 
 		editView.addCommitListener(() -> {
 			if (!createForm.getFieldGroup().isModified()) {
-				savePathogenTest(createForm.getValue(), onSavedPathogenTest, false, suppressNavigateToCase);
+				PathogenTestDto value = createForm.getValue();
+				value.setMultiplexPathogenTestDiseaseDtos(createForm.multiplexValues());
+				savePathogenTest(value, onSavedPathogenTest, false, suppressNavigateToCase);
 				SormasUI.refreshView();
 			}
 		});
@@ -176,7 +184,9 @@ public class PathogenTestController {
 		if (isEditAllowed) {
 			editView.addCommitListener(() -> {
 				if (!form.getFieldGroup().isModified()) {
-					savePathogenTest(form.getValue(), onSavedPathogenTest, false, false);
+					PathogenTestDto value = form.getValue();
+					value.setMultiplexPathogenTestDiseaseDtos(form.multiplexValues());
+					savePathogenTest(value, onSavedPathogenTest, false, false);
 					doneCallback.run();
 					SormasUI.refreshView();
 				}
@@ -230,21 +240,24 @@ public class PathogenTestController {
 		BiConsumer<PathogenTestDto, Runnable> onSavedPathogenTest,
 		boolean suppressSampleResultUpdatePopup,
 		boolean suppressNavigateToCase) {
-
-		PathogenTestDto savedDto = facade.savePathogenTest(dto);
-		final SampleDto sample = FacadeProvider.getSampleFacade().getSampleByUuid(dto.getSample().getUuid());
-		final CaseReferenceDto associatedCase = sample.getAssociatedCase();
-		final ContactReferenceDto associatedContact = sample.getAssociatedContact();
-		final EventParticipantReferenceDto associatedEventParticipant = sample.getAssociatedEventParticipant();
-		if (associatedContact != null) {
-			handleAssociatedContact(dto, onSavedPathogenTest, associatedContact, suppressSampleResultUpdatePopup);
-		} else if (associatedEventParticipant != null) {
-			handleAssociatedEventParticipant(dto, onSavedPathogenTest, associatedEventParticipant, suppressSampleResultUpdatePopup);
-		} else if (associatedCase != null) {
-			handleAssociatedCase(dto, onSavedPathogenTest, associatedCase, suppressSampleResultUpdatePopup, suppressNavigateToCase);
+		List<PathogenTestDto> pathogenTestDtos = FacadeProvider.getPathogenTestFacade().extractPathogenTestFromMultiplex(dto);
+		PathogenTestDto lastSaveDto = null;
+		for (PathogenTestDto paDto : pathogenTestDtos) {
+			lastSaveDto = facade.savePathogenTest(paDto);
+			final SampleDto sample = FacadeProvider.getSampleFacade().getSampleByUuid(paDto.getSample().getUuid());
+			final CaseReferenceDto associatedCase = sample.getAssociatedCase();
+			final ContactReferenceDto associatedContact = sample.getAssociatedContact();
+			final EventParticipantReferenceDto associatedEventParticipant = sample.getAssociatedEventParticipant();
+			if (associatedContact != null) {
+				handleAssociatedContact(paDto, onSavedPathogenTest, associatedContact, suppressSampleResultUpdatePopup);
+			} else if (associatedEventParticipant != null) {
+				handleAssociatedEventParticipant(paDto, onSavedPathogenTest, associatedEventParticipant, suppressSampleResultUpdatePopup);
+			} else if (associatedCase != null) {
+				handleAssociatedCase(paDto, onSavedPathogenTest, associatedCase, suppressSampleResultUpdatePopup, suppressNavigateToCase);
+			}
 		}
 		Notification.show(I18nProperties.getString(Strings.messagePathogenTestSavedShort), TRAY_NOTIFICATION);
-		return savedDto;
+		return lastSaveDto;
 	}
 
 	private void handleAssociatedCase(
@@ -554,7 +567,7 @@ public class PathogenTestController {
 			800,
 			confirmed -> {
 				if (confirmed) {
-					existingCaseDto.setCaseClassification(CaseClassification.NOT_CLASSIFIED);
+					existingCaseDto.setCaseClassification(CaseClassification.CONFIRMED);
 					existingCaseDto.setClassificationUser(null);
 					existingCaseDto.setDisease(disease);
 					existingCaseDto.setDiseaseDetails(diseaseDetails);

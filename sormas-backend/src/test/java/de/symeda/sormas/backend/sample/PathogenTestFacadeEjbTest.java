@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
+import de.symeda.sormas.api.utils.DataHelper;
 import org.junit.jupiter.api.Test;
 
 import de.symeda.sormas.api.Disease;
@@ -112,6 +114,22 @@ public class PathogenTestFacadeEjbTest extends AbstractBeanTest {
 		final PathogenTestDto newPathogenTest = creator.buildPathogenTestDto(rdcf, user, sample, caseConvertedFromContact.getDisease(), testDateTime);
 
 		testSaveAndUpdatePathogenTest(newPathogenTest);
+	}
+
+	@Test
+	public void extractPathogenTestFromMultiplexTest() {
+		MultiplexPathogenTestDiseaseDto multiplex = new MultiplexPathogenTestDiseaseDto();
+		multiplex.setTestedDisease(Disease.CORONAVIRUS);
+		multiplex.setTestResult(PathogenTestResultType.POSITIVE);
+
+		MultiplexPathogenTestDiseaseDto multiplex1 = new MultiplexPathogenTestDiseaseDto();
+		multiplex1.setTestedDisease(Disease.INFLUENZA_A);
+		multiplex1.setTestResult(PathogenTestResultType.POSITIVE);
+		PathogenTestDto pathogenTestDto = new PathogenTestDto();
+		pathogenTestDto.setUuid(DataHelper.createUuid());
+		pathogenTestDto.setMultiplexPathogenTestDiseaseDtos(List.of(multiplex, multiplex1));
+		List<PathogenTestDto> resultPathogenTest = getPathogenTestFacade().extractPathogenTestFromMultiplex(pathogenTestDto);
+		assertEquals(2, resultPathogenTest.size());
 	}
 
 	private void testSaveAndUpdatePathogenTest(PathogenTestDto newPathogenTest) {
