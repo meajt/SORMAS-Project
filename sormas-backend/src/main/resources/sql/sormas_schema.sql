@@ -12629,5 +12629,13 @@ ALTER TABLE clinicalvisit ADD COLUMN treatmentGiven varchar(255);
 
 INSERT INTO schema_version (version_number, comment) VALUES (507, 'NEPAL UPDATE FIELD');
 
+ALTER TABLE pathogentest ADD COLUMN influenzaATestResult varchar(255);
+ALTER TABLE pathogentest ADD COLUMN influenzaAOtherTestResult varchar(255);
+ALTER TABLE pathogentest ADD COLUMN influenzaBTestResult varchar(255);
+ALTER TABLE pathogentest ADD COLUMN influenzaBOtherTestResult varchar(255);
+
+INSERT INTO schema_version (version_number, comment) VALUES (508, 'Update pathogen test for influenza disease');
+
+
 
 -- *** Insert new sql commands BEFORE this line. Remember to always consider _history tables. ***

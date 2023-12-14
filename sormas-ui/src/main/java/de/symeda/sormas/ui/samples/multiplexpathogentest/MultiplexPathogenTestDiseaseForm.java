@@ -1,4 +1,4 @@
-package de.symeda.sormas.ui.samples;
+package de.symeda.sormas.ui.samples.multiplexpathogentest;
 
 import static de.symeda.sormas.ui.utils.LayoutUtil.fluidRowLocs;
 

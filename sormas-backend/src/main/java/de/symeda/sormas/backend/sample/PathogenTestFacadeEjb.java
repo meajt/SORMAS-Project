@@ -39,6 +39,8 @@ import javax.validation.constraints.NotNull;
 
 import de.symeda.sormas.api.logger.CustomLoggerFactory;
 import de.symeda.sormas.api.logger.LoggerType;
+import de.symeda.sormas.api.sample.PathogenTestType;
+import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -570,8 +572,6 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 	}
 
 	public PathogenTestDto copyPathogenTest(PathogenTestDto source) {
-		CustomLoggerFactory.getLogger(LoggerType.WEB)
-				.logObj("@copyPathogenTest", source);
 		PathogenTestDto newPathogenTest = PathogenTestDto.build(source.getSample(), source.getLabUser());
 		newPathogenTest.setLab(source.getLab());
 		newPathogenTest.setSample(source.getSample());
@@ -580,6 +580,34 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 		newPathogenTest.setTestResultVerified(source.getTestResultVerified());
 		return newPathogenTest;
 	}
+
+
+	public List<PathogenTestDto> extractPathogenTestFromMultiplex(PathogenTestDto pathogenTestDto) {
+		if (pathogenTestDto.getMultiplexPathogenTestDiseaseDtos().isEmpty()) {
+			return List.of(pathogenTestDto);
+		}
+		try {
+			List<PathogenTestDto> result = new ArrayList<>();
+			for (MultiplexPathogenTestDiseaseDto multiPathDto : pathogenTestDto.getMultiplexPathogenTestDiseaseDtos()) {
+				PathogenTestDto dto = pathogenTestDto.clone();
+				dto.setTestType(PathogenTestType.PCR_RT_PCR);
+				dto.setUuid(DataHelper.createUuid());
+				dto.setTestedDisease(multiPathDto.getTestedDisease());
+				dto.setTestResult(multiPathDto.getTestResult());
+				dto.setInfluenzaATestResult(multiPathDto.getInfluenzaATestResult());
+				dto.setInfluenzaAOtherTestResult(multiPathDto.getInfluenzaAOtherTestResult());
+				dto.setInfluenzaBTestResult(multiPathDto.getInfluenzaBTestResult());
+				dto.setInfluenzaBOtherTestResult(multiPathDto.getInfluenzaBOtherTestResult());
+				dto.setCqValue(multiPathDto.getCqValue());
+				result.add(dto);
+			}
+			return result;
+
+		}catch (CloneNotSupportedException exe) {
+			return List.of(pathogenTestDto);
+		}
+	}
+
 
 	@LocalBean
 	@Stateless

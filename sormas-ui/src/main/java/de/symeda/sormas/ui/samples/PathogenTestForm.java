@@ -33,6 +33,8 @@ import java.util.function.Consumer;
 
 import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaAPathogenTestResult;
 import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaBPathogenTestResult;
+import de.symeda.sormas.ui.samples.multiplexpathogentest.MultiplexPathogenTestDiseaseForm;
+import de.symeda.sormas.ui.samples.multiplexpathogentest.MultiplexPathogenTestForm;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.vaadin.ui.Label;
@@ -91,8 +93,8 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			fluidRowLocs(PathogenTestDto.TEST_DATE_TIME, PathogenTestDto.LAB) +
 			fluidRowLocs("", PathogenTestDto.LAB_DETAILS) +
 			fluidRowLocs(PathogenTestDto.TEST_RESULT, PathogenTestDto.TEST_RESULT_VERIFIED) +
-			fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT) +
-			fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT) +
+			fluidRowLocs(PathogenTestDto.INFLUENZA_A_TEST_RESULT, PathogenTestDto.INFLUENZA_A_OTHER_TEST_RESULT) +
+			fluidRowLocs(PathogenTestDto.INFLUENZA_B_TEST_RESULT, PathogenTestDto.INFLUENZA_B_OTHER_TEST_RESULT) +
 			loc(MULTIPLEX_DISEASE_FROM) +
 			fluidRowLocs(PathogenTestDto.PRELIMINARY, "") +
 			fluidRowLocs(PathogenTestDto.FOUR_FOLD_INCREASE_ANTIBODY_TITER, "") +
@@ -112,8 +114,7 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 	private TextField testTypeTextField;
 	private ComboBox pcrTestSpecification;
 	private TextField typingIdField;
-	private VerticalLayout multiplexVerticalLayout;
-
+	private MultiplexPathogenTestForm multiplexPathogenTestForm;
 	public PathogenTestForm(SampleDto sample, boolean create, int caseSampleCount, boolean isPseudonymized, boolean inJurisdiction) {
 		super(
 			PathogenTestDto.class,
@@ -203,18 +204,18 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 
 		addField(PathogenTestDto.DELETION_REASON);
 		addField(PathogenTestDto.OTHER_DELETION_REASON, TextArea.class).setRows(3);
-		addField(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT, ComboBox.class);
-		addField(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, ComboBox.class);
+		addField(PathogenTestDto.INFLUENZA_A_TEST_RESULT, ComboBox.class);
+		addField(PathogenTestDto.INFLUENZA_B_TEST_RESULT, ComboBox.class);
 		addFields(
-				MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT,
-				MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT);
-		multiplexVerticalLayout = new VerticalLayout();
-		getContent().addComponent(multiplexVerticalLayout, MULTIPLEX_DISEASE_FROM);
+				PathogenTestDto.INFLUENZA_A_OTHER_TEST_RESULT,
+				PathogenTestDto.INFLUENZA_B_OTHER_TEST_RESULT);
+		multiplexPathogenTestForm = new MultiplexPathogenTestForm();
+		getContent().addComponent(multiplexPathogenTestForm, MULTIPLEX_DISEASE_FROM);
 		setVisible(false, PathogenTestDto.DELETION_REASON, PathogenTestDto.OTHER_DELETION_REASON);
 		setVisible(false, PathogenTestDto.INFLUENZA_A_TEST_RESULT, PathogenTestDto.INFLUENZA_B_TEST_RESULT);
 		initializeAccessAndAllowedAccesses();
 		initializeVisibilitiesAndAllowedVisibilities();
-		multiplexVerticalLayout.setVisible(false);
+		multiplexPathogenTestForm.setVisible(false);
 		pcrTestSpecification.setVisible(false);
 		Map<Object, List<Object>> pcrTestSpecificationVisibilityDependencies = new HashMap<Object, List<Object>>() {
 
@@ -262,14 +263,14 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 
 		FieldHelper.setVisibleWhen(
 				getFieldGroup(),
-				MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT,
-				MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT,
+				PathogenTestDto.INFLUENZA_A_OTHER_TEST_RESULT,
+				PathogenTestDto.INFLUENZA_A_TEST_RESULT,
 				InfluenzaAPathogenTestResult.OTHERS,
 				true);
 		FieldHelper.setVisibleWhen(
 				getFieldGroup(),
-				MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT,
-				MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT,
+				PathogenTestDto.INFLUENZA_B_OTHER_TEST_RESULT,
+				PathogenTestDto.INFLUENZA_B_TEST_RESULT,
 				InfluenzaBPathogenTestResult.OTHERS,
 				true);
 
@@ -325,14 +326,18 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 		testTypeField.addValueChangeListener(e -> {
 			PathogenTestType testType = (PathogenTestType) e.getProperty().getValue();
 			if (testType == PathogenTestType.MULTIPLEX_RT_PCR) {
-				multiplexVerticalLayout.setVisible(true);
-				setVisible(false, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
-				setRequired(false, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
-				addMultiplexRow(multiplexVerticalLayout);
+				multiplexPathogenTestForm.setVisible(true);
+				diseaseField.setVisible(false);
+				diseaseField.setRequired(false);
+				testResultField.setVisible(false);
+				testResultField.setRequired(false);
+				multiplexPathogenTestForm.addMultiplexRow();
 			} else {
-				multiplexVerticalLayout.setVisible(false);
-				setVisible(true, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
-				setRequired(true, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
+				multiplexPathogenTestForm.setVisible(false);
+				diseaseField.setVisible(true);
+				diseaseField.setRequired(true);
+				testResultField.setVisible(true);
+				testResultField.setRequired(true);
 			}
 
 			if ((testType == PathogenTestType.PCR_RT_PCR && testResultField.getValue() == PathogenTestResultType.POSITIVE)
@@ -371,48 +376,14 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 		setRequired(true, PathogenTestDto.TEST_TYPE, PathogenTestDto.TESTED_DISEASE, PathogenTestDto.TEST_RESULT);
 	}
 
-	private void addMultiplexRow(final VerticalLayout layout) {
-		layout.removeAllComponents();
-
-		var infAForm = new MultiplexPathogenTestDiseaseForm(Disease.INFLUENZA_A);
-		infAForm.setValue(buildMultiplexPathogenTest(Disease.INFLUENZA_A));
-		layout.addComponent(infAForm);
-
-
-		var infBForm = new MultiplexPathogenTestDiseaseForm(Disease.INFLUENZA_B);
-		infBForm.setValue(buildMultiplexPathogenTest(Disease.INFLUENZA_B));
-		layout.addComponent(infBForm);
-
-		var sarCovForm = new MultiplexPathogenTestDiseaseForm(Disease.CORONAVIRUS);
-		sarCovForm.setValue(buildMultiplexPathogenTest(Disease.CORONAVIRUS));
-		layout.addComponent(sarCovForm);
-	}
-
-	private MultiplexPathogenTestDiseaseDto buildMultiplexPathogenTest(Disease disease) {
-		var dto = new MultiplexPathogenTestDiseaseDto();
-		dto.setTestedDisease(disease);
-		return dto;
-	}
-
 	@Override
 	public void validate() throws Validator.InvalidValueException {
 		super.validate();
-		var totalChild = multiplexVerticalLayout.getComponentCount();
-		for (int i = 0; i < totalChild; i++) {
-			var form = (MultiplexPathogenTestDiseaseForm) multiplexVerticalLayout.getComponent(i);
-			form.validate();
-		}
+		multiplexPathogenTestForm.validate();
 	}
 
 	public List<MultiplexPathogenTestDiseaseDto> multiplexValues() {
-		List<MultiplexPathogenTestDiseaseDto> result = new ArrayList<>();
-		var totalChild = multiplexVerticalLayout.getComponentCount();
-		for (int i = 0; i < totalChild; i++) {
-			var form = (MultiplexPathogenTestDiseaseForm) multiplexVerticalLayout.getComponent(i);
-			form.commit();
-			result.add(form.getValue());
-		}
-		return result;
+		return multiplexPathogenTestForm.multiplexValues();
 	}
 
 	@Override

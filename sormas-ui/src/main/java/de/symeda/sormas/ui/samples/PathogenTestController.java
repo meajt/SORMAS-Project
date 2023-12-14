@@ -79,7 +79,7 @@ public class PathogenTestController {
 	}
 
 	public void addPathogenTestFromAboveButton(CommitDiscardWrapperComponent<PathogenTestForm> editForm, SampleDto sampleDto) {
-		Button addMoreButton = new Button("Copy From Main");
+		Button addMoreButton = new Button(I18nProperties.getCaption(Captions.copyFromMain));
 		editForm.getButtonsPanel().addComponent(addMoreButton, 0);
 		PathogenTestDto mainPathogenTestDto = editForm.getWrappedComponent().getValue();
 		addMoreButton.addClickListener(e -> {
@@ -240,7 +240,7 @@ public class PathogenTestController {
 		BiConsumer<PathogenTestDto, Runnable> onSavedPathogenTest,
 		boolean suppressSampleResultUpdatePopup,
 		boolean suppressNavigateToCase) {
-		List<PathogenTestDto> pathogenTestDtos = extractPathogenTestFromMultiplex(dto);
+		List<PathogenTestDto> pathogenTestDtos = FacadeProvider.getPathogenTestFacade().extractPathogenTestFromMultiplex(dto);
 		PathogenTestDto lastSaveDto = null;
 		for (PathogenTestDto paDto : pathogenTestDtos) {
 			lastSaveDto = facade.savePathogenTest(paDto);
@@ -258,32 +258,6 @@ public class PathogenTestController {
 		}
 		Notification.show(I18nProperties.getString(Strings.messagePathogenTestSavedShort), TRAY_NOTIFICATION);
 		return lastSaveDto;
-	}
-
-	private List<PathogenTestDto> extractPathogenTestFromMultiplex(PathogenTestDto pathogenTestDto) {
-		if (pathogenTestDto.getMultiplexPathogenTestDiseaseDtos().isEmpty()) {
-			return List.of(pathogenTestDto);
-		}
-		try {
-			List<PathogenTestDto> result = new ArrayList<>();
-			for (MultiplexPathogenTestDiseaseDto multiPathDto : pathogenTestDto.getMultiplexPathogenTestDiseaseDtos()) {
-				var dto = pathogenTestDto.clone();
-				dto.setTestType(PathogenTestType.PCR_RT_PCR);
-				dto.setUuid(DataHelper.createUuid());
-				dto.setTestedDisease(multiPathDto.getTestedDisease());
-				dto.setTestResult(multiPathDto.getTestResult());
-				dto.setInfluenzaATestResult(multiPathDto.getInfluenzaATestResult());
-				dto.setInfluenzaAOtherTestResult(multiPathDto.getInfluenzaAOtherTestResult());
-				dto.setInfluenzaBTestResult(multiPathDto.getInfluenzaBTestResult());
-				dto.setInfluenzaBOtherTestResult(multiPathDto.getInfluenzaBOtherTestResult());
-				dto.setCqValue(multiPathDto.getCqValue());
-				result.add(dto);
-			}
-			return result;
-
-		}catch (CloneNotSupportedException exe) {
-			return List.of(pathogenTestDto);
-		}
 	}
 
 	private void handleAssociatedCase(
@@ -593,7 +567,7 @@ public class PathogenTestController {
 			800,
 			confirmed -> {
 				if (confirmed) {
-					existingCaseDto.setCaseClassification(CaseClassification.NOT_CLASSIFIED);
+					existingCaseDto.setCaseClassification(CaseClassification.CONFIRMED);
 					existingCaseDto.setClassificationUser(null);
 					existingCaseDto.setDisease(disease);
 					existingCaseDto.setDiseaseDetails(diseaseDetails);

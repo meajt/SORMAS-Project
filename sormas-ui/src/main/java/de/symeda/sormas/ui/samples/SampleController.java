@@ -234,7 +234,9 @@ public class SampleController {
 
 		// save pathogen test after saving sample
 		CommitDiscardWrapperComponent.CommitListener savePathogenTest = () -> {
-			ControllerProvider.getPathogenTestController().savePathogenTest(pathogenTestForm.getValue(), null, true, true);
+			PathogenTestDto value = pathogenTestForm.getValue();
+			value.setMultiplexPathogenTestDiseaseDtos(pathogenTestForm.multiplexValues());
+			ControllerProvider.getPathogenTestController().savePathogenTest(value, null, true, true);
 			if (callback != null) {
 				callback.run();
 			}

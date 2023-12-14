@@ -49,7 +49,6 @@ public enum Disease
 	RABIES(true, true, true, false, true, 6, true, false, false),
 	ANTHRAX(true, true, true, false, false, 0, true, false, false),
 	CORONAVIRUS(true, true, true, false, true, 14, true, true, true),
-	SARS_COV2(true, true, true, false, true, 14, true, true, true),
 	PNEUMONIA(true, true, true, false, false, 0, true, false, false),
 	MALARIA(true, true, true, true, false, 0, true, false, false),
 	KALAZAR(true, true, true, false, false, 14, true, false, false),
