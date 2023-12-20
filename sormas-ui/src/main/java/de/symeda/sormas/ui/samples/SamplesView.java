@@ -40,6 +40,7 @@ import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.sample.AdditionalTestDto;
+import de.symeda.sormas.api.sample.SampleCaseExportDto;
 import de.symeda.sormas.api.sample.SampleDto;
 import de.symeda.sormas.api.sample.SampleExportDto;
 import de.symeda.sormas.api.sample.SampleIndexDto;
@@ -134,6 +135,44 @@ public class SamplesView extends AbstractView {
 				VaadinIcons.FILE_TEXT,
 				Captions.exportDetailed,
 				Strings.infoDetailedExport);
+
+			StreamResource caseSampleExportStreamResource = DownloadUtil.createCsvExportStreamResource(
+					SampleCaseExportDto.class,
+					null,
+					(Integer start, Integer max) -> FacadeProvider.getSampleFacade()
+							.getSampleCaseExportList(sampleListComponent.getGrid().getCriteria(), this.getSelectedRows(), start, max),
+					(propertyId, type) -> {
+						String caption = I18nProperties.getPrefixCaption(
+								SampleCaseExportDto.I18N_PREFIX,
+								propertyId,
+								I18nProperties.getPrefixCaption(
+										SampleDto.I18N_PREFIX,
+										propertyId,
+										I18nProperties.getPrefixCaption(
+												CaseDataDto.I18N_PREFIX,
+												propertyId,
+												I18nProperties.getPrefixCaption(
+														ContactDto.I18N_PREFIX,
+														propertyId,
+														I18nProperties.getPrefixCaption(
+																PersonDto.I18N_PREFIX,
+																propertyId,
+																I18nProperties.getPrefixCaption(AdditionalTestDto.I18N_PREFIX, propertyId))))));
+						if (Date.class.isAssignableFrom(type)) {
+							caption += " (" + DateFormatHelper.getDateFormatPattern() + ")";
+						}
+						return caption;
+					},
+					ExportEntityName.SAMPLES,
+					null);
+
+			addExportButton(
+					caseSampleExportStreamResource,
+					exportButton,
+					exportLayout,
+					VaadinIcons.FILE_TEXT,
+					Captions.exportLab,
+					Strings.infoDetailedExport);
 		}
 
 		if (UserProvider.getCurrent().hasUserRight(UserRight.PERFORM_BULK_OPERATIONS_CASE_SAMPLES)) {

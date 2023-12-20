@@ -1,13 +1,13 @@
 package de.symeda.sormas.ui.samples.multiplexpathogentest;
 
-import com.vaadin.v7.data.Validator;
-import com.vaadin.v7.ui.VerticalLayout;
-import de.symeda.sormas.api.Disease;
-import de.symeda.sormas.api.sample.PathogenTestType;
-import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.vaadin.v7.data.Validator;
+import com.vaadin.v7.ui.VerticalLayout;
+
+import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 
 public  class MultiplexPathogenTestForm extends VerticalLayout {
     public MultiplexPathogenTestForm() {
@@ -15,8 +15,6 @@ public  class MultiplexPathogenTestForm extends VerticalLayout {
     }
 
     public void addMultiplexRow() {
-        removeAllComponents();
-
         var infAForm = new MultiplexPathogenTestDiseaseForm(Disease.INFLUENZA_A);
         infAForm.setValue(buildMultiplexPathogenTest(Disease.INFLUENZA_A));
         addComponent(infAForm);
@@ -42,6 +40,12 @@ public  class MultiplexPathogenTestForm extends VerticalLayout {
             var form = (MultiplexPathogenTestDiseaseForm) getComponent(i);
             form.validate();
         }
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        removeAllComponents();
+        super.setVisible(visible);
     }
 
     public List<MultiplexPathogenTestDiseaseDto> multiplexValues() {

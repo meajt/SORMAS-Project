@@ -46,6 +46,8 @@ public interface SampleFacade {
 
 	List<SampleExportDto> getExportList(CaseCriteria caseCriteria, Collection<String> selectedRows, int first, int max);
 
+	List<SampleCaseExportDto> getSampleCaseExportList(SampleCriteria criteria, Collection<String> selectedRows, int first, int max);
+
 	long count(SampleCriteria sampleCriteria);
 
 	SampleDto getSampleByUuid(String uuid);

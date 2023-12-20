@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -40,6 +41,7 @@ import de.symeda.sormas.api.contact.ContactDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
 import de.symeda.sormas.api.sample.PathogenTestType;
+import de.symeda.sormas.api.sample.SampleCaseExportDto;
 import de.symeda.sormas.api.sample.SampleCriteria;
 import de.symeda.sormas.api.sample.SampleDto;
 import de.symeda.sormas.api.sample.SampleExportDto;
@@ -47,6 +49,7 @@ import de.symeda.sormas.api.sample.SampleIndexDto;
 import de.symeda.sormas.api.sample.SampleMaterial;
 import de.symeda.sormas.api.user.DefaultUserRole;
 import de.symeda.sormas.api.user.UserDto;
+import de.symeda.sormas.api.utils.CsvStreamUtils;
 import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.backend.AbstractBeanTest;
 import de.symeda.sormas.backend.MockProducer;
@@ -292,6 +295,59 @@ public class SampleFacadeEjbPseudonymizationTest extends AbstractBeanTest {
 		assertThat(export4.getAssociatedContact().getContactName().getFirstName(), is("Confidential"));
 		assertThat(export4.getAssociatedContact().getContactName().getLastName(), is("Confidential"));
 		assertThat(export4.getLab(), is("Lab"));
+	}
+
+	@Test
+	public void getSampleCaseExportListTest() {
+		CaseDataDto caze1 = creator.createCase(user2.toReference(), creator.createPerson("John", "Smith").toReference(), rdcf2);
+		SampleDto sample1 = createCaseSample(caze1, user2);
+		createPathogenTest(sample1, user2);
+
+		CaseDataDto caze2 = creator.createCase(user1.toReference(), creator.createPerson("John", "Smith").toReference(), rdcf1);
+		ContactDto contact1 = creator.createContact(
+				user2.toReference(),
+				null,
+				creator.createPerson("John", "Smith").toReference(),
+				caze2,
+				new Date(),
+				new Date(),
+				Disease.CORONAVIRUS,
+				rdcf2);
+		SampleDto sample2 = createCaseSample(caze2, user1);
+		createPathogenTest(sample2, user1);
+		createPathogenTest(sample2, user1);
+		createPathogenTest(sample2, user1);
+		createPathogenTest(sample2, user1);
+
+		SampleDto sample3 = createContactSample(contact1);
+
+		ContactDto contact2 = creator.createContact(
+				user1.toReference(),
+				null,
+				creator.createPerson("John", "Smith").toReference(),
+				caze2,
+				new Date(),
+				new Date(),
+				Disease.CORONAVIRUS,
+				rdcf1);
+		SampleDto sample4 = createContactSample(contact2);
+		List<SampleCaseExportDto> exportList = getSampleFacade().getSampleCaseExportList(new SampleCriteria(), Collections.emptySet(), 0, 100);
+
+		OutputStream outputStream = new OutputStream() {
+			@Override
+			public void write(int b) {
+
+			}
+		};
+		CsvStreamUtils.writeCsvContentToStream(
+				SampleCaseExportDto.class,
+				(start, max) -> exportList,
+				(name, clss) -> "",
+				null,
+				(a) -> true,
+				getConfigFacade(),
+				outputStream);
+		assertThat(exportList.size(), is(5));
 	}
 
 	private void createPathogenTest(SampleDto sample, UserDto user) {
