@@ -1254,11 +1254,24 @@ public class SampleFacadeEjb implements SampleFacade {
 		return changedSamples;
 	}
 
-	private void updateSampleWithBulkData(
-			SampleBulkEditData updateSampleBulkEditData,
-			SampleDto existingSample,
-			boolean sippedChanged,
-			boolean receivedChanged) {
+	@Override
+	public void updatePathogenTestResult(SampleReferenceDto sampleRef) {
+		List<PathogenTestResultType> pathogenTestTypes = pathogenTestFacade.getDistinctPathogenTestResultBySample(sampleRef);
+		Sample sample = sampleService.getByUuid(sampleRef.getUuid());
+		if (pathogenTestTypes.contains(PathogenTestResultType.POSITIVE)) {
+			sample.setPathogenTestResult(PathogenTestResultType.POSITIVE);
+		} else if (pathogenTestTypes.contains(PathogenTestResultType.NEGATIVE)) {
+			sample.setPathogenTestResult(PathogenTestResultType.NEGATIVE);
+		} else {
+			sample.setPathogenTestResult(PathogenTestResultType.PENDING);
+		}
+		em.persist(sample);
+	}
+
+	private void updateSampleWithBulkData(SampleBulkEditData updateSampleBulkEditData,
+										  SampleDto existingSample,
+										  boolean sippedChanged,
+										  boolean receivedChanged) {
 		if (sippedChanged) {
 			existingSample.setShipped(updateSampleBulkEditData.isShipped());
 			existingSample.setShipmentDate(updateSampleBulkEditData.getShipmentDate());

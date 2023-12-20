@@ -100,9 +100,7 @@ public interface SampleFacade {
 
 	List<DiseaseVariant> getAssociatedDiseaseVariants(String sampleUuid);
 
-	Integer saveBulkSample(
-			List<String> sampleUuids,
-			@Valid SampleBulkEditData updateSampleBulkEditData,
-			boolean sippedChange,
-			boolean receivedChanged);
+	Integer saveBulkSample(List<String> sampleUuids, @Valid SampleBulkEditData updateSampleBulkEditData, boolean sippedChange, boolean receivedChanged);
+
+	void updatePathogenTestResult(SampleReferenceDto sampleRef);
 }

@@ -35,6 +35,8 @@ public interface PathogenTestFacade {
 
 	List<PathogenTestDto> getAllBySample(SampleReferenceDto sampleRef);
 
+	List<PathogenTestResultType> getDistinctPathogenTestResultBySample(SampleReferenceDto sampleRef);
+
 	PathogenTestDto getByUuid(String uuid);
 
 	PathogenTestDto savePathogenTest(@Valid PathogenTestDto dto);

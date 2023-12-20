@@ -256,6 +256,7 @@ public class PathogenTestController {
 				handleAssociatedCase(paDto, onSavedPathogenTest, associatedCase, suppressSampleResultUpdatePopup, suppressNavigateToCase);
 			}
 		}
+		FacadeProvider.getSampleFacade().updatePathogenTestResult(dto.getSample());
 		Notification.show(I18nProperties.getString(Strings.messagePathogenTestSavedShort), TRAY_NOTIFICATION);
 		return lastSaveDto;
 	}

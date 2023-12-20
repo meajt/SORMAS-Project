@@ -32,15 +32,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import de.symeda.sormas.api.logger.CustomLoggerFactory;
-import de.symeda.sormas.api.logger.LoggerType;
-import de.symeda.sormas.api.sample.PathogenTestType;
-import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +50,9 @@ import de.symeda.sormas.api.sample.PathogenTestCriteria;
 import de.symeda.sormas.api.sample.PathogenTestDto;
 import de.symeda.sormas.api.sample.PathogenTestFacade;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
+import de.symeda.sormas.api.sample.PathogenTestType;
 import de.symeda.sormas.api.sample.SampleReferenceDto;
+import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
 import de.symeda.sormas.api.user.NotificationType;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.DataHelper;
@@ -211,6 +210,22 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 	}
 
 	@Override
+	public List<PathogenTestResultType> getDistinctPathogenTestResultBySample(SampleReferenceDto sampleRef) {
+		if (sampleRef == null) {
+			return List.of();
+		}
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PathogenTestResultType> cq = cb.createQuery(PathogenTestResultType.class);
+		Root<PathogenTest> pathogenTestRoot = cq.from(PathogenTest.class);
+		Join<PathogenTest, Sample> sampleJoin = pathogenTestRoot.join(PathogenTest.SAMPLE, JoinType.INNER);
+		cq.distinct(true);
+		cq.select(pathogenTestRoot.get(PathogenTest.TEST_RESULT));
+		Predicate filter = cb.equal(sampleJoin.get(Sample.UUID), sampleRef.getUuid());
+		cq.where(filter);
+		return QueryHelper.getResultList(em, cq, null, null);
+	}
+
+	@Override
 	public List<String> getDeletedUuidsSince(Date since) {
 		User user = userService.getCurrentUser();
 
@@ -232,8 +247,6 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 	}
 
 	public PathogenTestDto savePathogenTest(@Valid PathogenTestDto dto, boolean checkChangeDate, boolean syncShares) {
-		CustomLoggerFactory.getLogger(LoggerType.WEB)
-				.logObj("@savePathogenTest", dto);
 		PathogenTest existingSampleTest = pathogenTestService.getByUuid(dto.getUuid());
 		FacadeHelper.checkCreateAndEditRights(existingSampleTest, userService, UserRight.PATHOGEN_TEST_CREATE, UserRight.PATHOGEN_TEST_EDIT);
 

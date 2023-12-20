@@ -351,23 +351,28 @@ public class SampleFacadeEjbPseudonymizationTest extends AbstractBeanTest {
 	}
 
 	private void createPathogenTest(SampleDto sample, UserDto user) {
+		createPathogenTest(sample, user, PathogenTestResultType.PENDING);
+	}
+
+	private void createPathogenTest(SampleDto sample, UserDto user, PathogenTestResultType resultType) {
 		Date testDateTime = new Date(1591747200000L);//2020-06-10
 		creator.createPathogenTest(
-			sample.toReference(),
-			PathogenTestType.ISOLATION,
-			Disease.CORONAVIRUS,
-			testDateTime,
-			sample.getLab(),
-			user.toReference(),
-			PathogenTestResultType.PENDING,
-			"",
-			true,
-			t -> {
-				t.setLabDetails("Test lab details");
-				t.setTestType(PathogenTestType.OTHER);
-				t.setTestTypeText("Test type text");
-			});
+				sample.toReference(),
+				PathogenTestType.ISOLATION,
+				Disease.CORONAVIRUS,
+				testDateTime,
+				sample.getLab(),
+				user.toReference(),
+				resultType,
+				"",
+				true,
+				t -> {
+					t.setLabDetails("Test lab details");
+					t.setTestType(PathogenTestType.OTHER);
+					t.setTestTypeText("Test type text");
+				});
 	}
+
 
 	@Test
 	public void testPseudonymizeGetAllAfter() {
@@ -458,6 +463,33 @@ public class SampleFacadeEjbPseudonymizationTest extends AbstractBeanTest {
 		assertThat(updatedSample.getReportLatLonAccuracy(), is(20F));
 		assertThat(updatedSample.getLab().getUuid(), is(rdcf2.facility.getUuid()));
 	}
+
+	@Test
+	public void updatePathogenTestResultTest() {
+
+		CaseDataDto caze2 = creator.createCase(user1.toReference(), creator.createPerson("John", "Smith").toReference(), rdcf1);
+		SampleDto sample2 = createCaseSample(caze2, user1);
+
+		createPathogenTest(sample2, user1, PathogenTestResultType.INDETERMINATE);
+		createPathogenTest(sample2, user1, PathogenTestResultType.PENDING);
+		getSampleFacade().updatePathogenTestResult(sample2.toReference());
+		SampleDto resultSampleDto = getSampleFacade().getSampleByUuid(sample2.getUuid());
+		assertThat(resultSampleDto.getPathogenTestResult(), is(PathogenTestResultType.PENDING));
+
+		createPathogenTest(sample2, user1, PathogenTestResultType.NEGATIVE);
+		createPathogenTest(sample2, user1, PathogenTestResultType.PENDING);
+		getSampleFacade().updatePathogenTestResult(sample2.toReference());
+		resultSampleDto = getSampleFacade().getSampleByUuid(sample2.getUuid());
+		assertThat(resultSampleDto.getPathogenTestResult(), is(PathogenTestResultType.NEGATIVE));
+
+		createPathogenTest(sample2, user1, PathogenTestResultType.NEGATIVE);
+		createPathogenTest(sample2, user1, PathogenTestResultType.POSITIVE);
+		getSampleFacade().updatePathogenTestResult(sample2.toReference());
+		resultSampleDto = getSampleFacade().getSampleByUuid(sample2.getUuid());
+		assertThat(resultSampleDto.getPathogenTestResult(), is(PathogenTestResultType.POSITIVE));
+
+	}
+
 
 	private SampleDto createCaseSample(CaseDataDto caze, UserDto reportingUser) {
 		Facility lab = new Facility();
