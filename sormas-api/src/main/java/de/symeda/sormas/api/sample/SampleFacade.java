@@ -46,6 +46,8 @@ public interface SampleFacade {
 
 	List<SampleExportDto> getExportList(CaseCriteria caseCriteria, Collection<String> selectedRows, int first, int max);
 
+	List<SampleCaseExportDto> getSampleCaseExportList(SampleCriteria criteria, Collection<String> selectedRows, int first, int max);
+
 	long count(SampleCriteria sampleCriteria);
 
 	SampleDto getSampleByUuid(String uuid);
@@ -98,5 +100,9 @@ public interface SampleFacade {
 
 	List<DiseaseVariant> getAssociatedDiseaseVariants(String sampleUuid);
 
-	Integer saveBulkSample(List<String> sampleUuids, @Valid SampleBulkEditData updateSampleBulkEditData, boolean sippedChange, boolean receivedChanged);
+	Integer saveBulkSample(
+			List<String> sampleUuids,
+			@Valid SampleBulkEditData updateSampleBulkEditData,
+			boolean sippedChange,
+			boolean receivedChanged);
 }
