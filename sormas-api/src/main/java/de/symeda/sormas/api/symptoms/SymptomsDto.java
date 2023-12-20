@@ -19,7 +19,44 @@ package de.symeda.sormas.api.symptoms;
 
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_GERMANY;
 import static de.symeda.sormas.api.CountryHelper.COUNTRY_CODE_SWITZERLAND;
-import static de.symeda.sormas.api.Disease.*;
+import static de.symeda.sormas.api.Disease.ACUTE_ENCEPHALITIS_SYNDROME;
+import static de.symeda.sormas.api.Disease.ACUTE_VIRAL_HEPATITIS;
+import static de.symeda.sormas.api.Disease.AFP;
+import static de.symeda.sormas.api.Disease.ANTHRAX;
+import static de.symeda.sormas.api.Disease.ARI;
+import static de.symeda.sormas.api.Disease.CHICKENPOX;
+import static de.symeda.sormas.api.Disease.CHOLERA;
+import static de.symeda.sormas.api.Disease.CONGENITAL_RUBELLA;
+import static de.symeda.sormas.api.Disease.CONJUNCTIVITIES;
+import static de.symeda.sormas.api.Disease.CORONAVIRUS;
+import static de.symeda.sormas.api.Disease.CSM;
+import static de.symeda.sormas.api.Disease.DENGUE;
+import static de.symeda.sormas.api.Disease.DIARRHEA_BLOOD;
+import static de.symeda.sormas.api.Disease.DIARRHEA_DEHYDRATION;
+import static de.symeda.sormas.api.Disease.DIARRHOEA;
+import static de.symeda.sormas.api.Disease.EVD;
+import static de.symeda.sormas.api.Disease.FEVER_WITH_JAUNDICE;
+import static de.symeda.sormas.api.Disease.FEVER_WITH_RASH;
+import static de.symeda.sormas.api.Disease.GUINEA_WORM;
+import static de.symeda.sormas.api.Disease.KALAZAR;
+import static de.symeda.sormas.api.Disease.LASSA;
+import static de.symeda.sormas.api.Disease.LEPROSY;
+import static de.symeda.sormas.api.Disease.MALARIA;
+import static de.symeda.sormas.api.Disease.MEASLES;
+import static de.symeda.sormas.api.Disease.MONKEYPOX;
+import static de.symeda.sormas.api.Disease.MUMPS;
+import static de.symeda.sormas.api.Disease.NEW_INFLUENZA;
+import static de.symeda.sormas.api.Disease.OTHER;
+import static de.symeda.sormas.api.Disease.PLAGUE;
+import static de.symeda.sormas.api.Disease.POLIO;
+import static de.symeda.sormas.api.Disease.RABIES;
+import static de.symeda.sormas.api.Disease.RESPIRATORY_SYNCYTIAL_VIRUS;
+import static de.symeda.sormas.api.Disease.SCRUB_TYPHUS;
+import static de.symeda.sormas.api.Disease.SHAPU;
+import static de.symeda.sormas.api.Disease.SNAKE_BITE;
+import static de.symeda.sormas.api.Disease.UNDEFINED;
+import static de.symeda.sormas.api.Disease.UNSPECIFIED_VHF;
+import static de.symeda.sormas.api.Disease.YELLOW_FEVER;
 
 import java.util.Date;
 
@@ -301,7 +338,7 @@ public class SymptomsDto extends PseudonymizableDto {
             GUINEA_WORM,
             LASSA,
             NEW_INFLUENZA, ARI,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             YELLOW_FEVER,
             DENGUE,
             PLAGUE,
@@ -333,12 +370,12 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             CSM,
             MUMPS,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             POLIO,
             YELLOW_FEVER,
             UNSPECIFIED_VHF,
             MALARIA,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             ACUTE_VIRAL_HEPATITIS,
             RESPIRATORY_SYNCYTIAL_VIRUS,
             UNDEFINED,
@@ -398,7 +435,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
             AFP,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             GUINEA_WORM,
             POLIO,
             YELLOW_FEVER,
@@ -499,7 +536,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DIARRHEA_BLOOD,
             SNAKE_BITE,
             UNDEFINED,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             OTHER})
     @Outbreaks
     @SymptomGrouping(SymptomGroup.GENERAL)
@@ -515,7 +552,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MONKEYPOX,
             POLIO,
             UNSPECIFIED_VHF,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -593,7 +630,7 @@ public class SymptomsDto extends PseudonymizableDto {
             EVD,
             GUINEA_WORM,
             LASSA,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             POLIO,
             DIARRHEA_DEHYDRATION,
             UNSPECIFIED_VHF,
@@ -610,7 +647,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             PLAGUE,
             POLIO,
@@ -701,7 +738,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -712,7 +749,7 @@ public class SymptomsDto extends PseudonymizableDto {
             RABIES,
             ANTHRAX,
             CORONAVIRUS, MUMPS,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             MALARIA,
             DIARRHEA_DEHYDRATION,
             ACUTE_VIRAL_HEPATITIS,
@@ -733,7 +770,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -745,7 +782,7 @@ public class SymptomsDto extends PseudonymizableDto {
             ANTHRAX,
             CORONAVIRUS, MUMPS,
             MALARIA,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             DIARRHEA_DEHYDRATION,
             DIARRHEA_BLOOD,
             RESPIRATORY_SYNCYTIAL_VIRUS,
@@ -807,7 +844,7 @@ public class SymptomsDto extends PseudonymizableDto {
             ANTHRAX,
             MALARIA,
             CORONAVIRUS, MUMPS,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             UNDEFINED,
             OTHER})
     @Outbreaks
@@ -895,7 +932,7 @@ public class SymptomsDto extends PseudonymizableDto {
             ACUTE_VIRAL_HEPATITIS,
             SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             OTHER})
     @Outbreaks
     @HideForCountries(countries = {
@@ -922,7 +959,7 @@ public class SymptomsDto extends PseudonymizableDto {
             ANTHRAX,
             POLIO,
             UNDEFINED,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             OTHER})
     @HideForCountries
     @SymptomGrouping(SymptomGroup.SKIN)
@@ -935,7 +972,7 @@ public class SymptomsDto extends PseudonymizableDto {
             MONKEYPOX,
             POLIO,
             UNDEFINED,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             OTHER})
     @DependantOn(LESIONS)
     @HideForCountries
@@ -1192,7 +1229,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -1201,7 +1238,7 @@ public class SymptomsDto extends PseudonymizableDto {
             POLIO,
             CORONAVIRUS, MUMPS,
             UNSPECIFIED_VHF,
-            SCRUB_TYPHUS,
+            SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             SHAPU, CONJUNCTIVITIES,
             UNDEFINED,
             OTHER})
@@ -1216,7 +1253,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             YELLOW_FEVER,
             DENGUE,
             MONKEYPOX,
@@ -1350,7 +1387,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
             MONKEYPOX,
@@ -1373,7 +1410,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
             MONKEYPOX,
@@ -1420,7 +1457,7 @@ public class SymptomsDto extends PseudonymizableDto {
             GUINEA_WORM,
             LASSA,
             POLIO,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             MALARIA,
             ACUTE_VIRAL_HEPATITIS,
             UNSPECIFIED_VHF,
@@ -1436,7 +1473,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             POLIO,
             UNSPECIFIED_VHF,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             MALARIA,
             UNDEFINED,
             OTHER})
@@ -1514,7 +1551,7 @@ public class SymptomsDto extends PseudonymizableDto {
             GUINEA_WORM,
             LASSA,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             POLIO,
             UNSPECIFIED_VHF,
             RABIES,
@@ -1579,7 +1616,7 @@ public class SymptomsDto extends PseudonymizableDto {
             DENGUE,
             POLIO,
             UNSPECIFIED_VHF,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             UNDEFINED,
             OTHER,
             CORONAVIRUS})
@@ -1639,7 +1676,7 @@ public class SymptomsDto extends PseudonymizableDto {
             GUINEA_WORM,
             POLIO,
             UNSPECIFIED_VHF,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             MUMPS,
             UNDEFINED,
             OTHER})
@@ -1656,7 +1693,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             DENGUE,
             MONKEYPOX,
@@ -1678,7 +1715,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -1708,7 +1745,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -1790,7 +1827,7 @@ public class SymptomsDto extends PseudonymizableDto {
     private SymptomState developmentalDelay;
 
     @Diseases({
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             CONGENITAL_RUBELLA})
     @HideForCountries
     @SymptomGrouping(SymptomGroup.OTHER)
@@ -1854,7 +1891,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             YELLOW_FEVER,
             DENGUE,
@@ -2073,7 +2110,7 @@ public class SymptomsDto extends PseudonymizableDto {
 
     @Diseases({
             CORONAVIRUS, MUMPS,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             UNDEFINED,
             OTHER})
     @HideForCountries(countries = {
@@ -2113,7 +2150,7 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({
             MALARIA,
             CORONAVIRUS, MUMPS,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             DIARRHEA_DEHYDRATION,
             DIARRHEA_BLOOD,
             UNDEFINED,
@@ -2154,7 +2191,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2174,7 +2211,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             PLAGUE,
             POLIO,
@@ -2255,7 +2292,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2279,7 +2316,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2306,7 +2343,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2326,7 +2363,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             POLIO,
             UNSPECIFIED_VHF,
@@ -2344,7 +2381,7 @@ public class SymptomsDto extends PseudonymizableDto {
             LASSA,
             NEW_INFLUENZA, ARI,
             CSM,
-            CHOLERA, DIARRHOEA,
+            CHOLERA, DIARRHOEA, FEVER_WITH_JAUNDICE,
             MEASLES, CHICKENPOX, FEVER_WITH_RASH,
             PLAGUE,
             ANTHRAX,
@@ -2368,7 +2405,7 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({
             CORONAVIRUS, MUMPS,
             MALARIA,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             ACUTE_VIRAL_HEPATITIS,
             DIARRHEA_DEHYDRATION,
             DIARRHEA_BLOOD,
@@ -2380,7 +2417,7 @@ public class SymptomsDto extends PseudonymizableDto {
     @Diseases({
             CORONAVIRUS, MUMPS,
             MALARIA,
-            KALAZAR, SCRUB_TYPHUS,
+            KALAZAR, SCRUB_TYPHUS, ACUTE_ENCEPHALITIS_SYNDROME,
             ACUTE_VIRAL_HEPATITIS,
             DIARRHEA_BLOOD,
             UNDEFINED,
