@@ -17,7 +17,6 @@ package de.symeda.sormas.api.sample;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -87,6 +86,7 @@ public class PathogenTestDto extends PseudonymizableDto {
 
 	public static final String INFLUENZA_B_TEST_RESULT = "influenzaBTestResult";
 	public static final String INFLUENZA_B_OTHER_TEST_RESULT = "influenzaBOtherTestResult";
+	public static final String SUB_TYPE_CQ_VALUE = "subTypeCqValue";
 
 	@Required
 	private SampleReferenceDto sample;
@@ -150,6 +150,7 @@ public class PathogenTestDto extends PseudonymizableDto {
 	private String influenzaAOtherTestResult;
 	private InfluenzaBPathogenTestResult influenzaBTestResult;
 	private String influenzaBOtherTestResult;
+	private Float subTypeCqValue;
 	private List<MultiplexPathogenTestDiseaseDto> multiplexPathogenTestDiseaseDtos;
 
 	public static PathogenTestDto build(SampleDto sample, UserDto currentUser) {
@@ -452,5 +453,13 @@ public class PathogenTestDto extends PseudonymizableDto {
 
 	public void setInfluenzaBOtherTestResult(String influenzaBOtherTestResult) {
 		this.influenzaBOtherTestResult = influenzaBOtherTestResult;
+	}
+
+	public Float getSubTypeCqValue() {
+		return subTypeCqValue;
+	}
+
+	public void setSubTypeCqValue(Float subTypeCqValue) {
+		this.subTypeCqValue = subTypeCqValue;
 	}
 }

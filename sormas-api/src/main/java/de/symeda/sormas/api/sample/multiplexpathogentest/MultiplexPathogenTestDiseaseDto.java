@@ -19,6 +19,7 @@ public class MultiplexPathogenTestDiseaseDto extends EntityDto{
 	public static final String INFLUENZA_B_TEST_RESULT = "influenzaBTestResult";
 	public static final String INFLUENZA_B_OTHER_TEST_RESULT = "influenzaBOtherTestResult";
 	public static final String CQ_VALUE = "cqValue";
+	public static final String SUB_TYPE_CQ_VALUE = "subTypeCqValue";
 	@Required
 	private Disease testedDisease;
 	@Required
@@ -29,6 +30,7 @@ public class MultiplexPathogenTestDiseaseDto extends EntityDto{
 	private String influenzaBOtherTestResult;
 
 	private Float cqValue;
+	private Float subTypeCqValue;
 
 	public Disease getTestedDisease() {
 		return testedDisease;
@@ -84,5 +86,13 @@ public class MultiplexPathogenTestDiseaseDto extends EntityDto{
 
 	public void setCqValue(Float cqValue) {
 		this.cqValue = cqValue;
+	}
+
+	public Float getSubTypeCqValue() {
+		return subTypeCqValue;
+	}
+
+	public void setSubTypeCqValue(Float subTypeCqValue) {
+		this.subTypeCqValue = subTypeCqValue;
 	}
 }

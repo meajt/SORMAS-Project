@@ -7,6 +7,7 @@ import java.util.List;
 import com.vaadin.v7.ui.ComboBox;
 
 import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.sample.PathogenTestDto;
 import de.symeda.sormas.api.sample.PathogenTestResultType;
 import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaAPathogenTestResult;
 import de.symeda.sormas.api.sample.multiplexpathogentest.InfluenzaBPathogenTestResult;
@@ -18,9 +19,9 @@ public class MultiplexPathogenTestDiseaseForm extends AbstractEditForm<Multiplex
 
 	//@formatter:off
     private static final String  HTML_LAYOUT = fluidRowLocs(MultiplexPathogenTestDiseaseDto.TESTED_DISEASE, MultiplexPathogenTestDiseaseDto.TEST_RESULT)
-                         + fluidRowLocs( MultiplexPathogenTestDiseaseDto.CQ_VALUE)
 						 + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_A_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT)
-						 + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT);
+						 + fluidRowLocs(MultiplexPathogenTestDiseaseDto.INFLUENZA_B_TEST_RESULT, MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT)
+                         + fluidRowLocs( MultiplexPathogenTestDiseaseDto.CQ_VALUE, MultiplexPathogenTestDiseaseDto.SUB_TYPE_CQ_VALUE);
     //@formatter:on
 	private Disease disease;
 
@@ -44,7 +45,7 @@ public class MultiplexPathogenTestDiseaseForm extends AbstractEditForm<Multiplex
 		addFields(
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT,
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_B_OTHER_TEST_RESULT,
-			MultiplexPathogenTestDiseaseDto.CQ_VALUE);
+				MultiplexPathogenTestDiseaseDto.CQ_VALUE, MultiplexPathogenTestDiseaseDto.SUB_TYPE_CQ_VALUE);
 		diseaseCombox.setEnabled(false);
 		setVisible(
 			false,
@@ -76,6 +77,18 @@ public class MultiplexPathogenTestDiseaseForm extends AbstractEditForm<Multiplex
 					PathogenTestResultType.POSITIVE,
 					true);
 		}
+		FieldHelper.setVisibleWhenSourceNotNull(
+				getFieldGroup(),
+				List.of(PathogenTestDto.SUB_TYPE_CQ_VALUE),
+				PathogenTestDto.INFLUENZA_A_TEST_RESULT,
+				true
+		);
+		FieldHelper.setVisibleWhenSourceNotNull(
+				getFieldGroup(),
+				List.of(PathogenTestDto.SUB_TYPE_CQ_VALUE),
+				PathogenTestDto.INFLUENZA_B_TEST_RESULT,
+				true
+		);
 		FieldHelper.setVisibleWhen(
 			getFieldGroup(),
 			MultiplexPathogenTestDiseaseDto.INFLUENZA_A_OTHER_TEST_RESULT,

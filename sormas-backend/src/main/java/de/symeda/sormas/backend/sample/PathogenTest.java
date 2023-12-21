@@ -106,7 +106,7 @@ public class PathogenTest extends DeletableAdo {
 	private String influenzaAOtherTestResult;
 	private InfluenzaBPathogenTestResult influenzaBTestResult;
 	private String influenzaBOtherTestResult;
-
+	private Float subTypeCqValue;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	public Sample getSample() {
@@ -364,6 +364,14 @@ public class PathogenTest extends DeletableAdo {
 
 	public void setInfluenzaBOtherTestResult(String influenzaBOtherTestResult) {
 		this.influenzaBOtherTestResult = influenzaBOtherTestResult;
+	}
+
+	public Float getSubTypeCqValue() {
+		return subTypeCqValue;
+	}
+
+	public void setSubTypeCqValue(Float subTypeCqValue) {
+		this.subTypeCqValue = subTypeCqValue;
 	}
 
 	public PathogenTestReferenceDto toReference() {

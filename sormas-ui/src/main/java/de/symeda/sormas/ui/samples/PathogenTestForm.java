@@ -96,7 +96,7 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			fluidRowLocs(PathogenTestDto.PRELIMINARY, "") +
 			fluidRowLocs(PathogenTestDto.FOUR_FOLD_INCREASE_ANTIBODY_TITER, "") +
 			fluidRowLocs(PathogenTestDto.SEROTYPE, "") + 
-			fluidRowLocs(PathogenTestDto.CQ_VALUE, "") + 
+			fluidRowLocs(PathogenTestDto.CQ_VALUE, PathogenTestDto.SUB_TYPE_CQ_VALUE) +
 			fluidRowLocs(PathogenTestDto.TEST_RESULT_TEXT) +
 			fluidRowLocs(PathogenTestDto.DELETION_REASON) +
 			fluidRowLocs(PathogenTestDto.OTHER_DELETION_REASON);
@@ -205,11 +205,11 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 		addField(PathogenTestDto.INFLUENZA_B_TEST_RESULT, ComboBox.class);
 		addFields(
 				PathogenTestDto.INFLUENZA_A_OTHER_TEST_RESULT,
-				PathogenTestDto.INFLUENZA_B_OTHER_TEST_RESULT);
+				PathogenTestDto.INFLUENZA_B_OTHER_TEST_RESULT, PathogenTestDto.SUB_TYPE_CQ_VALUE);
 		multiplexPathogenTestForm = new MultiplexPathogenTestForm();
 		getContent().addComponent(multiplexPathogenTestForm, MULTIPLEX_DISEASE_FROM);
 		setVisible(false, PathogenTestDto.DELETION_REASON, PathogenTestDto.OTHER_DELETION_REASON);
-		setVisible(false, PathogenTestDto.INFLUENZA_A_TEST_RESULT, PathogenTestDto.INFLUENZA_B_TEST_RESULT);
+		setVisible(false, PathogenTestDto.INFLUENZA_A_TEST_RESULT, PathogenTestDto.INFLUENZA_B_TEST_RESULT, PathogenTestDto.SUB_TYPE_CQ_VALUE);
 		initializeAccessAndAllowedAccesses();
 		initializeVisibilitiesAndAllowedVisibilities();
 		multiplexPathogenTestForm.setVisible(false);
@@ -228,6 +228,18 @@ public class PathogenTestForm extends AbstractEditForm<PathogenTestDto> {
 			PathogenTestDto.TEST_TYPE,
 			Arrays.asList(PathogenTestType.PCR_RT_PCR, PathogenTestType.OTHER),
 			true);
+		FieldHelper.setVisibleWhenSourceNotNull(
+				getFieldGroup(),
+				List.of(PathogenTestDto.SUB_TYPE_CQ_VALUE),
+				PathogenTestDto.INFLUENZA_A_TEST_RESULT,
+				true
+		);
+		FieldHelper.setVisibleWhenSourceNotNull(
+				getFieldGroup(),
+				List.of(PathogenTestDto.SUB_TYPE_CQ_VALUE),
+				PathogenTestDto.INFLUENZA_B_TEST_RESULT,
+				true
+		);
 		FieldHelper.setVisibleWhen(
 			getFieldGroup(),
 			PathogenTestDto.TESTED_DISEASE_DETAILS,

@@ -419,6 +419,7 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 		target.setInfluenzaAOtherTestResult(source.getInfluenzaAOtherTestResult());
 		target.setInfluenzaBTestResult(source.getInfluenzaBTestResult());
 		target.setInfluenzaBOtherTestResult(source.getInfluenzaBOtherTestResult());
+		target.setSubTypeCqValue(source.getSubTypeCqValue());
 		return target;
 	}
 
@@ -492,6 +493,7 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 		target.setInfluenzaAOtherTestResult(source.getInfluenzaAOtherTestResult());
 		target.setInfluenzaBTestResult(source.getInfluenzaBTestResult());
 		target.setInfluenzaBOtherTestResult(source.getInfluenzaBOtherTestResult());
+		target.setSubTypeCqValue(source.getSubTypeCqValue());
 		return target;
 	}
 
@@ -612,6 +614,7 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 				dto.setInfluenzaBTestResult(multiPathDto.getInfluenzaBTestResult());
 				dto.setInfluenzaBOtherTestResult(multiPathDto.getInfluenzaBOtherTestResult());
 				dto.setCqValue(multiPathDto.getCqValue());
+				dto.setSubTypeCqValue(dto.getSubTypeCqValue());
 				result.add(dto);
 			}
 			return result;
