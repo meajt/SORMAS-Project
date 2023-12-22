@@ -12636,6 +12636,8 @@ ALTER TABLE pathogentest ADD COLUMN influenzaBOtherTestResult varchar(255);
 
 INSERT INTO schema_version (version_number, comment) VALUES (508, 'Update pathogen test for influenza disease');
 
+ALTER TABLE pathogentest ADD COLUMN subTypeCqValue real;
 
+INSERT INTO schema_version (version_number, comment) VALUES (508, 'Sub Type CQ value');
 
 -- *** Insert new sql commands BEFORE this line. Remember to always consider _history tables. ***
