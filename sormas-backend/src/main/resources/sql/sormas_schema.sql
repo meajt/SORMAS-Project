@@ -12638,6 +12638,6 @@ INSERT INTO schema_version (version_number, comment) VALUES (508, 'Update pathog
 
 ALTER TABLE pathogentest ADD COLUMN subTypeCqValue real;
 
-INSERT INTO schema_version (version_number, comment) VALUES (508, 'Sub Type CQ value');
+INSERT INTO schema_version (version_number, comment) VALUES (509, 'Sub Type CQ value');
 
 -- *** Insert new sql commands BEFORE this line. Remember to always consider _history tables. ***
