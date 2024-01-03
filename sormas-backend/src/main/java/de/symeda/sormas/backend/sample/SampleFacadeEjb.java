@@ -540,13 +540,18 @@ public class SampleFacadeEjb implements SampleFacade {
 				sampleRoot.get(AbstractDomainObject.UUID),
 				sampleRoot.get(AbstractDomainObject.ID),
 				sampleRoot.get(Sample.LAB_SAMPLE_ID),
+				sampleRoot.get(Sample.FIELD_SAMPLE_ID),
 				sampleRoot.get(Sample.SPECIMEN_CONDITION),
 				sampleRoot.get(Sample.SAMPLE_DATE_TIME),
 				reportingUserJoin.get(User.USER_NAME),
 				personJoin.get(Person.FIRST_NAME),
 				personJoin.get(Person.LAST_NAME),
 				personJoin.get(Person.SEX),
+				sampleJoins.getCaze().get(Case.PERSON_AGE_DURING_REGISTRATION),
+				sampleJoins.getCaze().get(Case.PERSON_AGE_TYPE_DURING_REGISTRATION),
 				personJoin.get(Person.MOBILE_NO),
+				sampleJoins.getCaze().get(Case.UUID),
+				sampleJoins.getCaze().get(Case.EPID_NUMBER),
 				sampleJoins.getCaze().get(Case.CASE_CLASSIFICATION),
 				sampleJoins.getCaze().get(Case.DISEASE),
 				caseJoins.getResponsibleRegion().get(Region.NAME),
@@ -592,7 +597,8 @@ public class SampleFacadeEjb implements SampleFacade {
 						pathogenTest.getTestedDisease(),
 						pathogenTest.getTestResult(),
 						null,
-						pathogenTest.getCqValue());
+						pathogenTest.getCqValue(),
+						pathogenTest.getSubTypeCqValue());
 
 				switch (++count) {
 					case 1:
