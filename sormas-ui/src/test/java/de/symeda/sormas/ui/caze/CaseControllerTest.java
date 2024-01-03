@@ -1,10 +1,14 @@
 package de.symeda.sormas.ui.caze;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.vaadin.server.Page;
@@ -16,7 +20,10 @@ import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 import com.vaadin.v7.data.util.converter.ConverterFactory;
 
-import de.symeda.sormas.api.user.DefaultUserRole;
+import de.symeda.sormas.api.caze.CaseDataDto;
+import de.symeda.sormas.api.person.ApproximateAgeType;
+import de.symeda.sormas.api.person.PersonDto;
+import de.symeda.sormas.api.utils.DateHelper;
 import de.symeda.sormas.ui.AbstractBeanTest;
 import de.symeda.sormas.ui.SormasUI;
 import de.symeda.sormas.ui.utils.SormasDefaultConverterFactory;
@@ -28,14 +35,14 @@ public class CaseControllerTest extends AbstractBeanTest {
 	@BeforeEach
 	public void initUI() throws Exception {
 
-		creator.createUser(
+/*		creator.createUser(
 			null,
 			null,
 			null,
 			"ad",
 			"min",
 			creator.getUserRoleReference(DefaultUserRole.ADMIN),
-			creator.getUserRoleReference(DefaultUserRole.NATIONAL_USER));
+			creator.getUserRoleReference(DefaultUserRole.NATIONAL_USER));*/
 
 		VaadinRequest request = Mockito.mock(VaadinServletRequest.class);
 		when(request.getUserPrincipal()).thenReturn((Principal) () -> "admin");
@@ -58,6 +65,32 @@ public class CaseControllerTest extends AbstractBeanTest {
 		pageField.setAccessible(true);
 		pageField.set(ui, Mockito.mock(Page.class));
 	}
+
+	@Test
+	public void updatePersonRegistrationAge() {
+		final CaseDataDto caseDataDto = new CaseDataDto();
+		Date date = DateHelper.parseDate("2024-01-02", new SimpleDateFormat("yyyy-MM-dd"));
+		caseDataDto.setReportDate(date);
+
+		PersonDto personDto = new PersonDto();
+		personDto.setBirthdateYYYY(2000);
+		CaseController caseController = new CaseController();
+		caseController.updatePersonRegistrationAge(caseDataDto, personDto);
+		assertEquals(24, caseDataDto.getPersonAgeDuringRegistration());
+		assertEquals(ApproximateAgeType.YEARS, caseDataDto.getPersonAgeTypeDuringRegistration());
+
+		personDto.setBirthdateMM(2);
+		caseController.updatePersonRegistrationAge(caseDataDto, personDto);
+		assertEquals(287, caseDataDto.getPersonAgeDuringRegistration());
+		assertEquals(ApproximateAgeType.MONTHS, caseDataDto.getPersonAgeTypeDuringRegistration());
+
+		personDto.setApproximateAge(20);
+		personDto.setApproximateAgeType(ApproximateAgeType.YEARS);
+		caseController.updatePersonRegistrationAge(caseDataDto, personDto);
+		assertEquals(20, caseDataDto.getPersonAgeDuringRegistration());
+		assertEquals(ApproximateAgeType.YEARS, caseDataDto.getPersonAgeTypeDuringRegistration());
+	}
+
 
 //	@SuppressWarnings("unchecked")
 //	@Test

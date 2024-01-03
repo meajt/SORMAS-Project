@@ -2982,6 +2982,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setDoseThroughRia(source.getDoseThroughRia());
 		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
 		target.setRegisteredAs(source.getRegisteredAs());
+		target.setPersonAgeDuringRegistration(source.getPersonAgeDuringRegistration());
+		target.setPersonAgeTypeDuringRegistration(source.getPersonAgeTypeDuringRegistration());
 		return target;
 	}
 
@@ -3024,7 +3026,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setRegionLevelDate(source.getRegionLevelDate());
 		target.setNationalLevelDate(source.getNationalLevelDate());
 		target.setDistrictLevelDate(source.getDistrictLevelDate());
-		target.setPerson(personService.getByReferenceDto(source.getPerson()));
+		Person person = personService.getByReferenceDto(source.getPerson());
+		target.setPerson(person);
 		target.setCaseClassification(source.getCaseClassification());
 		target.setCaseIdentificationSource(source.getCaseIdentificationSource());
 		target.setScreeningType(source.getScreeningType());
@@ -3187,6 +3190,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		target.setDoseThroughRia(source.getDoseThroughRia());
 		target.setTypeOfLeprosy(source.getTypeOfLeprosy());
 		target.setRegisteredAs(source.getRegisteredAs());
+		target.setPersonAgeDuringRegistration(source.getPersonAgeDuringRegistration());
+		target.setPersonAgeTypeDuringRegistration(source.getPersonAgeTypeDuringRegistration());
 		return target;
 	}
 

@@ -15,6 +15,8 @@
 
 package de.symeda.sormas.ui.caze;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,15 +27,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import de.symeda.sormas.api.caze.*;
-import de.symeda.sormas.api.logger.CustomLoggerFactory;
-import de.symeda.sormas.api.logger.LoggerType;
-import de.symeda.sormas.ui.caze.components.linelisting.CaseLineListSave;
-import de.symeda.sormas.ui.caze.components.linelisting.HospitalLineListLayout;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.ExternalResource;
@@ -61,6 +58,16 @@ import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.DiseaseHelper;
 import de.symeda.sormas.api.FacadeProvider;
+import de.symeda.sormas.api.caze.CaseBulkEditData;
+import de.symeda.sormas.api.caze.CaseConclusionDto;
+import de.symeda.sormas.api.caze.CaseCriteria;
+import de.symeda.sormas.api.caze.CaseDataDto;
+import de.symeda.sormas.api.caze.CaseFacade;
+import de.symeda.sormas.api.caze.CaseIndexDto;
+import de.symeda.sormas.api.caze.CaseLogic;
+import de.symeda.sormas.api.caze.CaseOrigin;
+import de.symeda.sormas.api.caze.CaseSelectionDto;
+import de.symeda.sormas.api.caze.CaseSimilarityCriteria;
 import de.symeda.sormas.api.caze.classification.ClassificationHtmlRenderer;
 import de.symeda.sormas.api.caze.classification.DiseaseClassificationCriteriaDto;
 import de.symeda.sormas.api.caze.maternalhistory.MaternalHistoryDto;
@@ -91,7 +98,10 @@ import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.infrastructure.pointofentry.PointOfEntryDto;
 import de.symeda.sormas.api.infrastructure.region.RegionReferenceDto;
+import de.symeda.sormas.api.logger.CustomLoggerFactory;
+import de.symeda.sormas.api.logger.LoggerType;
 import de.symeda.sormas.api.messaging.MessageType;
+import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.person.PersonReferenceDto;
 import de.symeda.sormas.api.symptoms.SymptomsContext;
@@ -112,6 +122,8 @@ import de.symeda.sormas.ui.ControllerProvider;
 import de.symeda.sormas.ui.SormasUI;
 import de.symeda.sormas.ui.UserProvider;
 import de.symeda.sormas.ui.ViewModelProviders;
+import de.symeda.sormas.ui.caze.components.linelisting.CaseLineListSave;
+import de.symeda.sormas.ui.caze.components.linelisting.HospitalLineListLayout;
 import de.symeda.sormas.ui.caze.components.linelisting.LineListingLayout;
 import de.symeda.sormas.ui.caze.maternalhistory.MaternalHistoryForm;
 import de.symeda.sormas.ui.caze.maternalhistory.MaternalHistoryView;
@@ -142,7 +154,6 @@ import de.symeda.sormas.ui.utils.components.automaticdeletion.DeletionLabel;
 import de.symeda.sormas.ui.utils.components.linelisting.model.LineDto;
 import de.symeda.sormas.ui.utils.components.page.title.TitleLayout;
 import de.symeda.sormas.ui.utils.components.page.title.TitleLayoutHelper;
-import org.apache.commons.lang3.StringUtils;
 
 public class CaseController {
 
@@ -708,10 +719,6 @@ public class CaseController {
 		editView.addCommitListener(() -> {
 			if (!createForm.getFieldGroup().isModified()) {
 				final CaseDataDto dto = createForm.getValue();
-				CustomLoggerFactory.getLogger(LoggerType.WEB)
-								.logObj("home address is ", dto.getPerson());
-				CustomLoggerFactory.getLogger(LoggerType.WEB)
-						.logObj("case dto is ", dto);
 				if (dto.getHealthFacility() == null || FacilityDto.NONE_FACILITY_UUID.equals(dto.getHealthFacility().getUuid())) {
 					dto.setFacilityType(null);
 				}
@@ -731,8 +738,6 @@ public class CaseController {
 					dto.setWasInQuarantineBeforeIsolation(YesNoUnknown.YES);
 
 					transferDataToPerson(createForm, person);
-					CustomLoggerFactory.getLogger(LoggerType.WEB)
-									.logObj("PersonDto", person);
 					FacadeProvider.getPersonFacade().save(person);
 
 					saveCase(dto);
@@ -827,6 +832,7 @@ public class CaseController {
 						// look for potential duplicate
 						final PersonDto duplicatePerson = PersonDto.build();
 						transferDataToPerson(createForm, duplicatePerson);
+						updatePersonRegistrationAge(dto, duplicatePerson);
 						ControllerProvider.getPersonController()
 							.selectOrCreatePerson(
 								duplicatePerson,
@@ -846,6 +852,26 @@ public class CaseController {
 		return editView;
 
 	}
+
+	public void updatePersonRegistrationAge(CaseDataDto caseDataDto, PersonDto personDto) {
+		if (personDto.getApproximateAge() != null) {
+			caseDataDto.setPersonAgeDuringRegistration(personDto.getApproximateAge());
+			caseDataDto.setPersonAgeTypeDuringRegistration(personDto.getApproximateAgeType());
+		} else if (personDto.getBirthdateYYYY() != null) {
+			LocalDate localDate = caseDataDto.getReportDate().toInstant()
+					.atZone(ZoneId.systemDefault())
+					.toLocalDate();
+			int yearDiff = localDate.getYear() - personDto.getBirthdateYYYY();
+			if (personDto.getBirthdateMM() == null || personDto.getBirthdateMM() == localDate.getMonthValue()) {
+				caseDataDto.setPersonAgeDuringRegistration(yearDiff);
+				caseDataDto.setPersonAgeTypeDuringRegistration(ApproximateAgeType.YEARS);
+			} else {
+				caseDataDto.setPersonAgeDuringRegistration(yearDiff * 12 + localDate.getMonthValue() - personDto.getBirthdateMM());
+				caseDataDto.setPersonAgeTypeDuringRegistration(ApproximateAgeType.MONTHS);
+			}
+		}
+	}
+
 
 	private void selectOrCreateCase(CaseCreateForm createForm, CaseDataDto dto, PersonReferenceDto selectedPerson) {
 		selectOrCreateCase(dto, FacadeProvider.getPersonFacade().getByUuid(selectedPerson.getUuid()), uuid -> {

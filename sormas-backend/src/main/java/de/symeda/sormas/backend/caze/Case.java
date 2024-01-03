@@ -75,6 +75,7 @@ import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.epidata.RegisteredAs;
 import de.symeda.sormas.api.externaldata.HasExternalData;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
+import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import de.symeda.sormas.api.utils.PersonalData;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -250,6 +251,8 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	public static final String DUPLICATE_OF = "duplicateOf";
 	public static final String CREATION_VERSION = "creationVersion";
 
+    public static final String PERSON_AGE_DURING_REGISTRATION = "personAgeDuringRegistration";
+    public static final String PERSON_AGE_TYPE_DURING_REGISTRATION = "personAgeTypeDuringRegistration";
 	private Person person;
 	private String description;
 	private Disease disease;
@@ -436,7 +439,8 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	private Date lastVaccinationDate;
 	private TypeOfLeprosy typeOfLeprosy;
 	private RegisteredAs registeredAs;
-
+    private Integer personAgeDuringRegistration;
+    private ApproximateAgeType personAgeTypeDuringRegistration;
 
 	@Column(name = "person_id", updatable = false, insertable = false)
 	public Long getPersonId() {
@@ -1840,4 +1844,21 @@ public class Case extends CoreAdo implements SormasToSormasShareable, HasExterna
 	public void setRegisteredAs(RegisteredAs registeredAs) {
 		this.registeredAs = registeredAs;
 	}
+
+    public Integer getPersonAgeDuringRegistration() {
+        return personAgeDuringRegistration;
+    }
+
+    public void setPersonAgeDuringRegistration(Integer personAgeDuringRegistration) {
+        this.personAgeDuringRegistration = personAgeDuringRegistration;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public ApproximateAgeType getPersonAgeTypeDuringRegistration() {
+        return personAgeTypeDuringRegistration;
+    }
+
+    public void setPersonAgeTypeDuringRegistration(ApproximateAgeType personAgeTypeDuringRegistration) {
+        this.personAgeTypeDuringRegistration = personAgeTypeDuringRegistration;
+    }
 }
