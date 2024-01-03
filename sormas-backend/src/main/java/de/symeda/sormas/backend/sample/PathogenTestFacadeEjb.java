@@ -614,7 +614,7 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 				dto.setInfluenzaBTestResult(multiPathDto.getInfluenzaBTestResult());
 				dto.setInfluenzaBOtherTestResult(multiPathDto.getInfluenzaBOtherTestResult());
 				dto.setCqValue(multiPathDto.getCqValue());
-				dto.setSubTypeCqValue(dto.getSubTypeCqValue());
+				dto.setSubTypeCqValue(multiPathDto.getSubTypeCqValue());
 				result.add(dto);
 			}
 			return result;

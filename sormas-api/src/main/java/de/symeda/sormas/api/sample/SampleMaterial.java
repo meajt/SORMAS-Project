@@ -34,7 +34,6 @@ public enum SampleMaterial {
 	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	NASAL_SWAB,
 	THROAT_SWAB,
-	@HideForCountries(countries = CountryHelper.COUNTRY_CODE_NEPAL)
 	NP_SWAB,
 	@Diseases(value = {
 		Disease.CORONAVIRUS }, hide = true)
