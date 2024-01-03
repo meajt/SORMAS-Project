@@ -41,6 +41,7 @@ public class SampleIndexDto extends PseudonymizableIndexDto implements Serializa
 	public static final String I18N_PREFIX = "Sample";
 
 	public static final String UUID = "uuid";
+	public static final String FIELD_SAMPLE_ID = "fieldSampleID";
 	public static final String ASSOCIATED_CASE = "associatedCase";
 	public static final String ASSOCIATED_CONTACT = "associatedContact";
 	public static final String ASSOCIATED_EVENT_PARTICIPANT = "associatedEventParticipant";
@@ -76,6 +77,7 @@ public class SampleIndexDto extends PseudonymizableIndexDto implements Serializa
 	private EventParticipantReferenceDto associatedEventParticipant;
 	private String epidNumber;
 	private String labSampleID;
+	private String fieldSampleID;
 	private Disease disease;
 	private String diseaseDetails;
 	private String district;
@@ -102,7 +104,7 @@ public class SampleIndexDto extends PseudonymizableIndexDto implements Serializa
 	private String otherDeletionReason;
 
 	//@formatter:off
-	public SampleIndexDto(String uuid, String epidNumber, String labSampleId, Date sampleDateTime,
+	public SampleIndexDto(String uuid, String epidNumber, String fieldSampleID, String labSampleId, Date sampleDateTime,
 						  boolean shipped, Date shipmentDate, boolean received, Date receivedDate,
 						  SampleMaterial sampleMaterial, SamplePurpose samplePurpose, SpecimenCondition specimenCondition,
 						  String labName, String referredSampleUuid,
@@ -131,6 +133,7 @@ public class SampleIndexDto extends PseudonymizableIndexDto implements Serializa
 		}
 		this.epidNumber = epidNumber;
 		this.labSampleID = labSampleId;
+		this.fieldSampleID = fieldSampleID;
 		this.disease = disease;
 		this.diseaseDetails = diseaseDetails;
 		this.district = districtName;
@@ -221,6 +224,14 @@ public class SampleIndexDto extends PseudonymizableIndexDto implements Serializa
 
 	public void setLabSampleID(String labSampleID) {
 		this.labSampleID = labSampleID;
+	}
+
+	public String getFieldSampleID() {
+		return fieldSampleID;
+	}
+
+	public void setFieldSampleID(String fieldSampleID) {
+		this.fieldSampleID = fieldSampleID;
 	}
 
 	public String getDistrict() {

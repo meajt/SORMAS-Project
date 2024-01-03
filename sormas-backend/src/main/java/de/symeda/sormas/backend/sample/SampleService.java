@@ -214,6 +214,7 @@ public class SampleService extends AbstractDeletableAdoService<Sample>
 				sample.get(Sample.UUID),
 				caze.get(Case.EPID_NUMBER),
 				sample.get(Sample.LAB_SAMPLE_ID),
+				sample.get(Sample.FIELD_SAMPLE_ID),
 				sample.get(Sample.SAMPLE_DATE_TIME),
 				sample.get(Sample.SHIPPED),
 				sample.get(Sample.SHIPMENT_DATE),
