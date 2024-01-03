@@ -30,14 +30,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
-import de.symeda.sormas.api.CountryHelper;
-import de.symeda.sormas.api.epidata.RegisteredAs;
-import de.symeda.sormas.api.location.LocationDto;
-import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.ImportIgnore;
 import de.symeda.sormas.api.activityascase.ActivityAsCaseDto;
@@ -51,6 +48,7 @@ import de.symeda.sormas.api.contact.FollowUpStatus;
 import de.symeda.sormas.api.contact.QuarantineType;
 import de.symeda.sormas.api.disease.DiseaseVariant;
 import de.symeda.sormas.api.epidata.EpiDataDto;
+import de.symeda.sormas.api.epidata.RegisteredAs;
 import de.symeda.sormas.api.event.EventParticipantDto;
 import de.symeda.sormas.api.exposure.ExposureDto;
 import de.symeda.sormas.api.feature.FeatureType;
@@ -62,12 +60,15 @@ import de.symeda.sormas.api.infrastructure.facility.FacilityReferenceDto;
 import de.symeda.sormas.api.infrastructure.facility.FacilityType;
 import de.symeda.sormas.api.infrastructure.pointofentry.PointOfEntryReferenceDto;
 import de.symeda.sormas.api.infrastructure.region.RegionReferenceDto;
+import de.symeda.sormas.api.location.LocationDto;
+import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.PersonDto;
 import de.symeda.sormas.api.person.PersonReferenceDto;
 import de.symeda.sormas.api.sormastosormas.S2SIgnoreProperty;
 import de.symeda.sormas.api.sormastosormas.SormasToSormasConfig;
 import de.symeda.sormas.api.sormastosormas.SormasToSormasShareableDto;
 import de.symeda.sormas.api.symptoms.SymptomsDto;
+import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import de.symeda.sormas.api.therapy.TherapyDto;
 import de.symeda.sormas.api.travelentry.TravelEntryDto;
 import de.symeda.sormas.api.user.UserReferenceDto;
@@ -242,7 +243,8 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	public static final String CASE_OUTCOME = "caseOutcome";
 	public static final String TYPE_OF_LEPROSY = "typeOfLeprosy";
 	public static final String REGISTER_AS = "registeredAs";
-
+	public static final String PERSON_AGE_DURING_REGISTRATION = "personAgeDuringRegistration";
+	public static final String PERSON_AGE_TYPE_DURING_REGISTRATION = "personAgeTypeDuringRegistration";
 	// Fields are declared in the order they should appear in the import template
 
 	@Outbreaks
@@ -647,6 +649,9 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 	private TypeOfLeprosy typeOfLeprosy;
 	@Diseases({LEPROSY})
 	private RegisteredAs registeredAs;
+
+	private Integer personAgeDuringRegistration;
+	private ApproximateAgeType personAgeTypeDuringRegistration;
 
 	public static CaseDataDto build(PersonReferenceDto person, Disease disease) {
 		return build(person, disease, HealthConditionsDto.build());
@@ -1901,5 +1906,21 @@ public class CaseDataDto extends SormasToSormasShareableDto {
 
 	public void setRegisteredAs(RegisteredAs registeredAs) {
 		this.registeredAs = registeredAs;
+	}
+
+	public Integer getPersonAgeDuringRegistration() {
+		return personAgeDuringRegistration;
+	}
+
+	public void setPersonAgeDuringRegistration(Integer personAgeDuringRegistration) {
+		this.personAgeDuringRegistration = personAgeDuringRegistration;
+	}
+
+	public ApproximateAgeType getPersonAgeTypeDuringRegistration() {
+		return personAgeTypeDuringRegistration;
+	}
+
+	public void setPersonAgeTypeDuringRegistration(ApproximateAgeType personAgeTypeDuringRegistration) {
+		this.personAgeTypeDuringRegistration = personAgeTypeDuringRegistration;
 	}
 }

@@ -12640,4 +12640,9 @@ ALTER TABLE pathogentest ADD COLUMN subTypeCqValue real;
 
 INSERT INTO schema_version (version_number, comment) VALUES (509, 'Sub Type CQ value');
 
+ALTER  TABLE cases ADD COLUMN personAgeDuringRegistration INTEGER;
+ALTER  TABLE cases ADD COLUMN personAgeTypeDuringRegistration varchar(255);
+
+INSERT INTO schema_version (version_number, comment) VALUES (510, 'Person Age During Registration');
+
 -- *** Insert new sql commands BEFORE this line. Remember to always consider _history tables. ***
