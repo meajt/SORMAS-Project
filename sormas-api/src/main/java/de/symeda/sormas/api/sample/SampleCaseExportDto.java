@@ -5,6 +5,7 @@ import java.util.Date;
 
 import de.symeda.sormas.api.Disease;
 import de.symeda.sormas.api.caze.CaseClassification;
+import de.symeda.sormas.api.person.ApproximateAgeType;
 import de.symeda.sormas.api.person.Sex;
 import de.symeda.sormas.api.utils.Order;
 import de.symeda.sormas.api.utils.YesNoUnknown;
@@ -16,6 +17,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 
 	private long id;
 	private String labSampleID;
+	private String fieldSampleId;
 	private SpecimenCondition specimenCondition;
 	private Date sampleDateTime;
 	private String reportingUserName;
@@ -23,9 +25,11 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 	private String firstName;
 	private String lastName;
 	private Integer age;
+	private ApproximateAgeType ageType;
 	private Sex sex;
 	private String contactNo;
-
+	private String caseId;
+	private String epidNumber;
 	private CaseClassification caseType;
 	private Disease caseDisease;
 	private String responsibleRegionName;
@@ -46,13 +50,18 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 			String uuid,
 			long id,
 			String labSampleID,
+			String fieldSampleId,
 			SpecimenCondition specimenCondition,
 			Date sampleDateTime,
 			String reportingUserName,
 			String firstName,
 			String lastName,
 			Sex sex,
+			Integer age,
+			ApproximateAgeType ageType,
 			String contactNo,
+			String caseId,
+			String epidNumber,
 			CaseClassification caseType,
 			Disease caseDisease,
 			String responsibleRegionName,
@@ -67,13 +76,18 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		super(uuid);
 		this.id = id;
 		this.labSampleID = labSampleID;
+		this.fieldSampleId = fieldSampleId;
 		this.specimenCondition = specimenCondition;
 		this.sampleDateTime = sampleDateTime;
 		this.reportingUserName = reportingUserName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.sex = sex;
+		this.age = age;
+		this.ageType = ageType;
 		this.contactNo = contactNo;
+		this.caseId = caseId;
+		this.epidNumber = epidNumber;
 		this.caseType = caseType;
 		this.caseDisease = caseDisease;
 		this.responsibleRegionName = responsibleRegionName;
@@ -103,8 +117,16 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 	public void setLabSampleID(String labSampleID) {
 		this.labSampleID = labSampleID;
 	}
-
 	@Order(1)
+	public String getFieldSampleId() {
+		return fieldSampleId;
+	}
+
+	public void setFieldSampleId(String fieldSampleId) {
+		this.fieldSampleId = fieldSampleId;
+	}
+
+	@Order(2)
 	public SpecimenCondition getSpecimenCondition() {
 		return specimenCondition;
 	}
@@ -113,7 +135,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.specimenCondition = specimenCondition;
 	}
 
-	@Order(2)
+	@Order(3)
 	public Date getSampleDateTime() {
 		return sampleDateTime;
 	}
@@ -122,7 +144,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.sampleDateTime = sampleDateTime;
 	}
 
-	@Order(3)
+	@Order(4)
 	public String getReportingUserName() {
 		return reportingUserName;
 	}
@@ -131,7 +153,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.reportingUserName = reportingUserName;
 	}
 
-	@Order(4)
+	@Order(5)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -140,7 +162,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.firstName = firstName;
 	}
 
-	@Order(5)
+	@Order(6)
 	public String getLastName() {
 		return lastName;
 	}
@@ -149,7 +171,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.lastName = lastName;
 	}
 
-	@Order(6)
+	@Order(7)
 	public Integer getAge() {
 		return age;
 	}
@@ -158,7 +180,16 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.age = age;
 	}
 
-	@Order(7)
+	@Order(8)
+	public ApproximateAgeType getAgeType() {
+		return ageType;
+	}
+
+	public void setAgeType(ApproximateAgeType ageType) {
+		this.ageType = ageType;
+	}
+
+	@Order(9)
 	public Sex getSex() {
 		return sex;
 	}
@@ -167,7 +198,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.sex = sex;
 	}
 
-	@Order(8)
+	@Order(10)
 	public String getContactNo() {
 		return contactNo;
 	}
@@ -176,7 +207,25 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.contactNo = contactNo;
 	}
 
-	@Order(9)
+	@Order(11)
+	public String getCaseId() {
+		return caseId;
+	}
+
+	public void setCaseId(String caseId) {
+		this.caseId = caseId;
+	}
+
+	@Order(12)
+	public String getEpidNumber() {
+		return epidNumber;
+	}
+
+	public void setEpidNumber(String epidNumber) {
+		this.epidNumber = epidNumber;
+	}
+
+	@Order(13)
 	public CaseClassification getCaseType() {
 		return caseType;
 	}
@@ -185,7 +234,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.caseType = caseType;
 	}
 
-	@Order(10)
+	@Order(14)
 	public Disease getCaseDisease() {
 		return caseDisease;
 	}
@@ -194,7 +243,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.caseDisease = caseDisease;
 	}
 
-	@Order(11)
+	@Order(15)
 	public String getResponsibleRegionName() {
 		return responsibleRegionName;
 	}
@@ -203,7 +252,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.responsibleRegionName = responsibleRegionName;
 	}
 
-	@Order(12)
+	@Order(16)
 	public String getResponsibleDistrictName() {
 		return responsibleDistrictName;
 	}
@@ -212,7 +261,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.responsibleDistrictName = responsibleDistrictName;
 	}
 
-	@Order(13)
+	@Order(17)
 	public String getResponsibleCommunityName() {
 		return responsibleCommunityName;
 	}
@@ -221,7 +270,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.responsibleCommunityName = responsibleCommunityName;
 	}
 
-	@Order(14)
+	@Order(18)
 	public Integer getWardNo() {
 		return wardNo;
 	}
@@ -230,7 +279,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.wardNo = wardNo;
 	}
 
-	@Order(15)
+	@Order(19)
 	public String getCaseReportedHospital() {
 		return caseReportedHospital;
 	}
@@ -239,7 +288,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.caseReportedHospital = caseReportedHospital;
 	}
 
-	@Order(16)
+	@Order(20)
 	public YesNoUnknown getWasPatientAdmittedASInpatient() {
 		return wasPatientAdmittedASInpatient;
 	}
@@ -248,7 +297,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.wasPatientAdmittedASInpatient = wasPatientAdmittedASInpatient;
 	}
 
-	@Order(17)
+	@Order(21)
 	public Date getHospitalDateOfAdmission() {
 		return hospitalDateOfAdmission;
 	}
@@ -257,7 +306,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.hospitalDateOfAdmission = hospitalDateOfAdmission;
 	}
 
-	@Order(18)
+	@Order(22)
 	public YesNoUnknown getAdmittedIndICU() {
 		return admittedIndICU;
 	}
@@ -266,7 +315,7 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		this.admittedIndICU = admittedIndICU;
 	}
 
-	@Order(19)
+	@Order(23)
 	public Date getDateOfOnsetSymptoms() {
 		return dateOfOnsetSymptoms;
 	}
@@ -300,6 +349,11 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		return pathogenTest1.cqValue;
 	}
 
+	@Order(115)
+	public Float getPathogenTestSubTypeCqValue1() {
+		return pathogenTest1.subTypeCqValue;
+	}
+
 	@Order(120)
 	public String getPathogenTestLab2() {
 		return pathogenTest2.lab;
@@ -323,6 +377,11 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 	@Order(124)
 	public Float getPathogenTestCqValue2() {
 		return pathogenTest2.cqValue;
+	}
+
+	@Order(125)
+	public Float getPathogenTestSubTypeCqValue2() {
+		return pathogenTest2.subTypeCqValue;
 	}
 
 	@Order(130)
@@ -350,6 +409,11 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		return pathogenTest3.cqValue;
 	}
 
+	@Order(135)
+	public Float getPathogenTestSubTypeCqValue3() {
+		return pathogenTest3.subTypeCqValue;
+	}
+
 	public void setPathogenTest1(SampleExportPathogenTest pathogenTest1) {
 		this.pathogenTest1 = pathogenTest1;
 	}
@@ -368,17 +432,19 @@ public class SampleCaseExportDto extends AbstractUuidDto {
 		private PathogenTestResultType testResultType;
 		private String cqSubType;
 		private Float cqValue;
+		private Float subTypeCqValue;
 
 		public SampleExportPathogenTest() {
 
 		}
 
-		public SampleExportPathogenTest(String lab, Disease testedDisease, PathogenTestResultType testResultType, String cqSubType, Float cqValue) {
+		public SampleExportPathogenTest(String lab, Disease testedDisease, PathogenTestResultType testResultType, String cqSubType, Float cqValue, Float subTypeCqValue) {
 			this.lab = lab;
 			this.testedDisease = testedDisease;
 			this.testResultType = testResultType;
 			this.cqSubType = cqSubType;
 			this.cqValue = cqValue;
+			this.subTypeCqValue = subTypeCqValue;
 		}
 	}
 

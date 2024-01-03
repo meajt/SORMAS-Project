@@ -119,6 +119,7 @@ public class SampleGrid extends FilteredGrid<SampleIndexDto, SampleCriteria> {
 			SampleIndexDto.UUID,
 			SampleIndexDto.LAB_SAMPLE_ID,
 			SampleIndexDto.EPID_NUMBER,
+			SampleIndexDto.FIELD_SAMPLE_ID,
 			SampleIndexDto.ASSOCIATED_CASE,
 			SampleIndexDto.ASSOCIATED_CONTACT,
 			SampleIndexDto.ASSOCIATED_EVENT_PARTICIPANT,
@@ -204,6 +205,9 @@ public class SampleGrid extends FilteredGrid<SampleIndexDto, SampleCriteria> {
 				removeColumn(SampleIndexDto.ASSOCIATED_CONTACT);
 			}
 		}
+
+		removeColumnIfExists(SampleIndexDto.ASSOCIATED_CONTACT);
+		removeColumnIfExists(SampleIndexDto.ASSOCIATED_EVENT_PARTICIPANT);
 
 		for (Column<SampleIndexDto, ?> column : getColumns()) {
 			column.setCaption(I18nProperties.getPrefixCaption(SampleIndexDto.I18N_PREFIX, column.getId(), column.getCaption()));
