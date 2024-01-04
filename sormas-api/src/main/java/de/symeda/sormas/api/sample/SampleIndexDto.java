@@ -104,7 +104,7 @@ public class SampleIndexDto extends PseudonymizableIndexDto implements Serializa
 	private String otherDeletionReason;
 
 	//@formatter:off
-	public SampleIndexDto(String uuid, String epidNumber, String fieldSampleID, String labSampleId, Date sampleDateTime,
+	public SampleIndexDto(String uuid, String epidNumber, String labSampleId, String fieldSampleID,  Date sampleDateTime,
 						  boolean shipped, Date shipmentDate, boolean received, Date receivedDate,
 						  SampleMaterial sampleMaterial, SamplePurpose samplePurpose, SpecimenCondition specimenCondition,
 						  String labName, String referredSampleUuid,
