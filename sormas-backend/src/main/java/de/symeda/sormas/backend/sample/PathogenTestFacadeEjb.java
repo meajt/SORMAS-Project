@@ -42,6 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.symeda.sormas.api.Disease;
+import de.symeda.sormas.api.caze.CaseReferenceDto;
 import de.symeda.sormas.api.common.DeletionDetails;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.i18n.I18nProperties;
@@ -221,6 +222,23 @@ public class PathogenTestFacadeEjb implements PathogenTestFacade {
 		cq.distinct(true);
 		cq.select(pathogenTestRoot.get(PathogenTest.TEST_RESULT));
 		Predicate filter = cb.equal(sampleJoin.get(Sample.UUID), sampleRef.getUuid());
+		cq.where(filter);
+		return QueryHelper.getResultList(em, cq, null, null);
+	}
+
+	@Override
+	public List<PathogenTestResultType> getDistinctPathogenTestResultByCaseRef(CaseReferenceDto caseRef) {
+		if (caseRef == null) {
+			return List.of();
+		}
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PathogenTestResultType> cq = cb.createQuery(PathogenTestResultType.class);
+		Root<PathogenTest> pathogenTestRoot = cq.from(PathogenTest.class);
+		Join<PathogenTest, Sample> sampleJoin = pathogenTestRoot.join(PathogenTest.SAMPLE, JoinType.INNER);
+		Join<Sample, Case> caseJoin = sampleJoin.join(Sample.ASSOCIATED_CASE, JoinType.INNER);
+		cq.distinct(true);
+		cq.select(pathogenTestRoot.get(PathogenTest.TEST_RESULT));
+		Predicate filter = cb.equal(caseJoin.get(Case.UUID), caseRef.getUuid());
 		cq.where(filter);
 		return QueryHelper.getResultList(em, cq, null, null);
 	}

@@ -475,6 +475,8 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 	@EJB
 	private SormasToSormasCaseFacadeEjbLocal sormasToSormasCaseFacade;
 	@EJB
+	private PathogenTestFacadeEjbLocal pathogenTestFacadeEjb;
+	@EJB
 	private ShareRequestInfoService shareRequestInfoService;
 	@EJB
 	private VaccinationFacadeEjb.VaccinationFacadeEjbLocal vaccinationFacade;
@@ -1465,6 +1467,17 @@ public class CaseFacadeEjb extends AbstractCoreFacadeEjb<Case, CaseDataDto, Case
 		return convertToReferenceDto(service.getByUuid(uuid));
 	}
 
+	@Override
+	public void updateCaseConfirm(CaseReferenceDto caseRef) {
+		List<PathogenTestResultType> pathogenTestTypes = pathogenTestFacadeEjb.getDistinctPathogenTestResultByCaseRef(caseRef);
+		Case caze = caseService.getByUuid(caseRef.getUuid());
+		if (pathogenTestTypes.contains(PathogenTestResultType.POSITIVE)) {
+			caze.setCaseClassification(CaseClassification.CONFIRMED);
+		} else if (pathogenTestTypes.size() == 1 && pathogenTestTypes.contains(PathogenTestResultType.NEGATIVE)) {
+			caze.setCaseClassification(CaseClassification.SUSPECT);
+		}
+		em.persist(caze);
+	}
 	@Override
 	@RightsAllowed({
 		UserRight._CASE_CREATE,

@@ -23,6 +23,7 @@ import java.util.List;
 import javax.ejb.Remote;
 import javax.validation.Valid;
 
+import de.symeda.sormas.api.caze.CaseReferenceDto;
 import de.symeda.sormas.api.common.DeletionDetails;
 import de.symeda.sormas.api.common.Page;
 import de.symeda.sormas.api.utils.SortProperty;
@@ -36,6 +37,8 @@ public interface PathogenTestFacade {
 	List<PathogenTestDto> getAllBySample(SampleReferenceDto sampleRef);
 
 	List<PathogenTestResultType> getDistinctPathogenTestResultBySample(SampleReferenceDto sampleRef);
+
+	List<PathogenTestResultType> getDistinctPathogenTestResultByCaseRef(CaseReferenceDto caseRe);
 
 	PathogenTestDto getByUuid(String uuid);
 

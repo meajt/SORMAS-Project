@@ -51,8 +51,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
-import de.symeda.sormas.api.symptoms.TypeOfLeprosy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hamcrest.MatcherAssert;
 import org.hibernate.internal.SessionImpl;
@@ -96,6 +94,7 @@ import de.symeda.sormas.api.contact.FollowUpStatus;
 import de.symeda.sormas.api.document.DocumentDto;
 import de.symeda.sormas.api.document.DocumentRelatedEntityType;
 import de.symeda.sormas.api.epidata.EpiDataDto;
+import de.symeda.sormas.api.epidata.MalariaEpiDataDto;
 import de.symeda.sormas.api.event.EventCriteria;
 import de.symeda.sormas.api.event.EventDto;
 import de.symeda.sormas.api.event.EventInvestigationStatus;
@@ -170,6 +169,7 @@ import de.symeda.sormas.backend.TestDataCreator;
 import de.symeda.sormas.backend.TestDataCreator.RDCF;
 import de.symeda.sormas.backend.TestDataCreator.RDCFEntities;
 import de.symeda.sormas.backend.infrastructure.district.District;
+import de.symeda.sormas.backend.infrastructure.facility.Facility;
 import de.symeda.sormas.backend.infrastructure.region.Region;
 import de.symeda.sormas.backend.share.ExternalShareInfo;
 import de.symeda.sormas.backend.util.DtoHelper;
@@ -3184,6 +3184,55 @@ public class CaseFacadeEjbTest extends AbstractBeanTest {
 		leprosyCase = getCaseFacade().save(leprosyCase);
 		symptomsDto = leprosyCase.getSymptoms();
 	}
+
+	@Test
+	public void updateCaseConfirmTest() {
+		RDCF rdcf1 = creator.createRDCF("Region 1", "District 1", "Community 1", "Facility 1", "Point of entry 1");
+		UserDto user1 = creator.createUser(
+				rdcf1.region.getUuid(),
+				rdcf1.district.getUuid(),
+				rdcf1.facility.getUuid(),
+				"Surv",
+				"Off1",
+				creator.getUserRoleReference(DefaultUserRole.SURVEILLANCE_OFFICER));
+
+		Facility lab = getFacilityService().getByUuid(creator.createFacility("Lab", rdcf1.region, rdcf1.district, rdcf1.community).getUuid());
+		loginWith(user1);
+
+		CaseDataDto caze = creator.createCase(user1.toReference(), creator.createPerson("First", "Last").toReference(), rdcf1);
+		SampleDto sample = creator.createSample(caze.toReference(), user1.toReference(), lab);
+		SampleDto sample1 = creator.createSample(caze.toReference(), user1.toReference(), lab);
+
+		createPathogenTest(lab, sample, user1, PathogenTestResultType.NEGATIVE);
+		createPathogenTest(lab, sample, user1, PathogenTestResultType.NEGATIVE);
+		getCaseFacade().updateCaseConfirm(caze.toReference());
+		CaseDataDto resultCase = getCaseFacade().getByUuid(caze.getUuid());
+		assertEquals(CaseClassification.SUSPECT, resultCase.getCaseClassification());
+
+		createPathogenTest(lab, sample1, user1, PathogenTestResultType.POSITIVE);
+		getCaseFacade().updateCaseConfirm(caze.toReference());
+		resultCase = getCaseFacade().getByUuid(caze.getUuid());
+		assertEquals(CaseClassification.CONFIRMED, resultCase.getCaseClassification());
+
+	}
+
+	private PathogenTestDto createPathogenTest(Facility lab, SampleDto sample, UserDto labUser, PathogenTestResultType testResultType) {
+		return creator.createPathogenTest(
+				sample.toReference(),
+				PathogenTestType.ISOLATION,
+				Disease.CORONAVIRUS,
+				new Date(),
+				lab,
+				labUser.toReference(),
+				testResultType,
+				"",
+				true,
+				t -> {
+					t.setLabDetails("Test lab details");
+					t.setTestTypeText("Test type text");
+				});
+	}
+
 
 	private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";
 	private static final SecureRandom rnd = new SecureRandom();
