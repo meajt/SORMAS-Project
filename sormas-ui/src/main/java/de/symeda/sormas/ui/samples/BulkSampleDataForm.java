@@ -93,19 +93,19 @@ public class BulkSampleDataForm extends AbstractEditForm<SampleBulkEditData> {
                 getFieldGroup(),
                 Arrays.asList(SampleBulkEditData.SHIPMENT_DATE, SampleBulkEditData.SHIPMENT_DETAILS),
                 SampleBulkEditData.SHIPPED,
-                List.of(true),
+                Arrays.asList(true),
                 true);
         FieldHelper.setVisibleWhen(
                 getFieldGroup(),
                 Arrays.asList(SampleBulkEditData.RECEIVED_DATE, SampleBulkEditData.LAB_SAMPLE_ID, SampleBulkEditData.SPECIMEN_CONDITION),
                 SampleDto.RECEIVED,
-                List.of(true),
+                Arrays.asList(true),
                 true);
         FieldHelper.setVisibleWhen(
                 getFieldGroup(),
                 SampleBulkEditData.NO_TEST_POSSIBLE_REASON,
                 SampleBulkEditData.SPECIMEN_CONDITION,
-                List.of(SpecimenCondition.NOT_ADEQUATE),
+                Arrays.asList(SpecimenCondition.NOT_ADEQUATE),
                 true);
 
         receivedDate.addValidator(
