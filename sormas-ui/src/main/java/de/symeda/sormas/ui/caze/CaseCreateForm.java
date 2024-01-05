@@ -286,7 +286,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		facilityTypeGroup.setId("typeGroup");
 		facilityTypeGroup.setCaption(I18nProperties.getCaption(Captions.Facility_typeGroup));
 		facilityTypeGroup.setWidth(100, Unit.PERCENTAGE);
-		facilityTypeGroup.addItems(FacilityTypeGroup.getAccomodationGroups());
+		facilityTypeGroup.addItems(FacilityTypeGroup.getValuesForNepal());
 		getContent().addComponent(facilityTypeGroup, FACILITY_TYPE_GROUP_LOC);
 		facilityType = ComboBoxHelper.createComboBoxV7();
 		facilityType.setId("type");
@@ -387,7 +387,7 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		});
 		facilityTypeGroup.addValueChangeListener(e -> {
 			FieldHelper.removeItems(facilityCombo);
-			FieldHelper.updateEnumData(facilityType, FacilityType.getAccommodationTypes((FacilityTypeGroup) facilityTypeGroup.getValue()));
+			FieldHelper.updateEnumData(facilityType, FacilityType.getAccommodationTypesForNepal((FacilityTypeGroup) facilityTypeGroup.getValue()));
 		});
 		facilityType.addValueChangeListener(e -> updateFacility());
 		regionCombo.addItems(FacadeProvider.getRegionFacade().getAllActiveByServerCountry());
@@ -605,17 +605,10 @@ public class CaseCreateForm extends AbstractEditForm<CaseDataDto> {
 		}
 
 		if (facilityType.getValue() != null && district != null) {
-			if (community != null) {
-				FieldHelper.updateItems(
-					facilityCombo,
-					FacadeProvider.getFacilityFacade()
-						.getActiveFacilitiesByCommunityAndType(community, (FacilityType) facilityType.getValue(), true, false));
-			} else {
 				FieldHelper.updateItems(
 					facilityCombo,
 					FacadeProvider.getFacilityFacade()
 						.getActiveFacilitiesByDistrictAndType(district, (FacilityType) facilityType.getValue(), true, false));
-			}
 		}
 	}
 

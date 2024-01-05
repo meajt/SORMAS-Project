@@ -160,6 +160,13 @@ public enum FacilityType {
 		return accomodationTypesByGroup.get(group);
 	}
 
+	public static List<FacilityType> getAccommodationTypesForNepal(FacilityTypeGroup group) {
+		if (group == FacilityTypeGroup.MEDICAL_FACILITY) {
+			return List.of(HOSPITAL, OTHER_MEDICAL_FACILITY);
+		}
+		return getAccommodationTypes(group);
+	}
+
 	public static final List<FacilityType> FOR_FACILITY_23_IFSG_GERMANY = Arrays.asList(
 		HOSPITAL,
 		AMBULATORY_SURGERY_FACILITY,

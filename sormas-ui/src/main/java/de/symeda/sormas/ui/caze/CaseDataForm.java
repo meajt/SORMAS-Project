@@ -838,7 +838,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		facilityTypeGroup.setId("typeGroup");
 		facilityTypeGroup.setCaption(I18nProperties.getCaption(Captions.Facility_typeGroup));
 		facilityTypeGroup.setWidth(100, Unit.PERCENTAGE);
-		facilityTypeGroup.addItems(FacilityTypeGroup.getAccomodationGroups());
+		facilityTypeGroup.addItems(FacilityTypeGroup.getValuesForNepal());
 		facilityTypeGroup.setVisible(false);
 		getContent().addComponent(facilityTypeGroup, TYPE_GROUP_LOC);
 		facilityTypeCombo = addField(CaseDataDto.FACILITY_TYPE);
@@ -894,7 +894,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 			}
 		});
 		facilityTypeGroup.addValueChangeListener(
-			e -> FieldHelper.updateEnumData(facilityTypeCombo, FacilityType.getAccommodationTypes((FacilityTypeGroup) facilityTypeGroup.getValue())));
+			e -> FieldHelper.updateEnumData(facilityTypeCombo, FacilityType.getAccommodationTypesForNepal((FacilityTypeGroup) facilityTypeGroup.getValue())));
 		facilityTypeCombo.addValueChangeListener(e -> updateFacility());
 		facilityCombo.addValueChangeListener(e -> updateFacilityDetails(facilityCombo, facilityDetails));
 		regionCombo.addItems(FacadeProvider.getRegionFacade().getAllActiveByServerCountry());
@@ -1853,11 +1853,7 @@ public class CaseDataForm extends AbstractEditForm<CaseDataDto> {
 		FacilityType facilityType = (FacilityType) facilityTypeCombo.getValue();
 
 		if (facilityType != null) {
-			if (community != null) {
-				FieldHelper.updateItems(
-					facilityCombo,
-					FacadeProvider.getFacilityFacade().getActiveFacilitiesByCommunityAndType(community, facilityType, true, false));
-			} else if (district != null) {
+			if (district != null) {
 				FieldHelper.updateItems(
 					facilityCombo,
 					FacadeProvider.getFacilityFacade().getActiveFacilitiesByDistrictAndType(district, facilityType, true, false));

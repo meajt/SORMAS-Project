@@ -49,7 +49,7 @@ public enum FacilityTypeGroup {
 
 	public static FacilityTypeGroup[] getValuesForNepal() {
 
-		return new FacilityTypeGroup[]{EDUCATIONAL_FACILITY, MEDICAL_FACILITY, WORKING_PLACE, RESIDENCE, OTHERS};
+		return new FacilityTypeGroup[]{MEDICAL_FACILITY};
 	}
 
 	@Override
