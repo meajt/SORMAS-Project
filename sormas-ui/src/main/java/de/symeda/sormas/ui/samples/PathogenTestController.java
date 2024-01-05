@@ -18,9 +18,7 @@
 package de.symeda.sormas.ui.samples;
 
 import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
-import static java.util.Objects.isNull;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,7 +27,11 @@ import java.util.function.Consumer;
 
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 
 import de.symeda.sormas.api.CountryHelper;
 import de.symeda.sormas.api.Disease;
@@ -48,16 +50,18 @@ import de.symeda.sormas.api.event.EventParticipantReferenceDto;
 import de.symeda.sormas.api.i18n.Captions;
 import de.symeda.sormas.api.i18n.I18nProperties;
 import de.symeda.sormas.api.i18n.Strings;
-import de.symeda.sormas.api.logger.CustomLoggerFactory;
-import de.symeda.sormas.api.logger.LoggerType;
-import de.symeda.sormas.api.sample.*;
-import de.symeda.sormas.api.sample.multiplexpathogentest.MultiplexPathogenTestDiseaseDto;
+import de.symeda.sormas.api.sample.PathogenTestDto;
+import de.symeda.sormas.api.sample.PathogenTestFacade;
+import de.symeda.sormas.api.sample.PathogenTestResultType;
+import de.symeda.sormas.api.sample.SampleDto;
+import de.symeda.sormas.api.sample.SampleReferenceDto;
 import de.symeda.sormas.api.user.UserRight;
 import de.symeda.sormas.api.utils.DataHelper;
 import de.symeda.sormas.ui.ControllerProvider;
 import de.symeda.sormas.ui.SormasUI;
 import de.symeda.sormas.ui.UserProvider;
-import de.symeda.sormas.ui.utils.*;
+import de.symeda.sormas.ui.utils.CommitDiscardWrapperComponent;
+import de.symeda.sormas.ui.utils.VaadinUiUtil;
 
 public class PathogenTestController {
 
@@ -242,6 +246,7 @@ public class PathogenTestController {
 		boolean suppressNavigateToCase) {
 		List<PathogenTestDto> pathogenTestDtos = FacadeProvider.getPathogenTestFacade().extractPathogenTestFromMultiplex(dto);
 		PathogenTestDto lastSaveDto = null;
+		CaseReferenceDto lastAssociateCaseRef = null;
 		for (PathogenTestDto paDto : pathogenTestDtos) {
 			lastSaveDto = facade.savePathogenTest(paDto);
 			final SampleDto sample = FacadeProvider.getSampleFacade().getSampleByUuid(paDto.getSample().getUuid());
@@ -254,9 +259,13 @@ public class PathogenTestController {
 				handleAssociatedEventParticipant(paDto, onSavedPathogenTest, associatedEventParticipant, suppressSampleResultUpdatePopup);
 			} else if (associatedCase != null) {
 				handleAssociatedCase(paDto, onSavedPathogenTest, associatedCase, suppressSampleResultUpdatePopup, suppressNavigateToCase);
+				lastAssociateCaseRef = associatedCase;
 			}
 		}
 		FacadeProvider.getSampleFacade().updatePathogenTestResult(dto.getSample());
+		if (lastAssociateCaseRef != null) {
+			FacadeProvider.getCaseFacade().updateCaseConfirm(lastAssociateCaseRef);
+		}
 		Notification.show(I18nProperties.getString(Strings.messagePathogenTestSavedShort), TRAY_NOTIFICATION);
 		return lastSaveDto;
 	}
